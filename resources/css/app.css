@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+
+/* Scan yolları — Filament + sənin blade-lər */
+@source '../../resources/**/*.blade.php';
+@source '../../resources/**/*.js';
+@source '../../storage/framework/views/*.php';
+@source '../../vendor/filament/**/*.blade.php';
+
+/* (komponentin yolu da bu patternə düşür: resources/views/forms/components/...) */
+
+@theme {
+    /* öz rəng/fontları istəsən burada */
+}

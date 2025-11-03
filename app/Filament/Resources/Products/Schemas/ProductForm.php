@@ -1,0 +1,227 @@
+<?php
+
+namespace App\Filament\Resources\Products\Schemas;
+
+use App\Models\Language;
+use Illuminate\Support\Str;
+use App\Enums\MenuPosition;
+use Filament\Schemas\Schema;
+use Filament\Actions\Action;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Tabs;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\RichEditor;
+use Filament\Schemas\Components\Tabs\Tab;
+use App\Enums\RichEditorFullToolBarButton;
+use Filament\Forms\Components\DateTimePicker;
+use App\Forms\Components\GoogleSearchPreview;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Components\Utilities\Get;
+
+class ProductForm
+{
+    public static function generateSKU($prefix = 'PRD'): string
+    {
+        $date = now()->format('ymd');
+        $micro = substr(str_replace('.', '', microtime(true)), -6);
+        $random = strtoupper(Str::random(4));
+        return "{$prefix}-{$date}-{$micro}-{$random}";
+    }
+
+    public static function getDefaultTranslatableLocale(): string
+    {
+        return Language::query()->where('is_default', true)->value('code') ?? app()->getLocale();
+    }
+
+    public static function configure(Schema $schema): Schema
+    {
+        return $schema
+            ->columns(1)
+            ->components([
+
+                Tabs::make('productTabs')
+                    ->persistTabInQueryString('tab')
+                    ->tabs([
+                        Tab::make(__('General'))
+                            ->columns(2)
+                            ->schema([
+                                Section::make(__('Category Information'))
+                                    ->collapsible()
+                                    ->description(__('Define the category information for the product.'))
+                                    ->schema([
+                                        Select::make('brand_id')
+                                            ->label(__('Brand'))
+                                            ->required()
+                                            ->relationship('brand', 'name'),
+                                        Select::make('categories')
+                                            ->label(__('Categories'))
+                                            ->required()
+                                            ->multiple()
+                                            ->relationship('categories', 'name', fn($query) => $query->orderBy('name'))
+                                            ->preload()
+                                            ->searchable()
+                                            ->columnSpanFull(),
+
+                                        Select::make('tags')
+                                            ->label(__('Tags'))
+                                            ->required()
+                                            ->multiple()
+                                            ->relationship('tags', 'name', fn($query) => $query->orderBy('name'))
+                                            ->preload()
+                                            ->searchable()
+                                            ->columnSpanFull(),
+                                    ]),
+                                Section::make(__('Price Information'))
+                                    ->collapsible()
+                                    ->description(__('Define the price information for the product.'))
+                                    ->columns(2)
+                                    ->schema([
+                                        TextInput::make('price')
+                                            ->label(__('Price'))
+                                            ->required()
+                                            ->numeric()
+                                            ->prefix('$'),
+                                        TextInput::make('compare_at_price')
+                                            ->label(__('Compare Price'))
+                                            ->required()
+                                            ->numeric()
+                                            ->prefix('$'),
+                                        Select::make('currency')
+                                            ->label(__('Currency'))
+                                            ->options([
+                                                'AZN' => 'AZN',
+                                                'USD' => 'USD',
+                                                'EUR' => 'EUR',
+                                            ])
+                                            ->columnSpanFull()
+                                            ->default('AZN')
+                                            ->required(),
+                                        Toggle::make('track_stock')
+                                            ->label('Track Stock')
+                                            ->live()
+                                            ->aboveLabel(__('Product appearance depends on stock.')),
+                                        TextInput::make('stock_qty')
+                                            ->label(__('Stock Quantity'))
+                                            ->required(function (Get $get) {
+                                                return $get('track_stock') == true;
+                                            })
+                                            ->numeric()
+                                            ->disabled(function (Get $get) {
+                                                return $get('track_stock') == false;
+                                            })
+                                            ->default(0),
+                                    ]),
+                                Section::make(__('General Information'))
+                                    ->collapsible()
+                                    ->columnSpanFull()
+                                    ->description(__('Define the general information for the product.'))
+                                    ->schema([
+                                        TextInput::make('sku')
+                                            ->label('SKU')
+                                            ->default(self::generateSKU())
+                                            ->readOnly()
+                                            ->required(),
+                                        TextInput::make('name')
+                                            ->label(__('Name'))
+                                            ->live()
+                                            ->columnSpanFull()
+                                            ->required()
+                                            ->afterStateUpdated(function ($state, Set $set, Get $get, $livewire) {
+                                                if ($livewire->activeLocale == self::getDefaultTranslatableLocale()) {
+                                                    $set('slug', Str::slug($state));
+                                                }
+                                            }),
+                                        Textarea::make('short_description')
+                                            ->label(__('Short Description'))
+                                            ->columnSpanFull(),
+                                        RichEditor::make('description')
+                                            ->label(__('Content'))
+                                            ->toolbarButtons(RichEditorFullToolBarButton::getAll())
+                                            ->columnSpanFull()
+                                    ]),
+                            ]),
+                        Tab::make(__('Seo'))
+                            ->schema([
+                                TextInput::make('slug')
+                                    ->label(__('Slug'))
+                                    ->live()
+                                    ->columnSpanFull()
+                                    ->required()
+                                    ->readonly(),
+                                TextInput::make('meta_title')
+                                    ->live()
+                                    ->label(__('Meta Title')),
+                                Textarea::make('meta_description')
+                                    ->live()
+                                    ->label(__('Meta Description')),
+                                GoogleSearchPreview::make()
+                                    ->baseUrl(config('app.site_url'))
+                                    ->siteName(config('app.name'))
+                                    ->faviconUrl(asset('favicon.png'))
+                            ]),
+                        Tab::make(__('Settings'))
+                            ->columns(5)
+                            ->schema([
+
+                                TextInput::make('sort_order')
+                                    ->hidden()
+                                    ->required()
+                                    ->numeric()
+                                    ->default(Language::query()->max('sort_order') + 1),
+                                Toggle::make('is_active')
+                                    ->label(__('Is Active'))
+                                    ->required(),
+                                Toggle::make('is_featured')
+                                    ->live()
+                                    ->label(__('Is Featured')),
+                                Select::make('menus')
+                                    ->label(__('Menus'))
+                                    ->multiple()
+                                    ->hidden(function (Get $get) {
+                                        return $get('is_featured') == false;
+                                    })
+                                    ->relationship(
+                                        name: 'menus',
+                                        titleAttribute: 'title',
+                                        modifyQueryUsing: function ($query) {
+                                            $query->where('position', MenuPosition::FEATURED->value)->orderBy('title');
+                                        }
+                                    )
+                                    ->required(function (Get $get) {
+                                        return $get('is_featured') == true;
+                                    })
+                                    ->preload()
+                                    ->searchable()
+                                    ->columnSpanFull(),
+                            ]),
+                        Tab::make(__('Attributes'))
+                            ->schema([
+                                Tabs::make('productAttributesTabs')
+                                    ->persistTabInQueryString('attributes_tab')
+                                    ->tabs([
+                                        Tab::make(__('Attributes'))
+                                            ->schema([
+                                                KeyValue::make('attributes')
+                                                    ->label(__('Attributes'))
+                                                    ->keyLabel(__('Attribute Name'))
+                                                    ->valueLabel(__('Attribute Value'))
+                                                    ->deleteAction(fn(Action $action) => $action->icon('heroicon-m-trash')),
+                                            ]),
+                                        Tab::make(__('Specifications'))
+                                            ->schema([
+                                                KeyValue::make('specs')
+                                                    ->label(__('Specifications'))
+                                                    ->keyLabel(__('Specification Name'))
+                                                    ->valueLabel(__('Specification Value'))
+                                                    ->deleteAction(fn(Action $action) => $action->icon('heroicon-m-trash'))
+                                            ]),
+                                    ]),
+                            ])
+                    ]),
+            ]);
+    }
+}

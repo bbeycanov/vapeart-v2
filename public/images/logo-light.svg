@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="0.966665in" height="0.313724in"
+     viewBox="0 0 957.49 310.75">
+    <!-- Main wordmark -->
+    <text x="50%" y="150"
+          text-anchor="middle"
+          font-family="Poppins, Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+          font-size="190"
+          font-weight="600"
+          fill="#ED711B"
+          letter-spacing="6">
+        vape art
+    </text>
+
+    <!-- Tagline -->
+    <text x="50%" y="255"
+          text-anchor="middle"
+          font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+          font-size="90"
+          font-weight="600"
+          fill="#111"
+          letter-spacing="2">
+        e-cigarettes
+    </text>
+</svg>

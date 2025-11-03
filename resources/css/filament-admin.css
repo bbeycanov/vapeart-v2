@@ -1,0 +1,16 @@
+@import "../../vendor/filament/filament/resources/css/theme.css";
+@import "../../vendor/filament/forms/resources/css/index.css";
+@import "../../vendor/filament/tables/resources/css/index.css";
+
+@import "tailwindcss/theme";
+@import "tailwindcss/utilities";
+
+@source "../../vendor/filament/**/*.blade.php";
+@source "../../resources/views/**/*.blade.php";
+@source "../../resources/**/*.js";
+@source "../../storage/framework/views/*.php";
+
+/* (istəsən) helperlər */
+.g-clamp-1{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.g-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.g-clamp-3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}

@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Providers;
+
+use App\Services\TagService;
+use App\Services\PageService;
+use App\Services\BlogService;
+use App\Services\MenuService;
+use App\Services\BrandService;
+use App\Services\BannerService;
+use App\Services\ReviewService;
+use App\Services\ProductService;
+use Illuminate\Support\ServiceProvider;
+use App\Services\CategoryService;
+use App\Services\Contracts\TagServiceInterface;
+use App\Services\Contracts\PageServiceInterface;
+use App\Services\Contracts\BlogServiceInterface;
+use App\Services\Contracts\MenuServiceInterface;
+use App\Services\Contracts\BrandServiceInterface;
+use App\Services\Contracts\BannerServiceInterface;
+use App\Services\Contracts\ReviewServiceInterface;
+use App\Services\Contracts\ProductServiceInterface;
+use App\Services\Contracts\CategoryServiceInterface;
+
+class ServiceLayerServiceProvider extends ServiceProvider
+{
+    /**
+     * Register services.
+     */
+    public function register(): void
+    {
+        $this->app->bind(PageServiceInterface::class, PageService::class);
+        $this->app->bind(BlogServiceInterface::class, BlogService::class);
+        $this->app->bind(MenuServiceInterface::class, MenuService::class);
+        $this->app->bind(BannerServiceInterface::class, BannerService::class);
+        $this->app->bind(ProductServiceInterface::class, ProductService::class);
+        $this->app->bind(CategoryServiceInterface::class, CategoryService::class);
+        $this->app->bind(BrandServiceInterface::class, BrandService::class);
+        $this->app->bind(TagServiceInterface::class, TagService::class);
+        $this->app->bind(ReviewServiceInterface::class, ReviewService::class);
+    }
+
+    /**
+     * Bootstrap services.
+     */
+    public function boot(): void
+    {
+
+    }
+}
