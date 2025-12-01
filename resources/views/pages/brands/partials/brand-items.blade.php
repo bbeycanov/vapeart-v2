@@ -22,7 +22,7 @@
                 </a>
             </div>
             <div class="brand-card__count mt-2">
-                <small class="text-muted">{{ $brand->products_count ?? 0 }} {{ __('Products') }}</small>
+                <small class="text-muted">{{ $brand->products_count ?? 0 }} {{ __('common.products') }}</small>
             </div>
         </div>
     </div>

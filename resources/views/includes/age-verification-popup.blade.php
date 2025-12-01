@@ -17,19 +17,19 @@
                     </div>
                     
                     <div class="age-verification-message mb-4">
-                        <p class="mb-2">Bu səhifə tanıtım məqsədi daşıyır.</p>
-                        <p class="mb-2">Səhifədə tütün məmulatları nümayiş olunub.</p>
-                        <p class="mb-2">Nikotin sizin sağlamlığınız üçün zərərlidir.</p>
-                        <p class="mb-2">18 yaşı tamam olmamış şəxslərə heç bir məhsul satılmır.</p>
-                        <p class="mb-0 fw-bold">18 yaşı tamam olmamış şəxslərə səhifəyə daxil olması qadağandır!</p>
+                        <p class="mb-2">{{ __('age_verification.Bu səhifə tanıtım məqsədi daşıyır.') }}</p>
+                        <p class="mb-2">{{ __('age_verification.Səhifədə tütün məmulatları nümayiş olunub.') }}</p>
+                        <p class="mb-2">{{ __('age_verification.Nikotin sizin sağlamlığınız üçün zərərlidir.') }}</p>
+                        <p class="mb-2">{{ __('age_verification.18 yaşı tamam olmamış şəxslərə heç bir məhsul satılmır.') }}</p>
+                        <p class="mb-0 fw-bold">{{ __('age_verification.18 yaşı tamam olmamış şəxslərə səhifəyə daxil olması qadağandır!') }}</p>
                     </div>
                     
                     <div class="age-verification-actions">
                         <button type="button" class="btn btn-primary mb-2 js-age-verify-yes">
-                            Bəli, 18 yaşım tamam olub
+                            {{ __('age_verification.Bəli, 18 yaşım tamam olub') }}
                         </button>
                         <button type="button" class="btn btn-outline-primary js-age-verify-no">
-                            Xeyr, 18 yaşım tamam olmayıb
+                            {{ __('age_verification.Xeyr, 18 yaşım tamam olmayıb') }}
                         </button>
                     </div>
                 </div>

@@ -4,13 +4,13 @@
     {!! $schemaJsonLd ?? '' !!}
 @endsection
 
-@section('title', __('Brands'))
+@section('title', __('page.Brands'))
 
 @section('content')
 
     <x-breadcrumb :items="[
-        ['label' => __('Home'), 'url' => route('home', app()->getLocale())],
-        ['label' => __('Brands'), 'url' => route('brands.index', app()->getLocale())]
+        ['label' => __('navigation.Home'), 'url' => route('home', app()->getLocale())],
+        ['label' => __('navigation.Brands'), 'url' => route('brands.index', app()->getLocale())]
     ]" />
 
     <section class="brand-page-title mb-4 mb-xl-5">
@@ -18,12 +18,12 @@
             <div class="title-bg">
                 <img loading="lazy" src="{{ asset('storefront/images/blog_title_bg.jpg') }}" width="1780" height="420" alt="Brands">
             </div>
-            <h2 class="page-title">{{ __('Brands') }}</h2>
+            <h2 class="page-title">{{ __('page.Brands') }}</h2>
         </div>
     </section>
 
     <section class="brand-page container py-4 py-md-5">
-        <h2 class="d-none">{{ __('Brands') }}</h2>
+        <h2 class="d-none">{{ __('page.Brands') }}</h2>
         @if($items->count() > 0)
             <div class="brand-grid row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6" id="brand-grid">
                 @include('pages.brands.partials.brand-items', ['items' => $items])
@@ -32,13 +32,13 @@
             @if($items->hasMorePages())
                 <div class="mt-4 d-flex justify-content-center" id="load-more-container">
                     <div class="spinner-border text-primary" role="status" id="loading-spinner" style="display: none;">
-                        <span class="visually-hidden">{{ __('Loading...') }}</span>
+                        <span class="visually-hidden">{{ __('common.Loading...') }}</span>
                     </div>
                 </div>
             @endif
         @else
             <div class="text-center py-5">
-                <p>{{ __('No brands found.') }}</p>
+                <p>{{ __('common.No brands found') }}</p>
             </div>
         @endif
     </section>

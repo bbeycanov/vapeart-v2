@@ -13,13 +13,13 @@
                     <rect x="30" y="35" width="60" height="50" rx="4" stroke="#DEE2E6" stroke-width="2" fill="none"/>
                 </svg>
             </div>
-            <h3 class="fs-4 fw-semibold mb-3">{{ __('No Products Found') }}</h3>
-            <p class="text-secondary mb-4">{{ __('We couldn\'t find any products matching your filters.') }}<br>{{ __('Try adjusting your search criteria.') }}</p>
+            <h3 class="fs-4 fw-semibold mb-3">{{ __('product.No Products Found') }}</h3>
+            <p class="text-secondary mb-4">{{ __('common.We couldn\'t find any products matching your filters.') }}<br>{{ __('common.Try adjusting your search criteria.') }}</p>
             <button type="button" class="btn btn-outline-primary btn-sm" id="clearAllFilters">
                 <svg class="me-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                     <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                 </svg>
-                {{ __('Clear All Filters') }}
+                {{ __('product.Clear All Filters') }}
             </button>
         </div>
     </div>

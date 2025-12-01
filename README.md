@@ -365,6 +365,116 @@ Veya `config/services.php` içinde:
 | `app/Console/Commands/ImportProductsFromApi.php` | Artisan command |
 | `app/Jobs/ImportProductsJob.php` | Queue job |
 
+## 📝 Blog İmport Sistemi (External API)
+
+Bu sistem harici bir API'den blog yazılarını çekip veritabanına aktarmanızı sağlar.
+
+### Özellikler
+
+- **Pagination Desteği**: API'deki tüm sayfaları otomatik gezer
+- **Çoklu Dil Desteği**: Aynı içerik tüm dillere (az, en, ru) kopyalanır
+- **Medya İmport**: Featured image Spatie Media Library ile import edilir
+- **Duplicate Kontrolü**: Slug üzerinden mevcut bloglar güncellenir
+- **Otomatik Excerpt**: Description'dan otomatik excerpt oluşturulur
+- **Okuma Süresi**: İçeriğe göre otomatik okuma süresi hesaplanır
+
+### API Veri Yapısı
+
+Import servisi aşağıdaki API yapısını destekler:
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "slug": "blog-slug",
+      "status": 1,
+      "sort": 1,
+      "title": "Blog Başlığı",
+      "description": "<p>Blog içeriği HTML formatında...</p>",
+      "base_image": {
+        "url": "http://example.com/image.jpg"
+      },
+      "created_at": "2024-01-01T00:00:00.000000Z"
+    }
+  ],
+  "meta": { "current_page": 1, "last_page": 1 }
+}
+```
+
+### Field Mapping (API → Database)
+
+| API Field | DB Field | Açıklama |
+|-----------|----------|----------|
+| `slug` | `slug` | URL-friendly tanımlayıcı |
+| `status` | `is_active` | Yayın durumu |
+| `sort` | `sort_order` | Sıralama |
+| `title` | `title` | Başlık (tüm dillere) |
+| `description` | `body` | İçerik (tüm dillere) |
+| `description` (ilk 200 karakter) | `excerpt` | Özet (tüm dillere) |
+| `created_at` | `published_at` | Yayınlanma tarihi |
+| `base_image` | `featured` collection | Öne çıkan görsel |
+
+### Kullanım
+
+#### Manuel Import (Progress Bar ile)
+
+```bash
+# Default API URL'den import
+php artisan blogs:import
+
+# Özel API URL'den import
+php artisan blogs:import http://example.com/api/posts
+
+# Örnek: Local API'den import
+php artisan blogs:import http://127.0.0.1:8001/api/posts
+```
+
+#### Queue ile Import (Arkaplanda)
+
+```bash
+# Queue'ya ekle
+php artisan blogs:import http://127.0.0.1:8001/api/posts --queue
+
+# Queue worker'ı başlat (ayrı terminalde)
+php artisan queue:work
+```
+
+### Çıktı Örneği
+
+```
+Starting blog import from: http://127.0.0.1:8001/api/posts
+
+ 2 blogs processed [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] Imported: 2 | Updated: 0 | Failed: 0
+
+Import completed!
++------------------+-------+
+| Metric           | Count |
++------------------+-------+
+| New Blogs        | 2     |
+| Updated Blogs    | 0     |
+| Failed           | 0     |
+| Total Processed  | 2     |
++------------------+-------+
+```
+
+### API URL Konfigürasyonu
+
+Default API URL'i `.env` dosyasında ayarlayabilirsiniz:
+
+```env
+BLOG_API_URL=http://127.0.0.1:8001/api/posts
+```
+
+### Blog Import Dosyaları
+
+| Dosya | Açıklama |
+|-------|----------|
+| `app/Services/BlogImportService.php` | Ana import logic |
+| `app/Services/Contracts/BlogImportServiceInterface.php` | Interface |
+| `app/Console/Commands/ImportBlogsFromApi.php` | Artisan command |
+| `app/Jobs/ImportBlogsJob.php` | Queue job |
+
 ## 🔄 Elasticsearch Senkronizasyonu
 
 Bu sistem veritabanındaki ürünleri Elasticsearch'e senkronize eder.
@@ -501,6 +611,9 @@ ELASTICSEARCH_PASS=
 
 # Product Import API
 PRODUCT_API_URL=http://127.0.0.1:8001/api/products
+
+# Blog Import API
+BLOG_API_URL=http://127.0.0.1:8001/api/posts
 ```
 
 ### Cache Yönetimi

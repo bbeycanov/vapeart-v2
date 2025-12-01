@@ -62,9 +62,9 @@
         <!-- Breadcrumb -->
         <div class="d-flex justify-content-between align-items-center mb-3 mb-md-4 pb-2 pb-md-3">
             <div class="breadcrumb mb-0 d-none d-md-block flex-grow-1">
-                <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Home') }}</a>
+                <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Home') }}</a>
                 <span class="breadcrumb-separator menu-link fw-medium ps-1 pe-1">/</span>
-                <a href="{{ route('categories.index', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Categories') }}</a>
+                <a href="{{ route('categories.index', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Categories') }}</a>
                 <span class="breadcrumb-separator menu-link fw-medium ps-1 pe-1">/</span>
                 <span class="menu-link menu-link_us-s text-uppercase fw-medium">{{ $categoryName }}</span>
             </div>
@@ -80,7 +80,7 @@
                             <button type="button" 
                                     class="brand-pill btn btn-sm {{ !$selectedBrandId ? 'btn-dark' : 'btn-outline-light text-dark border-secondary-subtle' }} rounded-pill px-3 px-md-4 py-2 py-md-2.5 flex-shrink-0 fw-medium d-flex align-items-center gap-2 transition-all"
                                     data-brand-id="">
-                                <span>{{ __('All Brands') }}</span>
+                                <span>{{ __('product.All Brands') }}</span>
                             </button>
                             
                             <!-- Brand List -->
@@ -108,7 +108,7 @@
                 <!-- Products Header / Active Filter Info -->
                 <div class="d-flex justify-content-between align-items-center mb-4 mb-md-5 flex-wrap gap-3">
                     <div class="d-flex align-items-center gap-3">
-                        <h2 class="h5 mb-0 fw-bold">{{ __('Products') }}</h2>
+                        <h2 class="h5 mb-0 fw-bold">{{ __('common.Products') }}</h2>
                         <span class="badge bg-light text-dark border rounded-pill px-3 py-2" id="products-count" style="font-size: 0.875rem; font-weight: 600;">
                             {{ $list->total() }}
                         </span>
@@ -117,7 +117,7 @@
                     <div id="brand-action-area" class="{{ $selectedBrand ? '' : 'd-none' }}">
                         @if($selectedBrand)
                             <a href="{{ route('brands.show', [$locale, $selectedBrand->slug]) }}" class="btn btn-sm btn-link text-decoration-none d-flex align-items-center text-dark fw-medium px-0">
-                                {{ __('Visit') }} {{ $selectedBrand->getTranslation('name', $locale) }} {{ __('Page') }}
+                                {{ __('page.Visit') }} {{ $selectedBrand->getTranslation('name', $locale) }} {{ __('page.Page') }}
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-1">
                                     <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
@@ -160,7 +160,7 @@
                                 <div id="infinite-scroll-trigger" class="py-3 py-md-4">
                                     @if($list->hasMorePages())
                                         <div class="spinner-border text-dark" role="status" id="btn-loading-spinner" style="width: 2.5rem; height: 2.5rem;">
-                                            <span class="visually-hidden">{{ __('Loading...') }}</span>
+                                            <span class="visually-hidden">{{ __('common.Loading...') }}</span>
                                         </div>
                                         <!-- Hidden button for fallback/JS data storage -->
                                         <button type="button" class="d-none" id="load-more-btn" 
@@ -179,10 +179,10 @@
                                     <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </div>
-                            <h3 class="h5 fw-bold text-dark mb-2">{{ __('No products found') }}</h3>
-                            <p class="text-muted mb-4">{{ __('Try selecting a different brand or browse all categories.') }}</p>
+                            <h3 class="h5 fw-bold text-dark mb-2">{{ __('common.No products found') }}</h3>
+                            <p class="text-muted mb-4">{{ __('common.Try selecting a different brand or browse all categories.') }}</p>
                             <a href="{{ route('products.index', $locale) }}" class="btn btn-dark rounded-pill px-4">
-                                {{ __('Browse All Products') }}
+                                {{ __('common.Browse All Products') }}
                             </a>
                         </div>
                     @endif
@@ -409,7 +409,7 @@
                 
                 brandActionArea.innerHTML = `
                     <a href="${brandUrl}" class="btn btn-sm btn-link text-decoration-none d-flex align-items-center text-dark fw-medium px-0 animate__animated animate__fadeIn">
-                        {{ __('Visit') }} ${brand.name} {{ __('Page') }}
+                        {{ __('page.Visit') }} ${brand.name} {{ __('page.Page') }}
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-1">
                             <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>

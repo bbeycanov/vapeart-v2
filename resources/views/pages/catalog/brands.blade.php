@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', $menu->getTranslation('title', app()->getLocale()) . ' - ' . __('Brands'))
+@section('title', $menu->getTranslation('title', app()->getLocale()) . ' - ' . __('navigation.Brands'))
 
 @php
     $locale = app()->getLocale();
@@ -17,13 +17,13 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Home') }}</a>
+                        <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Home') }}</a>
                     </li>
                     <li class="breadcrumb-item">
                         <span class="menu-link menu-link_us-s text-uppercase fw-medium">{{ $menuTitle }}</span>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Brands') }}</span>
+                        <span class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Brands') }}</span>
                     </li>
                 </ol>
             </nav>
@@ -31,8 +31,8 @@
 
         <!-- Page Header -->
         <div class="mb-4 mb-md-5">
-            <h1 class="page-title mb-2 mb-md-3">{{ $menuTitle }} - {{ __('Brands') }}</h1>
-            <p class="text-secondary">{{ __('Browse brands available in this category') }}</p>
+            <h1 class="page-title mb-2 mb-md-3">{{ $menuTitle }} - {{ __('navigation.Brands') }}</h1>
+            <p class="text-secondary">{{ __('common.Browse brands available in this category') }}</p>
         </div>
 
         <!-- Brands Grid -->
@@ -79,8 +79,8 @@
                         <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <h3 class="h5 fw-bold text-dark mb-2">{{ __('No brands found') }}</h3>
-                <p class="text-muted mb-4">{{ __('No brands available for this category.') }}</p>
+                <h3 class="h5 fw-bold text-dark mb-2">{{ __('common.No brands found') }}</h3>
+                <p class="text-muted mb-4">{{ __('common.No brands available for this category.') }}</p>
             </div>
         @endif
     </section>

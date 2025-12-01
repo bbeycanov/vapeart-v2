@@ -43,7 +43,7 @@
                         type="text" 
                         name="q" 
                         id="mobileSearchInput"
-                        placeholder="{{ __('Search products...') }}"
+                        placeholder="{{ __('product.Search products...') }}"
                         autocomplete="off"
                     >
                     <button class="btn-icon search-popup__submit pb-0 me-2" type="submit">
@@ -58,7 +58,7 @@
                         <!-- Loading State -->
                         <div class="autocomplete-loading p-4 text-center d-none" id="mobileAutocompleteLoading">
                             <div class="spinner-border text-primary" role="status">
-                                <span class="visually-hidden">{{ __('Loading...') }}</span>
+                                <span class="visually-hidden">{{ __('common.Loading...') }}</span>
                             </div>
                         </div>
                         
@@ -69,13 +69,13 @@
                         
                         <!-- No Results -->
                         <div class="autocomplete-no-results p-4 text-center text-secondary d-none" id="mobileAutocompleteNoResults">
-                            <p class="mb-0">{{ __('No products found') }}</p>
+                            <p class="mb-0">{{ __('common.No products found') }}</p>
                         </div>
                         
                         <!-- View All Results -->
                         <div class="autocomplete-footer border-top p-3 text-center d-none" id="mobileAutocompleteFooter">
                             <a href="{{ route('search.index', app()->getLocale()) }}" class="btn btn-link text-decoration-none">
-                                {{ __('View all results') }}
+                                {{ __('common.View all results') }}
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-1">
                                     <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
@@ -95,13 +95,13 @@
                     
                     {{-- 1. Ana Sayfa - Static --}}
                     <li class="navigation__item">
-                        <a href="{{ route('home', $locale) }}" class="navigation__link">{{ __('Home') }}</a>
+                        <a href="{{ route('home', $locale) }}" class="navigation__link">{{ __('navigation.Home') }}</a>
                     </li>
                     
                     {{-- 2. Categories - Static (goes to categories index page) --}}
                     <li class="navigation__item">
                         <a href="{{ route('categories.index', $locale) }}" class="navigation__link js-nav-right d-flex align-items-center">
-                            {{ __('Categories') }}
+                            {{ __('navigation.Categories') }}
                             <svg class="ms-auto" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg>
                         </a>
                     </li>
@@ -151,13 +151,11 @@
 
         <div class="border-top mt-auto pb-2">
             <div class="container d-flex align-items-center">
-                <label for="footerSettingsLanguage_mobile" class="me-2 text-secondary">Language</label>
+                <label for="footerSettingsLanguage_mobile" class="me-2 text-secondary">{{ __('footer.Language') }}</label>
                 <select id="footerSettingsLanguage_mobile" class="form-select form-select-sm bg-transparent border-0" aria-label="Default select example" name="store-language">
                     @foreach($languages as $lang)
-                        <option class="footer-select__option" selected>
-                            <a href="{{ localized_url($lang['code']) }}">
-                                {{ $lang['native_name'] ?? strtoupper($lang['code']) }}
-                            </a>
+                        <option value="{{ $lang['code'] }}" {{ app()->getLocale() === $lang['code'] ? 'selected' : '' }}>
+                            {{ $lang['native_name'] ?? strtoupper($lang['code']) }}
                         </option>
                     @endforeach
                 </select>
@@ -210,7 +208,7 @@
                         type="text" 
                         name="q" 
                         id="desktopSearchInput"
-                        placeholder="{{ __('Search products...') }}"
+                        placeholder="{{ __('product.Search products...') }}"
                         autocomplete="off"
                     >
 
@@ -226,7 +224,7 @@
                             <!-- Loading State -->
                             <div class="autocomplete-loading p-4 text-center d-none" id="desktopAutocompleteLoading">
                                 <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">{{ __('Loading...') }}</span>
+                                    <span class="visually-hidden">{{ __('common.Loading...') }}</span>
                                 </div>
                             </div>
                             
@@ -237,13 +235,13 @@
                             
                             <!-- No Results -->
                             <div class="autocomplete-no-results p-4 text-center text-secondary d-none" id="desktopAutocompleteNoResults">
-                                <p class="mb-0">{{ __('No products found') }}</p>
+                                <p class="mb-0">{{ __('common.No products found') }}</p>
                             </div>
                             
                             <!-- View All Results -->
                             <div class="autocomplete-footer border-top p-3 text-center d-none" id="desktopAutocompleteFooter">
                                 <a href="{{ route('search.index', app()->getLocale()) }}" class="btn btn-link text-decoration-none">
-                                    {{ __('View all results') }}
+                                    {{ __('common.View all results') }}
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-1">
                                         <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
@@ -415,7 +413,7 @@
                     <svg class="me-2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                     </svg>
-                    <h5 class="modal-title mb-0" id="branchPhoneModalLabel">{{ __('Select Branch') }}</h5>
+                    <h5 class="modal-title mb-0" id="branchPhoneModalLabel">{{ __('common.Select Branch') }}</h5>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -443,7 +441,7 @@
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                                 </svg>
-                                <span>{{ __('Call') }}</span>
+                                <span>{{ __('common.Call') }}</span>
                             </a>
                         </div>
                     @endforeach

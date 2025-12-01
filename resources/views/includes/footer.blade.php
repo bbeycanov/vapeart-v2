@@ -112,22 +112,21 @@
         <div class="footer-bottom-content d-flex flex-column flex-md-row align-items-center justify-content-between py-3 py-md-4 gap-3">
             <div class="footer-copyright text-center text-md-start order-2 order-md-1">
                 <span class="text-white-50" style="font-size: 0.875rem;">
-                    {{ __('Copyright') }} © {{ date('Y') }} {{ settings('site.name', 'VapeartBaku.com') }}
+                    {{ __('footer.Copyright') }} © {{ date('Y') }} {{ settings('site.name', 'VapeartBaku.com') }}
                 </span>
             </div>
             <div class="footer-settings order-1 order-md-2">
                 <div class="footer-language-selector d-flex align-items-center justify-content-center justify-content-md-end gap-2">
                     <label for="footerSettingsLanguage" class="text-white mb-0" style="font-size: 0.875rem; font-weight: 500;">
-                        {{ __('Language') }}:
+                        {{ __('footer.Language') }}:
                     </label>
                     <div class="footer-language-select-wrapper position-relative">
                     <select id="footerSettingsLanguage"
                                 class="footer-language-select"
-                            aria-label="{{ __('Select Language') }}" 
-                            name="store-language"
-                            onchange="window.location.href = this.value;">
+                            aria-label="{{ __('footer.Select Language') }}" 
+                            name="store-language">
                         @foreach($languages as $lang)
-                            <option value="{{ localized_url($lang['code'], 'home') }}" 
+                            <option value="{{ $lang['code'] }}" 
                                         {{ app()->getLocale() === $lang['code'] ? 'selected' : '' }}>
                                 {{ $lang['native_name'] ?? strtoupper($lang['code']) }}
                             </option>
@@ -342,25 +341,72 @@
 </style>
 @endpush
 
+@push('scripts')
+<script>
+// Language Selector - Change URL locale while preserving slug
+(function() {
+    'use strict';
+    
+    function initLanguageSelector(selectId) {
+        const select = document.getElementById(selectId);
+        if (!select) return;
+        
+        select.addEventListener('change', function() {
+            const newLocale = this.value;
+            const currentPath = window.location.pathname;
+            
+            // Get supported locales from config
+            const supportedLocales = ['en', 'az', 'ru'];
+            
+            // Split path into segments
+            const segments = currentPath.split('/').filter(s => s);
+            
+            // Check if first segment is a locale
+            if (segments.length > 0 && supportedLocales.includes(segments[0])) {
+                // Replace locale (keep slug and other params)
+                segments[0] = newLocale;
+            } else {
+                // Add locale at beginning
+                segments.unshift(newLocale);
+            }
+            
+            // Rebuild URL
+            const newPath = '/' + segments.join('/');
+            const queryString = window.location.search;
+            const hash = window.location.hash;
+            
+            window.location.href = newPath + queryString + hash;
+        });
+    }
+    
+    // Initialize both language selectors
+    document.addEventListener('DOMContentLoaded', function() {
+        initLanguageSelector('footerSettingsLanguage');
+        initLanguageSelector('footerSettingsLanguage_mobile');
+    });
+})();
+</script>
+@endpush
+
 <footer class="footer-mobile container w-100 px-5 d-md-none bg-body">
     <div class="row text-center">
         <div class="col-3">
-            <a href="/" class="footer-mobile__link d-flex flex-column align-items-center">
+            <a href="{{ route('home', app()->getLocale()) }}" class="footer-mobile__link d-flex flex-column align-items-center">
                 <svg class="d-block" width="18" height="18" viewBox="0 0 18 18" fill="none"
                      xmlns="http://www.w3.org/2000/svg">
                     <use href="#icon_home"/>
                 </svg>
-                <span>Home</span>
+                <span>{{ __('footer.Home') }}</span>
             </a>
         </div>
 
         <div class="col-3">
-            <a href="/" class="footer-mobile__link d-flex flex-column align-items-center">
+            <a href="{{ route('categories.index', app()->getLocale()) }}" class="footer-mobile__link d-flex flex-column align-items-center">
                 <svg class="d-block" width="18" height="18" viewBox="0 0 18 18" fill="none"
                      xmlns="http://www.w3.org/2000/svg">
                     <use href="#icon_hanger"/>
                 </svg>
-                <span>Categories</span>
+                <span>{{ __('footer.Categories') }}</span>
             </a>
         </div>
 
@@ -372,19 +418,19 @@
                         <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                     </svg>
                 </div>
-                <span>Phone</span>
+                <span>{{ __('footer.Phone') }}</span>
             </a>
         </div>
         @else
         <div class="col-3">
-            <a href="/" class="footer-mobile__link d-flex flex-column align-items-center">
+            <a href="{{ route('contacts.index', app()->getLocale()) }}" class="footer-mobile__link d-flex flex-column align-items-center">
                 <div class="position-relative">
                     <svg class="d-block" width="18" height="18" viewBox="0 0 20 20" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <use href="#icon_headphone"/>
                     </svg>
                 </div>
-                <span>Phone</span>
+                <span>{{ __('footer.Phone') }}</span>
             </a>
         </div>
         @endif
@@ -396,7 +442,7 @@
                         <use href="#icon_search"/>
                     </svg>
                 </div>
-                <span>Search</span>
+                <span>{{ __('footer.Search') }}</span>
             </a>
         </div>
     </div>

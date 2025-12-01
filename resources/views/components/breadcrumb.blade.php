@@ -9,7 +9,7 @@
         <nav class="breadcrumb py-2 py-md-3 mb-0" aria-label="breadcrumb">
             @if(empty($items))
                 {{-- Default: Home only --}}
-                <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Home') }}</a>
+                <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Home') }}</a>
             @else
                 @foreach($items as $index => $item)
                     @if($loop->last)

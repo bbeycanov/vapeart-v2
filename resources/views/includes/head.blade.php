@@ -7,7 +7,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
-
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Inter%3A300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;subset=latin&#038;display=swap&#038;ver=6.8.3' type='text/css' media='all' />
 
 <link rel="stylesheet" href="{{asset('storefront/css/plugins/swiper.min.css')}}" type="text/css">
 <link rel="stylesheet" href="{{asset('storefront/css/plugins/jquery.fancybox.css')}}" type="text/css">
@@ -17,6 +17,9 @@
 
 <!-- Toastr Custom Styles -->
 <style>
+    * {
+        font-family: "Inter", Arial, Helvetica, sans-serif!important;
+    }
     /* Toastr Success - Green */
     .toast-success {
         background-color: #51A351 !important;

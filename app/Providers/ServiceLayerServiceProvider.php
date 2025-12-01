@@ -15,6 +15,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\CategoryService;
 use App\Services\ContactMessageService;
 use App\Services\ProductImportService;
+use App\Services\BlogImportService;
 use App\Services\Contracts\TagServiceInterface;
 use App\Services\Contracts\PageServiceInterface;
 use App\Services\Contracts\BlogServiceInterface;
@@ -27,6 +28,7 @@ use App\Services\Contracts\ProductServiceInterface;
 use App\Services\Contracts\CategoryServiceInterface;
 use App\Services\Contracts\ContactMessageServiceInterface;
 use App\Services\Contracts\ProductImportServiceInterface;
+use App\Services\Contracts\BlogImportServiceInterface;
 
 class ServiceLayerServiceProvider extends ServiceProvider
 {
@@ -47,6 +49,7 @@ class ServiceLayerServiceProvider extends ServiceProvider
         $this->app->bind(TagServiceInterface::class, TagService::class);
         $this->app->bind(ReviewServiceInterface::class, ReviewService::class);
         $this->app->bind(ProductImportServiceInterface::class, ProductImportService::class);
+        $this->app->bind(BlogImportServiceInterface::class, BlogImportService::class);
     }
 
     /**

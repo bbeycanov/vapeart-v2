@@ -4,7 +4,7 @@
     <div class="mb-md-1 pb-md-3"></div>
     <section class="products-page container py-4 py-md-5">
         <div class="mb-4 pb-md-2">
-            <h1 class="page-title mb-3">{{ __('Wishlist') }}</h1>
+            <h1 class="page-title mb-3">{{ __('page.Wishlist') }}</h1>
             <p class="text-secondary" id="wishlistCount">0 {{ __('items') }}</p>
         </div>
 
@@ -17,14 +17,14 @@
                         </svg>
                     </div>
                     <h2 class="wishlist-empty-title mb-3 mb-md-4 mx-auto" style="font-size: 1.5rem; font-weight: 600; color: #222222; text-align: center;">
-                        {{ __('Your Wishlist is Empty') }}
+                        {{ __('wishlist.Your Wishlist is Empty') }}
                     </h2>
                     <p class="wishlist-empty-text text-secondary mb-4 mb-md-5 mx-auto" style="font-size: 1rem; max-width: 500px; text-align: center;">
-                        {{ __('Start adding products to your wishlist to save them for later. Browse our collection and add items you love!') }}
+                        {{ __('wishlist.Start adding products to your wishlist to save them for later. Browse our collection and add items you love!') }}
                     </p>
                     <div class="d-flex justify-content-center">
                         <a href="{{ route('products.index', app()->getLocale()) }}" class="btn btn-primary btn-lg px-5 py-3" style="text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500;">
-                            {{ __('Start Shopping') }}
+                            {{ __('wishlist.Start Shopping') }}
                         </a>
                     </div>
                 </div>
@@ -39,17 +39,17 @@
     'use strict';
     
     const locale = '{{ app()->getLocale() }}';
-    const emptyTitle = @json(__('Your Wishlist is Empty'));
-    const emptyText = @json(__('Start adding products to your wishlist to save them for later. Browse our collection and add items you love!'));
-    const startShoppingText = @json(__('Start Shopping'));
-    const noProductsTitle = @json(__('No Products Found'));
-    const noProductsText = @json(__('We couldn\'t find the products in your wishlist. They may have been removed or are no longer available.'));
-    const browseProductsText = @json(__('Browse Products'));
-    const errorTitle = @json(__('Error Loading Wishlist'));
-    const errorText = @json(__('There was an error loading your wishlist. Please try refreshing the page.'));
-    const continueShoppingText = @json(__('Continue Shopping'));
-    const itemsText = @json(__('items'));
-    const loadingText = @json(__('Loading...'));
+    const emptyTitle = @json(__('wishlist.Your Wishlist is Empty'));
+    const emptyText = @json(__('wishlist.Start adding products to your wishlist to save them for later. Browse our collection and add items you love!'));
+    const startShoppingText = @json(__('wishlist.Start Shopping'));
+    const noProductsTitle = @json(__('wishlist.No Products Found'));
+    const noProductsText = @json(__('wishlist.We couldn\'t find the products in your wishlist. They may have been removed or are no longer available.'));
+    const browseProductsText = @json(__('wishlist.Browse Products'));
+    const errorTitle = @json(__('wishlist.Error Loading Wishlist'));
+    const errorText = @json(__('wishlist.There was an error loading your wishlist. Please try refreshing the page.'));
+    const continueShoppingText = @json(__('wishlist.Continue Shopping'));
+    const itemsText = @json(__('common.items'));
+    const loadingText = @json(__('common.Loading...'));
     const productsUrl = '{{ route('products.index', app()->getLocale()) }}';
     const placeholderImage = '{{ asset('storefront/images/products/placeholder.jpg') }}';
     

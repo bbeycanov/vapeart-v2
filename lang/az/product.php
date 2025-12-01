@@ -1,0 +1,107 @@
+<?php
+
+return [
+    // General
+    'Products' => 'Məhsullar',
+    'Product' => 'Məhsul',
+    'All Products' => 'Bütün məhsullar',
+    'New Products' => 'Yeni məhsullar',
+    'No New Products Yet' => 'Hələ yeni məhsul yoxdur',
+    'Discounted Products' => 'Endirimli məhsullar',
+    'Featured Products' => 'Seçilmiş məhsullar',
+    'Related Products' => 'Əlaqəli məhsullar',
+    'Related' => 'Əlaqəli',
+    'Latest Products' => 'Son məhsullar',
+    'Best Selling' => 'Ən çox satılanlar',
+    
+    // Product Details
+    'SKU' => 'SKU',
+    'Brand' => 'Brend',
+    'Categories' => 'Kateqoriyalar',
+    'Tags' => 'Teqlər',
+    'Price' => 'Qiymət',
+    'Regular Price' => 'Normal qiymət',
+    'Sale Price' => 'Satış qiyməti',
+    'Discount' => 'Endirim',
+    'Stock' => 'Stok',
+    'In Stock' => 'Stokda var',
+    'Out of Stock' => 'Stokda yoxdur',
+    'Quantity' => 'Miqdar',
+    'Description' => 'Təsvir',
+    'Short Description' => 'Qısa təsvir',
+    'Additional Information' => 'Əlavə məlumat',
+    'Specifications' => 'Texniki xüsusiyyətlər',
+    'Attributes' => 'Atributlar',
+    'Reviews' => 'Rəylər',
+    'Rating' => 'Reytinq',
+    'Your rating' => 'Sizin reytinqiniz',
+    
+    // Actions
+    'Add to Cart' => 'Səbətə əlavə et',
+    'Add to Wishlist' => 'İstək siyahısına əlavə et',
+    'Remove from Wishlist' => 'İstək siyahısından sil',
+    'Quick View' => 'Sürətli baxış',
+    'Compare' => 'Müqayisə et',
+    'Share' => 'Paylaş',
+    'View Details' => 'Ətraflı bax',
+    'View Product' => 'Məhsula bax',
+    'Quick view' => 'Sürətli baxış',
+    'Zoom' => 'Böyüt',
+    
+    // Sorting & Filtering
+    'Filter' => 'Filtr',
+    'Filter By' => 'Filtrlə',
+    'Sort By' => 'Sırala',
+    'Default Sorting' => 'Standart sıralama',
+    'Featured' => 'Seçilmişlər',
+    'Name A-Z' => 'Ad A-Z',
+    'Name Z-A' => 'Ad Z-A',
+    'Price: Low to High' => 'Qiymət: Aşağıdan yuxarı',
+    'Price: High to Low' => 'Qiymət: Yuxarıdan aşağı',
+    'Newest' => 'Ən yenilər',
+    'Oldest' => 'Ən köhnələr',
+    'Default' => 'Standart',
+    'Price, low to high' => 'Qiymət, aşağıdan yuxarı',
+    'Price, high to low' => 'Qiymət, yuxarıdan aşağı',
+    'Alphabetically, A-Z' => 'Əlifba sırası, A-Z',
+    'Alphabetically, Z-A' => 'Əlifba sırası, Z-A',
+    'Date, new to old' => 'Tarix, yenidən köhnəyə',
+    'Date, old to new' => 'Tarix, köhnədən yeniyə',
+    
+    // Filters
+    'Product Categories' => 'Məhsul kateqoriyaları',
+    'Brands' => 'Brendlər',
+    'Min Price' => 'Min qiymət',
+    'Max Price' => 'Maks qiymət',
+    'Apply' => 'Tətbiq et',
+    'Clear All Filters' => 'Bütün filtrləri təmizlə',
+    'All Brands' => 'Bütün brendlər',
+    
+    // Search
+    'Search for products...' => 'Məhsul axtar...',
+    'Search products' => 'Məhsul axtar',
+    'Search products...' => 'Məhsul axtar...',
+    'Search Products...' => 'Məhsul axtar...',
+    'Search Results' => 'Axtarış nəticələri',
+    'Clear search' => 'Axtarışı təmizlə',
+    'No Products Found' => 'Məhsul tapılmadı',
+    'No products found for this brand.' => 'Bu brend üçün məhsul tapılmadı.',
+    
+    // Reviews
+    'Be the first to review' => 'İlk rəy verən olun',
+    'Your email address will not be published. Required fields are marked *' => 'E-poçt ünvanınız dərc edilməyəcək. Tələb olunan sahələr * ilə işarələnib',
+    'Title' => 'Başlıq',
+    'Review Title' => 'Rəy başlığı',
+    'Your Review' => 'Sizin rəyiniz',
+    'Name' => 'Ad',
+    'Email address' => 'E-poçt ünvanı',
+    'Submit' => 'Göndər',
+    'Save my name, email, and website in this browser for the next time I comment.' => 'Növbəti dəfə şərh yazmaq üçün ad, e-poçt və vebsaytımı bu brauzerdə saxla.',
+    
+    // Messages
+    'Limited Time Only' => 'Məhdud müddətə',
+    'No products available' => 'Məhsul yoxdur',
+    'Showing' => 'Göstərilir',
+    'of' => '-dən',
+];
+

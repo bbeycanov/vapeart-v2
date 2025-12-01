@@ -18,8 +18,8 @@
     @endphp
 
     <x-breadcrumb :items="[
-        ['label' => __('Home'), 'url' => route('home', app()->getLocale())],
-        ['label' => __('The Blog'), 'url' => route('blog.index', app()->getLocale())],
+        ['label' => __('navigation.Home'), 'url' => route('home', app()->getLocale())],
+        ['label' => __('page.The Blog'), 'url' => route('blog.index', app()->getLocale())],
         ['label' => $blogTitle]
     ]" />
 
@@ -80,7 +80,7 @@
                                 <div class="col-lg-6">
                                     <a href="{{ $prevUrl }}" class="btn-link d-inline-flex align-items-center">
                                         <svg class="me-1" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_prev_sm" /></svg>
-                                        <span class="fw-medium">PREVIOUS POST</span>
+                                        <span class="fw-medium">{{ __('page.PREVIOUS POST') }}</span>
                                     </a>
                                     <p>{{ $prevTitle }}</p>
                                 </div>
@@ -90,9 +90,9 @@
                                     $nextTitle = $nextBlog->getTranslation('title', app()->getLocale());
                                     $nextUrl = route('blog.show', [app()->getLocale(), $nextBlog->slug]);
                                 @endphp
-                                <div class="col-lg-6 {{ !isset($previousBlog) ? 'offset-lg-6' : 'text-lg-end' }}">
+                                <div class="col-lg-6 {{ isset($previousBlog) ? 'text-lg-end' : '' }}">
                                     <a href="{{ $nextUrl }}" class="btn-link d-inline-flex align-items-center">
-                                        <span class="fw-medium me-1">NEXT POST</span>
+                                        <span class="fw-medium me-1">{{ __('page.NEXT POST') }}</span>
                                         <svg width="25" height="25" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_md" /></svg>
                                     </a>
                                     <p>{{ $nextTitle }}</p>
@@ -106,22 +106,22 @@
         <div class="row">
             <div class="col-12">
                 <div class="blog-single__reviews py-4">
-            <h2 class="blog-single__reviews-title">{{ __('Reviews') }}</h2>
+            <h2 class="blog-single__reviews-title">{{ __('product.Reviews') }}</h2>
             <div class="blog-single__reviews-list" id="reviews-list">
                 @if($reviews->count() > 0)
                     @foreach($reviews as $review)
                         @include('pages.blog.partials.review-item', ['review' => $review])
                     @endforeach
                 @else
-                    <p class="text-muted">{{ __('No reviews yet. Be the first to review!') }}</p>
+                    <p class="text-muted">{{ __('common.No reviews yet. Be the first to review!') }}</p>
                 @endif
             </div>
             <div class="blog-single__review-form mt-4">
                 <form id="blog-review-form" name="customer-review-form" class="needs-validation" novalidate>
-                    <h5>{{ __('Be the first to review') }} "{{ $blogTitle }}"</h5>
-                    <p>{{ __('Your email address will not be published. Required fields are marked *') }}</p>
+                    <h5>{{ __('product.Be the first to review') }} "{{ $blogTitle }}"</h5>
+                    <p>{{ __('product.Your email address will not be published. Required fields are marked *') }}</p>
                     <div class="select-star-rating mb-4">
-                        <label>{{ __('Your rating') }} *</label>
+                        <label>{{ __('product.Your rating') }} *</label>
                         <span class="star-rating" id="star-rating">
                             @for($i = 1; $i <= 5; $i++)
                                 <svg class="star-rating__star-icon" data-rating="{{ $i }}" width="12" height="12" fill="#ccc" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;">
@@ -132,24 +132,24 @@
                         <input type="hidden" id="form-input-rating" name="rating" value="" required>
                     </div>
                     <div class="mb-4">
-                        <textarea id="form-input-review" name="body" class="form-control form-control_gray" placeholder="{{ __('Your Review') }}" cols="30" rows="8"></textarea>
+                        <textarea id="form-input-review" name="body" class="form-control form-control_gray" placeholder="{{ __('product.Your Review') }}" cols="30" rows="8"></textarea>
                     </div>
                     <div class="form-label-fixed mb-4">
-                        <label for="form-input-name" class="form-label">{{ __('Name') }} *</label>
+                        <label for="form-input-name" class="form-label">{{ __('product.Name') }} *</label>
                         <input id="form-input-name" name="author_name" class="form-control form-control-md form-control_gray" required>
                     </div>
                     <div class="form-label-fixed mb-4">
-                        <label for="form-input-email" class="form-label">{{ __('Email address') }} *</label>
+                        <label for="form-input-email" class="form-label">{{ __('product.Email address') }} *</label>
                         <input id="form-input-email" name="author_email" type="email" class="form-control form-control-md form-control_gray" required>
                     </div>
                     <div class="form-check mb-4">
                         <input class="form-check-input form-check-input_fill" type="checkbox" value="1" id="remember_checkbox" name="remember">
                         <label class="form-check-label" for="remember_checkbox">
-                            {{ __('Save my name, email, and website in this browser for the next time I comment.') }}
+                            {{ __('product.Save my name, email, and website in this browser for the next time I comment.') }}
                         </label>
                     </div>
                     <div class="form-action">
-                        <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ __('product.Submit') }}</button>
                     </div>
                 </form>
             </div>

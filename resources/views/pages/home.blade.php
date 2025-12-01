@@ -45,7 +45,7 @@
                                              src="{{ $imageUrl }}" 
                                              width="1920"
                                              height="560" 
-                                             alt="{{ $title ?? 'Banner' }}" 
+                                             alt="{{ $title ?? __('common.Banner') }}" 
                                              class="slideshow-bg__img object-fit-cover">
                                     </picture>
                                 @endif
@@ -106,14 +106,14 @@
                                     class="product-search-input form-control form-control-lg" 
                                     id="productSearchInput"
                                     name="q" 
-                                    placeholder="{{ __('Search for products...') }}"
+                                    placeholder="{{ __('product.Search for products...') }}"
                                     autocomplete="off"
-                                    aria-label="{{ __('Search products') }}"
+                                    aria-label="{{ __('product.Search products') }}"
                                 >
                                 <button 
                                     type="submit" 
                                     class="product-search-submit-btn position-absolute"
-                                    aria-label="{{ __('Search') }}"
+                                    aria-label="{{ __('common.Search') }}"
                                 >
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M19 19L13.8571 13.8571M13.8571 13.8571C15.9167 11.7975 15.9167 8.60254 13.8571 6.54286C11.7975 4.48318 8.60254 4.48318 6.54286 6.54286C4.48318 8.60254 4.48318 11.7975 6.54286 13.8571C8.60254 15.9167 11.7975 15.9167 13.8571 13.8571Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -123,7 +123,7 @@
                                     type="button" 
                                     class="product-search-clear-btn position-absolute d-none"
                                     id="productSearchClear"
-                                    aria-label="{{ __('Clear search') }}"
+                                    aria-label="{{ __('product.Clear search') }}"
                                 >
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -137,7 +137,7 @@
                                     <!-- Loading State -->
                                     <div class="autocomplete-loading p-4 text-center d-none">
                                         <div class="spinner-border text-primary" role="status">
-                                            <span class="visually-hidden">{{ __('Loading...') }}</span>
+                                            <span class="visually-hidden">{{ __('common.Loading...') }}</span>
                                         </div>
                                     </div>
                                     
@@ -148,13 +148,13 @@
                                     
                                     <!-- No Results -->
                                     <div class="autocomplete-no-results p-4 text-center text-secondary d-none">
-                                        <p class="mb-0">{{ __('No products found') }}</p>
+                                        <p class="mb-0">{{ __('common.No products found') }}</p>
                                     </div>
                                     
                                     <!-- View All Results -->
                                     <div class="autocomplete-footer border-top p-3 text-center d-none" id="autocompleteFooter">
                                         <a href="{{ route('search.index', app()->getLocale()) }}" class="btn btn-link text-decoration-none" id="viewAllLink">
-                                            {{ __('View all results') }}
+                                            {{ __('common.View all results') }}
                                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-1">
                                                 <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
@@ -175,7 +175,7 @@
         <section class="categories-section">
             <div class="container">
                 <div class="d-flex align-items-center justify-content-between flex-wrap mb-3 pb-xl-2 mb-xl-4 gap-md-4">
-                    <h2 class="section-title fw-normal">Kateqoriyalar</h2>
+                    <h2 class="section-title fw-normal">{{ __('home.Kateqoriyalar') }}</h2>
                 </div>
 
                 <ul class="nav nav-tabs justify-content-start mb-4" id="categories-tab" role="tablist">
@@ -239,7 +239,7 @@
                                                 </div>
                                                 <div class="category-mini-card__content d-flex flex-column justify-content-center flex-grow-1" style="min-width: 0;">
                                                     <span class="category-mini-card__name text-dark fw-medium mb-1" style="font-size: 0.9rem; line-height: 1.3; word-wrap: break-word; overflow-wrap: break-word;">{{ $menuTitle }}</span>
-                                                    <span class="category-mini-card__count text-muted" style="font-size: 0.75rem; line-height: 1.2;">{{ $productCount }} {{ __('products') }}</span>
+                                                    <span class="category-mini-card__count text-muted" style="font-size: 0.75rem; line-height: 1.2;">{{ $productCount }} {{ __('common.products') }}</span>
                                                 </div>
                                             </a>
                                         </div>
@@ -247,7 +247,7 @@
                                 </div>
                             @else
                                 <div class="text-center text-secondary py-5">
-                                    <p>{{ __('No subcategories available') }}</p>
+                                    <p>{{ __('common.No subcategories available') }}</p>
                                 </div>
                             @endif
                         </div>
@@ -263,7 +263,7 @@
     <section class="products-grid">
         <div class="container">
             <div class="d-flex align-items-center justify-content-between flex-wrap mb-3 pb-xl-2 mb-xl-4 gap-md-4">
-                <h2 class="section-title fw-normal">Featured Products</h2>
+                <h2 class="section-title fw-normal">{{ __('home.Featured Products') }}</h2>
 
                 <ul class="nav nav-tabs justify-content-center" id="collections-1-tab" role="tablist">
                         @foreach($featuredMenus as $index => $menu)
@@ -295,7 +295,7 @@
                                     @endforeach
                                 @else
                                     <div class="col-12 text-center text-secondary py-5">
-                                        <p>{{ __('No products available') }}</p>
+                                        <p>{{ __('product.No products available') }}</p>
                                     </div>
                                 @endif
                             </div>
@@ -313,9 +313,9 @@
     @if(isset($discountProducts) && $discountProducts->isNotEmpty() && $activeDiscount)
     <section class="discount-carousel container">
         <div class="d-flex align-items-center justify-content-between flex-wrap mb-3 pb-xl-2 mb-xl-4 gap-md-4">
-            <h2 class="section-title fw-normal">{{ __('Discount') }}</h2>
+            <h2 class="section-title fw-normal">{{ __('product.Discount') }}</h2>
             <a href="{{ route('discounts.index', app()->getLocale()) }}" class="btn btn-link text-decoration-none">
-                {{ __('View All') }}
+                {{ __('common.View All') }}
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-1">
                     <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -337,7 +337,7 @@
                     <div class="position-absolute position-center text-white text-center w-100 px-3">
                         <h2 class="section-title fw-bold text-white">{{ $discountText }}</h2>
                         <h3 class="text-white fw-normal">{{ $discountName }}</h3>
-                        <p>{{ __('Limited Time Only') }}</p>
+                        <p>{{ __('product.Limited Time Only') }}</p>
                     </div>
                 </div>
             </div>
@@ -396,8 +396,8 @@
             <div class="mb-3 mb-xl-5 pb-3 pt-1 pb-xl-5"></div>
 
             <div class="d-flex align-items-center justify-content-between flex-wrap mb-3 pb-xl-2 mb-xl-4 gap-md-4">
-                <h2 class="section-title fw-normal">Latest in Blog</h2>
-                <a class="btn-link btn-link_md default-underline text-uppercase fw-medium" href="{{ route('blog.index', app()->getLocale()) }}">See All Blog</a>
+                <h2 class="section-title fw-normal">{{ __('page.Latest in Blog') }}</h2>
+                <a class="btn-link btn-link_md default-underline text-uppercase fw-medium" href="{{ route('blog.index', app()->getLocale()) }}">{{ __('page.See All Blog') }}</a>
             </div>
 
             @if(isset($latestBlogs) && count($latestBlogs) > 0)
@@ -410,7 +410,7 @@
                   "slidesPerView": 3,
                   "slidesPerGroup": 3,
                   "effect": "none",
-                  "loop": true,
+                  "loop": false,
                   "breakpoints": {
                     "320": {
                       "slidesPerView": 1,

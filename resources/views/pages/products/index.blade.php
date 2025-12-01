@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', __('Products'))
+@section('title', __('page.Products'))
 
 @php
     $locale = app()->getLocale();
@@ -59,7 +59,7 @@
     <section class="shop-main container d-flex pt-4 pt-xl-5">
         <div class="shop-sidebar side-sticky bg-body" id="shopFilter">
             <div class="aside-header d-flex d-lg-none align-items-center">
-                <h3 class="text-uppercase fs-6 mb-0">Filter By</h3>
+                <h3 class="text-uppercase fs-6 mb-0">{{ __('product.Filter By') }}</h3>
                 <button class="btn-close-lg js-close-aside btn-close-aside ms-auto"></button>
             </div>
 
@@ -70,7 +70,7 @@
                 <div class="accordion-item mb-4 pb-3">
                     <h5 class="accordion-header" id="accordion-heading-category">
                         <button class="accordion-button p-0 border-0 fs-5 text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-filter-category" aria-expanded="true" aria-controls="accordion-filter-category">
-                            Product Categories
+                            {{ __('product.Product Categories') }}
                             <svg class="accordion-button__icon type2" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg">
                                 <g aria-hidden="true" stroke="none" fill-rule="evenodd">
                                     <path d="M5.35668 0.159286C5.16235 -0.053094 4.83769 -0.0530941 4.64287 0.159286L0.147611 5.05963C-0.0492049 5.27473 -0.049205 5.62357 0.147611 5.83813C0.344427 6.05323 0.664108 6.05323 0.860924 5.83813L5 1.32706L9.13858 5.83867C9.33589 6.05378 9.65507 6.05378 9.85239 5.83867C10.0492 5.62357 10.0492 5.27473 9.85239 5.06018L5.35668 0.159286Z"/>
@@ -96,7 +96,7 @@
                                 @endforeach
                             </select>
                             <div class="search-field__input-wrapper mb-3">
-                                <input type="text" name="category_search" id="categorySearchInput" class="search-field__input form-control form-control-sm border-light border-2" placeholder="SEARCH">
+                                <input type="text" name="category_search" id="categorySearchInput" class="search-field__input form-control form-control-sm border-light border-2" placeholder="{{ __('common.Search') }}">
                             </div>
                             <ul class="multi-select__list list-unstyled category-filter-list" id="categoryFilterList">
                                 @foreach($categories as $category)
@@ -108,45 +108,45 @@
                                         <div class="d-flex align-items-center">
                                             <input type="checkbox" class="category-checkbox me-2" id="cat-{{ $category->id }}" data-category-id="{{ $category->id }}">
                                             <label for="cat-{{ $category->id }}" class="d-flex align-items-center w-100 mb-0">
-                                                <span class="me-auto category-name">{{ $categoryName }}</span>
-                                                <span class="text-secondary category-count">{{ $productCount }}</span>
+                                            <span class="me-auto category-name">{{ $categoryName }}</span>
+                                            <span class="text-secondary category-count">{{ $productCount }}</span>
                                             </label>
                                         </div>
                                     </li>
-                                    @if($category->children && $category->children->isNotEmpty())
-                                        @foreach($category->children as $child)
-                                            @php
-                                                $childName = $child->getTranslation('name', $locale);
-                                                $childProductCount = $child->products()->where('is_active', true)->count();
-                                            @endphp
+                                        @if($category->children && $category->children->isNotEmpty())
+                                                @foreach($category->children as $child)
+                                                    @php
+                                                        $childName = $child->getTranslation('name', $locale);
+                                                        $childProductCount = $child->products()->where('is_active', true)->count();
+                                                    @endphp
                                             <li class="category-filter-item ms-3" data-category-id="{{ $child->id }}" data-parent-id="{{ $category->id }}">
-                                                <div class="d-flex align-items-center">
+                                                        <div class="d-flex align-items-center">
                                                     <input type="checkbox" class="category-checkbox me-2" id="cat-{{ $child->id }}" data-category-id="{{ $child->id }}">
                                                     <label for="cat-{{ $child->id }}" class="d-flex align-items-center w-100 mb-0">
-                                                        <span class="me-auto category-name">{{ $childName }}</span>
-                                                        <span class="text-secondary category-count">{{ $childProductCount }}</span>
+                                                            <span class="me-auto category-name">{{ $childName }}</span>
+                                                            <span class="text-secondary category-count">{{ $childProductCount }}</span>
                                                     </label>
-                                                </div>
+                                                        </div>
                                             </li>
-                                            @if($child->children && $child->children->isNotEmpty())
-                                                @foreach($child->children as $grandchild)
-                                                    @php
-                                                        $grandchildName = $grandchild->getTranslation('name', $locale);
-                                                        $grandchildProductCount = $grandchild->products()->where('is_active', true)->count();
-                                                    @endphp
+                                                        @if($child->children && $child->children->isNotEmpty())
+                                                                @foreach($child->children as $grandchild)
+                                                                    @php
+                                                                        $grandchildName = $grandchild->getTranslation('name', $locale);
+                                                                        $grandchildProductCount = $grandchild->products()->where('is_active', true)->count();
+                                                                    @endphp
                                                     <li class="category-filter-item ms-5" data-category-id="{{ $grandchild->id }}" data-parent-id="{{ $child->id }}">
-                                                        <div class="d-flex align-items-center">
+                                                                        <div class="d-flex align-items-center">
                                                             <input type="checkbox" class="category-checkbox me-2" id="cat-{{ $grandchild->id }}" data-category-id="{{ $grandchild->id }}">
                                                             <label for="cat-{{ $grandchild->id }}" class="d-flex align-items-center w-100 mb-0">
-                                                                <span class="me-auto category-name">{{ $grandchildName }}</span>
-                                                                <span class="text-secondary category-count">{{ $grandchildProductCount }}</span>
+                                                                            <span class="me-auto category-name">{{ $grandchildName }}</span>
+                                                                            <span class="text-secondary category-count">{{ $grandchildProductCount }}</span>
                                                             </label>
-                                                        </div>
+                                                                        </div>
                                                     </li>
                                                 @endforeach
                                             @endif
                                         @endforeach
-                                    @endif
+                                        @endif
                                 @endforeach
                             </ul>
                         </div>
@@ -159,7 +159,7 @@
                 <div class="accordion-item mb-4 pb-3">
                     <h5 class="accordion-header" id="accordion-heading-brand">
                         <button class="accordion-button p-0 border-0 fs-5 text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-filter-brand" aria-expanded="true" aria-controls="accordion-filter-brand">
-                            Brands
+                            {{ __('navigation.Brands') }}
                             <svg class="accordion-button__icon type2" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg">
                                 <g aria-hidden="true" stroke="none" fill-rule="evenodd">
                                     <path d="M5.35668 0.159286C5.16235 -0.053094 4.83769 -0.0530941 4.64287 0.159286L0.147611 5.05963C-0.0492049 5.27473 -0.049205 5.62357 0.147611 5.83813C0.344427 6.05323 0.664108 6.05323 0.860924 5.83813L5 1.32706L9.13858 5.83867C9.33589 6.05378 9.65507 6.05378 9.85239 5.83867C10.0492 5.62357 10.0492 5.27473 9.85239 5.06018L5.35668 0.159286Z"/>
@@ -175,7 +175,7 @@
                                 @endforeach
                             </select>
                             <div class="search-field__input-wrapper mb-3">
-                                <input type="text" name="brand_search" id="brandSearchInput" class="search-field__input form-control form-control-sm border-light border-2" placeholder="SEARCH">
+                                <input type="text" name="brand_search" id="brandSearchInput" class="search-field__input form-control form-control-sm border-light border-2" placeholder="{{ __('common.Search') }}">
                             </div>
                             <ul class="multi-select__list list-unstyled brand-filter-list" id="brandFilterList">
                                 @foreach($brands as $brand)
@@ -187,8 +187,8 @@
                                         <div class="d-flex align-items-center">
                                             <input type="checkbox" class="brand-checkbox me-2" id="brand-{{ $brand->id }}" data-brand-id="{{ $brand->id }}">
                                             <label for="brand-{{ $brand->id }}" class="d-flex align-items-center w-100 mb-0">
-                                                <span class="me-auto brand-name">{{ $brandName }}</span>
-                                                <span class="text-secondary brand-count">{{ $brandProductCount }}</span>
+                                        <span class="me-auto brand-name">{{ $brandName }}</span>
+                                        <span class="text-secondary brand-count">{{ $brandProductCount }}</span>
                                             </label>
                                         </div>
                                     </li>
@@ -204,7 +204,7 @@
                 <div class="accordion-item mb-4">
                     <h5 class="accordion-header mb-2" id="accordion-heading-price">
                         <button class="accordion-button p-0 border-0 fs-5 text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-filter-price" aria-expanded="true" aria-controls="accordion-filter-price">
-                            Price
+                            {{ __('product.Price') }}
                             <svg class="accordion-button__icon type2" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg">
                                 <g aria-hidden="true" stroke="none" fill-rule="evenodd">
                                     <path d="M5.35668 0.159286C5.16235 -0.053094 4.83769 -0.0530941 4.64287 0.159286L0.147611 5.05963C-0.0492049 5.27473 -0.049205 5.62357 0.147611 5.83813C0.344427 6.05323 0.664108 6.05323 0.860924 5.83813L5 1.32706L9.13858 5.83867C9.33589 6.05378 9.65507 6.05378 9.85239 5.83867C10.0492 5.62357 10.0492 5.27473 9.85239 5.06018L5.35668 0.159286Z"/>
@@ -216,20 +216,20 @@
                         <div class="price-filter-wrapper accordion-body px-0 pb-0">
                             <div class="row g-2">
                                 <div class="col-6">
-                                    <label class="form-label text-secondary small">Min Price</label>
+                                    <label class="form-label text-secondary small">{{ __('product.Min Price') }}</label>
                                     <input type="number" class="form-control form-control-sm" id="priceMinInput" 
                                            min="{{ $priceMin }}" max="{{ $priceMax }}" step="5"
                                            value="{{ $filters['price_min'] ?? $priceMin }}" placeholder="{{ $priceMin }}">
                                 </div>
                                 <div class="col-6">
-                                    <label class="form-label text-secondary small">Max Price</label>
+                                    <label class="form-label text-secondary small">{{ __('product.Max Price') }}</label>
                                     <input type="number" class="form-control form-control-sm" id="priceMaxInput" 
                                            min="{{ $priceMin }}" max="{{ $priceMax }}" step="5"
                                            value="{{ $filters['price_max'] ?? $priceMax }}" placeholder="{{ $priceMax }}">
-                                </div>
+                            </div>
                             </div>
                             <button type="button" class="btn btn-sm btn-primary w-100 mt-3" id="applyPriceFilter">
-                                Apply
+                                {{ __('form.Apply') }}
                             </button>
                         </div>
                     </div>
@@ -242,25 +242,25 @@
 
             <div class="d-flex justify-content-between mb-4 pb-md-2">
                 <div class="breadcrumb mb-0 d-none d-md-block flex-grow-1">
-                    <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">Home</a>
+                    <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Home') }}</a>
                     <span class="breadcrumb-separator menu-link fw-medium ps-1 pe-1">/</span>
-                    <a href="#" class="menu-link menu-link_us-s text-uppercase fw-medium">Products</a>
+                    <a href="#" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Products') }}</a>
                 </div>
 
                 <div class="shop-acs d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
                     <select class="shop-acs__select form-select w-auto border-0 py-0 order-1 order-md-0" aria-label="Sort Items" name="sort" id="sortSelect">
-                        <option value="default" {{ ($filters['sort'] ?? 'default') === 'default' ? 'selected' : '' }}>Default Sorting</option>
-                        <option value="price_asc" {{ ($filters['sort'] ?? '') === 'price_asc' ? 'selected' : '' }}>Price, low to high</option>
-                        <option value="price_desc" {{ ($filters['sort'] ?? '') === 'price_desc' ? 'selected' : '' }}>Price, high to low</option>
-                        <option value="name_asc" {{ ($filters['sort'] ?? '') === 'name_asc' ? 'selected' : '' }}>Alphabetically, A-Z</option>
-                        <option value="name_desc" {{ ($filters['sort'] ?? '') === 'name_desc' ? 'selected' : '' }}>Alphabetically, Z-A</option>
-                        <option value="created_desc" {{ ($filters['sort'] ?? '') === 'created_desc' ? 'selected' : '' }}>Date, new to old</option>
-                        <option value="created_asc" {{ ($filters['sort'] ?? '') === 'created_asc' ? 'selected' : '' }}>Date, old to new</option>
+                        <option value="default" {{ ($filters['sort'] ?? 'default') === 'default' ? 'selected' : '' }}>{{ __('product.Default Sorting') }}</option>
+                        <option value="price_asc" {{ ($filters['sort'] ?? '') === 'price_asc' ? 'selected' : '' }}>{{ __('product.Price, low to high') }}</option>
+                        <option value="price_desc" {{ ($filters['sort'] ?? '') === 'price_desc' ? 'selected' : '' }}>{{ __('product.Price, high to low') }}</option>
+                        <option value="name_asc" {{ ($filters['sort'] ?? '') === 'name_asc' ? 'selected' : '' }}>{{ __('product.Alphabetically, A-Z') }}</option>
+                        <option value="name_desc" {{ ($filters['sort'] ?? '') === 'name_desc' ? 'selected' : '' }}>{{ __('product.Alphabetically, Z-A') }}</option>
+                        <option value="created_desc" {{ ($filters['sort'] ?? '') === 'created_desc' ? 'selected' : '' }}>{{ __('product.Date, new to old') }}</option>
+                        <option value="created_asc" {{ ($filters['sort'] ?? '') === 'created_asc' ? 'selected' : '' }}>{{ __('product.Date, old to new') }}</option>
                     </select>
                     <div class="shop-filter d-flex align-items-center order-0 order-md-3 d-lg-none">
                         <button class="btn-link btn-link_f d-flex align-items-center ps-0 js-open-aside" data-aside="shopFilter">
                             <svg class="d-inline-block align-middle me-2" width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_filter" /></svg>
-                            <span class="text-uppercase fw-medium d-inline-block align-middle">Filter</span>
+                            <span class="text-uppercase fw-medium d-inline-block align-middle">{{ __('product.Filter') }}</span>
                         </button>
                     </div>
                 </div>
@@ -282,13 +282,13 @@
                                     <rect x="30" y="35" width="60" height="50" rx="4" stroke="#DEE2E6" stroke-width="2" fill="none"/>
                                 </svg>
                             </div>
-                            <h3 class="fs-4 fw-semibold mb-3">{{ __('No Products Found') }}</h3>
-                            <p class="text-secondary mb-4">{{ __('We couldn\'t find any products matching your filters.') }}<br>{{ __('Try adjusting your search criteria.') }}</p>
+                            <h3 class="fs-4 fw-semibold mb-3">{{ __('product.No Products Found') }}</h3>
+                            <p class="text-secondary mb-4">{{ __('common.We couldn\'t find any products matching your filters.') }}<br>{{ __('common.Try adjusting your search criteria.') }}</p>
                             <button type="button" class="btn btn-outline-primary btn-sm" id="clearAllFilters">
                                 <svg class="me-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                                 </svg>
-                                {{ __('Clear All Filters') }}
+                                {{ __('product.Clear All Filters') }}
                             </button>
                         </div>
                     </div>
@@ -300,7 +300,7 @@
                     <div id="infinite-scroll-trigger" style="height: 1px;"></div>
                     <div class="text-center">
                         <div id="btn-loading-spinner" class="spinner-border text-primary d-none" role="status" style="width: 2.5rem; height: 2.5rem;">
-                            <span class="visually-hidden">{{ __('Loading...') }}</span>
+                            <span class="visually-hidden">{{ __('common.Loading...') }}</span>
                         </div>
                     </div>
                 </div>

@@ -115,7 +115,7 @@
         
         // Render cart items
         if (cart.length === 0) {
-            cartItemsList.innerHTML = '<div class="text-center py-5 text-secondary" id="cartEmptyMessage"><p>Your cart is empty</p></div>';
+            cartItemsList.innerHTML = '<div class="text-center py-5 text-secondary" id="cartEmptyMessage"><p>{{ __("scripts.Your cart is empty") }}</p></div>';
             return;
         }
         
@@ -172,7 +172,7 @@
         
         const modal = new bootstrap.Modal(modalEl);
         
-        branchList.innerHTML = '<div class="text-center py-4"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+        branchList.innerHTML = '<div class="text-center py-4"><div class="spinner-border" role="status"><span class="visually-hidden">{{ __("scripts.Loading...") }}</span></div></div>';
         modal.show();
         
         fetch(`/${locale}/cart/branches`, {
@@ -219,19 +219,19 @@
                     });
                 });
             } else {
-                branchList.innerHTML = '<div class="alert alert-warning">Filial tapılmadı.</div>';
+                branchList.innerHTML = '<div class="alert alert-warning">{{ __("branch.Filial tapılmadı.") }}</div>';
             }
         })
         .catch(error => {
             console.error('Error loading branches:', error);
-            branchList.innerHTML = '<div class="alert alert-danger">Filiallar yüklənərkən xəta baş verdi.</div>';
+            branchList.innerHTML = '<div class="alert alert-danger">{{ __("branch.Filiallar yüklənərkən xəta baş verdi.") }}</div>';
         });
     }
     
     // Unified function to select branch and open WhatsApp (works for both cart page and cart drawer)
     window.selectBranchAndOpenWhatsApp = function(branchId, branchWhatsapp, modalId = 'branchSelectionModal') {
         if (!branchWhatsapp) {
-            alert('Bu filialın WhatsApp nömrəsi yoxdur. Lütfən başqa bir filial seçin.');
+            alert('{{ __("branch.Bu filialın WhatsApp nömrəsi yoxdur. Lütfən başqa bir filial seçin.") }}');
             return;
         }
         
@@ -326,7 +326,7 @@
                 // Check if cart is not empty
                 if (!cart || cart.length === 0) {
                     if (typeof toastr !== 'undefined') {
-                        toastr.warning('Səbətiniz boşdur', 'Xəbərdarlıq');
+                        toastr.warning('{{ __("scripts.Səbətiniz boşdur") }}', '{{ __("scripts.Xəbərdarlıq") }}');
                     }
                     return;
                 }
@@ -457,7 +457,7 @@
         console.log('Quick view button clicked, product ID:', productId);
         
         // Show loading state immediately
-        $('#quickViewName').text('Loading...');
+        $('#quickViewName').text('{{ __("quick_view.Loading...") }}');
         $('#quickViewPrice').text('-');
         
         // Load product data
@@ -617,10 +617,10 @@
                             stockEl.style.display = 'block';
                             if (stockBadgeEl) {
                                 if (product.stock_quantity > 0) {
-                                    stockBadgeEl.textContent = 'In Stock (' + product.stock_quantity + ')';
+                                    stockBadgeEl.textContent = '{{ __("quick_view.In Stock") }} (' + product.stock_quantity + ')';
                                     stockBadgeEl.className = 'badge bg-success';
                                 } else {
-                                    stockBadgeEl.textContent = 'Out of Stock';
+                                    stockBadgeEl.textContent = '{{ __("quick_view.Out of Stock") }}';
                                     stockBadgeEl.className = 'badge bg-danger';
                                 }
                             }
@@ -637,13 +637,13 @@
                         if (images.length === 0 || !images[0]) {
                             // If no images, show a simple placeholder div instead of trying to load a missing image
                             imagesHtml = `<div class="swiper-slide product-single__image-item d-flex align-items-center justify-content-center bg-light" style="min-height: 400px;">
-                                <span class="text-muted">No image available</span>
+                                <span class="text-muted">{{ __("quick_view.No image available") }}</span>
                             </div>`;
                         } else {
                             images.forEach(img => {
                                 if (img) {
                                     imagesHtml += `<div class="swiper-slide product-single__image-item">
-                                        <img loading="lazy" src="${img}" alt="${product.name}" style="object-fit: contain; width: 100%; height: 512px; max-width: 512px; max-height: 512px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'d-flex align-items-center justify-content-center bg-light\\' style=\\'min-height: 400px;\\'><span class=\\'text-muted\\'>Image not found</span></div>';">
+                                        <img loading="lazy" src="${img}" alt="${product.name}" style="object-fit: contain; width: 100%; height: 512px; max-width: 512px; max-height: 512px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'d-flex align-items-center justify-content-center bg-light\\' style=\\'min-height: 400px;\\'><span class=\\'text-muted\\'>{{ __("quick_view.Image not found") }}</span></div>';">
                                     </div>`;
                                 }
                             });
@@ -706,7 +706,7 @@
             },
             error: function(xhr, status, error) {
                 console.error('Error loading quick view:', error);
-                $('#quickViewName').text('Error loading product');
+                $('#quickViewName').text('{{ __("quick_view.Error loading product") }}');
                 $('#quickViewPrice').text('-');
             }
         });
@@ -761,11 +761,11 @@
             }
             
             // Disable button to prevent double clicks
-            btn.prop('disabled', true).text('Adding...');
+            btn.prop('disabled', true).text('{{ __("scripts.Adding...") }}');
             
             addToCart(productId, quantity).then(success => {
                 // Re-enable button
-                btn.prop('disabled', false).text('Add to Cart');
+                btn.prop('disabled', false).text('{{ __("buttons.Add to Cart") }}');
                 
                 if (success) {
                     // Get aside ID before closing modal
@@ -943,14 +943,14 @@
                             icon.setAttribute('fill', '#d6001c');
                         }
                     }
-                    if (text) text.textContent = 'Remove from Wishlist';
+                    if (text) text.textContent = '{{ __("wishlist.Remove from Wishlist") }}';
                     btn.classList.add('wishlist-active');
                 } else {
                     if (icon) {
                         icon.style.fill = '';
                         icon.removeAttribute('fill');
                     }
-                    if (text) text.textContent = 'Add to Wishlist';
+                    if (text) text.textContent = '{{ __("wishlist.Add to Wishlist") }}';
                     btn.classList.remove('wishlist-active');
                 }
             }
@@ -967,12 +967,12 @@
                 if (isInWishlist(productId)) {
                     removeFromWishlist(productId);
                     if (typeof toastr !== 'undefined') {
-                        toastr.success('Removed from wishlist', 'Wishlist');
+                        toastr.success('{{ __("scripts.Removed from wishlist") }}', '{{ __("scripts.Wishlist") }}');
                     }
                 } else {
                     addToWishlist(productId);
                     if (typeof toastr !== 'undefined') {
-                        toastr.success('Added to wishlist', 'Wishlist');
+                        toastr.success('{{ __("scripts.Added to wishlist") }}', '{{ __("scripts.Wishlist") }}');
                     }
                 }
             }

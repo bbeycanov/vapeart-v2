@@ -55,13 +55,13 @@
                                 <div class="qty-control__reduce">-</div>
                                 <div class="qty-control__increase">+</div>
                             </div>
-                            <button type="button" class="btn btn-primary btn-addtocart js-add-cart-from-quickview js-open-aside" data-aside="cartDrawer">Add to Cart</button>
+                            <button type="button" class="btn btn-primary btn-addtocart js-add-cart-from-quickview js-open-aside" data-aside="cartDrawer">{{ __('buttons.Add to Cart') }}</button>
                         </div>
                     </form>
                     <div class="product-single__addtolinks">
                         <a href="#" class="menu-link menu-link_us-s js-add-wishlist" id="quickViewWishlistBtn">
                             <svg class="js-wishlist-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_heart" /></svg>
-                            <span class="js-wishlist-text">Add to Wishlist</span>
+                            <span class="js-wishlist-text">{{ __('wishlist.Add to Wishlist') }}</span>
                         </a>
                         <share-button class="share-button">
                             <button class="menu-link menu-link_us-s to-share border-0 bg-transparent d-flex align-items-center">
@@ -88,19 +88,19 @@
                     </div>
                     <div class="product-single__meta-info mb-0">
                         <div class="meta-item">
-                            <label>SKU:</label>
+                            <label>{{ __('quick_view.SKU') }}:</label>
                             <span id="quickViewSku">-</span>
                         </div>
                         <div class="meta-item" id="quickViewBrandItem" style="display: none;">
-                            <label>Brand:</label>
+                            <label>{{ __('quick_view.Brand') }}:</label>
                             <span id="quickViewBrand">-</span>
                         </div>
                         <div class="meta-item" id="quickViewCategoriesItem" style="display: none;">
-                            <label>Categories:</label>
+                            <label>{{ __('quick_view.Categories') }}:</label>
                             <span id="quickViewCategories">-</span>
                         </div>
                         <div class="meta-item" id="quickViewTagsItem" style="display: none;">
-                            <label>Tags:</label>
+                            <label>{{ __('quick_view.Tags') }}:</label>
                             <span id="quickViewTags">-</span>
                         </div>
                     </div>

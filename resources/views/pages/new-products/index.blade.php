@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', __('New Products'))
+@section('title', __('page.New Products'))
 
 @php
     $locale = app()->getLocale();
@@ -15,17 +15,17 @@
             <nav aria-label="breadcrumb" class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Home') }}</a>
+                        <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Home') }}</a>
                     </li>
                     <li class="breadcrumb-item active menu-link menu-link_us-s text-uppercase fw-medium" aria-current="page">
-                        {{ __('New Products') }}
+                        {{ __('page.New Products') }}
                     </li>
                 </ol>
             </nav>
         </div>
 
         <h1 class="page-title mb-4 mb-md-5 text-center text-md-start">
-            {{ __('New Products') }}
+            {{ __('page.New Products') }}
         </h1>
 
         <div id="products-container">
@@ -43,7 +43,7 @@
                         <div id="infinite-scroll-trigger" style="height: 1px;"></div>
                         <div class="text-center">
                             <div id="btn-loading-spinner" class="spinner-border text-primary d-none" role="status" style="width: 2.5rem; height: 2.5rem;">
-                                <span class="visually-hidden">{{ __('Loading...') }}</span>
+                                <span class="visually-hidden">{{ __('common.Loading...') }}</span>
                             </div>
                         </div>
                     </div>
@@ -59,10 +59,10 @@
                                 <rect x="35" y="35" width="50" height="50" rx="4" stroke="#DEE2E6" stroke-width="2" fill="none"/>
                             </svg>
                         </div>
-                        <h3 class="fs-4 fw-semibold mb-3">{{ __('No New Products Yet') }}</h3>
-                        <p class="text-secondary mb-4">{{ __('Check back soon for new arrivals!') }}</p>
+                        <h3 class="fs-4 fw-semibold mb-3">{{ __('product.No New Products Yet') }}</h3>
+                        <p class="text-secondary mb-4">{{ __('common.Check back soon for new arrivals!') }}</p>
                         <a href="{{ route('home', $locale) }}" class="btn btn-outline-primary btn-sm">
-                            {{ __('Back to Home') }}
+                            {{ __('common.Back to Home') }}
                         </a>
                     </div>
                 </div>

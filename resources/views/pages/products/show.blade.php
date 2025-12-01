@@ -45,7 +45,7 @@
                                     @foreach($productImages as $image)
                                 <div class="swiper-slide product-single__image-item">
                                             <img loading="lazy" class="h-auto" src="{{ $image }}" width="788" height="788" alt="{{ $productName }}" onerror="this.src='{{ $defaultImage }}'">
-                                            <a data-fancybox="gallery" href="{{ $image }}" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ __('Zoom') }}">
+                                            <a data-fancybox="gallery" href="{{ $image }}" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ __('product.Zoom') }}">
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_zoom" /></svg>
                                     </a>
                                 </div>
@@ -53,7 +53,7 @@
                                 @else
                                 <div class="swiper-slide product-single__image-item">
                                         <img loading="lazy" class="h-auto" src="{{ $defaultImage }}" width="788" height="788" alt="{{ $productName }}">
-                                        <a data-fancybox="gallery" href="{{ $defaultImage }}" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ __('Zoom') }}">
+                                        <a data-fancybox="gallery" href="{{ $defaultImage }}" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ __('product.Zoom') }}">
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_zoom" /></svg>
                                     </a>
                                 </div>
@@ -81,9 +81,9 @@
             <div class="col-lg-5">
                 <div class="d-flex justify-content-between mb-4 pb-md-2">
                     <div class="breadcrumb mb-0 d-none d-md-block flex-grow-1">
-                        <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Home') }}</a>
+                        <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Home') }}</a>
                         <span class="breadcrumb-separator menu-link fw-medium ps-1 pe-1">/</span>
-                        <a href="{{ route('products.index', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Products') }}</a>
+                        <a href="{{ route('products.index', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Products') }}</a>
                     </div><!-- /.breadcrumb -->
                 </div>
                 <h1 class="product-single__name">{{ $productName }}</h1>
@@ -143,18 +143,18 @@
                             data-aside="cartDrawer" 
                             data-product-id="{{ $productData['id'] }}"
                             id="addToCartBtn">
-                        {{ __('Add to Cart') }}
+                        {{ __('buttons.Add to Cart') }}
                     </button>
                     </div>
                 <div class="product-single__addtolinks">
                     <a href="#" class="menu-link menu-link_us-s js-add-wishlist" data-product-id="{{ $productData['id'] }}">
                         <svg class="js-wishlist-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_heart" /></svg>
-                        <span class="js-wishlist-text">Add to Wishlist</span>
+                        <span class="js-wishlist-text">{{ __('product.Add to Wishlist') }}</span>
                     </a>
                     <share-button class="share-button">
                         <button class="menu-link menu-link_us-s to-share border-0 bg-transparent d-flex align-items-center">
                             <svg width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_sharing" /></svg>
-                            <span>Share</span>
+                            <span>{{ __('product.Share') }}</span>
                         </button>
                         <details id="Details-share-template__main" class="m-1 xl:m-1.5" hidden="">
                             <summary class="btn-solid m-1 xl:m-1.5 pt-3.5 pb-3 px-5">+</summary>
@@ -167,7 +167,7 @@
                                     <svg class="icon icon-clipboard inline-block mr-1" width="11" height="13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 11 13">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M2 1a1 1 0 011-1h7a1 1 0 011 1v9a1 1 0 01-1 1V1H2zM1 2a1 1 0 00-1 1v9a1 1 0 001 1h7a1 1 0 001-1V3a1 1 0 00-1-1H1zm0 10V3h7v9H1z" fill="currentColor"></path>
                                     </svg>
-                                    <span class="sr-only">Copy link</span>
+                                    <span class="sr-only">{{ __('quick_view.Copy link') }}</span>
                                 </button>
                             </div>
                         </details>
@@ -177,12 +177,12 @@
                 </div>
                 <div class="product-single__meta-info">
                     <div class="meta-item">
-                        <label>{{ __('SKU') }}:</label>
+                        <label>{{ __('product.SKU') }}:</label>
                         <span>{{ $productSku }}</span>
                     </div>
                     @if($productData['brand'])
                     <div class="meta-item">
-                        <label>{{ __('Brand') }}:</label>
+                        <label>{{ __('product.Brand') }}:</label>
                         <span>
                             @if($productData['brand']['slug'])
                                 <a href="{{ route('brands.show', [$locale, $productData['brand']['slug']]) }}" class="text-decoration-none">{{ $productData['brand']['name'] }}</a>
@@ -194,7 +194,7 @@
                     @endif
                     @if($productCategories->isNotEmpty())
                     <div class="meta-item">
-                        <label>{{ __('Categories') }}:</label>
+                        <label>{{ __('product.Categories') }}:</label>
                         <span>
                             @foreach($productCategories as $index => $category)
                                 @if($index > 0), @endif
@@ -205,7 +205,7 @@
                     @endif
                     @if($productTags->isNotEmpty())
                     <div class="meta-item">
-                        <label>{{ __('Tags') }}:</label>
+                        <label>{{ __('product.Tags') }}:</label>
                         <span>
                             @foreach($productTags as $index => $tag)
                                 @if($index > 0), @endif
@@ -220,13 +220,13 @@
         <div class="product-single__details-tab">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link nav-link_underscore active" id="tab-description-tab" data-bs-toggle="tab" href="#tab-description" role="tab" aria-controls="tab-description" aria-selected="true">Description</a>
+                    <a class="nav-link nav-link_underscore active" id="tab-description-tab" data-bs-toggle="tab" href="#tab-description" role="tab" aria-controls="tab-description" aria-selected="true">{{ __('product.Description') }}</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link nav-link_underscore" id="tab-additional-info-tab" data-bs-toggle="tab" href="#tab-additional-info" role="tab" aria-controls="tab-additional-info" aria-selected="false">Additional Information</a>
+                    <a class="nav-link nav-link_underscore" id="tab-additional-info-tab" data-bs-toggle="tab" href="#tab-additional-info" role="tab" aria-controls="tab-additional-info" aria-selected="false">{{ __('product.Additional Information') }}</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link nav-link_underscore" id="tab-reviews-tab" data-bs-toggle="tab" href="#tab-reviews" role="tab" aria-controls="tab-reviews" aria-selected="false" data-label="{{ __('Reviews') }}">{{ __('Reviews') }} ({{ $reviewsCount }})</a>
+                    <a class="nav-link nav-link_underscore" id="tab-reviews-tab" data-bs-toggle="tab" href="#tab-reviews" role="tab" aria-controls="tab-reviews" aria-selected="false" data-label="{{ __('product.Reviews') }}">{{ __('product.Reviews') }} ({{ $reviewsCount }})</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -235,7 +235,7 @@
                         @if($productDesc)
                             {!! $productDesc !!}
                         @else
-                            <p class="content">{{ __('No description available.') }}</p>
+                            <p class="content">{{ __('common.No description available.') }}</p>
                         @endif
                     </div>
                 </div>
@@ -246,7 +246,7 @@
                             $specs = $productData['specs'] ?? [];
                         @endphp
                         @if(!empty($attributes))
-                            <h5 class="mb-3">{{ __('Attributes') }}</h5>
+                            <h5 class="mb-3">{{ __('product.Attributes') }}</h5>
                             @foreach($attributes as $key => $value)
                                 <div class="item mb-3">
                                     <label class="h6">{{ $key }}</label>
@@ -258,7 +258,7 @@
                             @if(!empty($attributes))
                                 <hr class="my-4">
                             @endif
-                            <h5 class="mb-3">{{ __('Specifications') }}</h5>
+                            <h5 class="mb-3">{{ __('product.Specifications') }}</h5>
                             @foreach($specs as $key => $value)
                                 <div class="item mb-3">
                                     <label class="h6">{{ $key }}</label>
@@ -267,28 +267,28 @@
                             @endforeach
                         @endif
                         @if(empty($attributes) && empty($specs))
-                            <p class="text-muted">{{ __('No additional information available.') }}</p>
+                            <p class="text-muted">{{ __('common.No additional information available.') }}</p>
                         @endif
                     </div>
                 </div>
                 <div class="tab-pane fade" id="tab-reviews" role="tabpanel" aria-labelledby="tab-reviews-tab">
-                    <h2 class="product-single__reviews-title">{{ __('Reviews') }}</h2>
+                    <h2 class="product-single__reviews-title">{{ __('product.Reviews') }}</h2>
                     <div class="product-single__reviews-list" id="reviews-list">
                         @if($reviews->count() > 0)
                             @foreach($reviews as $review)
                                 @include('pages.products.partials.review-item', ['review' => $review])
                             @endforeach
                         @else
-                            <p class="text-muted">{{ __('No reviews yet. Be the first to review!') }}</p>
+                            <p class="text-muted">{{ __('common.No reviews yet. Be the first to review!') }}</p>
                         @endif
                     </div>
                     <div class="product-single__review-form mt-4">
                         <form id="product-review-form" name="customer-review-form" class="needs-validation" novalidate data-submit-url="{{ route('products.reviews.store', [$locale, $product->slug]) }}">
                             @csrf
-                            <h5>{{ __('Be the first to review') }} "{{ $productName }}"</h5>
-                            <p>{{ __('Your email address will not be published. Required fields are marked *') }}</p>
+                            <h5>{{ __('product.Be the first to review') }} "{{ $productName }}"</h5>
+                            <p>{{ __('product.Your email address will not be published. Required fields are marked *') }}</p>
                             <div class="select-star-rating mb-4">
-                                <label>{{ __('Your rating') }} *</label>
+                                <label>{{ __('product.Your rating') }} *</label>
                                 <span class="star-rating" id="star-rating">
                                     @for($i = 1; $i <= 5; $i++)
                                         <svg class="star-rating__star-icon" data-rating="{{ $i }}" width="12" height="12" fill="#ccc" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;">
@@ -299,28 +299,28 @@
                                 <input type="hidden" id="form-input-rating" name="rating" value="" required>
                             </div>
                             <div class="mb-4">
-                                <label for="form-input-title" class="form-label">{{ __('Title') }}</label>
-                                <input id="form-input-title" name="title" class="form-control form-control-md form-control_gray" placeholder="{{ __('Review Title') }}">
+                                <label for="form-input-title" class="form-label">{{ __('product.Title') }}</label>
+                                <input id="form-input-title" name="title" class="form-control form-control-md form-control_gray" placeholder="{{ __('product.Review Title') }}">
                             </div>
                             <div class="mb-4">
-                                <textarea id="form-input-review" name="body" class="form-control form-control_gray" placeholder="{{ __('Your Review') }}" cols="30" rows="8"></textarea>
+                                <textarea id="form-input-review" name="body" class="form-control form-control_gray" placeholder="{{ __('product.Your Review') }}" cols="30" rows="8"></textarea>
                             </div>
                             <div class="form-label-fixed mb-4">
-                                <label for="form-input-name" class="form-label">{{ __('Name') }} *</label>
+                                <label for="form-input-name" class="form-label">{{ __('product.Name') }} *</label>
                                 <input id="form-input-name" name="author_name" class="form-control form-control-md form-control_gray" required>
                             </div>
                             <div class="form-label-fixed mb-4">
-                                <label for="form-input-email" class="form-label">{{ __('Email address') }} *</label>
+                                <label for="form-input-email" class="form-label">{{ __('product.Email address') }} *</label>
                                 <input id="form-input-email" name="author_email" type="email" class="form-control form-control-md form-control_gray" required>
                             </div>
                             <div class="form-check mb-4">
                                 <input class="form-check-input form-check-input_fill" type="checkbox" value="1" id="remember_checkbox" name="remember">
                                 <label class="form-check-label" for="remember_checkbox">
-                                    {{ __('Save my name, email, and website in this browser for the next time I comment.') }}
+                                    {{ __('product.Save my name, email, and website in this browser for the next time I comment.') }}
                                 </label>
-                            </div>
+            </div>
                             <div class="form-action">
-                                <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
+                                <button type="submit" class="btn btn-primary">{{ __('product.Submit') }}</button>
                             </div>
                         </form>
                     </div>
@@ -329,7 +329,7 @@
         </div>
     </section>
     <section class="products-carousel container">
-        <h2 class="h3 text-uppercase mb-4 pb-xl-2 mb-xl-4">Related <strong>Products</strong></h2>
+        <h2 class="h3 text-uppercase mb-4 pb-xl-2 mb-xl-4">{{ __('product.Related') }} <strong>{{ __('product.Products') }}</strong></h2>
 
         <div id="related_products" class="position-relative">
             <div class="swiper-container js-swiper-slider"
@@ -373,7 +373,7 @@
                         </div>
                     @empty
                         <div class="swiper-slide">
-                            <p class="text-center text-muted">{{ __('No related products found.') }}</p>
+                            <p class="text-center text-muted">{{ __('common.No related products found.') }}</p>
                         </div>
                     @endforelse
                 </div><!-- /.swiper-wrapper -->

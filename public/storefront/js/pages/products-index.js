@@ -51,8 +51,8 @@
             const brandIds = params.getAll('brand_ids[]');
             if (brandIds.length > 0) {
                 selectedBrandIds = brandIds.map(id => parseInt(id));
-            }
-            
+                }
+                
             // Get price range
             if (params.has('price_min')) {
                 priceMin = parseFloat(params.get('price_min'));
@@ -88,8 +88,8 @@
                 // Set initial state from URL
                 if (selectedCategoryIds.includes(categoryId)) {
                     checkbox.checked = true;
-                }
-                
+            }
+            
                 // Add change listener
                 checkbox.addEventListener('change', function() {
                     const id = parseInt(this.getAttribute('data-category-id'));
@@ -103,7 +103,7 @@
                     }
                     
                     console.log('Categories selected:', selectedCategoryIds);
-                    applyFilters();
+            applyFilters();
                 });
             });
         }
@@ -197,9 +197,9 @@
                 priceMax = parseFloat(maxInput.value) || null;
                 
                 console.log('Price filter applied:', priceMin, '-', priceMax);
-                applyFilters();
-            });
-            
+                        applyFilters();
+                });
+                
             // Apply on Enter key
             [minInput, maxInput].forEach(input => {
                 input.addEventListener('keypress', function(e) {
@@ -283,7 +283,7 @@
                 
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-                const newGrid = doc.getElementById('products-grid');
+                    const newGrid = doc.getElementById('products-grid');
                 
                 console.log('Parsed document title:', doc.title);
                 console.log('Products grid found:', !!newGrid);
@@ -294,9 +294,9 @@
                     
                     // Update pagination
                     const newPagination = doc.querySelector('.load-more-section');
-                    const currentPagination = document.querySelector('.load-more-section');
-                    if (currentPagination) currentPagination.remove();
-                    
+                        const currentPagination = document.querySelector('.load-more-section');
+                        if (currentPagination) currentPagination.remove();
+                        
                     if (newPagination) {
                         productsGrid.parentElement.appendChild(newPagination.cloneNode(true));
                     }
@@ -401,14 +401,14 @@
          * Load more products
          */
         function loadMore() {
-            const loadMoreSection = document.querySelector('.load-more-section');
+                        const loadMoreSection = document.querySelector('.load-more-section');
             if (!loadMoreSection || loadMoreSection.style.display === 'none') return;
             
             isLoading = true;
-            currentPage++;
+                            currentPage++;
             
-            const spinner = document.getElementById('btn-loading-spinner');
-            if (spinner) spinner.classList.remove('d-none');
+                            const spinner = document.getElementById('btn-loading-spinner');
+                            if (spinner) spinner.classList.remove('d-none');
             
             // Build URL
             const params = new URLSearchParams();
@@ -428,7 +428,7 @@
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
                     'Accept': 'text/html'
-                }
+                    }
             })
             .then(response => response.text())
             .then(html => {

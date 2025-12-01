@@ -4,18 +4,18 @@
     {!! $schemaJsonLd ?? '' !!}
 @endsection
 
-@section('title', __('Contact Us'))
+@section('title', __('page.Contact Us'))
 
 @section('content')
 
     <x-breadcrumb :items="[
-        ['label' => __('Home'), 'url' => route('home', app()->getLocale())],
-        ['label' => __('Contact Us'), 'url' => route('contacts.index', app()->getLocale())]
+        ['label' => __('navigation.Home'), 'url' => route('home', app()->getLocale())],
+        ['label' => __('navigation.Contact Us'), 'url' => route('contacts.index', app()->getLocale())]
     ]" />
 
     <section class="contact-page-title mb-4 mb-xl-5">
         <div class="container">
-            <h2 class="page-title">{{ __('Contact Us') }}</h2>
+            <h2 class="page-title">{{ __('page.Contact Us') }}</h2>
         </div>
     </section>
 
@@ -75,7 +75,7 @@
                                                             <i class="bi bi-geo-alt-fill"></i>
                                                         </div>
                                                         <div class="contact-content">
-                                                            <strong class="contact-label">{{ __('Address') }}</strong>
+                                                            <strong class="contact-label">{{ __('common.Address') }}</strong>
                                                             <p class="contact-value mb-0">{!! nl2br(e($address)) !!}</p>
                                                         </div>
                                                     </div>
@@ -89,7 +89,7 @@
                                                             <i class="bi bi-telephone-fill"></i>
                                                         </div>
                                                         <div class="contact-content">
-                                                            <strong class="contact-label">{{ __('Phone') }}</strong>
+                                                            <strong class="contact-label">{{ __('common.Phone') }}</strong>
                                                             <a href="tel:{{ $branch->phone }}" class="contact-link">{{ $branch->phone }}</a>
                                                         </div>
                                                     </div>
@@ -103,7 +103,7 @@
                                                             <i class="bi bi-envelope-fill"></i>
                                                         </div>
                                                         <div class="contact-content">
-                                                            <strong class="contact-label">{{ __('Email') }}</strong>
+                                                            <strong class="contact-label">{{ __('common.Email') }}</strong>
                                                             <a href="mailto:{{ $branch->email }}" class="contact-link">{{ $branch->email }}</a>
                                                         </div>
                                                     </div>
@@ -117,7 +117,7 @@
                                                             <i class="bi bi-whatsapp"></i>
                                                         </div>
                                                         <div class="contact-content">
-                                                            <strong class="contact-label">{{ __('WhatsApp') }}</strong>
+                                                            <strong class="contact-label">{{ __('common.WhatsApp') }}</strong>
                                                             <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $branch->whatsapp) }}" target="_blank" class="contact-link">{{ $branch->whatsapp }}</a>
                                                         </div>
                                                     </div>
@@ -131,7 +131,7 @@
                                                             <i class="bi bi-clock-fill"></i>
                                                         </div>
                                                         <div class="contact-content">
-                                                            <strong class="contact-label">{{ __('Working Hours') }}</strong>
+                                                            <strong class="contact-label">{{ __('common.Working Hours') }}</strong>
                                                             <p class="contact-value mb-0">{!! nl2br(e($workingHours)) !!}</p>
                                                         </div>
                                                     </div>
@@ -158,9 +158,9 @@
                         <div class="contact-form-card card shadow-sm border">
                             <div class="card-body p-4 p-md-5">
                                 <h3 class="form-title mb-3 text-center">
-                                    {{ __('Get In Touch') }}
+                                    {{ __('messages.Get In Touch') }}
                                 </h3>
-                                <p class="text-center text-muted mb-4">{{ __('Fill out the form below and we will get back to you as soon as possible.') }}</p>
+                                <p class="text-center text-muted mb-4">{{ __('messages.Fill out the form below and we will get back to you as soon as possible.') }}</p>
 
                                 <form id="contact-form" name="contact-us-form" class="needs-validation" novalidate>
                                     @csrf
@@ -173,9 +173,9 @@
                                                     class="form-control"
                                                     id="contact_us_name"
                                                     name="name"
-                                                    placeholder="{{ __('Name') }} *"
+                                                    placeholder="{{ __('form.Name') }} *"
                                                     required>
-                                                <label for="contact_us_name">{{ __('Name') }} *</label>
+                                                <label for="contact_us_name">{{ __('form.Name') }} *</label>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                         </div>
@@ -187,9 +187,9 @@
                                                     class="form-control"
                                                     id="contact_us_email"
                                                     name="email"
-                                                    placeholder="{{ __('Email address') }} *"
+                                                    placeholder="{{ __('form.Email address') }} *"
                                                     required>
-                                                <label for="contact_us_email">{{ __('Email address') }} *</label>
+                                                <label for="contact_us_email">{{ __('form.Email address') }} *</label>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                         </div>
@@ -200,20 +200,20 @@
                                                     class="form-control"
                                                     id="contact_us_message"
                                                     name="message"
-                                                    placeholder="{{ __('Your Message') }}"
+                                                    placeholder="{{ __('form.Your Message') }}"
                                                     style="height: 150px;"
                                                     required></textarea>
-                                                <label for="contact_us_message">{{ __('Your Message') }} *</label>
+                                                <label for="contact_us_message">{{ __('form.Your Message') }} *</label>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                         </div>
 
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-primary btn-lg w-100" id="submit-btn">
-                                                <span class="btn-text">{{ __('Send Message') }}</span>
+                                                <span class="btn-text">{{ __('buttons.Send Message') }}</span>
                                                 <span class="btn-loading" style="display: none;">
                                                     <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                                    {{ __('Sending...') }}
+                                                    {{ __('form.Sending...') }}
                                                 </span>
                                             </button>
                                         </div>
@@ -542,7 +542,7 @@ function initGoogleMap() {
         );
     } else {
         // Default location (Baku)
-        initMap(40.4093, 49.8671, '{{ __('Contact Us') }}', '');
+        initMap(40.4093, 49.8671, '{{ __('page.Contact Us') }}', '');
     }
 
     // Tab change event
@@ -715,7 +715,7 @@ document.addEventListener('DOMContentLoaded', function() {
 @else
 <script>
 console.warn('Google Maps API key not configured');
-document.getElementById('map').innerHTML = '<div class="alert alert-info m-3">{{ __('Google Maps API key is not configured.') }}</div>';
+document.getElementById('map').innerHTML = '<div class="alert alert-info m-3">{{ __('branch.Google Maps API key is not configured.') }}</div>';
 </script>
 @endif
 @endpush

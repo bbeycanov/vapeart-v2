@@ -53,7 +53,7 @@
             @if($blogExcerpt)
                 <div class="blog-grid__item-content">
                     <p>{{ strip_tags($blogExcerpt) }}</p>
-                    <a href="{{ $blogUrl }}" class="readmore-link">{{ __('Continue Reading') }}</a>
+                    <a href="{{ $blogUrl }}" class="readmore-link">{{ __('page.Continue Reading') }}</a>
                 </div>
             @endif
         </div>

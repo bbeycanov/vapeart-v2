@@ -15,13 +15,13 @@
         <div id="infinite-scroll-trigger" style="height: 1px;"></div>
         <div class="text-center">
             <div id="btn-loading-spinner" class="spinner-border text-primary d-none" role="status" style="width: 2.5rem; height: 2.5rem;">
-                <span class="visually-hidden">{{ __('Loading...') }}</span>
+                <span class="visually-hidden">{{ __('common.Loading...') }}</span>
             </div>
             <button id="load-more-btn" 
                     class="btn btn-outline-primary d-none" 
                     data-page="{{ $list->currentPage() + 1 }}"
                     style="display: none;">
-                {{ __('Load More') }}
+                {{ __('common.Load More') }}
             </button>
         </div>
     </div>

@@ -4,7 +4,7 @@
     </div>
     <div class="customer-review">
         <div class="customer-name">
-            <h6>{{ $review->author_name ?: 'Anonymous' }}</h6>
+            <h6>{{ $review->author_name ?: __('common.Anonymous') }}</h6>
             <div class="reviews-group d-flex">
                 @for($i = 1; $i <= 5; $i++)
                     <svg class="review-star {{ $i <= $review->rating ? 'active' : '' }}" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">

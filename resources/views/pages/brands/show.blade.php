@@ -62,23 +62,23 @@
     <section class="shop-main container">
         <div class="d-flex justify-content-between mb-4 pb-md-2">
             <div class="breadcrumb mb-0 d-none d-md-block flex-grow-1">
-                <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Home') }}</a>
+                <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Home') }}</a>
                 <span class="breadcrumb-separator menu-link fw-medium ps-1 pe-1">/</span>
-                <a href="{{ route('brands.index', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Brands') }}</a>
+                <a href="{{ route('brands.index', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Brands') }}</a>
                 <span class="breadcrumb-separator menu-link fw-medium ps-1 pe-1">/</span>
                 <span class="menu-link menu-link_us-s text-uppercase fw-medium">{{ $brandName }}</span>
             </div><!-- /.breadcrumb -->
 
             <div class="shop-acs d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
                 <select class="shop-acs__select form-select w-auto border-0 py-0 order-1 order-md-0" aria-label="Sort Items" name="sort" id="sort-select">
-                    <option value="">{{ __('Default') }}</option>
-                    <option value="featured">{{ __('Featured') }}</option>
-                    <option value="name_asc">{{ __('Name A-Z') }}</option>
-                    <option value="name_desc">{{ __('Name Z-A') }}</option>
-                    <option value="price_asc">{{ __('Price: Low to High') }}</option>
-                    <option value="price_desc">{{ __('Price: High to Low') }}</option>
-                    <option value="created_desc">{{ __('Newest') }}</option>
-                    <option value="created_asc">{{ __('Oldest') }}</option>
+                    <option value="">{{ __('product.Default') }}</option>
+                    <option value="featured">{{ __('product.Featured') }}</option>
+                    <option value="name_asc">{{ __('product.Name A-Z') }}</option>
+                    <option value="name_desc">{{ __('product.Name Z-A') }}</option>
+                    <option value="price_asc">{{ __('product.Price: Low to High') }}</option>
+                    <option value="price_desc">{{ __('product.Price: High to Low') }}</option>
+                    <option value="created_desc">{{ __('product.Newest') }}</option>
+                    <option value="created_asc">{{ __('product.Oldest') }}</option>
                 </select>
 
             </div><!-- /.shop-acs -->
@@ -89,40 +89,19 @@
                 @include('pages.brands.partials.products', ['products' => $list->items()])
             </div><!-- /.products-grid row -->
 
-            @if($list->hasMorePages() || $list->currentPage() > 1)
-                <p class="mb-1 text-center fw-medium">
-                    {{ __('Showing') }} {{ $list->firstItem() ?? 0 }} {{ __('of') }} {{ $list->total() }} {{ __('items') }}
-                </p>
-                <div class="progress progress_uomo mb-3 ms-auto me-auto" style="width: 300px;">
-                    <div class="progress-bar" 
-                         role="progressbar" 
-                         style="width: {{ $list->total() > 0 ? ($list->lastItem() / $list->total() * 100) : 0 }}%;" 
-                         aria-valuenow="{{ $list->lastItem() ?? 0 }}" 
-                         aria-valuemin="0" 
-                         aria-valuemax="{{ $list->total() }}">
+            @if($list->hasMorePages())
+                    <div class="load-more-section mt-4 mt-md-5 pt-3" id="load-more-section">
+                        <div id="infinite-scroll-trigger" style="height: 1px;"></div>
+                        <div class="text-center">
+                            <div id="btn-loading-spinner" class="spinner-border text-primary d-none" role="status" style="width: 2.5rem; height: 2.5rem;">
+                                <span class="visually-hidden">{{ __('common.Loading...') }}</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="text-center" id="load-more-container">
-                    @if($list->hasMorePages())
-                        <button type="button" class="btn-link btn-link_lg text-uppercase fw-medium" id="load-more-btn" data-page="{{ $list->currentPage() + 1 }}" data-brand-slug="{{ $brand->slug }}" data-locale="{{ $locale }}">
-                            {{ __('Show More') }}
-                            <span class="spinner-border spinner-border-sm d-none ms-2" role="status" id="btn-loading-spinner">
-                                <span class="visually-hidden">{{ __('Loading...') }}</span>
-                            </span>
-                        </button>
-                    @endif
-                </div>
-            @endif
-
-            @if($list->hasPages())
-                <div class="mt-4 d-flex justify-content-center">
-                    {{ $list->links() }}
-                </div>
-            @endif
+                @endif
         @else
             <div class="text-center py-5">
-                <p>{{ __('No products found for this brand.') }}</p>
+                <p>{{ __('product.No products found for this brand.') }}</p>
             </div>
         @endif
     </section><!-- /.shop-main container -->
@@ -139,25 +118,23 @@
     document.addEventListener('DOMContentLoaded', function() {
         const productsGrid = document.getElementById('products-grid');
         const sortSelect = document.getElementById('sort-select');
-        const loadMoreBtn = document.getElementById('load-more-btn');
-        const btnLoadingSpinner = document.getElementById('btn-loading-spinner');
-        const loadMoreContainer = document.getElementById('load-more-container');
-        const progressBar = document.querySelector('.progress-bar');
-        const showingText = document.querySelector('.mb-1.text-center.fw-medium');
         
         let isLoading = false;
-        let currentPage = 1;
+        let currentPage = {{ $list->currentPage() }};
         let currentSort = '';
+        let infiniteScrollObserver = null;
         const locale = '{{ $locale }}';
         const brandSlug = '{{ $brand->slug }}';
         
         // Get current sort from URL
         const urlParams = new URLSearchParams(window.location.search);
         currentSort = urlParams.get('sort') || '';
-        currentPage = parseInt(urlParams.get('page')) || 1;
         if (sortSelect && currentSort) {
             sortSelect.value = currentSort;
         }
+        
+        // Initialize Infinite Scroll
+        initInfiniteScroll();
         
         // Sort functionality with AJAX
         if (sortSelect) {
@@ -168,14 +145,37 @@
             });
         }
         
-        // Load More functionality
-        if (loadMoreBtn) {
-            loadMoreBtn.addEventListener('click', function() {
-                if (!isLoading && this.dataset.page) {
-                    currentPage = parseInt(this.dataset.page);
-                    loadProducts(false);
-                }
-            });
+        /**
+         * Initialize Infinite Scroll Observer
+         */
+        function initInfiniteScroll() {
+            // Disconnect existing observer
+            if (infiniteScrollObserver) {
+                infiniteScrollObserver.disconnect();
+            }
+            
+            const trigger = document.getElementById('infinite-scroll-trigger');
+            if (!trigger) return;
+            
+            const options = {
+                root: null,
+                rootMargin: '200px',
+                threshold: 0.1
+            };
+            
+            infiniteScrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !isLoading) {
+                        const loadMoreSection = document.querySelector('.load-more-section');
+                        if (loadMoreSection && loadMoreSection.style.display !== 'none') {
+                            currentPage++;
+                            loadProducts(false);
+                        }
+                    }
+                });
+            }, options);
+            
+            infiniteScrollObserver.observe(trigger);
         }
         
         function loadProducts(reset = false) {
@@ -190,10 +190,8 @@
                     productsGrid.style.pointerEvents = 'none';
                 }
             } else {
-                if (loadMoreBtn) {
-                    loadMoreBtn.disabled = true;
-                    if (btnLoadingSpinner) btnLoadingSpinner.classList.remove('d-none');
-                }
+                const spinner = document.getElementById('btn-loading-spinner');
+                if (spinner) spinner.classList.remove('d-none');
             }
             
             // Add timestamp to prevent cache
@@ -239,41 +237,23 @@
                         window.history.pushState({}, '', newUrl);
                     } else {
                         // Append products
-                        productsGrid.insertAdjacentHTML('beforeend', newProductsGrid.innerHTML);
+                        Array.from(newProductsGrid.children).forEach(item => {
+                            productsGrid.appendChild(item.cloneNode(true));
+                        });
                     }
                     
-                    // Update pagination info
-                    const newShowingText = doc.querySelector('.mb-1.text-center.fw-medium');
-                    const newProgressBar = doc.querySelector('.progress-bar');
-                    const newLoadMoreContainer = doc.querySelector('#load-more-container');
+                    // Update load more section
+                    const newLoadMoreSection = doc.querySelector('.load-more-section');
+                    const currentLoadMoreSection = document.querySelector('.load-more-section');
                     
-                    if (newShowingText && showingText) {
-                        showingText.textContent = newShowingText.textContent;
+                    if (currentLoadMoreSection) currentLoadMoreSection.remove();
+                    
+                    if (newLoadMoreSection) {
+                        productsGrid.parentElement.appendChild(newLoadMoreSection.cloneNode(true));
                     }
                     
-                    if (newProgressBar && progressBar) {
-                        progressBar.style.width = newProgressBar.style.width;
-                        progressBar.setAttribute('aria-valuenow', newProgressBar.getAttribute('aria-valuenow') || '0');
-                    }
-                    
-                    // Update load more button
-                    if (newLoadMoreContainer) {
-                        const newLoadMoreBtn = newLoadMoreContainer.querySelector('#load-more-btn');
-                        if (newLoadMoreBtn && loadMoreBtn) {
-                            const nextPage = parseInt(newLoadMoreBtn.dataset.page) || (currentPage + 1);
-                            loadMoreBtn.dataset.page = nextPage;
-                            loadMoreBtn.disabled = false;
-                        } else if (loadMoreContainer) {
-                            loadMoreContainer.remove();
-                        }
-                    } else if (loadMoreContainer) {
-                        loadMoreContainer.remove();
-                    }
-                    
-                    // Update current page for next load
-                    if (!reset && loadMoreBtn) {
-                        currentPage = parseInt(loadMoreBtn.dataset.page) || (currentPage + 1);
-                    }
+                    // Re-initialize infinite scroll
+                    setTimeout(initInfiniteScroll, 100);
                 }
             })
             .catch(error => {
@@ -292,13 +272,32 @@
                         productsGrid.style.pointerEvents = 'auto';
                     }
                 } else {
-                    if (loadMoreBtn) {
-                        loadMoreBtn.disabled = false;
-                        if (btnLoadingSpinner) btnLoadingSpinner.classList.add('d-none');
-                    }
+                    const spinner = document.getElementById('btn-loading-spinner');
+                    if (spinner) spinner.classList.add('d-none');
                 }
             });
         }
+        
+        // Backup scroll listener
+        let scrollTimeout;
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(function() {
+                const trigger = document.getElementById('infinite-scroll-trigger');
+                if (trigger && !isLoading) {
+                    const rect = trigger.getBoundingClientRect();
+                    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                    
+                    if (rect.top <= windowHeight + 200) {
+                        const loadMoreSection = document.querySelector('.load-more-section');
+                        if (loadMoreSection && loadMoreSection.style.display !== 'none') {
+                            currentPage++;
+                            loadProducts(false);
+                        }
+                    }
+                }
+            }, 100);
+        });
     });
 })();
 </script>

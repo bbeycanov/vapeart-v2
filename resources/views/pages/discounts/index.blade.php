@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', __('Discounted Products'))
+@section('title', __('page.Discounted Products'))
 
 @php
     $locale = app()->getLocale();
@@ -15,17 +15,17 @@
             <nav aria-label="breadcrumb" class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Home') }}</a>
+                        <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Home') }}</a>
                     </li>
                     <li class="breadcrumb-item active menu-link menu-link_us-s text-uppercase fw-medium" aria-current="page">
-                        {{ __('Discounted Products') }}
+                        {{ __('page.Discounted Products') }}
                     </li>
                 </ol>
             </nav>
         </div>
 
         <h1 class="page-title mb-4 mb-md-5 text-center text-md-start">
-            {{ __('Discounted Products') }}
+            {{ __('page.Discounted Products') }}
         </h1>
 
         <div id="products-container">
@@ -43,22 +43,22 @@
                         <div id="infinite-scroll-trigger" style="height: 1px;"></div>
                         <div class="text-center">
                             <div id="btn-loading-spinner" class="spinner-border text-primary d-none" role="status" style="width: 2.5rem; height: 2.5rem;">
-                                <span class="visually-hidden">{{ __('Loading...') }}</span>
+                                <span class="visually-hidden">{{ __('common.Loading...') }}</span>
                             </div>
                             <button id="load-more-btn" 
                                     class="btn btn-outline-primary d-none" 
                                     data-page="{{ $list->currentPage() + 1 }}"
                                     style="display: none;">
-                                {{ __('Load More') }}
+                                {{ __('common.Load More') }}
                             </button>
                         </div>
                     </div>
                 @endif
             @else
                 <div class="text-center py-5 py-md-6 empty-state">
-                    <p class="text-secondary mb-4">{{ __('No discounted products found.') }}</p>
+                    <p class="text-secondary mb-4">{{ __('product.No discounted products found.') }}</p>
                     <a href="{{ route('home', $locale) }}" class="btn btn-primary">
-                        {{ __('Back to Home') }}
+                        {{ __('common.Back to Home') }}
                     </a>
                 </div>
             @endif

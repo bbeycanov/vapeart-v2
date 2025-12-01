@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', $parentCategory ? $parentCategory->getTranslation('name', app()->getLocale()) . ' - ' . __('Categories') : __('Categories'))
+@section('title', $parentCategory ? $parentCategory->getTranslation('name', app()->getLocale()) . ' - ' . __('page.Categories') : __('page.Categories'))
 
 @php
     $locale = app()->getLocale();
@@ -15,10 +15,10 @@
             <nav aria-label="breadcrumb" class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Home') }}</a>
+                        <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Home') }}</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('categories.index', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Categories') }}</a>
+                        <a href="{{ route('categories.index', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Categories') }}</a>
                     </li>
                     @if($parentCategory)
                         <li class="breadcrumb-item active menu-link menu-link_us-s text-uppercase fw-medium" aria-current="page">
@@ -31,7 +31,7 @@
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-1">
                             <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        {{ __('Back') }}
+                        {{ __('common.Back') }}
                     </a>
                 @endif
             </nav>
@@ -40,7 +40,7 @@
         <!-- Page Title -->
         <div class="mb-4 mb-md-5">
             <h1 class="page-title mb-0">
-                {{ $parentCategory ? $parentCategory->getTranslation('name', $locale) : __('Categories') }}
+                {{ $parentCategory ? $parentCategory->getTranslation('name', $locale) : __('page.Categories') }}
             </h1>
             @if($parentCategory && $parentCategory->getTranslation('description', $locale))
                 <p class="text-muted mt-2 mb-0" style="font-size: 1rem;">
@@ -99,10 +99,10 @@
                         <path d="M9 11H15M9 15H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                     </svg>
                 </div>
-                <h3 class="h5 mb-3 text-dark">{{ __('No categories found') }}</h3>
-                <p class="text-secondary mb-4">{{ __('There are no categories available at the moment.') }}</p>
+                <h3 class="h5 mb-3 text-dark">{{ __('common.No categories found') }}</h3>
+                <p class="text-secondary mb-4">{{ __('common.There are no categories available at the moment.') }}</p>
                 <a href="{{ route('home', $locale) }}" class="btn btn-primary">
-                    {{ __('Back to Home') }}
+                    {{ __('common.Back to Home') }}
                 </a>
             </div>
         @endif

@@ -6,15 +6,15 @@
             <div class="mb-4">
                 <h1 class="page-title mb-3">
                     @if($query)
-                        {{ __('Search Results') }}: "{{ $query }}"
+                        {{ __('product.Search Results') }}: "{{ $query }}"
                     @else
-                        {{ __('All Products') }}
+                        {{ __('product.All Products') }}
                     @endif
                 </h1>
                 
                 @if($query)
                     <p class="text-secondary">
-                        {{ __('Found :count products', ['count' => $products->total()]) }}
+                        {{ trans('common.found_products', ['count' => $products->total()]) }}
                     </p>
                 @endif
             </div>
@@ -31,9 +31,9 @@
                 </div>
             @else
                 <div class="text-center py-5">
-                    <p class="text-secondary mb-4">{{ __('No products found') }}</p>
+                    <p class="text-secondary mb-4">{{ __('common.No products found') }}</p>
                     <a href="{{ route('home', app()->getLocale()) }}" class="btn btn-primary">
-                        {{ __('Back to Home') }}
+                        {{ __('common.Back to Home') }}
                     </a>
                 </div>
             @endif
