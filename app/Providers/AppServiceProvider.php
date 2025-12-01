@@ -10,6 +10,7 @@ use App\Enums\MenuPosition;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use App\Services\Contracts\MenuServiceInterface;
 use Spatie\Permission\PermissionRegistrar;
@@ -37,6 +38,11 @@ class AppServiceProvider extends ServiceProvider
         Gate::before(function ($user, $ability) {
             return $user->hasRole('admin') ? true : null;
         });
+
+        // Tabloların varlığını kontrol et (migration sırasında hata önlemek için)
+        if (!Schema::hasTable('languages')) {
+            return;
+        }
 
         $languages = Cache::remember('languages:active', 3600, function () {
             return Language::query()
