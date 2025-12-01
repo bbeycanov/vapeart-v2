@@ -1,0 +1,112 @@
+/* Custom Scrollbar Hide */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Smooth Transitions */
+.transition-all {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sticky Header Adjustment */
+.header_sticky .sticky-brand-nav {
+    top: 70px; /* Adjust based on your main header height */
+}
+
+/* Brand Pill Hover Effects */
+.brand-pill {
+    transition: all 0.2s ease;
+}
+.brand-pill:hover:not(.btn-dark) {
+    background-color: #f8f9fa !important;
+    border-color: #dee2e6 !important;
+    transform: translateY(-1px);
+}
+.brand-pill.btn-dark {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.brand-pill.btn-dark img {
+    filter: brightness(1.1);
+}
+
+/* Product Grid Transitions */
+#products-grid {
+    transition: opacity 0.3s ease;
+}
+#products-grid.loading {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* Banner Text Shadow */
+.shop-banner__content .text-white {
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* Category Banner Improvements */
+.shop-banner {
+    border-radius: 16px !important;
+}
+
+.shop-banner__content {
+    padding: 2rem 1rem;
+}
+
+@media (min-width: 768px) {
+    .shop-banner__content {
+        padding: 3rem 2rem;
+    }
+}
+
+/* Brand Navigation Improvements */
+.sticky-brand-nav {
+    border: 1px solid #e9ecef !important;
+}
+
+.brand-scroll-container {
+    padding: 1rem 1.25rem;
+}
+
+@media (min-width: 768px) {
+    .brand-scroll-container {
+        padding: 1.25rem 1.5rem;
+    }
+}
+
+/* Products Section Spacing */
+.category-page-wrapper {
+    padding-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .category-page-wrapper {
+        padding-bottom: 2rem;
+    }
+}
+
+/* Empty State Improvements */
+.empty-state {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+}
+
+@media (min-width: 768px) {
+    .empty-state {
+        padding-top: 4rem !important;
+        padding-bottom: 4rem !important;
+    }
+}
+
+.empty-state svg {
+    opacity: 0.4;
+}
+
+/* Loading Spinner Improvements */
+#btn-loading-spinner {
+    border-width: 3px;
+}
+

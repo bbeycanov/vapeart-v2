@@ -14,6 +14,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" type="text/css">
 <link rel="stylesheet" href="{{asset('storefront/css/style.css')}}" type="text/css">
 <link rel="stylesheet" href="{{asset('storefront/css/pages/cart-index.css')}}" type="text/css">
+<link rel="stylesheet" href="{{asset('storefront/css/includes/site-map.css')}}" type="text/css">
+<link rel="stylesheet" href="{{asset('storefront/css/includes/footer.css')}}" type="text/css">
+<link rel="stylesheet" href="{{asset('storefront/css/includes/quick-view.css')}}" type="text/css">
 
 <!-- Toastr Custom Styles -->
 <style>

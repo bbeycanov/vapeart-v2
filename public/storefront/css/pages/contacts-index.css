@@ -1,0 +1,272 @@
+/* Branch Tabs */
+.branch-tabs-wrapper {
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.branch-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: start;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: transparent;
+}
+
+.branch-tab-btn {
+    background-color: #ffffff;
+    color: #222222;
+    border: 2px solid #e4e4e4;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.branch-tab-btn:hover {
+    background-color: #faf9f8;
+    border-color: #222222;
+    color: #222222;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(34, 34, 34, 0.1);
+}
+
+.branch-tab-btn.active {
+    background-color: #222222;
+    color: #ffffff;
+    border-color: #222222;
+    box-shadow: 0 4px 12px rgba(34, 34, 34, 0.2);
+}
+
+.branch-tab-btn.active:hover {
+    background-color: #86BC42;
+    border-color: #86BC42;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(134, 188, 66, 0.3);
+}
+
+/* Branch Info Card */
+.branch-info-card {
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 2rem;
+
+}
+
+.branch-info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1) !important;
+}
+
+.branch-info-card .card-body{
+    border: 2px solid #e4e4e4;
+    border-radius: 8px;
+}
+
+.branch-header {
+    border-bottom: 1px solid #e4e4e4;
+}
+
+.branch-name-contact {
+    color: #222222;
+    font-weight: 600;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.branch-description {
+    color: #767676;
+    line-height: 1.8;
+    font-size: 0.9375rem;
+}
+
+.branch-contact-info {
+    margin-top: 1.5rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: #ffffff;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 2px solid #e4e4e4;
+    margin-bottom: 0;
+    height: 100%;
+}
+
+.contact-item:hover {
+    background: #faf9f8;
+    border-color: #222222;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.contact-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #222222;
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    transition: background-color 0.3s ease;
+}
+
+.contact-item:hover .contact-icon {
+    background-color: #86BC42;
+}
+
+.contact-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.contact-label {
+    color: #222222;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.contact-value {
+    color: #767676;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin: 0;
+    word-wrap: break-word;
+}
+
+.contact-link {
+    color: #222222;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    display: inline-block;
+    font-size: 0.9375rem;
+    word-break: break-all;
+}
+
+.contact-link:hover {
+    color: #86BC42;
+    text-decoration: none;
+}
+
+/* Google Maps Container */
+.google-map-container {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    height: 500px;
+    background: #faf9f8;
+    border: 1px solid #e4e4e4;
+}
+
+.google-map__wrapper {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Contact Form */
+.contact-form-wrapper {
+    margin-top: 3rem;
+}
+
+.contact-form-card {
+    border-radius: 8px;
+}
+
+.form-title {
+    color: #222222;
+    font-weight: 600;
+    font-size: 1.75rem;
+}
+
+.form-floating > label {
+    color: #767676;
+    font-weight: 500;
+}
+
+.form-control {
+    border-color: #e4e4e4;
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    border-color: #222222;
+    box-shadow: 0 0 0 0.2rem rgba(34, 34, 34, 0.15);
+}
+
+.form-control.is-invalid {
+    border-color: #c32929;
+}
+
+.form-control.is-valid {
+    border-color: #86BC42;
+}
+
+.btn-primary {
+    background-color: #222222;
+    border-color: #222222;
+    color: #ffffff;
+    padding: 14px 28px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.875rem;
+}
+
+.btn-primary:hover {
+    background-color: #86BC42;
+    border-color: #86BC42;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(134, 188, 66, 0.3);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .branch-tab-btn {
+        padding: 10px 16px;
+        font-size: 0.875rem;
+    }
+
+    .branch-name-contact {
+        font-size: 1.5rem;
+    }
+
+    .contact-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .contact-icon {
+        margin: 0 auto;
+    }
+
+    .google-map-container {
+        height: 400px;
+    }
+}
+

@@ -1,0 +1,120 @@
+.category-card {
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    height: 100%;
+}
+
+.category-card:hover {
+    text-decoration: none;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-color: #dee2e6;
+}
+
+.category-card__image-wrapper {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+}
+
+.category-card__image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover .category-card__image {
+    transform: scale(1.05);
+}
+
+.category-card__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    color: #6c757d;
+}
+
+.category-card__content {
+    text-align: center;
+    width: 100%;
+}
+
+.category-card__title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.8em;
+}
+
+.category-card__count {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    .category-card {
+        padding: 2rem 1.5rem;
+        min-height: 220px;
+    }
+
+    .category-card__image-wrapper {
+        height: 110px;
+        margin-bottom: 1.25rem;
+    }
+
+    .category-card__title {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .category-card {
+        padding: 2.25rem 1.75rem;
+        min-height: 240px;
+    }
+
+    .category-card__image-wrapper {
+        height: 120px;
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Empty state styling */
+.text-center.py-5.py-md-6 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+}
+
+@media (min-width: 768px) {
+    .text-center.py-5.py-md-6 {
+        padding-top: 4rem !important;
+        padding-bottom: 4rem !important;
+    }
+}
+

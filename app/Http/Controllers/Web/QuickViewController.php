@@ -30,14 +30,23 @@ class QuickViewController extends Controller
             ->findOrFail($request->product_id);
 
         if ($request->expectsJson()) {
-            // Get images with medium conversion for quick view (standardized size: 512x512)
-            $images = $product->getMedia('images');
-            if ($images->isEmpty()) {
-                $thumbnail = $product->getFirstMedia('thumbnail');
-                $images = $thumbnail ? collect([$thumbnail]) : collect();
+            // Get base image (thumbnail) and additional images
+            $allImages = collect();
+            
+            // 1. First add base image (thumbnail) - must be first
+            $thumbnail = $product->getFirstMedia('thumbnail');
+            if ($thumbnail) {
+                $allImages->push($thumbnail);
             }
             
-            $imageUrls = $images->map(function($media) use ($product) {
+            // 2. Then add additional images from 'images' collection
+            $additionalImages = $product->getMedia('images');
+            if ($additionalImages->isNotEmpty()) {
+                $allImages = $allImages->merge($additionalImages);
+            }
+            
+            // Convert to URLs
+            $imageUrls = $allImages->map(function($media) use ($product) {
                 try {
                     $url = $media->getUrl('medium');
                     // Ensure we're using the conversion, not original
@@ -49,7 +58,7 @@ class QuickViewController extends Controller
                 } catch (\Exception $e) {
                     return $media->getUrl();
                 }
-            })->filter()->toArray();
+            })->filter()->values()->toArray();
             
             // If no images, use placeholder
             if (empty($imageUrls)) {
@@ -59,13 +68,28 @@ class QuickViewController extends Controller
             // Get thumbnail image for cart (thumb conversion - standardized size: 256x256)
             $thumbImage = $product->getProductImageUrl('thumb');
             
+            // Categories with ID and slug for links
             $categories = $product->categories->map(function($category) {
-                return $category->getTranslation('name', app()->getLocale());
-            })->implode(', ');
+                return [
+                    'id' => $category->id,
+                    'name' => $category->getTranslation('name', app()->getLocale()),
+                    'slug' => $category->slug
+                ];
+            })->toArray();
             
             $tags = $product->tags->map(function($tag) {
                 return $tag->getTranslation('name', app()->getLocale());
             })->implode(', ');
+            
+            // Brand with logo and slug
+            $brandData = null;
+            if ($product->brand) {
+                $brandData = [
+                    'name' => $product->brand->getTranslation('name', app()->getLocale()),
+                    'slug' => $product->brand->slug,
+                    'logo' => $product->brand->getFirstMediaUrl('logo')
+                ];
+            }
             
             // Get discount information
             $bestDiscount = $product->getBestDiscount();
@@ -88,9 +112,9 @@ class QuickViewController extends Controller
                     'currency' => $product->currency ?? 'AZN',
                     'short_description' => $product->getTranslation('short_description', app()->getLocale()),
                     'description' => $product->getTranslation('description', app()->getLocale()),
-                    'brand' => $product->brand ? $product->brand->getTranslation('name', app()->getLocale()) : null,
+                    'brand' => $brandData,
                     'sku' => $product->sku ?? 'N/A',
-                    'categories' => $categories ?: 'N/A',
+                    'categories' => $categories,
                     'tags' => $tags ?: 'N/A',
                     'rating_avg' => $product->rating_avg ?? 0,
                     'reviews_count' => $product->reviews_count ?? 0,

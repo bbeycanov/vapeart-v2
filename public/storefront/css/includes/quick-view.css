@@ -1,0 +1,79 @@
+/* Quick View Modal Centering */
+.modal-dialog.quick-view .product-single {
+    display: flex;
+    align-items: center;
+    min-height: 500px;
+}
+
+.modal-dialog.quick-view .product-single__media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-dialog.quick-view .product-single__detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Ensure slider container centers content */
+.modal-dialog.quick-view .product-single__image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-dialog.quick-view .product-single__image .swiper-container {
+    width: 100%;
+}
+
+/* Center slider vertically when content is short */
+.modal-dialog.quick-view .swiper-slide.product-single__image-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.modal-dialog.quick-view .swiper-slide.product-single__image-item img {
+    max-height: 512px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+    .modal-dialog.quick-view .product-single {
+        flex-direction: column;
+        min-height: auto;
+    }
+    
+    .modal-dialog.quick-view .swiper-slide.product-single__image-item {
+        min-height: 300px;
+    }
+}
+
+@media (min-width: 992px) {
+    .modal-dialog.quick-view .product-single {
+        min-height: 600px;
+    }
+}
+
+/* Brand Logo in Quick View */
+.product-single__brand {
+    margin-bottom: 1rem;
+}
+
+.product-single__brand img {
+    max-height: 60px;
+    max-width: 150px;
+    object-fit: contain;
+    transition: opacity 0.2s ease;
+}
+
+.product-single__brand a:hover img {
+    opacity: 0.8;
+}
+

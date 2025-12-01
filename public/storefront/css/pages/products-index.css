@@ -1,0 +1,156 @@
+/* Product Grid Transitions */
+#products-grid {
+    transition: opacity 0.3s ease;
+}
+#products-grid.loading {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* Category Filter */
+.category-filter-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.category-filter-item {
+    padding: 0.5rem 0;
+    transition: background-color 0.2s;
+}
+
+.category-filter-item label {
+    cursor: pointer;
+}
+
+.category-filter-item:hover {
+    background-color: #f8f9fa;
+}
+
+.category-checkbox {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* Brand Filter */
+.brand-filter-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.brand-filter-item {
+    padding: 0.5rem 0;
+    transition: background-color 0.2s;
+}
+
+.brand-filter-item label {
+    cursor: pointer;
+}
+
+.brand-filter-item:hover {
+    background-color: #f8f9fa;
+}
+
+.brand-checkbox {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* Price Filter */
+.price-filter-wrapper input[type="number"] {
+    border: 1px solid #dee2e6;
+}
+
+.price-filter-wrapper input[type="number"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.price-filter-wrapper .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.price-filter-wrapper .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Empty Products State */
+.empty-products-state {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+}
+
+.products-grid:has(.empty-products-state) {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-products-state .empty-icon {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.empty-products-state h3 {
+    color: #212529;
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.empty-products-state p {
+    max-width: 500px;
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.empty-products-state button {
+    animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading Spinner */
+#btn-loading-spinner {
+    border-width: 3px;
+}
+
+/* Scrollbar Styling */
+.category-filter-list::-webkit-scrollbar,
+.brand-filter-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.category-filter-list::-webkit-scrollbar-track,
+.brand-filter-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.category-filter-list::-webkit-scrollbar-thumb,
+.brand-filter-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.category-filter-list::-webkit-scrollbar-thumb:hover,
+.brand-filter-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+

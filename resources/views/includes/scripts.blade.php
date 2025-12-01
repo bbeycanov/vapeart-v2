@@ -481,16 +481,15 @@
                     const oldPriceEl = document.getElementById('quickViewOldPrice');
                     const descEl = document.getElementById('quickViewDescription');
                     const skuEl = document.getElementById('quickViewSku');
-                    const brandEl = document.getElementById('quickViewBrand');
+                    const brandLinkEl = document.getElementById('quickViewBrandLink');
                     const brandItemEl = document.getElementById('quickViewBrandItem');
-                    const categoriesEl = document.getElementById('quickViewCategories');
+                    const brandLogoEl = document.getElementById('quickViewBrandLogo');
+                    const categoriesLinksEl = document.getElementById('quickViewCategoriesLinks');
                     const categoriesItemEl = document.getElementById('quickViewCategoriesItem');
                     const tagsEl = document.getElementById('quickViewTags');
                     const tagsItemEl = document.getElementById('quickViewTagsItem');
                     const ratingEl = document.getElementById('quickViewRating');
                     const reviewsCountEl = document.getElementById('quickViewReviewsCount');
-                    const stockEl = document.getElementById('quickViewStock');
-                    const stockBadgeEl = document.getElementById('quickViewStockBadge');
                     const productIdEl = document.getElementById('quickViewProductId');
                     const imagesWrapper = document.getElementById('quickViewImages');
                     const wishlistBtn = document.getElementById('quickViewWishlistBtn');
@@ -558,29 +557,48 @@
                     // Description
                     if (descEl) {
                         const description = product.short_description || product.description || '-';
-                        descEl.textContent = description;
+                        descEl.innerHTML = description;
                     }
                     
                     // SKU
                     if (skuEl) skuEl.textContent = product.sku || 'N/A';
                     
-                    // Brand
-                    if (product.brand) {
-                        if (brandEl) brandEl.textContent = product.brand;
+                    // Brand with logo and link
+                    if (product.brand && product.brand.name) {
+                        // Show brand logo if available
+                        if (brandLogoEl && product.brand.logo) {
+                            brandLogoEl.innerHTML = `<a href="/${locale}/brands/${product.brand.slug}" target="_blank" class="d-inline-block">
+                                <img src="${product.brand.logo}" alt="${product.brand.name}" style="max-height: 60px; max-width: 150px; object-fit: contain;">
+                            </a>`;
+                            brandLogoEl.style.display = 'block';
+                        } else if (brandLogoEl) {
+                            brandLogoEl.style.display = 'none';
+                        }
+                        
+                        // Brand link in meta
+                        if (brandLinkEl) {
+                            brandLinkEl.innerHTML = `<a href="/${locale}/brands/${product.brand.slug}" target="_blank" class="text-decoration-none">${product.brand.name}</a>`;
+                        }
                         if (brandItemEl) brandItemEl.style.display = 'block';
                     } else {
+                        if (brandLogoEl) brandLogoEl.style.display = 'none';
                         if (brandItemEl) brandItemEl.style.display = 'none';
                     }
                     
-                    // Categories
-                    if (product.categories && product.categories !== 'N/A') {
-                        if (categoriesEl) categoriesEl.textContent = product.categories;
+                    // Categories with links
+                    if (product.categories && Array.isArray(product.categories) && product.categories.length > 0) {
+                        const categoryLinks = product.categories.map((cat, index) => {
+                            const separator = index > 0 ? ', ' : '';
+                            return `${separator}<a href="/${locale}/products?category_id=${cat.id}" target="_blank" class="text-decoration-none">${cat.name}</a>`;
+                        }).join('');
+                        
+                        if (categoriesLinksEl) categoriesLinksEl.innerHTML = categoryLinks;
                         if (categoriesItemEl) categoriesItemEl.style.display = 'block';
                     } else {
                         if (categoriesItemEl) categoriesItemEl.style.display = 'none';
                     }
                     
-                    // Tags
+                    // Tags (no links, just text)
                     if (product.tags && product.tags !== 'N/A') {
                         if (tagsEl) tagsEl.textContent = product.tags;
                         if (tagsItemEl) tagsItemEl.style.display = 'block';
@@ -609,24 +627,6 @@
                         }
                     } else {
                         if (ratingEl) ratingEl.style.display = 'none';
-                    }
-                    
-                    // Stock
-                    if (product.stock_quantity !== undefined) {
-                        if (stockEl) {
-                            stockEl.style.display = 'block';
-                            if (stockBadgeEl) {
-                                if (product.stock_quantity > 0) {
-                                    stockBadgeEl.textContent = '{{ __("quick_view.In Stock") }} (' + product.stock_quantity + ')';
-                                    stockBadgeEl.className = 'badge bg-success';
-                                } else {
-                                    stockBadgeEl.textContent = '{{ __("quick_view.Out of Stock") }}';
-                                    stockBadgeEl.className = 'badge bg-danger';
-                                }
-                            }
-                        }
-                    } else {
-                        if (stockEl) stockEl.style.display = 'none';
                     }
                     
                     // Update images

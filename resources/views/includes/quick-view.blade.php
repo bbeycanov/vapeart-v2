@@ -32,6 +32,9 @@
                         <span class="current-price" id="quickViewPrice">-</span>
                         <span class="old-price" id="quickViewOldPrice" style="display: none;"></span>
                     </div>
+                    <div class="product-single__brand mb-3" id="quickViewBrandLogo" style="display: none;">
+                        <!-- Brand logo will be added here -->
+                    </div>
                     <div class="product-single__rating mb-2" id="quickViewRating" style="display: none;">
                         <div class="reviews-group d-flex">
                             <!-- Stars will be added dynamically -->
@@ -40,9 +43,6 @@
                     </div>
                     <div class="product-single__short-desc">
                         <p id="quickViewDescription">-</p>
-                    </div>
-                    <div class="product-single__stock mb-2" id="quickViewStock" style="display: none;">
-                        <span class="badge" id="quickViewStockBadge"></span>
                     </div>
                     <form name="addtocart-form" method="post" id="quickViewAddToCartForm">
                         <input type="hidden" name="product_id" id="quickViewProductId" value="">
@@ -93,11 +93,11 @@
                         </div>
                         <div class="meta-item" id="quickViewBrandItem" style="display: none;">
                             <label>{{ __('quick_view.Brand') }}:</label>
-                            <span id="quickViewBrand">-</span>
+                            <span id="quickViewBrandLink">-</span>
                         </div>
                         <div class="meta-item" id="quickViewCategoriesItem" style="display: none;">
                             <label>{{ __('quick_view.Categories') }}:</label>
-                            <span id="quickViewCategories">-</span>
+                            <span id="quickViewCategoriesLinks">-</span>
                         </div>
                         <div class="meta-item" id="quickViewTagsItem" style="display: none;">
                             <label>{{ __('quick_view.Tags') }}:</label>
