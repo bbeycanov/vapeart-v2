@@ -13,11 +13,9 @@
         : null;
 @endphp
 
-<style>
-    .g-clamp-1{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
-    .g-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-    .g-clamp-3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-</style>
+@push('styles')
+<link rel="stylesheet" href="{{ asset('storefront/css/forms/google-search-preview.css') }}">
+@endpush
 
 <div
     x-data="serpPreview(
@@ -76,29 +74,6 @@
     </div>
 </div>
 
-<script>
-    function serpPreview(metaTitleRef, metaDescRef, slugRef, baseUrl, host, siteName, favicon) {
-        return {
-            meta_title: metaTitleRef,
-            meta_description: metaDescRef,
-            slug: slugRef,
-
-            baseUrl, host, siteName, favicon,
-
-            get siteInitial() {
-                return (this.siteName || 'S').toString().trim().charAt(0).toUpperCase();
-            },
-            get protoHost() {
-                try { return new URL(this.baseUrl).origin.replace(/\/+$/,''); }
-                catch { return this.baseUrl; }
-            },
-            get slugPath() {
-                return (this.slug || '').toString().trim().replace(/^\/+/, '');
-            },
-            get descLine() {
-                const d = (this.meta_description || '').trim();
-                return d.length > 170 ? d.substring(0, 170) + '…' : d;
-            },
-        }
-    }
-</script>
+@push('scripts')
+<script src="{{ asset('storefront/js/forms/google-search-preview.js') }}" defer></script>
+@endpush

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="zxx">
+<html dir="ltr" lang="{{ app()->getLocale() }}">
     <head>
         <title>VapeartBaku.com</title>
 
         @include('includes.head')
 
         @yield('head')
+        
+        @stack('styles')
     </head>
     <body>
 
@@ -23,13 +25,17 @@
 
     @include('includes.cart-drawer')
 
+    @include('includes.branch-selection-modal')
+
     @include('includes.site-map')
 
     @include('includes.quick-view')
 
-{{--    @include('includes.newsletter-popup')--}}
+    @include('includes.age-verification-popup')
 
     @include('includes.scripts')
+
+    @stack('scripts')
 
     </body>
 </html>

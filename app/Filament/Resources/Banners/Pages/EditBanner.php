@@ -27,4 +27,23 @@ class EditBanner extends EditRecord
             RestoreAction::make(),
         ];
     }
+
+    protected function afterSave(): void
+    {
+        $this->clearCache();
+    }
+
+    protected function afterDelete(): void
+    {
+        $this->clearCache();
+    }
+
+    protected function clearCache(): void
+    {
+        // Banner service cache'ini temizle
+        $bannerService = app(\App\Services\Contracts\BannerServiceInterface::class);
+        if (method_exists($bannerService, 'flushServiceCache')) {
+            $bannerService->flushServiceCache();
+        }
+    }
 }

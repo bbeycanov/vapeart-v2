@@ -7,11 +7,27 @@
         </a>
 
         <div class="logo">
-            <a href="#">
-                <img src="{{ asset('storefront/images/logo.png') }}" alt="Uomo" class="logo__image d-block">
+            <a href="{{ route('home', app()->getLocale()) }}">
+                @php
+                    $mobileLogo = settings('site.mobile_logo');
+                    $defaultLogo = asset('storefront/images/logo.png');
+                @endphp
+                <img src="{{ $mobileLogo ?: $defaultLogo }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image d-block">
             </a>
         </div>
 
+        @if(isset($headerBranches) && $headerBranches->isNotEmpty())
+            <a href="#" class="header-tools__item me-2" data-bs-toggle="modal" data-bs-target="#branchPhoneModal">
+                <svg class="d-block" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+            </a>
+        @endif
+
+        <a href="{{ route('wishlist.index', app()->getLocale()) }}" class="header-tools__item header-tools__wishlist">
+            <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_heart" /></svg>
+            <span class="wishlist-amount d-block position-absolute js-wishlist-items-count theme-bg-color">0</span>
+        </a>
         <a href="#" class="header-tools__item header-tools__cart js-open-aside" data-aside="cartDrawer">
             <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_cart" /></svg>
             <span class="cart-amount d-block position-absolute js-cart-items-count">3</span>
@@ -20,17 +36,52 @@
 
     <nav class="header-mobile__navigation navigation d-flex flex-column w-100 position-absolute top-100 bg-body overflow-auto">
         <div class="container">
-            <form action="#" method="GET" class="search-field position-relative mt-4 mb-3">
+            <form action="{{ route('search.index', app()->getLocale()) }}" method="GET" class="search-field position-relative mt-4 mb-3" id="mobileSearchForm">
                 <div class="position-relative">
-                    <input class="search-field__input w-100 border rounded-1" type="text" name="search-keyword" placeholder="Search products">
+                    <input 
+                        class="search-field__input w-100 border rounded-1" 
+                        type="text" 
+                        name="q" 
+                        id="mobileSearchInput"
+                        placeholder="{{ __('Search products...') }}"
+                        autocomplete="off"
+                    >
                     <button class="btn-icon search-popup__submit pb-0 me-2" type="submit">
                         <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_search" /></svg>
                     </button>
-                    <button class="btn-icon btn-close-lg search-popup__reset pb-0 me-2" type="reset"></button>
+                    <button class="btn-icon btn-close-lg search-popup__reset pb-0 me-2 d-none" type="button" id="mobileSearchClear"></button>
                 </div>
 
-                <div class="position-absolute start-0 top-100 m-0 w-100">
-                    <div class="search-result"></div>
+                <!-- Mobile Autocomplete Dropdown -->
+                <div class="position-absolute start-0 top-100 m-0 w-100 d-none" id="mobileSearchAutocomplete" style="z-index: 1000;">
+                    <div class="bg-white border rounded-3 shadow-lg mt-2 overflow-hidden">
+                        <!-- Loading State -->
+                        <div class="autocomplete-loading p-4 text-center d-none" id="mobileAutocompleteLoading">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">{{ __('Loading...') }}</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Results Container -->
+                        <div class="autocomplete-results" id="mobileAutocompleteResults" style="max-height: 400px; overflow-y: auto;">
+                            <!-- Product suggestions will appear here -->
+                        </div>
+                        
+                        <!-- No Results -->
+                        <div class="autocomplete-no-results p-4 text-center text-secondary d-none" id="mobileAutocompleteNoResults">
+                            <p class="mb-0">{{ __('No products found') }}</p>
+                        </div>
+                        
+                        <!-- View All Results -->
+                        <div class="autocomplete-footer border-top p-3 text-center d-none" id="mobileAutocompleteFooter">
+                            <a href="{{ route('search.index', app()->getLocale()) }}" class="btn btn-link text-decoration-none">
+                                {{ __('View all results') }}
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-1">
+                                    <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -38,136 +89,62 @@
         <div class="container">
             <div class="overflow-hidden">
                 <ul class="navigation__list list-unstyled position-relative">
+                    @php
+                        $locale = app()->getLocale();
+                    @endphp
+                    
+                    {{-- 1. Ana Sayfa - Static --}}
                     <li class="navigation__item">
-                        <a href="#" class="navigation__link js-nav-right d-flex align-items-center">Home<svg class="ms-auto" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg></a>
-                        <div class="sub-menu position-absolute top-0 start-100 w-100 d-none">
-                            <a href="#" class="navigation__link js-nav-left d-flex align-items-center border-bottom mb-2"><svg class="me-2" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_prev_sm" /></svg>Home</a>
-                            <ul class="list-unstyled">
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 1</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 2</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 3</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 4</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 5</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 6</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 7</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 8</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 9</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 10</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 11</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 12</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 13</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 14</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 15</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 16</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 17</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 18</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 19</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 20</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 21</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 22</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 23</a></li>
-                            </ul>
-                        </div>
+                        <a href="{{ route('home', $locale) }}" class="navigation__link">{{ __('Home') }}</a>
                     </li>
+                    
+                    {{-- 2. Categories - Static (goes to categories index page) --}}
                     <li class="navigation__item">
-                        <a href="#" class="navigation__link js-nav-right d-flex align-items-center">Shop<svg class="ms-auto" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg></a>
-                        <div class="sub-menu position-absolute top-0 start-100 w-100 d-none">
-                            <a href="#" class="navigation__link js-nav-left d-flex align-items-center border-bottom mb-3"><svg class="me-2" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_prev_sm" /></svg>Shop</a>
-                            <div class="sub-menu__wrapper">
-                                <a href="#" class="navigation__link js-nav-right d-flex align-items-center">Shop List<svg class="ms-auto" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg></a>
-                                <div class="sub-menu__wrapper position-absolute top-0 start-100 w-100 d-none">
-                                    <a href="#" class="navigation__link js-nav-left d-flex align-items-center border-bottom mb-2"><svg class="me-2" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_prev_sm" /></svg>Shop List</a>
-                                    <ul class="sub-menu__list list-unstyled">
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V1</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V2</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V3</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V4</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V5</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V6</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V7</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V8</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V9</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Item Style</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Horizontal Scroll</a></li>
-                                    </ul>
-                                </div>
-
-                                <a href="#" class="navigation__link js-nav-right d-flex align-items-center">Shop Detail<svg class="ms-auto" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg></a>
-                                <div class="sub-menu__wrapper position-absolute top-0 start-100 w-100 d-none">
-                                    <a href="#" class="navigation__link js-nav-left d-flex align-items-center border-bottom mb-2"><svg class="me-2" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_prev_sm" /></svg>Shop Detail</a>
-                                    <ul class="sub-menu__list list-unstyled">
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V1</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V2</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V3</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V4</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V5</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V6</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V7</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V8</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V9</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V10</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V11</a></li>
-                                    </ul>
-                                </div>
-
-                                <a href="#" class="navigation__link js-nav-right d-flex align-items-center">Other Pages<svg class="ms-auto" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg></a>
-                                <div class="sub-menu__wrapper position-absolute top-0 start-100 w-100 d-none">
-                                    <a href="#" class="navigation__link js-nav-left d-flex align-items-center border-bottom mb-2"><svg class="me-2" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_prev_sm" /></svg>Other Pages</a>
-                                    <ul class="sub-menu__list list-unstyled">
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Collection Grid</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Simple Product</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Variable Product</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">External Product</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Grouped Product</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">On Sale</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Out of Stock</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shopping Cart</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Checkout</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Order Complete</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Order Tracking</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="{{ route('categories.index', $locale) }}" class="navigation__link js-nav-right d-flex align-items-center">
+                            {{ __('Categories') }}
+                            <svg class="ms-auto" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg>
+                        </a>
                     </li>
-
-                    <li class="navigation__item">
-                        <a href="#" class="navigation__link js-nav-right d-flex align-items-center">Blog<svg class="ms-auto" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg></a>
-                        <div class="sub-menu position-absolute top-0 start-100 w-100 d-none">
-                            <a href="#" class="navigation__link js-nav-left d-flex align-items-center border-bottom mb-2"><svg class="me-2" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_prev_sm" /></svg>Blog</a>
-                            <ul class="list-unstyled">
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Blog V1</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Blog V2</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Blog V3</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Blog Detail</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="navigation__item">
-                        <a href="#" class="navigation__link js-nav-right d-flex align-items-center">Pages<svg class="ms-auto" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg></a>
-                        <div class="sub-menu position-absolute top-0 start-100 w-100 d-none">
-                            <a href="#" class="navigation__link js-nav-left d-flex align-items-center border-bottom mb-2"><svg class="me-2" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_prev_sm" /></svg>Pages</a>
-                            <ul class="list-unstyled">
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">My Account</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Login / Register</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Store Locator</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Lookbook</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Faq</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Terms</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">404 Error</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Coming Soon</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="navigation__item">
-                        <a href="#" class="navigation__link">About</a>
-                    </li>
-
-                    <li class="navigation__item">
-                        <a href="#" class="navigation__link">Contact</a>
-                    </li>
+                    
+                    {{-- 3. Dynamic Menu Items from MobileMenu position --}}
+                    @if(isset($mobileMenus) && $mobileMenus->isNotEmpty())
+                        @foreach($mobileMenus as $menu)
+                            @php
+                                $menuTitle = $menu->getTranslation('title', $locale);
+                                $menuUrl = $menu->getTranslation('url', $locale) ?: '#';
+                                $hasChildren = $menu->children->isNotEmpty();
+                                $target = $menu->target ?: '_self';
+                            @endphp
+                            <li class="navigation__item">
+                                @if($hasChildren)
+                                    <a href="{{ $menuUrl }}" class="navigation__link js-nav-right d-flex align-items-center" target="{{ $target }}">
+                                        {{ $menuTitle }}
+                                        <svg class="ms-auto" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg>
+                                    </a>
+                                    <div class="sub-menu position-absolute top-0 start-100 w-100 d-none">
+                                        <a href="{{ $menuUrl }}" class="navigation__link js-nav-left d-flex align-items-center border-bottom mb-2" target="{{ $target }}">
+                                            <svg class="me-2" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_prev_sm" /></svg>
+                                            {{ $menuTitle }}
+                                        </a>
+                                        <ul class="list-unstyled">
+                                            @foreach($menu->children as $child)
+                                                @php
+                                                    $childTitle = $child->getTranslation('title', $locale);
+                                                    $childUrl = $child->getTranslation('url', $locale) ?: '#';
+                                                    $childTarget = $child->target ?: '_self';
+                                                @endphp
+                                                <li class="sub-menu__item">
+                                                    <a href="{{ $childUrl }}" class="menu-link menu-link_us-s" target="{{ $childTarget }}">{{ $childTitle }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @else
+                                    <a href="{{ $menuUrl }}" class="navigation__link" target="{{ $target }}">{{ $menuTitle }}</a>
+                                @endif
+                            </li>
+                        @endforeach
+                    @endif
                 </ul>
             </div>
         </div>
@@ -222,22 +199,85 @@
         <div class="header-top theme-bg-color-secondary">
             <div class="container d-flex align-items-center">
                 <div class="logo">
-                    <a href="#">
+                    <a href="{{ route('home', app()->getLocale()) }}">
                         <img src="{{ asset('storefront/images/logo-white.png') }}" alt="Uomo" class="logo__image">
                     </a>
                 </div>
 
-                <form action="./" method="GET" class="header-search search-field">
-                    <input class="header-search__input w-100" type="text" name="search-keyword" placeholder="Search products...">
+                <form action="{{ route('search.index', app()->getLocale()) }}" method="GET" class="header-search search-field position-relative" id="desktopSearchForm">
+                    <input 
+                        class="header-search__input w-100" 
+                        type="text" 
+                        name="q" 
+                        id="desktopSearchInput"
+                        placeholder="{{ __('Search products...') }}"
+                        autocomplete="off"
+                    >
 
                     <button class="btn header-search__btn" type="submit">
                         <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_search" /></svg>
                     </button>
+                    
+                    <button class="btn-icon btn-close-lg d-none" type="button" id="desktopSearchClear" style="position: absolute; right: 3rem; top: 50%; transform: translateY(-50%); padding: 0.25rem;"></button>
+
+                    <!-- Desktop Autocomplete Dropdown -->
+                    <div class="position-absolute start-0 top-100 w-100 d-none" id="desktopSearchAutocomplete" style="z-index: 1000; margin-top: 0.5rem;">
+                        <div class="bg-white border rounded-3 shadow-lg overflow-hidden">
+                            <!-- Loading State -->
+                            <div class="autocomplete-loading p-4 text-center d-none" id="desktopAutocompleteLoading">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">{{ __('Loading...') }}</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Results Container -->
+                            <div class="autocomplete-results" id="desktopAutocompleteResults" style="max-height: 400px; overflow-y: auto;">
+                                <!-- Product suggestions will appear here -->
+                            </div>
+                            
+                            <!-- No Results -->
+                            <div class="autocomplete-no-results p-4 text-center text-secondary d-none" id="desktopAutocompleteNoResults">
+                                <p class="mb-0">{{ __('No products found') }}</p>
+                            </div>
+                            
+                            <!-- View All Results -->
+                            <div class="autocomplete-footer border-top p-3 text-center d-none" id="desktopAutocompleteFooter">
+                                <a href="{{ route('search.index', app()->getLocale()) }}" class="btn btn-link text-decoration-none">
+                                    {{ __('View all results') }}
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-1">
+                                        <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </form>
 
                 <div class="header-tools d-flex align-items-center">
+                    @if(isset($headerBranches) && $headerBranches->isNotEmpty())
+                        <div class="header-phone-slider position-relative me-3" id="desktopHeaderPhoneSlider">
+                            <a href="#" class="header-phone-link text-white text-decoration-none d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#branchPhoneModal">
+                                <svg class="header-phone-icon me-2" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                </svg>
+                                <div class="header-phone-content position-relative">
+                                    <div class="header-phone-slider-wrapper" id="desktopPhoneSliderWrapper">
+                                        @foreach($headerBranches as $branch)
+                                            <div class="header-phone-item d-flex flex-column">
+                                                <span class="header-phone-name">{{ $branch['name'] }}</span>
+                                                <span class="header-phone-number">{{ $branch['phone'] }}</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endif
 
-
+                    <a href="{{ route('wishlist.index', app()->getLocale()) }}" class="header-tools__item header-tools__wishlist">
+                        <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_heart" /></svg>
+                        <span class="wishlist-amount d-block position-absolute js-wishlist-items-count theme-bg-color">0</span>
+                    </a>
                     <a href="#" class="header-tools__item header-tools__cart js-open-aside" data-aside="cartDrawer">
                         <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_cart" /></svg>
                         <span class="cart-amount d-block position-absolute js-cart-items-count theme-bg-color">3</span>
@@ -256,153 +296,161 @@
             <div class="container d-flex align-items-center">
                 <nav class="navigation">
                     <ul class="navigation__list list-unstyled d-flex">
-                        <li class="navigation__item">
-                            <a href="#" class="navigation__link">Home</a>
-                            <div class="box-menu" style="width: 800px;">
-                                <div class="col pe-4">
-                                    <ul class="sub-menu__list list-unstyled">
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 1</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 2</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 3</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 4</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 5</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 6</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="col pe-4">
-                                    <ul class="sub-menu__list list-unstyled">
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 7</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 8</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 9</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 10</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 11</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 12</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="col pe-4">
-                                    <ul class="sub-menu__list list-unstyled">
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 13</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 14</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 15</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 16</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 17</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 18</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="col">
-                                    <ul class="sub-menu__list list-unstyled">
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 19</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 20</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 21</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 22</a></li>
-                                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Home 23</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="navigation__item">
-                            <a href="#" class="navigation__link">Shop</a>
-                            <div class="mega-menu">
-                                <div class="container d-flex">
-                                    <div class="col pe-4">
-                                        <a href="#" class="sub-menu__title">Shop List</a>
-                                        <ul class="sub-menu__list list-unstyled">
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V1</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V2</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V3</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V4</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V5</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V6</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V7</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V8</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop List V9</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Item Style</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Horizontal Scroll</a></li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="col pe-4">
-                                        <a href="#" class="sub-menu__title">Shop Detail</a>
-                                        <ul class="sub-menu__list list-unstyled">
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V1</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V2</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V3</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V4</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V5</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V6</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V7</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V8</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V9</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V10</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shop Detail V11</a></li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="col pe-4">
-                                        <a href="#" class="sub-menu__title">Other Pages</a>
-                                        <ul class="sub-menu__list list-unstyled">
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Collection Grid</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Simple Product</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Variable Product</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">External Product</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Grouped Product</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">On Sale</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Out of Stock</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Shopping Cart</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Checkout</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Order Complete</a></li>
-                                            <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Order Tracking</a></li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="mega-menu__media col">
-                                        <div class="position-relative">
-                                            <img loading="lazy" class="mega-menu__img" src="{{ asset('storefront/images/mega-menu-item.jpg') }}" alt="New Horizons">
-                                            <div class="mega-menu__media-content content_abs content_left content_bottom">
-                                                <h3>NEW</h3>
-                                                <h3 class="mb-0">HORIZONS</h3>
-                                                <a href="#" class="btn-link default-underline fw-medium">SHOP NOW</a>
+                        @if(isset($headerMenus) && $headerMenus->isNotEmpty())
+                            @foreach($headerMenus as $menu)
+                                @php
+                                    $menuTitle = $menu->getTranslation('title', app()->getLocale());
+                                    $menuUrl = $menu->getTranslation('url', app()->getLocale()) ?: '#';
+                                    $hasChildren = $menu->children->isNotEmpty();
+                                    $target = $menu->target ?: '_self';
+                                    $menuType = $menu->type;
+                                @endphp
+                                <li class="navigation__item">
+                                    @if($menuType === 'mega' && $hasChildren)
+                                        {{-- MEGA MENU --}}
+                                        <a href="{{ $menuUrl }}" class="navigation__link" target="{{ $target }}">{{ $menuTitle }}</a>
+                                        <div class="mega-menu">
+                                            <div class="container d-flex">
+                                                @foreach($menu->children as $groupMenu)
+                                                    @php
+                                                        $groupTitle = $groupMenu->getTranslation('title', app()->getLocale());
+                                                        $groupUrl = $groupMenu->getTranslation('url', app()->getLocale()) ?: '#';
+                                                        $groupChildren = $groupMenu->children;
+                                                    @endphp
+                                                    <div class="col pe-4">
+                                                        <a href="{{ $groupUrl }}" class="sub-menu__title">{{ $groupTitle }}</a>
+                                                        @if($groupChildren->isNotEmpty())
+                                                            <ul class="sub-menu__list list-unstyled">
+                                                                @foreach($groupChildren as $child)
+                                                                    @php
+                                                                        $childTitle = $child->getTranslation('title', app()->getLocale());
+                                                                        $childUrl = $child->getTranslation('url', app()->getLocale()) ?: '#';
+                                                                        $childTarget = $child->target ?: '_self';
+                                                                    @endphp
+                                                                    <li class="sub-menu__item">
+                                                                        <a href="{{ $childUrl }}" class="menu-link menu-link_us-s" target="{{ $childTarget }}">{{ $childTitle }}</a>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                    </div>
+                                                @endforeach
+                                                
+                                                {{-- Widget Area --}}
+                                                @if($menu->widgets->isNotEmpty())
+                                                    @foreach($menu->widgets->where('is_active', true)->sortBy('sort_order') as $widget)
+                                                        @php
+                                                            $widgetTitle = $widget->getTranslation('title', app()->getLocale());
+                                                            $widgetContent = $widget->getTranslation('content', app()->getLocale());
+                                                            $widgetButtonText = $widget->getTranslation('button_text', app()->getLocale());
+                                                            $widgetButtonUrl = $widget->getTranslation('button_url', app()->getLocale()) ?: '#';
+                                                            $widgetImage = $widget->getFirstMediaUrl('image');
+                                                        @endphp
+                                                        <div class="mega-menu__media col">
+                                                            <div class="position-relative">
+                                                                @if($widgetImage)
+                                                                    <img loading="lazy" class="mega-menu__img" src="{{ $widgetImage }}" alt="{{ $widgetTitle ?: 'Widget Image' }}">
+                                                                @endif
+                                                                <div class="mega-menu__media-content content_abs content_left content_bottom">
+                                                                    @if($widgetTitle)
+                                                                        @php
+                                                                            $titleWords = explode(' ', $widgetTitle);
+                                                                            $firstWord = $titleWords[0] ?? '';
+                                                                            $remainingWords = implode(' ', array_slice($titleWords, 1));
+                                                                        @endphp
+                                                                        <h3>{{ strtoupper($firstWord) }}</h3>
+                                                                        @if($remainingWords)
+                                                                            <h3 class="mb-0">{{ strtoupper($remainingWords) }}</h3>
+                                                                        @endif
+                                                                    @endif
+                                                                    @if($widgetContent)
+                                                                        <p class="mega-menu__content mb-2">{{ $widgetContent }}</p>
+                                                                    @endif
+                                                                    @if($widgetButtonText && $widgetButtonUrl)
+                                                                        <a href="{{ $widgetButtonUrl }}" class="btn-link default-underline fw-medium">{{ strtoupper($widgetButtonText) }}</a>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="navigation__item">
-                            <a href="#" class="navigation__link">Blog</a>
-                            <ul class="default-menu list-unstyled">
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Blog V1</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Blog V2</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Blog V3</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Blog Detail</a></li>
-                            </ul>
-                        </li>
-                        <li class="navigation__item">
-                            <a href="#" class="navigation__link">Pages</a>
-                            <ul class="default-menu list-unstyled">
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">My Account</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Login / Register</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Store Locator</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Lookbook</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Faq</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Terms</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">404 Error</a></li>
-                                <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Coming Soon</a></li>
-                            </ul>
-                        </li>
-                        <li class="navigation__item">
-                            <a href="#" class="navigation__link">About</a>
-                        </li>
-                        <li class="navigation__item">
-                            <a href="#" class="navigation__link">Contact</a>
-                        </li>
+                                    @elseif($menuType === 'dropdown' && $hasChildren)
+                                        {{-- DROPDOWN MENU --}}
+                                        <a href="{{ $menuUrl }}" class="navigation__link" target="{{ $target }}">{{ $menuTitle }}</a>
+                                        <ul class="default-menu list-unstyled">
+                                            @foreach($menu->children as $child)
+                                                @php
+                                                    $childTitle = $child->getTranslation('title', app()->getLocale());
+                                                    $childUrl = $child->getTranslation('url', app()->getLocale()) ?: '#';
+                                                    $childTarget = $child->target ?: '_self';
+                                                @endphp
+                                                <li class="sub-menu__item">
+                                                    <a href="{{ $childUrl }}" class="menu-link menu-link_us-s" target="{{ $childTarget }}">{{ $childTitle }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        {{-- NORMAL LINK --}}
+                                        <a href="{{ $menuUrl }}" class="navigation__link" target="{{ $target }}">{{ $menuTitle }}</a>
+                                    @endif
+                                </li>
+                            @endforeach
+                        @endif
                     </ul>
                 </nav>
             </div>
         </div>
     </div>
 </header>
+
+<!-- Branch Phone Modal -->
+@if(isset($headerBranches) && $headerBranches->isNotEmpty())
+<div class="modal fade" id="branchPhoneModal" tabindex="-1" aria-labelledby="branchPhoneModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content branch-modal-content">
+            <div class="modal-header border-bottom">
+                <div class="d-flex align-items-center">
+                    <svg class="me-2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                    <h5 class="modal-title mb-0" id="branchPhoneModalLabel">{{ __('Select Branch') }}</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="branch-list">
+                    @foreach($headerBranches as $index => $branch)
+                        <div class="branch-item">
+                            <div class="branch-item-content">
+                                <div class="branch-icon-wrapper">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="branch-info">
+                                    <h6 class="branch-name">{{ $branch['name'] }}</h6>
+                                    <div class="branch-phone-wrapper">
+                                        <svg class="branch-phone-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                        </svg>
+                                        <span class="branch-phone">{{ $branch['phone'] }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="tel:{{ $branch['phone'] }}" class="branch-call-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                </svg>
+                                <span>{{ __('Call') }}</span>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 

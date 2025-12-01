@@ -19,4 +19,18 @@ class CreateBanner extends CreateRecord
             LocaleSwitcher::make(),
         ];
     }
+
+    protected function afterCreate(): void
+    {
+        $this->clearCache();
+    }
+
+    protected function clearCache(): void
+    {
+        // Banner service cache'ini temizle
+        $bannerService = app(\App\Services\Contracts\BannerServiceInterface::class);
+        if (method_exists($bannerService, 'flushServiceCache')) {
+            $bannerService->flushServiceCache();
+        }
+    }
 }

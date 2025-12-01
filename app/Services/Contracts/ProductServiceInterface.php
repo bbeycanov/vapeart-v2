@@ -41,4 +41,11 @@ interface ProductServiceInterface
      * @return string
      */
     public function buildSchemaFor(Product $product): string;
+
+    /**
+     * @param Product $product
+     * @param int $limit
+     * @return \Illuminate\Support\Collection
+     */
+    public function getRelatedProducts(Product $product, int $limit = 8): \Illuminate\Support\Collection;
 }

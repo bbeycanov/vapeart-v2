@@ -115,4 +115,16 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Contact Form Email Address
+    |--------------------------------------------------------------------------
+    |
+    | This email address will receive contact form submissions. If not set,
+    | it will default to MAIL_FROM_ADDRESS.
+    |
+    */
+
+    'contact_to_address' => env('MAIL_CONTACT_TO_ADDRESS'),
+
 ];

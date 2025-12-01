@@ -6,6 +6,7 @@
             <div class="product-single">
                 <div class="product-single__media m-0">
                     <div class="product-single__image position-relative w-100">
+                        <div id="quickViewDiscountBadge" style="position: absolute; top: 0; left: 0; margin: 12px; z-index: 10; display: none;"></div>
                         <div class="swiper-container js-swiper-slider"
                              data-settings='{
                   "slidesPerView": 1,
@@ -17,19 +18,8 @@
                     "prevEl": ".modal-dialog.quick-view .product-single__media .swiper-button-prev"
                   }
                 }'>
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide product-single__image-item">
-                                    <img loading="lazy" src="{{ asset('storefront/images/products/quickview_1.jpg') }}" alt="">
-                                </div>
-                                <div class="swiper-slide product-single__image-item">
-                                    <img loading="lazy" src="{{ asset('storefront/images/products/quickview_2.jpg') }}" alt="">
-                                </div>
-                                <div class="swiper-slide product-single__image-item">
-                                    <img loading="lazy" src="{{ asset('storefront/images/products/quickview_3.jpg') }}" alt="">
-                                </div>
-                                <div class="swiper-slide product-single__image-item">
-                                    <img loading="lazy" src="{{ asset('storefront/images/products/quickview_4.jpg') }}" alt="">
-                                </div>
+                            <div class="swiper-wrapper" id="quickViewImages">
+                                <!-- Images will be loaded dynamically -->
                             </div>
                             <div class="swiper-button-prev"><svg width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_prev_sm" /></svg></div>
                             <div class="swiper-button-next"><svg width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg></div>
@@ -37,54 +27,42 @@
                     </div>
                 </div>
                 <div class="product-single__detail">
-                    <h1 class="product-single__name">Lightweight Puffer Jacket With a Hood</h1>
+                    <h1 class="product-single__name" id="quickViewName">-</h1>
                     <div class="product-single__price">
-                        <span class="current-price">$449</span>
+                        <span class="current-price" id="quickViewPrice">-</span>
+                        <span class="old-price" id="quickViewOldPrice" style="display: none;"></span>
+                    </div>
+                    <div class="product-single__rating mb-2" id="quickViewRating" style="display: none;">
+                        <div class="reviews-group d-flex">
+                            <!-- Stars will be added dynamically -->
+                        </div>
+                        <span class="reviews-note text-lowercase text-secondary ms-2" id="quickViewReviewsCount"></span>
                     </div>
                     <div class="product-single__short-desc">
-                        <p>Phasellus sed volutpat orci. Fusce eget lore mauris vehicula elementum gravida nec dui. Aenean aliquam varius ipsum, non ultricies tellus sodales eu. Donec dignissim viverra nunc, ut aliquet magna posuere eget.</p>
+                        <p id="quickViewDescription">-</p>
                     </div>
-                    <form name="addtocart-form" method="post">
-                        <div class="product-single__swatches">
-                            <div class="product-swatch text-swatches">
-                                <label>Sizes</label>
-                                <div class="swatch-list">
-                                    <input type="radio" name="size" id="swatch-1">
-                                    <label class="swatch js-swatch" for="swatch-1" aria-label="Extra Small" data-bs-toggle="tooltip" data-bs-placement="top" title="Extra Small">XS</label>
-                                    <input type="radio" name="size" id="swatch-2" checked>
-                                    <label class="swatch js-swatch" for="swatch-2" aria-label="Small" data-bs-toggle="tooltip" data-bs-placement="top" title="Small">S</label>
-                                    <input type="radio" name="size" id="swatch-3">
-                                    <label class="swatch js-swatch" for="swatch-3" aria-label="Middle" data-bs-toggle="tooltip" data-bs-placement="top" title="Middle">M</label>
-                                    <input type="radio" name="size" id="swatch-4">
-                                    <label class="swatch js-swatch" for="swatch-4" aria-label="Large" data-bs-toggle="tooltip" data-bs-placement="top" title="Large">L</label>
-                                    <input type="radio" name="size" id="swatch-5">
-                                    <label class="swatch js-swatch" for="swatch-5" aria-label="Extra Large" data-bs-toggle="tooltip" data-bs-placement="top" title="Extra Large">XL</label>
-                                </div>
-                                <a href="#" class="sizeguide-link" data-bs-toggle="modal" data-bs-target="#sizeGuide">Size Guide</a>
-                            </div>
-                            <div class="product-swatch color-swatches">
-                                <label>Color</label>
-                                <div class="swatch-list">
-                                    <input type="radio" name="color" id="swatch-11">
-                                    <label class="swatch swatch-color js-swatch" for="swatch-11" aria-label="Black" data-bs-toggle="tooltip" data-bs-placement="top" title="Black" style="color: #222"></label>
-                                    <input type="radio" name="color" id="swatch-12" checked>
-                                    <label class="swatch swatch-color js-swatch" for="swatch-12" aria-label="Red" data-bs-toggle="tooltip" data-bs-placement="top" title="Red" style="color: #C93A3E"></label>
-                                    <input type="radio" name="color" id="swatch-13">
-                                    <label class="swatch swatch-color js-swatch" for="swatch-13" aria-label="Grey" data-bs-toggle="tooltip" data-bs-placement="top" title="Grey" style="color: #E4E4E4"></label>
-                                </div>
-                            </div>
+                    <div class="product-single__stock mb-2" id="quickViewStock" style="display: none;">
+                        <span class="badge" id="quickViewStockBadge"></span>
+                    </div>
+                    <form name="addtocart-form" method="post" id="quickViewAddToCartForm">
+                        <input type="hidden" name="product_id" id="quickViewProductId" value="">
+                        <div class="product-single__swatches" style="display: none;">
+                            <!-- Swatches can be added later if needed -->
                         </div>
                         <div class="product-single__addtocart">
                             <div class="qty-control position-relative">
-                                <input type="number" name="quantity" value="1" min="1" class="qty-control__number text-center">
+                                <input type="number" name="quantity" value="1" min="1" class="qty-control__number text-center" id="quickViewQuantity">
                                 <div class="qty-control__reduce">-</div>
                                 <div class="qty-control__increase">+</div>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-addtocart js-open-aside" data-aside="cartDrawer">Add to Cart</button>
+                            <button type="button" class="btn btn-primary btn-addtocart js-add-cart-from-quickview js-open-aside" data-aside="cartDrawer">Add to Cart</button>
                         </div>
                     </form>
                     <div class="product-single__addtolinks">
-                        <a href="#" class="menu-link menu-link_us-s add-to-wishlist"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_heart" /></svg><span>Add to Wishlist</span></a>
+                        <a href="#" class="menu-link menu-link_us-s js-add-wishlist" id="quickViewWishlistBtn">
+                            <svg class="js-wishlist-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_heart" /></svg>
+                            <span class="js-wishlist-text">Add to Wishlist</span>
+                        </a>
                         <share-button class="share-button">
                             <button class="menu-link menu-link_us-s to-share border-0 bg-transparent d-flex align-items-center">
                                 <svg width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_sharing" /></svg>
@@ -111,15 +89,19 @@
                     <div class="product-single__meta-info mb-0">
                         <div class="meta-item">
                             <label>SKU:</label>
-                            <span>N/A</span>
+                            <span id="quickViewSku">-</span>
                         </div>
-                        <div class="meta-item">
+                        <div class="meta-item" id="quickViewBrandItem" style="display: none;">
+                            <label>Brand:</label>
+                            <span id="quickViewBrand">-</span>
+                        </div>
+                        <div class="meta-item" id="quickViewCategoriesItem" style="display: none;">
                             <label>Categories:</label>
-                            <span>Casual & Urban Wear, Jackets, Men</span>
+                            <span id="quickViewCategories">-</span>
                         </div>
-                        <div class="meta-item">
+                        <div class="meta-item" id="quickViewTagsItem" style="display: none;">
                             <label>Tags:</label>
-                            <span>biker, black, bomber, leather</span>
+                            <span id="quickViewTags">-</span>
                         </div>
                     </div>
                 </div>

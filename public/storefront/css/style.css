@@ -13126,6 +13126,20 @@ textarea.form-control-lg {
     line-height: 1rem;
     text-align: center; }
 
+.header-tools__wishlist {
+  position: relative; }
+  .header-tools__wishlist .wishlist-amount {
+    top: calc(0.25rem + 1em);
+    left: calc(0.5rem + 1.4em);
+    width: 1rem;
+    height: 1rem;
+    border-radius: 100%;
+    background: #b9a16b;
+    color: #ffffff;
+    font-size: 0.625rem;
+    line-height: 1rem;
+    text-align: center; }
+
 .header-search {
   display: flex;
   align-items: center;
@@ -13135,8 +13149,6 @@ textarea.form-control-lg {
   background-color: #ffffff; }
   .header-search > :first-child {
     padding-left: 0; }
-  .header-search > :last-child {
-    margin-left: 1.25rem; }
   .header-search .hover-container {
     display: none; }
     @media (min-width: 1200px) {
@@ -13154,6 +13166,245 @@ textarea.form-control-lg {
   padding: 0;
   border: 0;
   line-height: 1; }
+
+/* Header Phone Slider Styles */
+.header-phone-slider {
+  margin-right: 0.75rem;
+}
+
+.header-phone-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s ease;
+  padding: 0.25rem 0;
+}
+
+.header-phone-link:hover {
+  opacity: 0.85;
+}
+
+.header-phone-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  transition: transform 0.2s ease;
+}
+
+.header-phone-link:hover .header-phone-icon {
+  transform: scale(1.1);
+}
+
+.header-phone-content {
+  position: relative;
+  height: 40px;
+  overflow: hidden;
+  min-width: 120px;
+}
+
+.header-phone-slider-wrapper {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.5s ease-in-out;
+}
+
+.header-phone-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 40px;
+  line-height: 1.2;
+}
+
+.header-phone-name {
+  font-size: 0.6875rem;
+  opacity: 0.85;
+  color: inherit;
+  margin-bottom: 0.125rem;
+  white-space: nowrap;
+}
+
+.header-phone-number {
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: inherit;
+  white-space: nowrap;
+}
+
+/* Branch Modal Styles */
+.branch-modal-content {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.branch-modal-content .modal-header {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.branch-modal-content .modal-header svg {
+  color: #495057;
+  flex-shrink: 0;
+}
+
+.branch-modal-content .modal-title {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: #212529;
+}
+
+.branch-list {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.branch-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+  background-color: #ffffff;
+}
+
+.branch-item:last-child {
+  border-bottom: none;
+}
+
+.branch-item:hover {
+  background-color: #f8f9fa;
+}
+
+.branch-item-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 1rem;
+}
+
+.branch-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #86BC42;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(134, 188, 66, 0.25);
+}
+
+.branch-icon-wrapper svg {
+  width: 24px;
+  height: 24px;
+  stroke: #ffffff;
+  fill: none;
+}
+
+.branch-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.branch-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.branch-phone-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6c757d;
+}
+
+.branch-phone-icon {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  flex-shrink: 0;
+}
+
+.branch-phone {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #495057;
+  letter-spacing: 0.3px;
+}
+
+.branch-call-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: #86BC42;
+  color: #ffffff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(134, 188, 66, 0.3);
+  flex-shrink: 0;
+  white-space: nowrap;
+  border: none;
+}
+
+.branch-call-btn:hover {
+  background: #6fa336;
+  box-shadow: 0 4px 12px rgba(134, 188, 66, 0.4);
+  color: #ffffff;
+}
+
+.branch-call-btn:active {
+  background: #5d8a2d;
+  box-shadow: 0 2px 6px rgba(134, 188, 66, 0.3);
+}
+
+.branch-call-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  flex-shrink: 0;
+}
+
+/* Mobile Header Phone - Just Icon */
+.header-mobile .header-tools__item svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 575.98px) {
+  .branch-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .branch-call-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .header-phone-content {
+    min-width: 90px;
+    height: 40px;
+  }
+}
 
 .header-search__category {
   padding-right: 12px;
@@ -13349,7 +13600,7 @@ textarea.form-control-lg {
   color: #ffffff;
   background-color: #767676; }
 .header-desk_type_7 .logo {
-  margin-right: 12rem; }
+  margin-right: 7rem; }
 .header-desk_type_7 .header-search {
   width: 50.625rem;
   margin-right: auto; }

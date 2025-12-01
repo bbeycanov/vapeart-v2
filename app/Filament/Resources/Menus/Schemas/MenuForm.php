@@ -115,7 +115,7 @@ class MenuForm
                                 SpatieMediaLibraryFileUpload::make('icon')
                                     ->image()
                                     ->label(__('Icon'))
-                                    ->disk(config('filesystems.default'))
+                                    ->disk('public')
                                     ->collection('icon')
                                     ->maxSize(1024)
                                     ->imagePreviewHeight('250')

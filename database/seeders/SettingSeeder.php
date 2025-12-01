@@ -79,5 +79,8 @@ class SettingSeeder extends Seeder
             'en' => 'https://www.tiktok.com',
             'ru' => 'https://www.tiktok.com',
         ]);
+
+        // Age Verification Modal - Boolean value (not translatable)
+        $svc->set('age_verification_enabled', true);
     }
 }

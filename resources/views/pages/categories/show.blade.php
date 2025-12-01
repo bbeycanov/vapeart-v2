@@ -6,16 +6,525 @@
 
 @section('title', $category->getTranslation('meta_title', app()->getLocale()) ?? $category->getTranslation('name', app()->getLocale()))
 
-@section('content')
-    <section class="container py-8">
-        <article class="prose max-w-none">
-            <h1>{{ $category->getTranslation('name', app()->getLocale()) }}</h1>
+@php
+    $locale = app()->getLocale();
+    $categoryName = $category->getTranslation('name', $locale);
+    $categoryDescription = $category->getTranslation('description', $locale);
+    $categoryBanner = $category->getFirstMediaUrl('banner');
+    $selectedBrandId = request()->get('brand_id');
+    $selectedBrand = $selectedBrandId ? $brands->firstWhere('id', $selectedBrandId) : null;
+    
+    // Prepare brands array for JavaScript
+    $brandsArray = [];
+    if ($brands) {
+        foreach ($brands as $brand) {
+            $brandsArray[$brand->id] = [
+                'id' => $brand->id,
+                'name' => $brand->getTranslation('name', $locale),
+                'slug' => $brand->slug,
+                'logo' => $brand->getFirstMediaUrl('logo')
+            ];
+        }
+    }
+@endphp
 
-            @if($img = $category->getFirstMediaUrl('featured'))
-                <img src="{{ $img }}" alt="{{ $category->getTranslation('name', app()->getLocale()) }}" class="my-6">
+@section('content')
+    
+    <div class="mb-md-1 pb-md-3"></div>
+
+    <div class="container">
+        
+        <!-- Category Banner & Hero Section -->
+        <section class="mb-4 mb-md-5">
+            <div class="shop-banner position-relative rounded-3 overflow-hidden" style="min-height: 320px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                <div class="background-img background-img_overlay" style="background-color: #f5f5f5;">
+                    @if($categoryBanner)
+                        <img loading="lazy" src="{{ $categoryBanner }}" width="1903" height="600" alt="{{ $categoryName }}" class="slideshow-bg__img object-fit-cover" style="opacity: 0.9;">
+                        <!-- Dark overlay for better text readability on image -->
+                        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0,0,0,0.35);"></div>
+                    @endif
+                </div>
+
+                <div class="shop-banner__content position-relative z-2 text-center py-4 py-md-5 px-3 px-md-4 w-100">
+                    <h1 class="h1 text-uppercase fw-bold mb-3 mb-md-4 {{ $categoryBanner ? 'text-white' : 'text-dark' }}" style="font-size: clamp(1.75rem, 4vw, 2.5rem);">
+                        {{ $categoryName }}
+                    </h1>
+                    
+                    @if($categoryDescription)
+                        <div class="category-description mx-auto {{ $categoryBanner ? 'text-white' : 'text-secondary' }}" style="max-width: 800px; font-size: 1.05rem; line-height: 1.6;">
+                            {!! $categoryDescription !!}
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </section>
+
+        <!-- Breadcrumb -->
+        <div class="d-flex justify-content-between align-items-center mb-3 mb-md-4 pb-2 pb-md-3">
+            <div class="breadcrumb mb-0 d-none d-md-block flex-grow-1">
+                <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Home') }}</a>
+                <span class="breadcrumb-separator menu-link fw-medium ps-1 pe-1">/</span>
+                <a href="{{ route('categories.index', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('Categories') }}</a>
+                <span class="breadcrumb-separator menu-link fw-medium ps-1 pe-1">/</span>
+                <span class="menu-link menu-link_us-s text-uppercase fw-medium">{{ $categoryName }}</span>
+            </div>
+        </div>
+
+        <div class="category-page-wrapper">
+            <!-- Sticky Brand Navigation -->
+            @if($brands && $brands->count() > 0)
+                <div class="sticky-brand-nav bg-white border rounded-3 mb-4 mb-md-5" style="position: sticky; top: 60px; z-index: 99; transition: top 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    <div class="brand-scroll-container py-3 py-md-3.5 d-flex align-items-center px-3 px-md-4 position-relative">
+                        <div class="brand-scroll-wrapper d-flex gap-2 gap-md-3 overflow-auto no-scrollbar w-100" style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch;">
+                            <!-- All Brands Button -->
+                            <button type="button" 
+                                    class="brand-pill btn btn-sm {{ !$selectedBrandId ? 'btn-dark' : 'btn-outline-light text-dark border-secondary-subtle' }} rounded-pill px-3 px-md-4 py-2 py-md-2.5 flex-shrink-0 fw-medium d-flex align-items-center gap-2 transition-all"
+                                    data-brand-id="">
+                                <span>{{ __('All Brands') }}</span>
+                            </button>
+                            
+                            <!-- Brand List -->
+                            @foreach($brands as $brand)
+                                @php 
+                                    $isActive = $selectedBrandId == $brand->id;
+                                    $brandLogo = $brand->getFirstMediaUrl('logo');
+                                @endphp
+                                <button type="button" 
+                                        class="brand-pill btn btn-sm {{ $isActive ? 'btn-dark' : 'btn-outline-light text-dark border-secondary-subtle' }} rounded-pill px-3 px-md-4 py-2 py-md-2.5 flex-shrink-0 fw-medium d-flex align-items-center gap-2 transition-all"
+                                        data-brand-id="{{ $brand->id }}">
+                                    @if($brandLogo)
+                                        <img src="{{ $brandLogo }}" alt="{{ $brand->getTranslation('name', $locale) }}" class="rounded-circle bg-white p-0.5" style="width: 22px; height: 22px; object-fit: contain;">
+                                    @endif
+                                    <span>{{ $brand->getTranslation('name', $locale) }}</span>
+                                </button>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             @endif
 
-            {!! $category->getTranslation('description', app()->getLocale()) !!}
-        </article>
+            <!-- Main Content -->
+            <section class="pb-4 pb-md-5">
+                <!-- Products Header / Active Filter Info -->
+                <div class="d-flex justify-content-between align-items-center mb-4 mb-md-5 flex-wrap gap-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <h2 class="h5 mb-0 fw-bold">{{ __('Products') }}</h2>
+                        <span class="badge bg-light text-dark border rounded-pill px-3 py-2" id="products-count" style="font-size: 0.875rem; font-weight: 600;">
+                            {{ $list->total() }}
+                        </span>
+                    </div>
+
+                    <div id="brand-action-area" class="{{ $selectedBrand ? '' : 'd-none' }}">
+                        @if($selectedBrand)
+                            <a href="{{ route('brands.show', [$locale, $selectedBrand->slug]) }}" class="btn btn-sm btn-link text-decoration-none d-flex align-items-center text-dark fw-medium px-0">
+                                {{ __('Visit') }} {{ $selectedBrand->getTranslation('name', $locale) }} {{ __('Page') }}
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-1">
+                                    <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div id="products-container" style="min-height: 400px;">
+                    @if($list && $list->count() > 0)
+                        <div class="products-grid row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5 g-3 g-md-4 mb-4" id="products-grid">
+                            @foreach($list->items() as $product)
+                                <div class="col">
+                                    <x-product-card :product="$product" />
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Infinite Scroll Trigger / Loading State -->
+                        @if($list->hasMorePages() || $list->currentPage() > 1)
+                            <div class="load-more-section text-center mt-4 mt-md-5 pt-3">
+                                <!-- Progress Bar -->
+                                <div class="progress mb-4 mx-auto" style="height: 4px; width: 200px; max-width: 100%; background-color: #f0f0f0; border-radius: 2px;">
+                                    <div class="progress-bar bg-dark" 
+                                         role="progressbar" 
+                                         style="width: {{ $list->total() > 0 ? ($list->lastItem() / $list->total() * 100) : 0 }}%; border-radius: 2px; transition: width 0.3s ease;" 
+                                         aria-valuenow="{{ $list->lastItem() ?? 0 }}" 
+                                         aria-valuemin="0" 
+                                         aria-valuemax="{{ $list->total() }}">
+                                    </div>
+                                </div>
+                                
+                                <!-- Status Text -->
+                                <p class="text-muted small mb-3 d-none">
+                                    {{ __('Showing') }} <span class="fw-bold text-dark">{{ $list->firstItem() ?? 0 }} - {{ $list->lastItem() ?? 0 }}</span> {{ __('of') }} {{ $list->total() }} {{ __('products') }}
+                                </p>
+
+                                <!-- Infinite Scroll Trigger Element -->
+                                <div id="infinite-scroll-trigger" class="py-3 py-md-4">
+                                    @if($list->hasMorePages())
+                                        <div class="spinner-border text-dark" role="status" id="btn-loading-spinner" style="width: 2.5rem; height: 2.5rem;">
+                                            <span class="visually-hidden">{{ __('Loading...') }}</span>
+                                        </div>
+                                        <!-- Hidden button for fallback/JS data storage -->
+                                        <button type="button" class="d-none" id="load-more-btn" 
+                                                data-page="{{ $list->currentPage() + 1 }}" 
+                                                data-category-slug="{{ $category->slug }}" 
+                                                data-locale="{{ $locale }}">
+                                        </button>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
+                    @else
+                        <div class="empty-state text-center py-5 py-md-6">
+                            <div class="mb-4">
+                                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-muted opacity-50">
+                                    <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3 class="h5 fw-bold text-dark mb-2">{{ __('No products found') }}</h3>
+                            <p class="text-muted mb-4">{{ __('Try selecting a different brand or browse all categories.') }}</p>
+                            <a href="{{ route('products.index', $locale) }}" class="btn btn-dark rounded-pill px-4">
+                                {{ __('Browse All Products') }}
+                            </a>
+                        </div>
+                    @endif
+                </div>
     </section>
+        </div>
+    </div>
 @endsection
+
+@push('styles')
+<style>
+/* Custom Scrollbar Hide */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Smooth Transitions */
+.transition-all {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sticky Header Adjustment */
+.header_sticky .sticky-brand-nav {
+    top: 70px; /* Adjust based on your main header height */
+}
+
+/* Brand Pill Hover Effects */
+.brand-pill {
+    transition: all 0.2s ease;
+}
+.brand-pill:hover:not(.btn-dark) {
+    background-color: #f8f9fa !important;
+    border-color: #dee2e6 !important;
+    transform: translateY(-1px);
+}
+.brand-pill.btn-dark {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.brand-pill.btn-dark img {
+    filter: brightness(1.1);
+}
+
+/* Product Grid Transitions */
+#products-grid {
+    transition: opacity 0.3s ease;
+}
+#products-grid.loading {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* Banner Text Shadow */
+.shop-banner__content .text-white {
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* Category Banner Improvements */
+.shop-banner {
+    border-radius: 16px !important;
+}
+
+.shop-banner__content {
+    padding: 2rem 1rem;
+}
+
+@media (min-width: 768px) {
+    .shop-banner__content {
+        padding: 3rem 2rem;
+    }
+}
+
+/* Brand Navigation Improvements */
+.sticky-brand-nav {
+    border: 1px solid #e9ecef !important;
+}
+
+.brand-scroll-container {
+    padding: 1rem 1.25rem;
+}
+
+@media (min-width: 768px) {
+    .brand-scroll-container {
+        padding: 1.25rem 1.5rem;
+    }
+}
+
+/* Products Section Spacing */
+.category-page-wrapper {
+    padding-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .category-page-wrapper {
+        padding-bottom: 2rem;
+    }
+}
+
+/* Empty State Improvements */
+.empty-state {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+}
+
+@media (min-width: 768px) {
+    .empty-state {
+        padding-top: 4rem !important;
+        padding-bottom: 4rem !important;
+    }
+}
+
+.empty-state svg {
+    opacity: 0.4;
+}
+
+/* Loading Spinner Improvements */
+#btn-loading-spinner {
+    border-width: 3px;
+}
+</style>
+@endpush
+
+@push('scripts')
+<script>
+(function() {
+    'use strict';
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const brandPills = document.querySelectorAll('.brand-pill');
+        const productsGrid = document.getElementById('products-grid');
+        const productsContainer = document.getElementById('products-container');
+        const brandActionArea = document.getElementById('brand-action-area');
+        const productsCountBadge = document.getElementById('products-count');
+        
+        const locale = '{{ $locale }}';
+        const categorySlug = '{{ $category->slug }}';
+        const brands = @json($brandsArray);
+        
+        let isLoading = false;
+        let currentPage = 1;
+        let currentBrandId = {{ $selectedBrandId ?: 'null' }};
+        let infiniteScrollObserver = null;
+
+        // Scroll active pill into view on load
+        const activePill = document.querySelector('.brand-pill.btn-dark');
+        if (activePill) {
+            setTimeout(() => {
+                activePill.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
+            }, 100);
+        }
+        
+        // Initialize Infinite Scroll
+        initInfiniteScroll();
+
+        // Brand Pill Click Handler
+        brandPills.forEach(pill => {
+            pill.addEventListener('click', function() {
+                if (isLoading) return;
+                if (this.classList.contains('btn-dark') && this.dataset.brandId !== '') return; // Already active
+                
+                const brandId = this.dataset.brandId ? parseInt(this.dataset.brandId) : null;
+                
+                // UI Updates for Pills
+                brandPills.forEach(p => {
+                    p.classList.remove('btn-dark');
+                    p.classList.add('btn-outline-light', 'text-dark', 'border-secondary-subtle');
+                });
+                this.classList.remove('btn-outline-light', 'text-dark', 'border-secondary-subtle');
+                this.classList.add('btn-dark');
+                
+                // Center the active pill
+                this.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+                // Update State
+                currentBrandId = brandId;
+                currentPage = 1;
+                
+                // Logic
+                loadProducts(true);
+                updateBrandActionArea(brandId);
+            });
+        });
+        
+        function initInfiniteScroll() {
+            // Disconnect existing observer if any
+            if (infiniteScrollObserver) {
+                infiniteScrollObserver.disconnect();
+            }
+
+            const trigger = document.getElementById('infinite-scroll-trigger');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            
+            // Only initialize if we have a trigger and a button with a next page
+            if (trigger && loadMoreBtn && loadMoreBtn.dataset.page) {
+                const options = {
+                    root: null,
+                    rootMargin: '200px', // Load 200px before reaching bottom
+                    threshold: 0.1
+                };
+
+                infiniteScrollObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !isLoading) {
+                            const btn = document.getElementById('load-more-btn');
+                            if (btn && btn.dataset.page) {
+                                currentPage = parseInt(btn.dataset.page);
+                                loadProducts(false);
+                            }
+                        }
+                    });
+                }, options);
+
+                infiniteScrollObserver.observe(trigger);
+            }
+        }
+        
+        function updateBrandActionArea(brandId) {
+            if (brandId && brands[brandId]) {
+                const brand = brands[brandId];
+                const brandUrl = `/${locale}/brands/${brand.slug}`;
+                
+                brandActionArea.innerHTML = `
+                    <a href="${brandUrl}" class="btn btn-sm btn-link text-decoration-none d-flex align-items-center text-dark fw-medium px-0 animate__animated animate__fadeIn">
+                        {{ __('Visit') }} ${brand.name} {{ __('Page') }}
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-1">
+                            <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                `;
+                brandActionArea.classList.remove('d-none');
+            } else {
+                brandActionArea.classList.add('d-none');
+                brandActionArea.innerHTML = '';
+            }
+        }
+        
+        function loadProducts(reset = false) {
+            if (isLoading) return;
+            isLoading = true;
+            
+            // Loading UI
+            if (reset) {
+                if (productsGrid) productsGrid.classList.add('loading');
+                if (productsContainer) productsContainer.style.opacity = '0.5';
+            } else {
+                // Show spinner for infinite scroll
+                const spinner = document.getElementById('btn-loading-spinner');
+                if (spinner) spinner.classList.remove('d-none');
+            }
+            
+            // URL Params
+            const params = new URLSearchParams();
+            params.set('page', currentPage);
+            if (currentBrandId) params.set('brand_id', currentBrandId);
+            params.set('_t', new Date().getTime());
+            
+            const url = `/${locale}/categories/${categorySlug}?${params.toString()}`;
+            
+            fetch(url, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'text/html'
+                }
+            })
+            .then(res => {
+                if(!res.ok) throw new Error('Network error');
+                return res.text();
+            })
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                const newGrid = doc.getElementById('products-grid');
+                const newPagination = doc.querySelector('.load-more-section');
+                const newCount = doc.getElementById('products-count');
+
+                // Update Count
+                if (productsCountBadge && newCount) {
+                    productsCountBadge.textContent = newCount.textContent;
+                }
+
+                if (reset) {
+                    // Full Replace
+                    if (productsContainer) {
+                        if(newGrid) {
+                            productsContainer.innerHTML = ''; 
+                            productsContainer.appendChild(newGrid);
+                            
+                            if (newPagination) {
+                                productsContainer.appendChild(newPagination);
+                            }
+                        } else {
+                             const emptyState = doc.querySelector('.empty-state');
+                             if(emptyState) {
+                                 productsContainer.innerHTML = '';
+                                 productsContainer.appendChild(emptyState);
+                             }
+                        }
+                    }
+                    
+                    // URL History Update
+                    const newUrl = new URL(window.location);
+                    if (currentBrandId) newUrl.searchParams.set('brand_id', currentBrandId);
+                    else newUrl.searchParams.delete('brand_id');
+                    newUrl.searchParams.delete('page');
+                    window.history.pushState({}, '', newUrl);
+                    
+                } else {
+                    // Append
+                    if (newGrid && productsGrid) {
+                        productsGrid.insertAdjacentHTML('beforeend', newGrid.innerHTML);
+                    }
+                    
+                    // Update Pagination Section
+                    const currentPagination = document.querySelector('.load-more-section');
+                    if (currentPagination) currentPagination.remove();
+                    
+                    if (newPagination && productsContainer) {
+                        productsContainer.appendChild(newPagination);
+                    }
+                }
+
+                // Re-initialize infinite scroll observer for the new content/trigger
+                setTimeout(initInfiniteScroll, 100);
+            })
+            .catch(err => console.error(err))
+            .finally(() => {
+                isLoading = false;
+                if (reset) {
+                    if (productsGrid) productsGrid.classList.remove('loading');
+                    if (productsContainer) productsContainer.style.opacity = '1';
+                } else {
+                     // Hide spinner
+                     const spinner = document.getElementById('btn-loading-spinner');
+                     if (spinner) spinner.classList.add('d-none');
+                }
+            });
+        }
+    });
+})();
+</script>
+@endpush

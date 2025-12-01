@@ -19,4 +19,11 @@ interface ProductRepositoryInterface extends RepositoryInterface
      * @return LengthAwarePaginator
      */
     public function paginatePublished(int $perPage = 12, array $filters = []): LengthAwarePaginator;
+
+    /**
+     * @param Product $product
+     * @param int $limit
+     * @return \Illuminate\Support\Collection
+     */
+    public function getRelatedProducts(Product $product, int $limit = 8): \Illuminate\Support\Collection;
 }

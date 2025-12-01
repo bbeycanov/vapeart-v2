@@ -30,11 +30,12 @@ class ProductService extends AbstractService implements ProductServiceInterface
     /**
      * @param array $filters
      * @param int $perPage
+     * @param int|null $page
      * @return LengthAwarePaginator
      */
-    public function catalog(array $filters = [], int $perPage = 12): LengthAwarePaginator
+    public function catalog(array $filters = [], int $perPage = 12, ?int $page = null): LengthAwarePaginator
     {
-        return $this->repo->catalog($filters, $perPage);
+        return $this->repo->catalog($filters, $perPage, $page);
     }
 
     /**
@@ -132,5 +133,19 @@ class ProductService extends AbstractService implements ProductServiceInterface
         }
 
         return $schema->toScript();
+    }
+
+    /**
+     * @param Product $product
+     * @param int $limit
+     * @return \Illuminate\Support\Collection
+     */
+    public function getRelatedProducts(Product $product, int $limit = 8): \Illuminate\Support\Collection
+    {
+        return $this->remember($this->cacheKey('relatedProducts', [
+            $product->id,
+            $limit,
+            App::getLocale()
+        ]), fn() => $this->repo->getRelatedProducts($product, $limit));
     }
 }

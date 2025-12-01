@@ -1,0 +1,34 @@
+/* Toastr Color Fixes */
+#toast-container > .toast-success {
+    background-color: #51A351 !important;
+}
+#toast-container > .toast-error {
+    background-color: #BD362F !important;
+}
+#toast-container > .toast-info {
+    background-color: #2F96B4 !important;
+}
+#toast-container > .toast-warning {
+    background-color: #F89406 !important;
+}
+#toast-container > div {
+    opacity: 1 !important;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.15) !important;
+}
+.toast-success .toast-title,
+.toast-success .toast-message {
+    color: #fff !important;
+}
+.toast-error .toast-title,
+.toast-error .toast-message {
+    color: #fff !important;
+}
+.toast-info .toast-title,
+.toast-info .toast-message {
+    color: #fff !important;
+}
+.toast-warning .toast-title,
+.toast-warning .toast-message {
+    color: #fff !important;
+}
+

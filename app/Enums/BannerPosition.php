@@ -17,6 +17,7 @@ enum BannerPosition: string
     // GENERIC PAGES
     case PAGE_HEADER = 'page_header';                    // About/Contact kimi səhifələrdə başlıq/hero sahəsi. :contentReference[oaicite:6]{index=6}
     case BRANDS_CAROUSEL = 'brands_carousel';            // tərəfdaş/brand zolağı (istəsən ayrıca banner kimi idarə olunsun). :contentReference[oaicite:7]{index=7}
+    case BLOG_INDEX_HEADER = 'blog_index_header';        // Blog index səhifəsinin üst banneri
 
     // PRODUCT
     case PRODUCT_SIDEBAR = 'product_sidebar';            // məhsul səhifəsində side banner/promo (yer saxlanıb).
@@ -42,6 +43,7 @@ enum BannerPosition: string
             self::SHOP_TOP_BANNER->value => __('Shop Top Banner'),
             self::PAGE_HEADER->value => __('Page Header'),
             self::BRANDS_CAROUSEL->value => __('Brands Carousel'),
+            self::BLOG_INDEX_HEADER->value => __('Blog Index Header'),
             self::PRODUCT_SIDEBAR->value => __('Product Sidebar'),
             self::MEGA_MENU_MEDIA->value => __('Mega Menu Media'),
             self::FOOTER_PROMO->value => __('Footer Promo'),

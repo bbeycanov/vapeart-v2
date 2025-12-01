@@ -5,6 +5,10 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Cache;
+use App\Enums\MenuPosition;
+use App\Services\Contracts\MenuServiceInterface;
 
 class SetLocaleFromUrl
 {

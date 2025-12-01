@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    'google' => [
+        'maps_api_key' => env('GOOGLE_MAPS_API_KEY'),
+    ],
+
+    'product_api' => [
+        'url' => env('PRODUCT_API_URL', 'http://127.0.0.1:8001/api/products'),
+    ],
+
 ];

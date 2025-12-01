@@ -54,6 +54,11 @@ class BlogForm
                                                     $set('slug', Str::slug($state));
                                                 }
                                             }),
+                                        RichEditor::make('excerpt')
+                                            ->label(__('Excerpt'))
+                                            ->toolbarButtons(RichEditorFullToolBarButton::getAll())
+                                            ->columnSpanFull()
+                                            ->helperText(__('Short summary of the blog post')),
                                         RichEditor::make('body')
                                             ->label(__('Content'))
                                             ->toolbarButtons(RichEditorFullToolBarButton::getAll())
@@ -124,10 +129,18 @@ class BlogForm
                                     ->multiple(),
                             ]),
                         Section::make(__('Status'))
-                            ->columns()
+                            ->columns(2)
                             ->collapsible()
                             ->description(__('Set the status and settings for the blog post'))
                             ->schema([
+                                Select::make('status')
+                                    ->label(__('Status'))
+                                    ->options([
+                                        0 => __('Draft'),
+                                        1 => __('Published'),
+                                    ])
+                                    ->default(0)
+                                    ->required(),
                                 Toggle::make('is_active')
                                     ->label(__('Is Active'))
                                     ->default(true),

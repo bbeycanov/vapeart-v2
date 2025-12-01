@@ -164,7 +164,7 @@ class ProductForm
                                     ->faviconUrl(asset('favicon.png'))
                             ]),
                         Tab::make(__('Settings'))
-                            ->columns(5)
+                            ->columns(3)
                             ->schema([
 
                                 TextInput::make('sort_order')
@@ -172,17 +172,34 @@ class ProductForm
                                     ->required()
                                     ->numeric()
                                     ->default(Language::query()->max('sort_order') + 1),
-                                Toggle::make('is_active')
-                                    ->label(__('Is Active'))
-                                    ->required(),
-                                Toggle::make('is_featured')
+
+                                Select::make('is_new')
+                                    ->label(__('New Product'))
+                                    ->options([
+                                        true => __('New'),
+                                        false => __('Normal'),
+                                    ]),
+
+                                Select::make('is_hot')
+                                    ->label(__('Hot Product'))
+                                    ->options([
+                                        true => __('Hot'),
+                                        false => __('Normal'),
+                                    ]),
+
+                                Select::make('is_featured')
+                                    ->label(__('Featured'))
                                     ->live()
-                                    ->label(__('Is Featured')),
-                                Select::make('menus')
-                                    ->label(__('Menus'))
+                                    ->options([
+                                        true => __('Featured'),
+                                        false => __('Normal'),
+                                    ]),
+
+                                Select::make('featured_menus')
+                                    ->label(__('Featured Menus'))
                                     ->multiple()
                                     ->hidden(function (Get $get) {
-                                        return $get('is_featured') == false;
+                                        return $get('is_featured') == '0';
                                     })
                                     ->relationship(
                                         name: 'menus',
@@ -196,6 +213,36 @@ class ProductForm
                                     })
                                     ->preload()
                                     ->searchable()
+                                    ->columnSpanFull(),
+
+                                Select::make('sidebar_menus')
+                                    ->label(__('Sidebar Menus'))
+                                    ->multiple()
+                                    ->relationship(
+                                        name: 'menus',
+                                        titleAttribute: 'title',
+                                        modifyQueryUsing: function ($query) {
+                                            $query->where('position', MenuPosition::SIDEBAR->value)->orderBy('title');
+                                        }
+                                    )
+                                    ->preload()
+                                    ->searchable()
+                                    ->columnSpanFull(),
+
+                                Select::make('discounts')
+                                    ->label(__('Discounts'))
+                                    ->multiple()
+                                    ->relationship(
+                                        name: 'discounts',
+                                        titleAttribute: 'name'
+                                    )
+                                    ->preload()
+                                    ->searchable()
+                                    ->columnSpanFull(),
+
+
+                                Toggle::make('is_active')
+                                    ->label(__('Active'))
                                     ->columnSpanFull(),
                             ]),
                         Tab::make(__('Attributes'))

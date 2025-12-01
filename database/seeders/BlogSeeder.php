@@ -3,97 +3,206 @@
 namespace Database\Seeders;
 
 use Carbon\Carbon;
+use App\Models\Blog;
 use Illuminate\Database\Seeder;
-use App\Services\Contracts\BlogServiceInterface;
 
 class BlogSeeder extends Seeder
 {
     public function run(): void
     {
-        /** @var BlogServiceInterface $svc */
-        $svc = app(BlogServiceInterface::class);
-
         $now = Carbon::now();
+        $blogImages = [
+            'blog-1.jpg', 'blog-2.jpg', 'blog-3.jpg', 'blog-4.jpg', 
+            'blog-5.jpg', 'blog-6.jpg', 'blog-7.jpg', 'blog-8.jpg',
+            'blog-9.jpg', 'blog-10.jpg', 'blog-11.jpg', 'blog-12.jpg'
+        ];
 
-        // Blog #1
-        $svc->create([
-            'slug' => 'how-to-use-vape-safely',
-            'title' => [
-                'az' => 'Elektron siqareti təhlükəsiz istifadə etməyin yolları',
-                'en' => 'How to Use Vape Safely',
+        $blogs = [
+            [
+                'slug' => 'woman-with-good-shoes-is-never-be-ugly-place',
+                'title' => [
+                    'az' => 'Yaxşı ayaqqabılı qadın heç vaxt çirkin yerdə olmaz',
+                    'en' => 'Woman with good shoes is never be ugly place',
+                    'ru' => 'Женщина в хорошей обуви никогда не будет в плохом месте'
+                ],
+                'excerpt' => [
+                    'az' => 'Midst one brought greater also morning green saying had good. Open stars day let over gathered, grass face one every light of under.',
+                    'en' => 'Midst one brought greater also morning green saying had good. Open stars day let over gathered, grass face one every light of under.',
+                    'ru' => 'Среди всего принесенного больше также утреннее зеленое высказывание было хорошим. Открытые звезды день пусть соберутся, трава лицо каждое свет под.'
+                ],
+                'body' => [
+                    'az' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet sapien dignissim a elementum. Sociis metus, hendrerit mauris id in. Quis sit sit ultrices tincidunt euismod luctus diam. Turpis sodales orci etiam phasellus lacus id leo.</p><p>Amet turpis nunc, nulla massa est viverra interdum. Praesent auctor nulla morbi non posuere mattis. Arcu eu id maecenas cras. Eget fames tincidunt leo, sed vitae, pretium interdum.</p>',
+                    'en' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet sapien dignissim a elementum. Sociis metus, hendrerit mauris id in. Quis sit sit ultrices tincidunt euismod luctus diam. Turpis sodales orci etiam phasellus lacus id leo.</p><p>Amet turpis nunc, nulla massa est viverra interdum. Praesent auctor nulla morbi non posuere mattis. Arcu eu id maecenas cras. Eget fames tincidunt leo, sed vitae, pretium interdum.</p>',
+                    'ru' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet sapien dignissim a elementum. Sociis metus, hendrerit mauris id in. Quis sit sit ultrices tincidunt euismod luctus diam. Turpis sodales orci etiam phasellus lacus id leo.</p><p>Amet turpis nunc, nulla massa est viverra interdum. Praesent auctor nulla morbi non posuere mattis. Arcu eu id maecenas cras. Eget fames tincidunt leo, sed vitae, pretium interdum.</p>'
+                ],
+                'author_name' => 'Admin',
+                'reading_time' => 5,
+                'status' => 1,
+                'published_at' => $now->subDays(10),
+                'is_active' => true,
+                'sort_order' => 1,
+                'image' => 'blog-1.jpg'
             ],
-            'excerpt' => [
-                'az' => 'Sağlamlıq üçün riskləri minimuma endirmək üçün ipucları.',
-                'en' => 'Tips to minimize health risks while vaping.',
+            [
+                'slug' => 'what-freud-can-teach-us-about-furniture',
+                'title' => [
+                    'az' => 'Freud bizə mebel haqqında nə öyrədə bilər',
+                    'en' => 'What Freud Can Teach Us About Furniture',
+                    'ru' => 'Чему Фрейд может научить нас о мебели'
+                ],
+                'excerpt' => [
+                    'az' => 'Midst one brought greater also morning green saying had good. Open stars day let over gathered, grass face one every light of under.',
+                    'en' => 'Midst one brought greater also morning green saying had good. Open stars day let over gathered, grass face one every light of under.',
+                    'ru' => 'Среди всего принесенного больше также утреннее зеленое высказывание было хорошим.'
+                ],
+                'body' => [
+                    'az' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet sapien dignissim a elementum.</p>',
+                    'en' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet sapien dignissim a elementum.</p>',
+                    'ru' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet sapien dignissim a elementum.</p>'
+                ],
+                'author_name' => 'Admin',
+                'reading_time' => 4,
+                'status' => 1,
+                'published_at' => $now->subDays(8),
+                'is_active' => true,
+                'sort_order' => 2,
+                'image' => 'blog-2.jpg'
             ],
-            'body' => [
-                'az' => '<p>Elektron siqaretin düzgün istifadəsi üçün bəzi qaydalara əməl etmək lazımdır...</p>',
-                'en' => '<p>To use your vape safely, always keep it clean and store the e-liquid properly...</p>',
+            [
+                'slug' => 'habitant-morbi-tristique-senectus',
+                'title' => [
+                    'az' => 'Habitant morbi tristique senectus',
+                    'en' => 'Habitant morbi tristique senectus',
+                    'ru' => 'Habitant morbi tristique senectus'
+                ],
+                'excerpt' => [
+                    'az' => 'Midst one brought greater also morning green saying had good. Open stars day let over gathered, grass face one every light of under.',
+                    'en' => 'Midst one brought greater also morning green saying had good. Open stars day let over gathered, grass face one every light of under.',
+                    'ru' => 'Среди всего принесенного больше также утреннее зеленое высказывание было хорошим.'
+                ],
+                'body' => [
+                    'az' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>',
+                    'en' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>',
+                    'ru' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>'
+                ],
+                'author_name' => 'Admin',
+                'reading_time' => 3,
+                'status' => 1,
+                'published_at' => $now->subDays(5),
+                'is_active' => true,
+                'sort_order' => 3,
+                'image' => 'blog-3.jpg'
             ],
-            'meta_title' => [
-                'az' => 'Elektron siqaretin təhlükəsiz istifadəsi',
-                'en' => 'Vaping Safety Guide',
+            [
+                'slug' => 'heaven-upon-heaven-moveth-every-have',
+                'title' => [
+                    'az' => 'Cənnət üzərində cənnət hər şeyi hərəkətə gətirir',
+                    'en' => 'Heaven upon heaven moveth every have',
+                    'ru' => 'Небо над небом движет все'
+                ],
+                'excerpt' => [
+                    'az' => 'Midst one brought greater also morning green saying had good.',
+                    'en' => 'Midst one brought greater also morning green saying had good.',
+                    'ru' => 'Среди всего принесенного больше также утреннее зеленое высказывание было хорошим.'
+                ],
+                'body' => [
+                    'az' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>',
+                    'en' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>',
+                    'ru' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>'
+                ],
+                'author_name' => 'Admin',
+                'reading_time' => 6,
+                'status' => 1,
+                'published_at' => $now->subDays(3),
+                'is_active' => true,
+                'sort_order' => 4,
+                'image' => 'blog-4.jpg'
             ],
-            'meta_description' => [
-                'az' => 'Bu məqalədə elektron siqaretin təhlükəsiz istifadəsi üçün əsas qaydaları öyrənəcəksiniz.',
-                'en' => 'Learn key safety principles for using vape devices.',
+            [
+                'slug' => 'tree-doesnt-good-void-waters-without-created',
+                'title' => [
+                    'az' => 'Ağac yaxşı deyil, boşluq, su yaradılmadan',
+                    'en' => 'Tree doesn\'t good void, waters without created',
+                    'ru' => 'Дерево не хорошо, пустота, воды без создания'
+                ],
+                'excerpt' => [
+                    'az' => 'Midst one brought greater also morning green saying had good.',
+                    'en' => 'Midst one brought greater also morning green saying had good.',
+                    'ru' => 'Среди всего принесенного больше также утреннее зеленое высказывание было хорошим.'
+                ],
+                'body' => [
+                    'az' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>',
+                    'en' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>',
+                    'ru' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>'
+                ],
+                'author_name' => 'Admin',
+                'reading_time' => 4,
+                'status' => 1,
+                'published_at' => $now->subDays(1),
+                'is_active' => true,
+                'sort_order' => 5,
+                'image' => 'blog-5.jpg'
             ],
-            'author_name' => 'Admin',
-            'reading_time' => 4,
-            'published_at' => $now->subDays(10),
-            'is_active' => true,
-            'sort_order' => 1,
-        ]);
+            [
+                'slug' => 'given-set-was-without-from-god-divide-rule-hath',
+                'title' => [
+                    'az' => 'Verilmiş dəst Allahdan olmadan bölünmüş qayda var',
+                    'en' => 'Given Set was without from god divide rule Hath',
+                    'ru' => 'Данный набор был без от бога разделить правило имеет'
+                ],
+                'excerpt' => [
+                    'az' => 'Midst one brought greater also morning green saying had good.',
+                    'en' => 'Midst one brought greater also morning green saying had good.',
+                    'ru' => 'Среди всего принесенного больше также утреннее зеленое высказывание было хорошим.'
+                ],
+                'body' => [
+                    'az' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>',
+                    'en' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>',
+                    'ru' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>'
+                ],
+                'author_name' => 'Admin',
+                'reading_time' => 5,
+                'status' => 1,
+                'published_at' => $now,
+                'is_active' => true,
+                'sort_order' => 6,
+                'image' => 'blog-6.jpg'
+            ],
+        ];
 
-        // Blog #2
-        $svc->create([
-            'slug' => 'latest-vape-flavors-2025',
-            'title' => [
-                'az' => '2025-ci ilin yeni vape dadları',
-                'en' => 'Latest Vape Flavors of 2025',
-            ],
-            'excerpt' => [
-                'az' => 'Bu il bazara çıxan ən məşhur dadlar.',
-                'en' => 'A quick overview of the trending flavors this year.',
-            ],
-            'body' => [
-                'az' => '<p>Yeni dadlar arasında tropik meyvələr, mentol və desert aromaları xüsusilə sevilir...</p>',
-                'en' => '<p>This year’s vape trends include tropical fruits, menthol, and dessert-inspired blends...</p>',
-            ],
-            'meta_title' => [
-                'az' => '2025 vape dad trendi',
-                'en' => 'Top Vape Flavors 2025',
-            ],
-            'meta_description' => [
-                'az' => 'Ən son vape dad trendini kəşf edin.',
-                'en' => 'Discover the most popular vape flavors of 2025.',
-            ],
-            'author_name' => 'VapeArt Team',
-            'reading_time' => 3,
-            'published_at' => $now->subDays(5),
-            'is_active' => true,
-            'sort_order' => 2,
-        ]);
+        foreach ($blogs as $index => $blogData) {
+            $image = $blogData['image'] ?? ($blogImages[$index] ?? 'blog-1.jpg');
+            unset($blogData['image']);
+            
+            $blog = Blog::create($blogData);
+            
+            // Add featured image
+            $imagePath = public_path('storefront/images/blog/' . $image);
+            if (file_exists($imagePath)) {
+                $blog->addMedia($imagePath)
+                    ->preservingOriginal()
+                    ->toMediaCollection('featured');
+            }
+        }
 
-        // Blog #3 (draft)
-        $svc->create([
-            'slug' => 'vape-maintenance-tips',
-            'title' => [
-                'az' => 'Vape cihazınızın qulluq qaydaları',
-                'en' => 'Vape Maintenance Tips',
-            ],
-            'excerpt' => [
-                'az' => 'Cihazınızın ömrünü uzatmaq üçün təlimatlar.',
-                'en' => 'How to extend your device lifespan with proper care.',
-            ],
-            'body' => [
-                'az' => '<p>Hər istifadədən sonra cihazınızı təmizləmək çox vacibdir...</p>',
-                'en' => '<p>Always clean your vape tank after each use to prevent residue buildup...</p>',
-            ],
-            'author_name' => 'Admin',
-            'reading_time' => 5,
-            'is_active' => true,
-            'sort_order' => 3,
-        ]);
+        // Use factory to create additional blogs (20 more blogs)
+        $additionalBlogs = Blog::factory()
+            ->count(20)
+            ->published()
+            ->create();
+
+        // Add images to factory-created blogs
+        foreach ($additionalBlogs as $index => $blog) {
+            // Cycle through available images
+            $imageIndex = ($index % count($blogImages));
+            $image = $blogImages[$imageIndex] ?? 'blog-1.jpg';
+            $imagePath = public_path('storefront/images/blog/' . $image);
+            
+            if (file_exists($imagePath)) {
+                $blog->addMedia($imagePath)
+                    ->preservingOriginal()
+                    ->toMediaCollection('featured');
+            }
+        }
     }
 }

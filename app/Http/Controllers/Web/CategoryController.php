@@ -21,14 +21,31 @@ class CategoryController extends Controller
 
     /**
      * @param string $locale
+     * @param Request $request
      * @return Factory|View
      */
-    public function index(string $locale): Factory|View
+    public function index(string $locale, Request $request): Factory|View
     {
         app()->setLocale($locale);
 
-        $tree = $this->cats->getTree();
-        return view('pages.categories.index', compact('tree'));
+        $parentId = $request->get('parent_id');
+        $parentCategory = $parentId ? \App\Models\Category::find($parentId) : null;
+        
+        $categories = $this->cats->getTree($parentId);
+        
+        // Get product counts for each category
+        $categoriesWithCounts = $categories->map(function ($category) {
+            $productCount = $category->products()
+                ->where('is_active', true)
+                ->count();
+            
+            return [
+                'category' => $category,
+                'product_count' => $productCount
+            ];
+        });
+
+        return view('pages.categories.index', compact('categoriesWithCounts', 'parentCategory'));
     }
 
     /**
@@ -54,11 +71,26 @@ class CategoryController extends Controller
 
         $list = $this->products->catalog($filters);
 
+        // Get brands that have products in this category
+        $brands = $category->products()
+            ->where('is_active', true)
+            ->whereNotNull('brand_id')
+            ->with('brand')
+            ->get()
+            ->pluck('brand')
+            ->filter()
+            ->unique('id')
+            ->sortBy(function ($brand) {
+                return $brand->getTranslation('name', app()->getLocale());
+            })
+            ->values();
+
         return view(
             'pages.categories.show',
             compact(
                 'category',
                 'list',
+                'brands',
                 'schemaJsonLd'
             )
         );

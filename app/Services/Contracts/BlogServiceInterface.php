@@ -53,4 +53,16 @@ interface BlogServiceInterface
      * @return string
      */
     public function buildSchemaFor(Blog $blog): string;
+
+    /**
+     * @param Blog $blog
+     * @return Blog|null
+     */
+    public function getPrevious(Blog $blog): ?Blog;
+
+    /**
+     * @param Blog $blog
+     * @return Blog|null
+     */
+    public function getNext(Blog $blog): ?Blog;
 }

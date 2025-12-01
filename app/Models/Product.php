@@ -6,6 +6,8 @@ use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Image\Enums\Fit;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -45,6 +47,8 @@ class Product extends Model implements HasMedia
         'is_track_stock',
         'is_active',
         'is_featured',
+        'is_new',
+        'is_hot',
         'attributes',
         'specs',
         'reviews_count',
@@ -119,6 +123,15 @@ class Product extends Model implements HasMedia
     }
 
     /**
+     * @return BelongsToMany
+     */
+    public function discounts(): BelongsToMany
+    {
+        return $this->belongsToMany(Discount::class, 'product_discounts');
+    }
+
+
+    /**
      * @return MorphMany
      */
     public function reviews(): MorphMany
@@ -133,5 +146,155 @@ class Product extends Model implements HasMedia
     {
         $this->addMediaCollection('images');
         $this->addMediaCollection('thumbnail')->singleFile();
+    }
+
+    /**
+     * Register media conversions for different sizes
+     * 
+     * @param Media|null $media
+     * @return void
+     */
+    public function registerMediaConversions(Media $media = null): void
+    {
+        // Thumbnail: 256x256 (for product cards, cart items) - maintains aspect ratio, no cropping
+        $this->addMediaConversion('thumb')
+            ->width(256)
+            ->height(256)
+            ->fit(Fit::Contain, 256, 256)
+            ->performOnCollections('images', 'thumbnail')
+            ->nonQueued();
+
+        // Medium: 512x512 (for cart drawer, quick view) - maintains aspect ratio, no cropping
+        $this->addMediaConversion('medium')
+            ->width(512)
+            ->height(512)
+            ->fit(Fit::Contain, 512, 512)
+            ->performOnCollections('images', 'thumbnail')
+            ->nonQueued();
+
+        // Large: 1024x1024 (for product detail page) - maintains aspect ratio, no cropping
+        $this->addMediaConversion('large')
+            ->width(1024)
+            ->height(1024)
+            ->fit(Fit::Contain, 1024, 1024)
+            ->performOnCollections('images', 'thumbnail')
+            ->nonQueued();
+    }
+
+    /**
+     * Get product image URL with fallback
+     * 
+     * @param string $conversion
+     * @return string
+     */
+    public function getProductImageUrl(string $conversion = 'thumb'): string
+    {
+        $media = $this->getFirstMedia('thumbnail') ?: $this->getFirstMedia('images');
+        
+        if ($media) {
+            // Always use conversion if available, otherwise use original
+            try {
+                $url = $media->getUrl($conversion);
+                if ($url && $url !== $media->getUrl()) {
+                    return $url;
+                }
+                // If conversion doesn't exist, try to generate it or use original
+                return $media->getUrl();
+            } catch (\Exception $e) {
+                // If conversion fails, use original
+                return $media->getUrl();
+            }
+        }
+        
+        return asset('storefront/images/products/placeholder.jpg');
+    }
+
+    /**
+     * Scope to get products that are on discount
+     * 
+     * @param $query
+     * @return mixed
+     */
+    public function scopeOnDiscount($query)
+    {
+        return $query->whereHas('discounts', function ($q) {
+            $q->active();
+        });
+    }
+
+    /**
+     * Get active discounts for this product
+     * 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getActiveDiscounts()
+    {
+        return $this->discounts()->active()->get();
+    }
+
+    /**
+     * Get the best active discount (highest percentage or fixed amount)
+     * 
+     * @return Discount|null
+     */
+    public function getBestDiscount()
+    {
+        $discounts = $this->getActiveDiscounts();
+        
+        if ($discounts->isEmpty()) {
+            return null;
+        }
+
+        // Find the discount with the highest value
+        return $discounts->sortByDesc(function ($discount) {
+            if ($discount->type === 'percentage') {
+                // For percentage, calculate the discount amount
+                return ($this->price * $discount->amount) / 100;
+            }
+            // For fixed, return the amount directly
+            return $discount->amount;
+        })->first();
+    }
+
+    /**
+     * Calculate discounted price
+     * 
+     * @return float
+     */
+    public function getDiscountedPrice(): float
+    {
+        $discount = $this->getBestDiscount();
+        
+        if (!$discount) {
+            return $this->price;
+        }
+
+        if ($discount->type === 'percentage') {
+            return max(0, $this->price - (($this->price * $discount->amount) / 100));
+        }
+
+        // Fixed amount
+        return max(0, $this->price - $discount->amount);
+    }
+
+    /**
+     * Get discount percentage or amount text
+     * 
+     * @return string|null
+     */
+    public function getDiscountText(): ?string
+    {
+        $discount = $this->getBestDiscount();
+        
+        if (!$discount) {
+            return null;
+        }
+
+        if ($discount->type === 'percentage') {
+            return '-' . $discount->amount . '%';
+        }
+
+        // Fixed amount
+        return '-' . number_format($discount->amount, 2) . ' ' . ($this->currency ?? 'AZN');
     }
 }

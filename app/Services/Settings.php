@@ -27,12 +27,18 @@ class Settings
             return $default;
         }
 
+        $raw = $value->getAttribute('value');
+        
+        // If value is boolean or not an array, return it directly (non-translatable)
+        if (!is_array($raw) || is_bool($raw)) {
+            return $raw ?? $default;
+        }
+
         $loc = $locale ?? App::getLocale();
 
         $translated = $value->getTranslation('value', $loc);
 
         if ($translated === null || $translated === '') {
-            $raw = $value->getAttribute('value');
             return $raw ?? $default;
         }
 

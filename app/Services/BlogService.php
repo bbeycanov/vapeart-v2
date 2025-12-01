@@ -174,4 +174,53 @@ class BlogService extends AbstractService implements BlogServiceInterface
 
         return $schema->toScript();
     }
+
+    /**
+     * Build schema for blog index page
+     * 
+     * @return string
+     */
+    public function buildIndexSchema(): string
+    {
+        $locale = App::getLocale();
+        $url = route('blog.index', ['locale' => $locale]);
+        
+        $schema = Schema::collectionPage()
+            ->name(__('The Blog'))
+            ->description(__('Blog posts and articles'))
+            ->inLanguage($locale)
+            ->url($url);
+
+        return $schema->toScript();
+    }
+
+    /**
+     * @param Blog $blog
+     * @return Blog|null
+     */
+    public function getPrevious(Blog $blog): ?Blog
+    {
+        $key = $this->cacheKey('previous', [
+            $blog->id,
+            App::getLocale()
+        ]);
+        return $this->remember($key, function () use ($blog) {
+            return $this->repo->findPrevious($blog);
+        });
+    }
+
+    /**
+     * @param Blog $blog
+     * @return Blog|null
+     */
+    public function getNext(Blog $blog): ?Blog
+    {
+        $key = $this->cacheKey('next', [
+            $blog->id,
+            App::getLocale()
+        ]);
+        return $this->remember($key, function () use ($blog) {
+            return $this->repo->findNext($blog);
+        });
+    }
 }

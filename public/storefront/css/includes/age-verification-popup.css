@@ -1,0 +1,143 @@
+/* Age Verification Popup Styles */
+.age-verification-popup {
+    max-width: 500px;
+}
+
+.age-verification-popup .modal-content {
+    border: none;
+    border-radius: 0;
+}
+
+.age-verification-popup .modal-body {
+    padding: 3rem 2rem;
+}
+
+@media (min-width: 576px) {
+    .age-verification-popup .modal-body {
+        padding: 4rem 3rem;
+    }
+}
+
+.age-verification-wrapper {
+    max-width: 100%;
+}
+
+.age-verification-brand {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #222222;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 576px) {
+    .age-verification-brand {
+        font-size: 2.5rem;
+    }
+}
+
+.age-icon-circle {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d6001c 0%, #c32929 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(214, 0, 28, 0.3);
+}
+
+.age-icon-text {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.age-verification-message {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #222222;
+    text-align: left;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.age-verification-message p {
+    margin-bottom: 0.75rem;
+}
+
+.age-verification-message p:last-child {
+    margin-bottom: 0;
+    color: #c32929;
+}
+
+.age-verification-actions {
+    margin-top: 2.5rem;
+}
+
+.age-verification-actions .btn {
+    width: 100%;
+    padding: 0.9375rem 3.125rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 0;
+    min-height: 50px;
+}
+
+.age-verification-actions .btn-primary {
+    background-color: #222222;
+    border-color: #222222;
+    color: #ffffff;
+}
+
+.age-verification-actions .btn-primary:hover {
+    background-color: #000000;
+    border-color: #000000;
+    color: #ffffff;
+}
+
+.age-verification-actions .btn-outline-primary {
+    border-color: #222222;
+    color: #222222;
+    background-color: transparent;
+}
+
+.age-verification-actions .btn-outline-primary:hover {
+    background-color: #222222;
+    border-color: #222222;
+    color: #ffffff;
+}
+
+@media (max-width: 575.98px) {
+    .age-verification-popup .modal-body {
+        padding: 2.5rem 1.5rem;
+    }
+    
+    .age-verification-brand {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .age-icon-circle {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .age-icon-text {
+        font-size: 2rem;
+    }
+    
+    .age-verification-message {
+        font-size: 0.875rem;
+    }
+    
+    .age-verification-actions {
+        margin-top: 2rem;
+    }
+}
+

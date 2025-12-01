@@ -206,7 +206,7 @@ abstract class AbstractService
      * @return void
      * @throws InvalidArgumentException
      */
-    protected function flushServiceCache(): void
+    public function flushServiceCache(): void
     {
         if (!$this->isCacheEnabled()) return;
 

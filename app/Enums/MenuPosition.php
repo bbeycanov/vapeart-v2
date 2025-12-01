@@ -9,6 +9,7 @@ enum MenuPosition: string
     case FOOTER     = 'footer';
     case SIDEBAR    = 'sidebar';
     case FEATURED    = 'featured';
+    case MOBILE_MENU = 'mobile_menu';
 
     /**
      * @return array
@@ -21,6 +22,7 @@ enum MenuPosition: string
             self::FOOTER->value => __('Footer'),
             self::SIDEBAR->value => __('Sidebar'),
             self::FEATURED->value => __('Featured'),
+            self::MOBILE_MENU->value => __('Mobile Menu'),
         ];
     }
 }

@@ -8,14 +8,20 @@ use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 use App\Services\Contracts\ProductServiceInterface;
+use App\Services\Contracts\CategoryServiceInterface;
+use App\Services\Contracts\BrandServiceInterface;
 
 class ProductController extends Controller
 {
     /**
-     * @param ProductServiceInterface $svc
+     * @param ProductServiceInterface $productService
+     * @param CategoryServiceInterface $categoryService
+     * @param BrandServiceInterface $brandService
      */
     public function __construct(
-        private readonly ProductServiceInterface $svc
+        private readonly ProductServiceInterface $productService,
+        private readonly CategoryServiceInterface $categoryService,
+        private readonly BrandServiceInterface $brandService
     )
     {
     }
@@ -32,15 +38,58 @@ class ProductController extends Controller
 
         $filters = $request->only([
             'brand_id',
+            'brand_ids',
             'category_id',
+            'category_ids',
             'tag_id',
             'price_min',
             'price_max',
             'sort'
         ]);
-        $products = $this->svc->catalog($filters, perPage: 12);
+        
+        $page = $request->get('page', 1);
+        $products = $this->productService->catalog($filters, perPage: 24, page: $page);
+        
+        // Get categories tree
+        $categories = $this->categoryService->getTree();
+        
+        // Get all active brands
+        $brands = \App\Models\Brand::where('is_active', true)->orderBy('sort_order')->get();
+        
+        // Get price range from products
+        $priceMin = Product::where('is_active', true)->min('price') ?? 0;
+        $priceMax = Product::where('is_active', true)->max('price') ?? 1000;
 
-        return view('pages.products.index', compact('products'));
+        // Always return full page - JavaScript will parse it
+        return view('pages.products.index', compact('products', 'categories', 'brands', 'priceMin', 'priceMax', 'filters'));
+    }
+    
+    /**
+     * Load more products via AJAX
+     * 
+     * @param string $locale
+     * @param Request $request
+     * @return Factory|View
+     */
+    public function loadMore(string $locale, Request $request): Factory|View
+    {
+        app()->setLocale($locale);
+
+        $filters = $request->only([
+            'brand_id',
+            'brand_ids',
+            'category_id',
+            'category_ids',
+            'tag_id',
+            'price_min',
+            'price_max',
+            'sort'
+        ]);
+        
+        $page = $request->get('page', 1);
+        $products = $this->productService->catalog($filters, perPage: 24, page: $page);
+
+        return view('pages.products._products_grid', compact('products'));
     }
 
     /**
@@ -52,16 +101,72 @@ class ProductController extends Controller
     {
         app()->setLocale($locale);
 
-        $schemaJsonLd = $this->svc->buildSchemaFor($product);
+        // Get product with all relations (cached via service)
+        $product = $this->productService->getBySlug($product->slug);
+        
+        if (!$product || !$product->is_active) {
+            abort(404);
+        }
 
-        $related = $product->categories()
-            ->with(['products' => fn($q) => $q->where('products.id', '<>', $product->id)->where('is_active', true)->limit(8)])
-            ->get()
-            ->pluck('products')
-            ->flatten()
-            ->unique('id')
-            ->take(8);
+        // Build schema for SEO (cached via service)
+        $schemaJsonLd = $this->productService->buildSchemaFor($product);
 
-        return view('pages.products.show', compact('product', 'schemaJsonLd', 'related'));
+        // Get related products (cached via service)
+        $relatedProducts = $this->productService->getRelatedProducts($product, 8);
+
+        // Get reviews
+        $reviews = $product->reviews()->where('status', 1)->latest('published_at')->get();
+
+        // Get discount information
+        $bestDiscount = $product->getBestDiscount();
+        $discountedPrice = $product->getDiscountedPrice();
+        $discountText = $product->getDiscountText();
+        $hasDiscount = $bestDiscount !== null;
+        $originalPrice = $product->price;
+
+        // Prepare product data for view
+        $productData = [
+            'id' => $product->id,
+            'name' => $product->getTranslation('name', $locale),
+            'slug' => $product->slug,
+            'sku' => $product->sku,
+            'price' => $hasDiscount ? $discountedPrice : $product->price,
+            'original_price' => $originalPrice,
+            'sale_price' => $product->compare_at_price,
+            'discount_text' => $discountText,
+            'has_discount' => $hasDiscount,
+            'currency' => $product->currency,
+            'short_description' => $product->getTranslation('short_description', $locale),
+            'description' => $product->getTranslation('description', $locale),
+            'stock_quantity' => $product->stock_qty,
+            'is_track_stock' => $product->is_track_stock,
+            'rating_avg' => $product->rating_avg ?? 0,
+            'reviews_count' => $product->reviews_count ?? 0,
+            'images' => $product->getMedia('gallery')->map(fn($media) => $media->getUrl()),
+            'attributes' => $product->attributes ?? [],
+            'specs' => $product->specs ?? [],
+            'brand' => $product->brand ? [
+                'id' => $product->brand->id,
+                'name' => $product->brand->getTranslation('name', $locale),
+                'slug' => $product->brand->slug,
+                'logo' => $product->brand->getFirstMediaUrl('logo'),
+            ] : null,
+            'categories' => $product->categories->map(function ($category) use ($locale) {
+                return [
+                    'id' => $category->id,
+                    'name' => $category->getTranslation('name', $locale),
+                    'slug' => $category->slug,
+                ];
+            }),
+            'tags' => $product->tags->map(function ($tag) use ($locale) {
+                return [
+                    'id' => $tag->id,
+                    'name' => $tag->getTranslation('name', $locale),
+                    'slug' => $tag->slug,
+                ];
+            }),
+        ];
+
+        return view('pages.products.show', compact('product', 'productData', 'schemaJsonLd', 'relatedProducts', 'reviews'));
     }
 }

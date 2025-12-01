@@ -11,8 +11,59 @@
 
 <link rel="stylesheet" href="{{asset('storefront/css/plugins/swiper.min.css')}}" type="text/css">
 <link rel="stylesheet" href="{{asset('storefront/css/plugins/jquery.fancybox.css')}}" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" type="text/css">
 <link rel="stylesheet" href="{{asset('storefront/css/style.css')}}" type="text/css">
+<link rel="stylesheet" href="{{asset('storefront/css/pages/cart-index.css')}}" type="text/css">
+
+<!-- Toastr Custom Styles -->
+<style>
+    /* Toastr Success - Green */
+    .toast-success {
+        background-color: #51A351 !important;
+        color: #ffffff !important;
+    }
+    
+    /* Toastr Error - Red */
+    .toast-error {
+        background-color: #BD362F !important;
+        color: #ffffff !important;
+    }
+    
+    /* Toastr Warning - Orange */
+    .toast-warning {
+        background-color: #F89406 !important;
+        color: #ffffff !important;
+    }
+    
+    /* Toastr Info - Blue */
+    .toast-info {
+        background-color: #2F96B4 !important;
+        color: #ffffff !important;
+    }
+    
+    /* Toastr Title */
+    #toast-container > div .toast-title {
+        color: #ffffff !important;
+        font-weight: bold;
+    }
+    
+    /* Toastr Message */
+    #toast-container > div .toast-message {
+        color: #ffffff !important;
+    }
+    
+    /* Toastr Close Button */
+    #toast-container > div .toast-close-button {
+        color: #ffffff !important;
+        opacity: 0.8;
+    }
+    
+    #toast-container > div .toast-close-button:hover {
+        opacity: 1;
+    }
+</style>
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 

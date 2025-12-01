@@ -44,18 +44,33 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     /**
      * @param array $filters
      * @param int $perPage
+     * @param int|null $page
      * @return LengthAwarePaginator
      */
-    public function catalog(array $filters = [], int $perPage = 12): LengthAwarePaginator
+    public function catalog(array $filters = [], int $perPage = 12, ?int $page = null): LengthAwarePaginator
     {
-        $q = $this->query()->where('is_active', true)->where('status', 1);
+        $q = $this->query()->where('is_active', true);
 
-        if (!empty($filters['brand_id'])) {
-            $q->where('brand_id', $filters['brand_id']);
+        // Multiple brand filter (takes precedence)
+        if (!empty($filters['brand_ids']) && is_array($filters['brand_ids'])) {
+            // Convert string IDs to integers
+            $brandIds = array_map('intval', $filters['brand_ids']);
+            $q->whereIn('brand_id', $brandIds);
+        }
+        // Single brand filter (backward compatibility)
+        elseif (!empty($filters['brand_id'])) {
+            $q->where('brand_id', (int)$filters['brand_id']);
         }
 
-        if (!empty($filters['category_id'])) {
-            $q->whereHas('categories', fn($qq) => $qq->where('categories.id', $filters['category_id']));
+        // Multiple category filter (takes precedence)
+        if (!empty($filters['category_ids']) && is_array($filters['category_ids'])) {
+            // Convert string IDs to integers
+            $categoryIds = array_map('intval', $filters['category_ids']);
+            $q->whereHas('categories', fn($qq) => $qq->whereIn('categories.id', $categoryIds));
+        }
+        // Single category filter (backward compatibility)
+        elseif (!empty($filters['category_id'])) {
+            $q->whereHas('categories', fn($qq) => $qq->where('categories.id', (int)$filters['category_id']));
         }
 
         if (!empty($filters['tag_id'])) {
@@ -69,18 +84,68 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             $q->where('price', '<=', (float)$filters['price_max']);
         }
 
-        if (!empty($filters['sort']) && $filters['sort'] === 'price_asc') {
-            $q->orderBy('price');
-        } elseif (!empty($filters['sort']) && $filters['sort'] === 'price_desc') {
-            $q->orderByDesc('price');
-        } else {
-            $q->orderByDesc('published_at');
+        // Menu filter - if menu_product_ids provided, only show products in that menu
+        if (!empty($filters['menu_product_ids']) && is_array($filters['menu_product_ids'])) {
+            $q->whereIn('id', $filters['menu_product_ids']);
         }
 
-        return $q->with([
+        // Menu filter - if menu_id provided, filter by menu
+        if (!empty($filters['menu_id'])) {
+            $q->whereHas('menus', fn($qq) => $qq->where('menus.id', $filters['menu_id']));
+        }
+
+        // Discount filter - if on_discount is true, only show products with active discounts
+        if (!empty($filters['on_discount']) && $filters['on_discount'] === true) {
+            $q->whereHas('discounts', function ($qq) {
+                $qq->active();
+            });
+        }
+
+        // Sorting
+        if (!empty($filters['sort'])) {
+            switch ($filters['sort']) {
+                case 'price_asc':
+                    $q->orderBy('price', 'asc');
+                    break;
+                case 'price_desc':
+                    $q->orderBy('price', 'desc');
+                    break;
+                case 'name_asc':
+                    // For translatable fields, we need to use JSON path
+                    $locale = app()->getLocale();
+                    $q->orderByRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.{$locale}')) ASC");
+                    break;
+                case 'name_desc':
+                    $locale = app()->getLocale();
+                    $q->orderByRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.{$locale}')) DESC");
+                    break;
+                case 'created_desc':
+                    $q->orderByDesc('created_at');
+                    break;
+                case 'created_asc':
+                    $q->orderBy('created_at', 'asc');
+                    break;
+                case 'featured':
+                    $q->orderByDesc('is_featured')->orderByDesc('created_at');
+                    break;
+                default:
+                    $q->orderByDesc('created_at');
+                    break;
+            }
+        } else {
+            // Default: featured first, then by creation date
+            $q->orderByDesc('is_featured')->orderByDesc('created_at');
+        }
+
+        $paginator = $q->with([
             'brand',
-            'media'
-        ])->paginate($perPage);
+            'media',
+            'discounts' => function ($query) {
+                $query->active();
+            }
+        ])->paginate($perPage, ['*'], 'page', $page);
+        
+        return $paginator;
     }
 
     /**
@@ -90,17 +155,38 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
      */
     public function paginatePublished(int $perPage = 12, array $filters = []): LengthAwarePaginator
     {
-        $q = $this->query()->where('is_active', true)->where('status', 1);
+        $q = $this->query()->where('is_active', true);
 
         if (!empty($filters['exclude_id'])) {
             $q->whereNotIn('id', (array)$filters['exclude_id']);
         }
 
-        $q->orderByDesc('published_at');
+        $q->orderByDesc('created_at');
 
         return $q->with([
             'brand',
             'media'
         ])->paginate($perPage);
+    }
+
+    /**
+     * @param Product $product
+     * @param int $limit
+     * @return \Illuminate\Support\Collection
+     */
+    public function getRelatedProducts(Product $product, int $limit = 8): \Illuminate\Support\Collection
+    {
+        return $product->categories()
+            ->with(['products' => function ($q) use ($product, $limit) {
+                $q->where('products.id', '<>', $product->id)
+                    ->where('is_active', true)
+                    ->with(['brand', 'media'])
+                    ->limit($limit * 2); // Get more to ensure we have enough after unique
+            }])
+            ->get()
+            ->pluck('products')
+            ->flatten()
+            ->unique('id')
+            ->take($limit);
     }
 }

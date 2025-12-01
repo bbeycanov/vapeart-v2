@@ -13,8 +13,8 @@ class StoreReviewRequest extends FormRequest
             'rating' => ['required','integer','min:1','max:5'],
             'title'  => ['nullable','string','max:150'],
             'body'   => ['nullable','string','max:5000'],
-            'author_name'  => ['nullable','string','max:120'],
-            'author_email' => ['nullable','email','max:150'],
+            'author_name'  => ['required','string','max:120'],
+            'author_email' => ['required','email','max:150'],
         ];
     }
 }

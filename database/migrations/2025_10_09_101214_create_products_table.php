@@ -37,7 +37,9 @@ return new class extends Migration {
             $table->decimal('rating_avg', 3, 2)->default(0);
 
             $table->boolean('is_featured')->default(false);
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->default(false);
+            $table->boolean('is_new')->default(false);
+            $table->boolean('is_hot')->default(false);
 
             $table->unsignedInteger('sort_order')->default(1);
             $table->timestamp('created_at')->useCurrent();

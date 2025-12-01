@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->string('author_name')->nullable();
             $table->unsignedInteger('reading_time')->nullable();
+            $table->unsignedTinyInteger('status')->default(0)->comment('0=draft, 1=published');
             $table->timestamp('published_at')->nullable();
             $table->boolean('is_active')->default(true);
             $table->unsignedInteger('sort_order')->default(1);

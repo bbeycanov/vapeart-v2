@@ -8,4 +8,6 @@ interface BlogRepositoryInterface extends RepositoryInterface
 {
     public function findBySlug(string $slug): ?Blog;
     public function findPublishedBySlug(string $slug): ?Blog;
+    public function findPrevious(Blog $blog): ?Blog;
+    public function findNext(Blog $blog): ?Blog;
 }

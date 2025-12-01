@@ -111,5 +111,149 @@ class BannerSeeder extends Seeder
                 'sort_order' => 1,
             ]
         );
+
+        // HOME CATEGORY STRIP
+        Banner::updateOrCreate(
+            [
+                'position' => BannerPosition::HOME_CATEGORY_STRIP->value,
+                'key' => 'home-category-strip'
+            ],
+            [
+                'type' => BannerType::IMAGE->value,
+                'title' => [
+                    'en' => 'Shop by Category',
+                    'az' => 'Kateqoriyaya görə alış-veriş',
+                    'ru' => 'Покупки по категориям'
+                ],
+                'is_active' => true,
+                'sort_order' => 1,
+            ]
+        );
+
+        // HOME BLOG STRIP
+        Banner::updateOrCreate(
+            [
+                'position' => BannerPosition::HOME_BLOG_STRIP->value,
+                'key' => 'home-blog-strip'
+            ],
+            [
+                'type' => BannerType::HTML->value,
+                'title' => [
+                    'en' => 'From our blog',
+                    'az' => 'Blogumuzdan',
+                    'ru' => 'Из нашего блога'
+                ],
+                'is_active' => true,
+                'sort_order' => 1,
+            ]
+        );
+
+        // HOME NEWSLETTER CTA
+        Banner::updateOrCreate(
+            [
+                'position' => BannerPosition::HOME_NEWSLETTER_CTA->value,
+                'key' => 'home-newsletter-cta'
+            ],
+            [
+                'type' => BannerType::HTML->value,
+                'title' => [
+                    'en' => 'Subscribe to Newsletter',
+                    'az' => 'Xəbər bülleteninə abunə ol',
+                    'ru' => 'Подписаться на рассылку'
+                ],
+                'is_active' => true,
+                'sort_order' => 1,
+            ]
+        );
+
+        // BRANDS CAROUSEL
+        Banner::updateOrCreate(
+            [
+                'position' => BannerPosition::BRANDS_CAROUSEL->value,
+                'key' => 'brands-carousel'
+            ],
+            [
+                'type' => BannerType::IMAGE->value,
+                'title' => [
+                    'en' => 'Our Brands',
+                    'az' => 'Brendlərimiz',
+                    'ru' => 'Наши бренды'
+                ],
+                'is_active' => true,
+                'sort_order' => 1,
+            ]
+        );
+
+        // BLOG INDEX HEADER
+        Banner::updateOrCreate(
+            [
+                'position' => BannerPosition::BLOG_INDEX_HEADER->value,
+                'key' => 'blog-index-header'
+            ],
+            [
+                'type' => BannerType::IMAGE->value,
+                'title' => [
+                    'en' => 'The Blog',
+                    'az' => 'Blog',
+                    'ru' => 'Блог'
+                ],
+                'is_active' => true,
+                'sort_order' => 1,
+            ]
+        );
+
+        // PRODUCT SIDEBAR
+        Banner::updateOrCreate(
+            [
+                'position' => BannerPosition::PRODUCT_SIDEBAR->value,
+                'key' => 'product-sidebar'
+            ],
+            [
+                'type' => BannerType::IMAGE->value,
+                'title' => [
+                    'en' => 'Special Offer',
+                    'az' => 'Xüsusi təklif',
+                    'ru' => 'Специальное предложение'
+                ],
+                'is_active' => true,
+                'sort_order' => 1,
+            ]
+        );
+
+        // MEGA MENU MEDIA
+        Banner::updateOrCreate(
+            [
+                'position' => BannerPosition::MEGA_MENU_MEDIA->value,
+                'key' => 'mega-menu-media'
+            ],
+            [
+                'type' => BannerType::IMAGE->value,
+                'title' => [
+                    'en' => 'Featured Product',
+                    'az' => 'Seçilmiş məhsul',
+                    'ru' => 'Рекомендуемый товар'
+                ],
+                'is_active' => true,
+                'sort_order' => 1,
+            ]
+        );
+
+        // FOOTER PROMO
+        Banner::updateOrCreate(
+            [
+                'position' => BannerPosition::FOOTER_PROMO->value,
+                'key' => 'footer-promo'
+            ],
+            [
+                'type' => BannerType::HTML->value,
+                'title' => [
+                    'en' => 'Footer Promotion',
+                    'az' => 'Footer promosyonu',
+                    'ru' => 'Промо в футере'
+                ],
+                'is_active' => true,
+                'sort_order' => 1,
+            ]
+        );
     }
 }

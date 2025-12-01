@@ -112,6 +112,24 @@
   }
 }
 
+// Header Wishlist (same structure as cart)
+.header-tools__wishlist {
+  position: relative;
+
+  .wishlist-amount {
+    top: calc(#{$header-tools-item-padding-y} + 1em);
+    left: calc(#{$header-tools-item-padding-x} + 1.4em);
+    width: $header-cart-amount-width;
+    height: $header-cart-amount-width;
+    border-radius: 100%;
+    background: $header-cart-amount-bg;
+    color: $header-cart-amount-color;
+    font-size: $header-cart-amount-font-size;
+    line-height: $header-cart-amount-width;
+    text-align: center;
+  }
+}
+
 .header-search {
   display: flex;
   align-items: center;

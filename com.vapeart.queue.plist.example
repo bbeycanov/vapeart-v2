@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.vapeart.queue</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/opt/php@8.2/bin/php</string>
+        <string>/Users/YOUR_USERNAME/Projects/vapeart-v2/artisan</string>
+        <string>queue:work</string>
+        <string>--sleep=3</string>
+        <string>--tries=3</string>
+        <string>--max-time=3600</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/YOUR_USERNAME/Projects/vapeart-v2</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/Users/YOUR_USERNAME/Projects/vapeart-v2/storage/logs/queue-worker.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/YOUR_USERNAME/Projects/vapeart-v2/storage/logs/queue-worker-error.log</string>
+</dict>
+</plist>
+
