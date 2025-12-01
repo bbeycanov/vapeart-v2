@@ -142,9 +142,9 @@ class ProductController extends Controller
             'is_track_stock' => $product->is_track_stock,
             'rating_avg' => $product->rating_avg ?? 0,
             'reviews_count' => $product->reviews_count ?? 0,
-            'images' => $product->getMedia('gallery')->map(fn($media) => $media->getUrl()),
+            'images' => $this->getProductImages($product),
             'attributes' => $product->attributes ?? [],
-            'specs' => $product->specs ?? [],
+            'specs' => $this->parseSpecs($product->getTranslation('specs', $locale)),
             'brand' => $product->brand ? [
                 'id' => $product->brand->id,
                 'name' => $product->brand->getTranslation('name', $locale),
@@ -168,5 +168,88 @@ class ProductController extends Controller
         ];
 
         return view('pages.products.show', compact('product', 'productData', 'schemaJsonLd', 'relatedProducts', 'reviews'));
+    }
+
+    /**
+     * Get all product images (thumbnail first, then additional images)
+     */
+    private function getProductImages(Product $product): array
+    {
+        $images = [];
+
+        // First add thumbnail/base image
+        $thumbnail = $product->getFirstMedia('thumbnail');
+        if ($thumbnail) {
+            $images[] = $thumbnail->getUrl();
+        }
+
+        // Then add additional images
+        $additionalImages = $product->getMedia('images');
+        foreach ($additionalImages as $media) {
+            $images[] = $media->getUrl();
+        }
+
+        // Fallback to gallery if no images found
+        if (empty($images)) {
+            $galleryImages = $product->getMedia('gallery');
+            foreach ($galleryImages as $media) {
+                $images[] = $media->getUrl();
+            }
+        }
+
+        return $images;
+    }
+
+    /**
+     * Parse specs from various formats to array
+     */
+    private function parseSpecs(mixed $specs): array
+    {
+        if (empty($specs)) {
+            return [];
+        }
+
+        if (is_array($specs)) {
+            return $specs;
+        }
+
+        if (is_string($specs)) {
+            // Try to decode if JSON string
+            $decoded = json_decode($specs, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                return $decoded;
+            }
+
+            // Parse HTML table or list format
+            return $this->parseHtmlSpecs($specs);
+        }
+
+        return [];
+    }
+
+    /**
+     * Parse HTML specs to key-value array
+     */
+    private function parseHtmlSpecs(string $html): array
+    {
+        $specs = [];
+
+        // Remove HTML tags but keep content structured
+        $text = strip_tags(str_replace(['<br>', '<br/>', '<br />', '</p>', '</li>', '</tr>'], "\n", $html));
+        $lines = array_filter(array_map('trim', explode("\n", $text)));
+
+        foreach ($lines as $line) {
+            // Try to split by common delimiters
+            if (str_contains($line, ':')) {
+                [$key, $value] = array_pad(explode(':', $line, 2), 2, '');
+                $key = trim($key);
+                $value = trim($value);
+                if ($key && $value) {
+                    $specs[$key] = $value;
+                }
+            }
+        }
+
+        return $specs;
     }
 }

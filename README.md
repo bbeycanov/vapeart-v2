@@ -235,20 +235,254 @@ php artisan tinker
 app(\App\Services\ElasticsearchService::class)->createIndex();
 ```
 
-### İlk Ürün Sync
+## 📦 Ürün İmport Sistemi (External API)
 
-Tüm ürünleri Elasticsearch'e indexlemek için:
+Bu sistem harici bir API'den ürünleri çekip veritabanına aktarmanızı sağlar.
 
-```bash
-# Queue worker ile
-php artisan queue:work
+### Özellikler
 
-# Veya direkt olarak
-php artisan tinker
+- **Pagination Desteği**: API'deki tüm sayfaları otomatik gezer
+- **Çoklu Dil Desteği**: az, en, ru çevirileri otomatik import edilir
+- **İlişki Yönetimi**: Brand, Category, Tag otomatik oluşturulur veya mevcut kullanılır
+- **Medya İmport**: Base image ve additional images Spatie Media Library ile import edilir
+- **Duplicate Kontrolü**: SKU veya slug üzerinden mevcut ürünler güncellenir
+- **Progress Tracking**: Gerçek zamanlı ilerleme göstergesi
+
+### API Veri Yapısı
+
+Import servisi aşağıdaki API yapısını destekler:
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "sku": "PRD-001",
+      "slug": "product-slug",
+      "title": "Product Name",
+      "new_price": 29.99,
+      "old_price": 39.99,
+      "smoke_count": 100,
+      "is_stock": true,
+      "is_new": true,
+      "is_best_seller": false,
+      "translations": {
+        "az": { "title": "...", "description": "...", "info": "..." },
+        "en": { "title": "...", "description": "...", "info": "..." },
+        "ru": { "title": "...", "description": "...", "info": "..." }
+      },
+      "brand": { "slug": "brand-slug", "title": "Brand Name", "translations": {...} },
+      "category": { "slug": "cat-slug", "title": "Category", "parent": {...} },
+      "tags": [{ "slug": "tag-1", "name": "Tag 1" }],
+      "base_image": { "url": "https://..." },
+      "additional_images": [{ "url": "https://..." }]
+    }
+  ],
+  "meta": { "current_page": 1, "last_page": 10 }
+}
 ```
 
+### Field Mapping (API → Database)
+
+| API Field | DB Field | Açıklama |
+|-----------|----------|----------|
+| `new_price` | `price` | Güncel satış fiyatı |
+| `old_price` | `compare_at_price` | Eski/karşılaştırma fiyatı |
+| `is_stock` | `is_active` | Stok durumu |
+| `is_best_seller` | `is_featured` | Öne çıkan ürün |
+| `smoke_count` | `stock_qty` | Stok miktarı |
+| `translations.{locale}.title` | `name` | Ürün adı (JSON) |
+| `translations.{locale}.description` | `description` | Açıklama (JSON) |
+| `translations.{locale}.info` | `specs` | Teknik özellikler (JSON) |
+| `base_image` | `thumbnail` collection | Ana ürün görseli |
+| `additional_images` | `images` collection | Ek görseller |
+
+### Kullanım
+
+#### Manuel Import (Progress Bar ile)
+
+```bash
+# Default API URL'den import
+php artisan products:import
+
+# Özel API URL'den import
+php artisan products:import http://example.com/api/products
+
+# Örnek: Local API'den import
+php artisan products:import http://127.0.0.1:8001/api/products
+```
+
+#### Queue ile Import (Arkaplanda)
+
+```bash
+# Queue'ya ekle
+php artisan products:import http://127.0.0.1:8001/api/products --queue
+
+# Queue worker'ı başlat (ayrı terminalde)
+php artisan queue:work
+```
+
+### Çıktı Örneği
+
+```
+Starting product import from: http://127.0.0.1:8001/api/products
+
+ 607 products processed [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] Imported: 605 | Updated: 2 | Failed: 0
+
+Import completed!
++------------------+-------+
+| Metric           | Count |
++------------------+-------+
+| New Products     | 605   |
+| Updated Products | 2     |
+| Failed           | 0     |
+| Total Processed  | 607   |
++------------------+-------+
+```
+
+### API URL Konfigürasyonu
+
+Default API URL'i `.env` dosyasında ayarlayabilirsiniz:
+
+```env
+PRODUCT_API_URL=http://127.0.0.1:8001/api/products
+```
+
+Veya `config/services.php` içinde:
+
 ```php
-app(\App\Jobs\SyncProductsToElasticsearch::class)->handle(app(\App\Services\ElasticsearchService::class));
+'product_api' => [
+    'url' => env('PRODUCT_API_URL', 'http://127.0.0.1:8001/api/products'),
+],
+```
+
+### Import Servisi Dosyaları
+
+| Dosya | Açıklama |
+|-------|----------|
+| `app/Services/ProductImportService.php` | Ana import logic |
+| `app/Services/Contracts/ProductImportServiceInterface.php` | Interface |
+| `app/Console/Commands/ImportProductsFromApi.php` | Artisan command |
+| `app/Jobs/ImportProductsJob.php` | Queue job |
+
+## 🔄 Elasticsearch Senkronizasyonu
+
+Bu sistem veritabanındaki ürünleri Elasticsearch'e senkronize eder.
+
+### Özellikler
+
+- **Toplu Senkronizasyon**: Tüm aktif ürünleri batch halinde indexler
+- **Fresh Sync**: Index'i silip sıfırdan oluşturma
+- **Chunk İşleme**: Bellek optimizasyonu için chunk'lar halinde işleme
+- **Otomatik Zamanlama**: Günlük gece yarısı otomatik sync
+- **Progress Bar**: Gerçek zamanlı ilerleme göstergesi
+- **Inaktif Temizleme**: İnaktif ürünleri index'ten kaldırır
+
+### Kullanım
+
+#### Manuel Senkronizasyon
+
+```bash
+# Normal sync (mevcut index'e ekle/güncelle)
+php artisan elasticsearch:sync
+
+# Fresh sync (index'i sil ve yeniden oluştur)
+php artisan elasticsearch:sync --fresh
+
+# Özel chunk boyutu ile
+php artisan elasticsearch:sync --chunk=200
+```
+
+#### Parametreler
+
+| Parametre | Default | Açıklama |
+|-----------|---------|----------|
+| `--fresh` | false | Index'i silip yeniden oluşturur |
+| `--chunk` | 100 | Her batch'te işlenecek ürün sayısı |
+
+### Çıktı Örneği
+
+```
+Starting Elasticsearch sync...
+
+Index ready.
+Found 607 active products to sync.
+
+ 607/607 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100% | Synced: product-slug
+
+Sync completed!
++------------------+-------+
+| Metric           | Count |
++------------------+-------+
+| Synced           | 607   |
+| Failed           | 0     |
+| Total Processed  | 607   |
++------------------+-------+
+```
+
+### Otomatik Zamanlama (Schedule)
+
+Elasticsearch sync her gece **00:00**'da otomatik çalışır.
+
+**Konfigürasyon:** `routes/console.php`
+
+```php
+Schedule::command('elasticsearch:sync')->dailyAt('00:00')
+    ->withoutOverlapping()
+    ->runInBackground()
+    ->appendOutputTo(storage_path('logs/elasticsearch-sync.log'));
+```
+
+**Scheduler'ın çalışması için:**
+
+Local development:
+```bash
+php artisan schedule:work
+```
+
+Production (crontab):
+```bash
+* * * * * cd /var/www/vapeart-v2 && php artisan schedule:run >> /dev/null 2>&1
+```
+
+### Log Dosyası
+
+Otomatik sync logları: `storage/logs/elasticsearch-sync.log`
+
+### Senkronizasyon Dosyaları
+
+| Dosya | Açıklama |
+|-------|----------|
+| `app/Console/Commands/SyncProductsToElasticsearch.php` | Artisan command |
+| `app/Services/ElasticsearchService.php` | Elasticsearch işlemleri |
+| `routes/console.php` | Schedule tanımı |
+
+## 🔁 Tam İş Akışı (Import + Sync)
+
+Yeni ürünleri import edip Elasticsearch'e senkronize etmek için:
+
+```bash
+# 1. Ürünleri API'den import et
+php artisan products:import http://127.0.0.1:8001/api/products
+
+# 2. Elasticsearch'e senkronize et
+php artisan elasticsearch:sync
+
+# Veya fresh sync (önerilir ilk kurulumda)
+php artisan elasticsearch:sync --fresh
+```
+
+### Queue ile İş Akışı
+
+```bash
+# Terminal 1: Queue worker başlat
+php artisan queue:work
+
+# Terminal 2: Import'u queue'ya ekle
+php artisan products:import http://127.0.0.1:8001/api/products --queue
+
+# Import tamamlandıktan sonra sync
+php artisan elasticsearch:sync
 ```
 
 ## ⚙️ Yapılandırma
@@ -264,6 +498,9 @@ ELASTICSEARCH_PORT=9200
 ELASTICSEARCH_SCHEME=http
 ELASTICSEARCH_USER=
 ELASTICSEARCH_PASS=
+
+# Product Import API
+PRODUCT_API_URL=http://127.0.0.1:8001/api/products
 ```
 
 ### Cache Yönetimi
@@ -441,9 +678,19 @@ Proje Elasticsearch 8.x ile uyumludur. Eğer Elasticsearch 7.x kullanıyorsanız
 - Cache TTL: 3600 saniye (1 saat)
 - Filament'te create/update/delete işlemlerinde cache otomatik temizlenir
 
-### Günlük Sync Job
+### Günlük Elasticsearch Sync
 
-`SyncProductsToElasticsearch` job'u günlük olarak çalışır ve tüm aktif ürünleri Elasticsearch'e sync eder. Scheduler'ın çalıştığından emin olun.
+`elasticsearch:sync` komutu her gece 00:00'da otomatik çalışır ve tüm aktif ürünleri Elasticsearch'e senkronize eder.
+
+```bash
+# Manuel çalıştırma
+php artisan elasticsearch:sync
+
+# Fresh sync (index'i yeniden oluştur)
+php artisan elasticsearch:sync --fresh
+```
+
+Scheduler'ın çalıştığından emin olun (crontab veya `php artisan schedule:work`).
 
 ## 🔄 Queue Worker Yönetimi (Ubuntu Server)
 
