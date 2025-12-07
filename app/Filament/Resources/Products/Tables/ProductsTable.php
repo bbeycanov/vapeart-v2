@@ -38,7 +38,7 @@ class ProductsTable
                     ->searchable(),
                 TextColumn::make('price')
                     ->label(__('Price'))
-                    ->money()
+                    ->money('AZN', true)
                     ->sortable(),
                 TextColumn::make('compare_at_price')
                     ->label(__('Compare at Price'))
