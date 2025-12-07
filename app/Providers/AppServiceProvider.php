@@ -40,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
             ->setRoleClass(Role::class);
 
         Gate::before(function ($user) {
-            return $user->hasRole('admin') ? true : null;
+            return $user->hasRole('Admin') ? true : null;
         });
 
         // Check if the 'languages' table exists before querying it
