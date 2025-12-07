@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Jobs\ImportProductsJob;
 use App\Services\Contracts\ProductImportServiceInterface;
 
 class ImportProductsFromApi extends Command
@@ -36,7 +37,7 @@ class ImportProductsFromApi extends Command
 
         if ($this->option('queue')) {
             $this->info('Dispatching import job to queue...');
-            \App\Jobs\ImportProductsJob::dispatch($url);
+            ImportProductsJob::dispatch($url);
             $this->info('Job dispatched successfully. Check your queue worker for progress.');
             return self::SUCCESS;
         }

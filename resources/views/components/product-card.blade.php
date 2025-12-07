@@ -12,7 +12,7 @@
     $productImage = $product->getProductImageUrl('thumb');
     $brandName = $product->brand ? $product->brand->getTranslation('name', app()->getLocale()) : '';
     $productUrl = route('products.show', [app()->getLocale(), $productSlug]);
-    
+
     // Get discount information
     $bestDiscount = $product->getBestDiscount();
     $discountedPrice = $product->getDiscountedPrice();
@@ -31,14 +31,14 @@
                     </span>
                 </div>
             @endif
-            
+
             <div class="pc__img-wrapper pc__img-wrapper_wide3">
                 <a href="{{ $productUrl }}">
                     <img loading="lazy"
                          src="{{ $productImage }}"
                          width="256" height="256" alt="{{ $productName }}"
                          class="pc__img"
-                         style="object-fit: contain; width: 100%; height: 256px;"
+                         style="object-fit: cover;"
                          onerror="this.src='{{ asset('storefront/images/products/placeholder.jpg') }}'">
                 </a>
             </div>
@@ -46,7 +46,7 @@
             <div class="anim_appear-bottom position-absolute w-100 text-center">
                 @if($showAddToCart)
                 <button class="btn btn-round btn-hover-red border-0 text-uppercase me-2 js-add-cart js-open-aside"
-                        data-aside="cartDrawer" 
+                        data-aside="cartDrawer"
                         data-product-id="{{ $product->id }}"
                         title="Add To Cart">
                     <svg class="d-inline-block" width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -63,8 +63,8 @@
                 </button>
                 @if($showQuickView)
                 <button class="btn btn-round btn-hover-red border-0 text-uppercase me-2 js-quick-view"
-                        data-bs-toggle="modal" 
-                        data-bs-target="#quickView" 
+                        data-bs-toggle="modal"
+                        data-bs-target="#quickView"
                         data-product-id="{{ $product->id }}"
                         title="Quick view">
                     <svg class="d-inline-block" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
