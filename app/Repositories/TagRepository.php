@@ -8,19 +8,19 @@ use App\Repositories\Contracts\TagRepositoryInterface;
 class TagRepository extends BaseRepository implements TagRepositoryInterface
 {
     /**
-     * @return string
-     */
-    public static function modelClass(): string
-    {
-        return Tag::class;
-    }
-
-    /**
      * @param Tag $model
      */
     public function __construct(Tag $model)
     {
         parent::__construct($model);
+    }
+
+    /**
+     * @return string
+     */
+    public static function modelClass(): string
+    {
+        return Tag::class;
     }
 
     /**

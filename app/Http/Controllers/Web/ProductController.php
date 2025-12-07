@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
+use App\Services\Contracts\BrandServiceInterface;
 use App\Services\Contracts\ProductServiceInterface;
 use App\Services\Contracts\CategoryServiceInterface;
-use App\Services\Contracts\BrandServiceInterface;
 
 class ProductController extends Controller
 {
@@ -21,7 +22,7 @@ class ProductController extends Controller
     public function __construct(
         private readonly ProductServiceInterface $productService,
         private readonly CategoryServiceInterface $categoryService,
-        private readonly BrandServiceInterface $brandService
+        public readonly BrandServiceInterface $brandService
     )
     {
     }
@@ -46,16 +47,16 @@ class ProductController extends Controller
             'price_max',
             'sort'
         ]);
-        
+
         $page = $request->get('page', 1);
         $products = $this->productService->catalog($filters, perPage: 24, page: $page);
-        
+
         // Get categories tree
         $categories = $this->categoryService->getTree();
-        
+
         // Get all active brands
-        $brands = \App\Models\Brand::where('is_active', true)->orderBy('sort_order')->get();
-        
+        $brands = Brand::where('is_active', true)->orderBy('sort_order')->get();
+
         // Get price range from products
         $priceMin = Product::where('is_active', true)->min('price') ?? 0;
         $priceMax = Product::where('is_active', true)->max('price') ?? 1000;
@@ -63,10 +64,10 @@ class ProductController extends Controller
         // Always return full page - JavaScript will parse it
         return view('pages.products.index', compact('products', 'categories', 'brands', 'priceMin', 'priceMax', 'filters'));
     }
-    
+
     /**
      * Load more products via AJAX
-     * 
+     *
      * @param string $locale
      * @param Request $request
      * @return Factory|View
@@ -85,7 +86,7 @@ class ProductController extends Controller
             'price_max',
             'sort'
         ]);
-        
+
         $page = $request->get('page', 1);
         $products = $this->productService->catalog($filters, perPage: 24, page: $page);
 
@@ -103,7 +104,7 @@ class ProductController extends Controller
 
         // Get product with all relations (cached via service)
         $product = $this->productService->getBySlug($product->slug);
-        
+
         if (!$product || !$product->is_active) {
             abort(404);
         }
@@ -112,7 +113,7 @@ class ProductController extends Controller
         $schemaJsonLd = $this->productService->buildSchemaFor($product);
 
         // Get related products (cached via service)
-        $relatedProducts = $this->productService->getRelatedProducts($product, 8);
+        $relatedProducts = $this->productService->getRelatedProducts($product);
 
         // Get reviews
         $reviews = $product->reviews()->where('status', 1)->latest('published_at')->get();
@@ -235,13 +236,23 @@ class ProductController extends Controller
         $specs = [];
 
         // Remove HTML tags but keep content structured
-        $text = strip_tags(str_replace(['<br>', '<br/>', '<br />', '</p>', '</li>', '</tr>'], "\n", $html));
+        $text = strip_tags(str_replace([
+            '<br>',
+            '<br/>',
+            '<br />',
+            '</p>',
+            '</li>',
+            '</tr>'
+        ], "\n", $html));
         $lines = array_filter(array_map('trim', explode("\n", $text)));
 
         foreach ($lines as $line) {
             // Try to split by common delimiters
             if (str_contains($line, ':')) {
-                [$key, $value] = array_pad(explode(':', $line, 2), 2, '');
+                [
+                    $key,
+                    $value
+                ] = array_pad(explode(':', $line, 2), 2, '');
                 $key = trim($key);
                 $value = trim($value);
                 if ($key && $value) {

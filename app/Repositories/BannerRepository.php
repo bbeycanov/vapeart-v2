@@ -11,14 +11,20 @@ use App\Repositories\Contracts\BannerRepositoryInterface;
 
 class BannerRepository extends BaseRepository implements BannerRepositoryInterface
 {
-    public static function modelClass(): string
-    {
-        return Banner::class;
-    }
-
+    /**
+     * @param Banner $model
+     */
     public function __construct(Banner $model)
     {
         parent::__construct($model);
+    }
+
+    /**
+     * @return string
+     */
+    public static function modelClass(): string
+    {
+        return Banner::class;
     }
 
     /**

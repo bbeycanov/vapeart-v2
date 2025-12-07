@@ -14,6 +14,7 @@ use Spatie\EloquentSortable\SortableTrait;
 
 /**
  * @property mixed $slug
+ * @property mixed $id
  */
 class Brand extends Model implements HasMedia, Sortable
 {

@@ -39,5 +39,7 @@ class BrandRepository extends BaseRepository implements BrandRepositoryInterface
     public function allActive(): Collection
     {
         $builder = $this->query()->active()->orderBy('name');
+
+        return $builder->get();
     }
 }

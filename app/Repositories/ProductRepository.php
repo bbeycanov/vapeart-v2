@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 use App\Models\Product;
+use Illuminate\Support\Collection;
 use App\Repositories\Contracts\ProductRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
@@ -51,25 +52,17 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         $q = $this->query()->where('is_active', true);
 
-        // Multiple brand filter (takes precedence)
         if (!empty($filters['brand_ids']) && is_array($filters['brand_ids'])) {
-            // Convert string IDs to integers
             $brandIds = array_map('intval', $filters['brand_ids']);
             $q->whereIn('brand_id', $brandIds);
-        }
-        // Single brand filter (backward compatibility)
-        elseif (!empty($filters['brand_id'])) {
+        } elseif (!empty($filters['brand_id'])) {
             $q->where('brand_id', (int)$filters['brand_id']);
         }
 
-        // Multiple category filter (takes precedence)
         if (!empty($filters['category_ids']) && is_array($filters['category_ids'])) {
-            // Convert string IDs to integers
             $categoryIds = array_map('intval', $filters['category_ids']);
             $q->whereHas('categories', fn($qq) => $qq->whereIn('categories.id', $categoryIds));
-        }
-        // Single category filter (backward compatibility)
-        elseif (!empty($filters['category_id'])) {
+        } elseif (!empty($filters['category_id'])) {
             $q->whereHas('categories', fn($qq) => $qq->where('categories.id', (int)$filters['category_id']));
         }
 
@@ -84,17 +77,14 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             $q->where('price', '<=', (float)$filters['price_max']);
         }
 
-        // Menu filter - if menu_product_ids provided, only show products in that menu
         if (!empty($filters['menu_product_ids']) && is_array($filters['menu_product_ids'])) {
             $q->whereIn('id', $filters['menu_product_ids']);
         }
 
-        // Menu filter - if menu_id provided, filter by menu
         if (!empty($filters['menu_id'])) {
             $q->whereHas('menus', fn($qq) => $qq->where('menus.id', $filters['menu_id']));
         }
 
-        // Discount filter - if on_discount is true, only show products with active discounts
         if (!empty($filters['on_discount']) && $filters['on_discount'] === true) {
             $q->whereHas('discounts', function ($qq) {
                 $qq->active();
@@ -105,25 +95,21 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         if (!empty($filters['sort'])) {
             switch ($filters['sort']) {
                 case 'price_asc':
-                    $q->orderBy('price', 'asc');
+                    $q->orderBy('price');
                     break;
                 case 'price_desc':
                     $q->orderBy('price', 'desc');
                     break;
                 case 'name_asc':
-                    // For translatable fields, we need to use JSON path
                     $locale = app()->getLocale();
-                    $q->orderByRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.{$locale}')) ASC");
+                    $q->orderByRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.$locale')) ASC");
                     break;
                 case 'name_desc':
                     $locale = app()->getLocale();
-                    $q->orderByRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.{$locale}')) DESC");
-                    break;
-                case 'created_desc':
-                    $q->orderByDesc('created_at');
+                    $q->orderByRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.$locale')) DESC");
                     break;
                 case 'created_asc':
-                    $q->orderBy('created_at', 'asc');
+                    $q->orderBy('created_at');
                     break;
                 case 'featured':
                     $q->orderByDesc('is_featured')->orderByDesc('created_at');
@@ -133,19 +119,16 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                     break;
             }
         } else {
-            // Default: featured first, then by creation date
             $q->orderByDesc('is_featured')->orderByDesc('created_at');
         }
 
-        $paginator = $q->with([
+        return $q->with([
             'brand',
             'media',
             'discounts' => function ($query) {
                 $query->active();
             }
         ])->paginate($perPage, ['*'], 'page', $page);
-        
-        return $paginator;
     }
 
     /**
@@ -172,17 +155,22 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     /**
      * @param Product $product
      * @param int $limit
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
-    public function getRelatedProducts(Product $product, int $limit = 8): \Illuminate\Support\Collection
+    public function getRelatedProducts(Product $product, int $limit = 8): Collection
     {
         return $product->categories()
-            ->with(['products' => function ($q) use ($product, $limit) {
-                $q->where('products.id', '<>', $product->id)
-                    ->where('is_active', true)
-                    ->with(['brand', 'media'])
-                    ->limit($limit * 2); // Get more to ensure we have enough after unique
-            }])
+            ->with([
+                'products' => function ($q) use ($product, $limit) {
+                    $q->where('products.id', '<>', $product->id)
+                        ->where('is_active', true)
+                        ->with([
+                            'brand',
+                            'media'
+                        ])
+                        ->limit($limit * 2);
+                }
+            ])
             ->get()
             ->pluck('products')
             ->flatten()

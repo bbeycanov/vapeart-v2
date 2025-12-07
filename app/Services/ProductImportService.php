@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use Exception;
 use App\Models\Tag;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
@@ -15,16 +17,18 @@ use App\Services\Contracts\ProductImportServiceInterface;
 class ProductImportService implements ProductImportServiceInterface
 {
     /**
-     * Supported locales for translations
+     * @var array|string[] $locales
      */
-    protected array $locales = ['az', 'en', 'ru'];
+    protected array $locales = [
+        'az',
+        'en',
+        'ru'
+    ];
 
     /**
-     * Import products from external API with pagination support
-     *
      * @param string $apiUrl
      * @param callable|null $onProgress
-     * @return array{imported: int, updated: int, failed: int, errors: array}
+     * @return array
      */
     public function importFromApi(string $apiUrl, ?callable $onProgress = null): array
     {
@@ -39,13 +43,13 @@ class ProductImportService implements ProductImportServiceInterface
         $hasMorePages = true;
 
         while ($hasMorePages) {
-            $url = $apiUrl . (str_contains($apiUrl, '?') ? '&' : '?') . "page={$page}";
+            $url = $apiUrl . (str_contains($apiUrl, '?') ? '&' : '?') . "page=$page";
 
             try {
                 $response = Http::timeout(30)->get($url);
 
                 if (!$response->successful()) {
-                    $stats['errors'][] = "Failed to fetch page {$page}: HTTP {$response->status()}";
+                    $stats['errors'][] = "Failed to fetch page $page: HTTP {$response->status()}";
                     break;
                 }
 
@@ -88,8 +92,8 @@ class ProductImportService implements ProductImportServiceInterface
 
                 $page++;
 
-            } catch (\Exception $e) {
-                $stats['errors'][] = "Page {$page} error: " . $e->getMessage();
+            } catch (Exception $e) {
+                $stats['errors'][] = "Page $page error: " . $e->getMessage();
                 Log::error('Product import API error', [
                     'page' => $page,
                     'error' => $e->getMessage()
@@ -175,7 +179,7 @@ class ProductImportService implements ProductImportServiceInterface
                 ];
             });
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Product import failed', [
                 'api_product' => $apiProduct['id'] ?? $apiProduct['sku'] ?? 'unknown',
                 'error' => $e->getMessage(),
@@ -203,15 +207,13 @@ class ProductImportService implements ProductImportServiceInterface
         return [
             'sku' => $apiProduct['sku'] ?? Str::random(8),
             'slug' => $this->generateUniqueSlug($apiProduct['slug'] ?? Str::slug($apiProduct['title'] ?? '')),
-            'price' => (float) ($apiProduct['new_price'] ?? $apiProduct['price'] ?? 0),
-            'compare_at_price' => (float) ($apiProduct['old_price'] ?? 0) > 0 ? (float) $apiProduct['old_price'] : null,
-            'stock_qty' => (int) ($apiProduct['smoke_count'] ?? $apiProduct['stock_qty'] ?? 0),
-            'is_active' => (bool) ($apiProduct['is_stock'] ?? $apiProduct['is_active'] ?? true),
-            'is_new' => (bool) ($apiProduct['is_new'] ?? false),
-            'is_featured' => (bool) ($apiProduct['is_best_seller'] ?? $apiProduct['is_featured'] ?? false),
-            'is_hot' => (bool) ($apiProduct['is_hot'] ?? false),
-
-            // Translatable fields - extract from translations
+            'price' => (float)($apiProduct['new_price'] ?? $apiProduct['price'] ?? 0),
+            'compare_at_price' => (float)($apiProduct['old_price'] ?? 0) > 0 ? (float)$apiProduct['old_price'] : null,
+            'stock_qty' => (int)($apiProduct['smoke_count'] ?? $apiProduct['stock_qty'] ?? 0),
+            'is_active' => (bool)($apiProduct['is_stock'] ?? $apiProduct['is_active'] ?? true),
+            'is_new' => (bool)($apiProduct['is_new'] ?? false),
+            'is_featured' => (bool)($apiProduct['is_best_seller'] ?? $apiProduct['is_featured'] ?? false),
+            'is_hot' => (bool)($apiProduct['is_hot'] ?? false),
             'name' => $this->extractTranslations($translations, 'title', $apiProduct['title'] ?? ''),
             'description' => $this->extractTranslations($translations, 'description'),
             'short_description' => $this->extractTranslations($translations, 'short_description'),
@@ -236,13 +238,11 @@ class ProductImportService implements ProductImportServiceInterface
         foreach ($this->locales as $locale) {
             $value = $translations[$locale][$field] ?? null;
 
-            // If no translation found and this is the first locale, use fallback
             if ($value === null && $locale === 'az' && $fallback !== null) {
                 $value = $fallback;
             }
 
             if ($value !== null) {
-                // Clean HTML if needed
                 $result[$locale] = $value;
             }
         }
@@ -275,8 +275,6 @@ class ProductImportService implements ProductImportServiceInterface
     }
 
     /**
-     * Find or create brand from API data
-     *
      * @param array $apiBrand
      * @return Brand
      */
@@ -284,11 +282,12 @@ class ProductImportService implements ProductImportServiceInterface
     {
         $slug = $apiBrand['slug'] ?? Str::slug($apiBrand['title'] ?? $apiBrand['name'] ?? '');
 
-        // Try to find by slug first
+        /**
+         * @var Brand|null $brand
+         */
         $brand = Brand::withTrashed()->where('slug', $slug)->first();
 
         if ($brand) {
-            // Restore if soft deleted
             if ($brand->trashed()) {
                 $brand->restore();
             }
@@ -302,7 +301,7 @@ class ProductImportService implements ProductImportServiceInterface
         $brand = Brand::create([
             'slug' => $slug,
             'name' => $name,
-            'is_active' => (bool) ($apiBrand['status'] ?? true),
+            'is_active' => (bool)($apiBrand['status'] ?? true),
         ]);
 
         // Import brand logo if available
@@ -350,15 +349,13 @@ class ProductImportService implements ProductImportServiceInterface
     {
         $categoryIds = [];
 
-        // First handle parent category if exists
         $parentId = null;
         if (!empty($apiCategory['parent'])) {
-            $parent = $this->findOrCreateSingleCategory($apiCategory['parent'], null);
+            $parent = $this->findOrCreateSingleCategory($apiCategory['parent']);
             $parentId = $parent->id;
             $categoryIds[] = $parentId;
         }
 
-        // Then handle the main category
         $category = $this->findOrCreateSingleCategory($apiCategory, $parentId);
         $categoryIds[] = $category->id;
 
@@ -376,7 +373,9 @@ class ProductImportService implements ProductImportServiceInterface
     {
         $slug = $apiCategory['slug'] ?? Str::slug($apiCategory['title'] ?? $apiCategory['name'] ?? '');
 
-        // Try to find by slug
+        /**
+         * @var Category|null $category
+         */
         $category = Category::withTrashed()->where('slug', $slug)->first();
 
         if ($category) {
@@ -394,7 +393,7 @@ class ProductImportService implements ProductImportServiceInterface
             'slug' => $slug,
             'name' => $name,
             'parent_id' => $parentId,
-            'is_active' => (bool) ($apiCategory['status'] ?? true),
+            'is_active' => (bool)($apiCategory['status'] ?? true),
         ]);
     }
 
@@ -471,7 +470,6 @@ class ProductImportService implements ProductImportServiceInterface
     {
         // Import base image as thumbnail
         if (!empty($apiProduct['base_image']['url'])) {
-            // Only import if product has no thumbnail yet
             if (!$product->hasMedia('thumbnail')) {
                 $this->importMedia($product, $apiProduct['base_image']['url'], 'thumbnail');
             }
@@ -490,15 +488,14 @@ class ProductImportService implements ProductImportServiceInterface
     /**
      * Import media from URL
      *
-     * @param \Spatie\MediaLibrary\HasMedia $model
+     * @param HasMedia $model
      * @param string $url
      * @param string $collection
      * @return void
      */
-    protected function importMedia($model, string $url, string $collection): void
+    protected function importMedia(HasMedia $model, string $url, string $collection): void
     {
         try {
-            // Skip if URL is invalid
             if (!filter_var($url, FILTER_VALIDATE_URL)) {
                 return;
             }
@@ -506,7 +503,7 @@ class ProductImportService implements ProductImportServiceInterface
             $model->addMediaFromUrl($url)
                 ->toMediaCollection($collection);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::warning('Failed to import media', [
                 'url' => $url,
                 'collection' => $collection,

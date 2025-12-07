@@ -7,11 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
-use App\Services\Contracts\CategoryServiceInterface;
 use App\Services\Contracts\ProductServiceInterface;
+use App\Services\Contracts\CategoryServiceInterface;
 
 class CategoryController extends Controller
 {
+    /**
+     * @param CategoryServiceInterface $cats
+     * @param ProductServiceInterface $products
+     */
     public function __construct(
         private readonly CategoryServiceInterface $cats,
         private readonly ProductServiceInterface  $products
@@ -29,16 +33,16 @@ class CategoryController extends Controller
         app()->setLocale($locale);
 
         $parentId = $request->get('parent_id');
-        $parentCategory = $parentId ? \App\Models\Category::find($parentId) : null;
-        
+
+        $parentCategory = $parentId ? Category::find($parentId) : null;
+
         $categories = $this->cats->getTree($parentId);
-        
-        // Get product counts for each category
+
         $categoriesWithCounts = $categories->map(function ($category) {
             $productCount = $category->products()
                 ->where('is_active', true)
                 ->count();
-            
+
             return [
                 'category' => $category,
                 'product_count' => $productCount
@@ -71,7 +75,6 @@ class CategoryController extends Controller
 
         $list = $this->products->catalog($filters);
 
-        // Get brands that have products in this category
         $brands = $category->products()
             ->where('is_active', true)
             ->whereNotNull('brand_id')
@@ -86,13 +89,8 @@ class CategoryController extends Controller
             ->values();
 
         return view(
-            'pages.categories.show',
-            compact(
-                'category',
-                'list',
-                'brands',
-                'schemaJsonLd'
-            )
+            view: 'pages.categories.show',
+            data: compact('category', 'list', 'brands', 'schemaJsonLd')
         );
     }
 }

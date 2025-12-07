@@ -25,6 +25,8 @@ class BannerController extends Controller
      */
     public function byPosition(string $locale, string $position): JsonResponse
     {
+        app()->setLocale($locale);
+
         $pos = BannerPosition::from($position)->value;
         $banners = $this->svc->byPosition($pos);
         $schema = $this->svc->buildSchemaForList($banners);
@@ -42,6 +44,7 @@ class BannerController extends Controller
      */
     public function showByKey(string $locale, string $key): JsonResponse
     {
+        app()->setLocale($locale);
         $banner = $this->svc->byKey($key);
         abort_if(!$banner, 404);
         $schema = $this->svc->buildSchemaFor($banner);

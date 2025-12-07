@@ -3,6 +3,7 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\Product;
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface ProductRepositoryInterface extends RepositoryInterface
@@ -23,7 +24,7 @@ interface ProductRepositoryInterface extends RepositoryInterface
     /**
      * @param Product $product
      * @param int $limit
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
-    public function getRelatedProducts(Product $product, int $limit = 8): \Illuminate\Support\Collection;
+    public function getRelatedProducts(Product $product, int $limit = 8): Collection;
 }

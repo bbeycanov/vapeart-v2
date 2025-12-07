@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Web;
 
+use Exception;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\View\View;
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 
 class QuickViewController extends Controller
@@ -16,7 +18,7 @@ class QuickViewController extends Controller
      * @param Request $request
      * @return Factory|View|JsonResponse
      */
-    public function show(string $locale, Request $request)
+    public function show(string $locale, Request $request): Factory|View|JsonResponse
     {
         $request->validate([
             'product_id' => 'required|exists:products,id'
@@ -27,24 +29,24 @@ class QuickViewController extends Controller
             $product = Product::with(['brand', 'categories', 'tags', 'media', 'discounts' => function ($q) {
                 $q->active();
             }])
-            ->findOrFail($request->product_id);
+            ->findOrFail($request->input('product_id'));
 
         if ($request->expectsJson()) {
             // Get base image (thumbnail) and additional images
             $allImages = collect();
-            
+
             // 1. First add base image (thumbnail) - must be first
             $thumbnail = $product->getFirstMedia('thumbnail');
             if ($thumbnail) {
                 $allImages->push($thumbnail);
             }
-            
+
             // 2. Then add additional images from 'images' collection
             $additionalImages = $product->getMedia('images');
             if ($additionalImages->isNotEmpty()) {
                 $allImages = $allImages->merge($additionalImages);
             }
-            
+
             // Convert to URLs
             $imageUrls = $allImages->map(function($media) use ($product) {
                 try {
@@ -55,19 +57,20 @@ class QuickViewController extends Controller
                     }
                     // If conversion doesn't exist, use original but log it
                     return $media->getUrl();
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
+                    Log::error($e->getMessage());
                     return $media->getUrl();
                 }
             })->filter()->values()->toArray();
-            
+
             // If no images, use placeholder
             if (empty($imageUrls)) {
                 $imageUrls = [asset('storefront/images/products/placeholder.jpg')];
             }
-            
+
             // Get thumbnail image for cart (thumb conversion - standardized size: 256x256)
-            $thumbImage = $product->getProductImageUrl('thumb');
-            
+            $thumbImage = $product->getProductImageUrl();
+
             // Categories with ID and slug for links
             $categories = $product->categories->map(function($category) {
                 return [
@@ -76,11 +79,11 @@ class QuickViewController extends Controller
                     'slug' => $category->slug
                 ];
             })->toArray();
-            
+
             $tags = $product->tags->map(function($tag) {
                 return $tag->getTranslation('name', app()->getLocale());
             })->implode(', ');
-            
+
             // Brand with logo and slug
             $brandData = null;
             if ($product->brand) {
@@ -90,14 +93,14 @@ class QuickViewController extends Controller
                     'logo' => $product->brand->getFirstMediaUrl('logo')
                 ];
             }
-            
+
             // Get discount information
             $bestDiscount = $product->getBestDiscount();
             $discountedPrice = $product->getDiscountedPrice();
             $discountText = $product->getDiscountText();
             $hasDiscount = $bestDiscount !== null;
             $originalPrice = $product->price;
-            
+
             return response()->json([
                 'success' => true,
                 'product' => [

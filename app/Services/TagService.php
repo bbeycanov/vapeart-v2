@@ -3,9 +3,9 @@
 namespace App\Services;
 
 use App\Models\Tag;
-use App\Repositories\Contracts\TagRepositoryInterface;
-use App\Services\Contracts\TagServiceInterface;
 use Illuminate\Support\Facades\App;
+use App\Services\Contracts\TagServiceInterface;
+use App\Repositories\Contracts\TagRepositoryInterface;
 
 class TagService extends AbstractService implements TagServiceInterface
 {

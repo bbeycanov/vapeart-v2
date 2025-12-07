@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Contracts;
 
-use Illuminate\Support\Collection;
 use App\Models\Branch;
+use Illuminate\Support\Collection;
 
 interface BranchRepositoryInterface extends RepositoryInterface
 {

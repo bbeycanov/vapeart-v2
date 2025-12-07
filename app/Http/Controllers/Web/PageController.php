@@ -34,6 +34,9 @@ class PageController extends Controller
 
         $schemaJsonLdScripts = $this->pages->buildSchemaFor($page);
 
-        return view('pages.pages.show', compact('page', 'schemaJsonLdScripts'));
+        return view(
+            view: 'pages.pages.show',
+            data: compact('page', 'schemaJsonLdScripts')
+        );
     }
 }

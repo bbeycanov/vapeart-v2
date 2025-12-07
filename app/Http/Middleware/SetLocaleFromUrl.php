@@ -3,18 +3,16 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Cache;
-use App\Enums\MenuPosition;
-use App\Services\Contracts\MenuServiceInterface;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class SetLocaleFromUrl
 {
     public function handle(Request $request, Closure $next)
     {
         $supported = (array)config('app.supported_locales', []);
+
         $default = (string)config('app.default_locale', config('app.fallback_locale'));
 
         $locale = $request->route('locale');
@@ -23,12 +21,13 @@ class SetLocaleFromUrl
             $path = ltrim($request->path(), '/');
 
             $firstSeg = Str::before($path, '/');
+
             if (in_array($firstSeg, $supported, true)) {
-                $path = Str::after($path, '/'); // qalan hissə
+                $path = Str::after($path, '/');
             }
 
             $target = url($default . ($path ? '/' . $path : ''));
-            return redirect()->to($target, 302);
+            return redirect()->to($target, Response::HTTP_FOUND);
         }
 
         app()->setLocale($locale);

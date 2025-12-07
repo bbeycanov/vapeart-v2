@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Http\Controllers\Controller;
-use App\Services\Contracts\ProductServiceInterface;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\Factory;
+use App\Services\Contracts\ProductServiceInterface;
 
 class DiscountController extends Controller
 {
+    /**
+     * @param ProductServiceInterface $products
+     */
     public function __construct(
         private readonly ProductServiceInterface $products
     )
@@ -18,7 +21,7 @@ class DiscountController extends Controller
 
     /**
      * Display a listing of discounted products
-     * 
+     *
      * @param string $locale
      * @param Request $request
      * @return Factory|View
@@ -36,12 +39,10 @@ class DiscountController extends Controller
             'sort'
         ]);
 
-        // Add on_discount filter
         $filters['on_discount'] = true;
 
         $list = $this->products->catalog($filters);
 
-        // If AJAX request, return only products grid
         if ($request->ajax()) {
             return view('pages.discounts._products_grid', compact('list'));
         }

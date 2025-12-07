@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Contracts;
 
-use Illuminate\Support\Collection;
 use App\Models\Brand;
+use Illuminate\Support\Collection;
 
 interface BrandRepositoryInterface extends RepositoryInterface
 {

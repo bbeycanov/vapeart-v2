@@ -3,9 +3,10 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Models\Blog;
+use App\Enums\BannerPosition;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
-use App\Enums\BannerPosition;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 use App\Services\Contracts\BlogServiceInterface;
@@ -57,14 +58,14 @@ class BlogController extends Controller
         $schemaJsonLd = $this->svc->buildSchemaFor($blog);
         $previousBlog = $this->svc->getPrevious($blog);
         $nextBlog = $this->svc->getNext($blog);
-        $reviews = $this->reviewService->listFor(\App\Models\Blog::class, $blog->id, 10);
+        $reviews = $this->reviewService->listFor(Blog::class, $blog->id);
 
         return view('pages.blog.show', compact('blog', 'schemaJsonLd', 'previousBlog', 'nextBlog', 'reviews'));
     }
 
     /**
      * Load more blogs via AJAX
-     * 
+     *
      * @param string $locale
      * @return JsonResponse
      */
@@ -72,19 +73,19 @@ class BlogController extends Controller
     {
         app()->setLocale($locale);
         $page = (int)request('page', 2);
-        
+
         // Create a new request with the page parameter
         $request = request()->duplicate(['page' => $page]);
-        
+
         // Temporarily replace the request
         $originalRequest = request();
         app()->instance('request', $request);
-        
+
         try {
             $blogs = $this->svc->index(['status' => 'published'], 9);
-            
+
             $html = view('pages.blog.partials.blog-items', ['blogs' => $blogs->items()])->render();
-            
+
             return response()->json([
                 'html' => $html,
                 'hasMore' => $blogs->hasMorePages(),

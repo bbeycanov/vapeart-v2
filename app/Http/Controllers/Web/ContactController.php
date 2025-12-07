@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\Web;
 
+use Exception;
 use Illuminate\Http\Request;
+use Spatie\SchemaOrg\Schema;
+use App\Mail\ContactMessageMail;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\View\Factory;
 use App\Services\Contracts\BranchServiceInterface;
 use App\Services\Contracts\ContactMessageServiceInterface;
-use App\Mail\ContactMessageMail;
-use Illuminate\Support\Facades\Mail;
-use Spatie\SchemaOrg\Schema;
 
 class ContactController extends Controller
 {
@@ -20,7 +23,7 @@ class ContactController extends Controller
      * @param ContactMessageServiceInterface $contactMessages
      */
     public function __construct(
-        private readonly BranchServiceInterface $branches,
+        private readonly BranchServiceInterface         $branches,
         private readonly ContactMessageServiceInterface $contactMessages
     )
     {
@@ -35,21 +38,22 @@ class ContactController extends Controller
         app()->setLocale($locale);
 
         $branches = $this->branches->getAllActive();
+
         $defaultBranch = $this->branches->getDefault() ?? $branches->first();
-        
-        $schemaJsonLd = $this->buildSchemaFor($branches, $defaultBranch);
+
+        $schemaJsonLd = $this->buildSchemaFor($branches);
 
         return view('pages.contacts.index', compact('branches', 'defaultBranch', 'schemaJsonLd'));
     }
 
     /**
-     * @param \Illuminate\Support\Collection $branches
-     * @param \App\Models\Branch|null $defaultBranch
+     * @param Collection $branches
      * @return string
      */
-    private function buildSchemaFor($branches, $defaultBranch): string
+    private function buildSchemaFor(Collection $branches): string
     {
         $locale = app()->getLocale();
+
         $url = route('contacts.index', ['locale' => $locale]);
 
         $webPage = Schema::webPage()
@@ -65,25 +69,24 @@ class ContactController extends Controller
 
         $schemaScripts = $webPage->toScript() . PHP_EOL . $breadcrumb->toScript();
 
-        // Add LocalBusiness schema for each branch
         foreach ($branches as $branch) {
             $name = $branch->getTranslation('name', $locale);
             $address = $branch->getTranslation('address', $locale);
-            
+
             $localBusiness = Schema::localBusiness()
                 ->name($name);
-            
+
             if ($branch->phone) {
                 $localBusiness->telephone($branch->phone);
             }
-            
+
             if ($branch->email) {
                 $localBusiness->email($branch->email);
             }
-            
+
             if ($address) {
                 $postalAddress = Schema::postalAddress();
-                // Try to parse address if it's multiline
+
                 $addressLines = explode("\n", $address);
                 if (count($addressLines) > 0) {
                     $postalAddress->streetAddress(trim($addressLines[0]));
@@ -91,16 +94,17 @@ class ContactController extends Controller
                 if (count($addressLines) > 1) {
                     $postalAddress->addressLocality(trim($addressLines[1]));
                 }
+
                 $localBusiness->address($postalAddress);
             }
-            
+
             if ($branch->latitude && $branch->longitude) {
                 $geo = Schema::geoCoordinates()
                     ->latitude((float)$branch->latitude)
                     ->longitude((float)$branch->longitude);
                 $localBusiness->geo($geo);
             }
-            
+
             $schemaScripts .= PHP_EOL . $localBusiness->toScript();
         }
 
@@ -133,14 +137,13 @@ class ContactController extends Controller
 
             $contactMessage = $this->contactMessages->create($validated);
 
-            // Send email
             $adminEmail = config('mail.contact_to_address', config('mail.from.address'));
+
             if ($adminEmail) {
                 try {
                     Mail::to($adminEmail)->send(new ContactMessageMail($contactMessage));
-                } catch (\Exception $mailException) {
-                    // Log mail error but don't fail the request
-                    \Log::error('Contact form mail error: ' . $mailException->getMessage());
+                } catch (Exception $mailException) {
+                    Log::error('Contact form mail error: ' . $mailException->getMessage());
                 }
             }
 
@@ -148,14 +151,8 @@ class ContactController extends Controller
                 'success' => true,
                 'message' => __('Your message has been sent successfully. We will contact you soon.')
             ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => __('Please correct the errors and try again.'),
-                'errors' => $e->errors()
-            ], 422);
-        } catch (\Exception $e) {
-            \Log::error('Contact form error: ' . $e->getMessage());
+        } catch (Exception $e) {
+            Log::error('Contact form error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
                 'message' => __('An error occurred. Please try again later.')

@@ -2,16 +2,24 @@
 
 namespace App\Services;
 
+use Exception;
 use App\Models\Product;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\ClientBuilder;
 use Illuminate\Support\Facades\Log;
+use Elastic\Elasticsearch\Exception\AuthenticationException;
+use Elastic\Elasticsearch\Exception\ClientResponseException;
+use Elastic\Elasticsearch\Exception\ServerResponseException;
+use Elastic\Elasticsearch\Exception\MissingParameterException;
 
 class ElasticsearchService
 {
     protected Client $client;
     protected string $index;
 
+    /**
+     * @throws AuthenticationException
+     */
     public function __construct()
     {
         $host = config('scout.elasticsearch.hosts.0.host', env('ELASTICSEARCH_HOST', 'localhost'));
@@ -21,11 +29,11 @@ class ElasticsearchService
         $pass = config('scout.elasticsearch.hosts.0.pass', env('ELASTICSEARCH_PASS'));
 
         // Build connection string
-        $connectionString = "{$scheme}://";
+        $connectionString = "$scheme://";
         if ($user && $pass) {
-            $connectionString .= "{$user}:{$pass}@";
+            $connectionString .= "$user:$pass@";
         }
-        $connectionString .= "{$host}:{$port}";
+        $connectionString .= "$host:$port";
 
         $builder = ClientBuilder::create()
             ->setHosts([$connectionString]);
@@ -36,7 +44,10 @@ class ElasticsearchService
     }
 
     /**
-     * Create index if not exists
+     * @return void
+     * @throws ClientResponseException
+     * @throws MissingParameterException
+     * @throws ServerResponseException
      */
     public function createIndex(): void
     {
@@ -52,7 +63,10 @@ class ElasticsearchService
                                 'custom_analyzer' => [
                                     'type' => 'custom',
                                     'tokenizer' => 'standard',
-                                    'filter' => ['lowercase', 'stop']
+                                    'filter' => [
+                                        'lowercase',
+                                        'stop'
+                                    ]
                                 ]
                             ]
                         ]
@@ -69,15 +83,36 @@ class ElasticsearchService
                                     'keyword' => ['type' => 'keyword']
                                 ]
                             ],
-                            'name_all_locales' => ['type' => 'text', 'analyzer' => 'custom_analyzer'],
-                            'short_description' => ['type' => 'text', 'analyzer' => 'custom_analyzer'],
-                            'description' => ['type' => 'text', 'analyzer' => 'custom_analyzer'],
-                            'description_all_locales' => ['type' => 'text', 'analyzer' => 'custom_analyzer'],
+                            'name_all_locales' => [
+                                'type' => 'text',
+                                'analyzer' => 'custom_analyzer'
+                            ],
+                            'short_description' => [
+                                'type' => 'text',
+                                'analyzer' => 'custom_analyzer'
+                            ],
+                            'description' => [
+                                'type' => 'text',
+                                'analyzer' => 'custom_analyzer'
+                            ],
+                            'description_all_locales' => [
+                                'type' => 'text',
+                                'analyzer' => 'custom_analyzer'
+                            ],
                             'brand_id' => ['type' => 'integer'],
-                            'brand_name' => ['type' => 'text', 'analyzer' => 'custom_analyzer'],
+                            'brand_name' => [
+                                'type' => 'text',
+                                'analyzer' => 'custom_analyzer'
+                            ],
                             'category_ids' => ['type' => 'integer'],
-                            'category_names' => ['type' => 'text', 'analyzer' => 'custom_analyzer'],
-                            'tag_names' => ['type' => 'text', 'analyzer' => 'custom_analyzer'],
+                            'category_names' => [
+                                'type' => 'text',
+                                'analyzer' => 'custom_analyzer'
+                            ],
+                            'tag_names' => [
+                                'type' => 'text',
+                                'analyzer' => 'custom_analyzer'
+                            ],
                             'price' => ['type' => 'float'],
                             'currency' => ['type' => 'keyword'],
                             'is_active' => ['type' => 'boolean'],
@@ -95,8 +130,8 @@ class ElasticsearchService
 
             try {
                 $this->client->indices()->create($params);
-                Log::info("Elasticsearch index '{$this->index}' created successfully.");
-            } catch (\Exception $e) {
+                Log::info("Elasticsearch index '$this->index' created successfully.");
+            } catch (Exception $e) {
                 Log::error("Failed to create Elasticsearch index: " . $e->getMessage());
                 throw $e;
             }
@@ -111,13 +146,18 @@ class ElasticsearchService
         try {
             $response = $this->client->indices()->exists(['index' => $this->index]);
             return $response->asBool();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+            Log::error("Failed to check if Elasticsearch index exists: " . $e->getMessage());
             return false;
         }
     }
 
     /**
-     * Index a product
+     * @param Product $product
+     * @return void
+     * @throws ClientResponseException
+     * @throws MissingParameterException
+     * @throws ServerResponseException
      */
     public function indexProduct(Product $product): void
     {
@@ -126,25 +166,34 @@ class ElasticsearchService
             return;
         }
 
-        $this->createIndex();
+        try {
+            $this->createIndex();
+        } catch (ClientResponseException|MissingParameterException|ServerResponseException $e) {
+            Log::error("Failed to create Elasticsearch index: " . $e->getMessage());
+            throw $e;
+        }
 
         $locale = app()->getLocale();
-        
+
         // Get category names in all locales
         $categoryNames = [];
         foreach ($product->categories as $category) {
             $categoryNames[] = $category->getTranslation('name', $locale);
-            foreach (['en', 'az', 'ru'] as $loc) {
+            foreach ([
+                         'en',
+                         'az',
+                         'ru'
+                     ] as $loc) {
                 $translated = $category->getTranslation('name', $loc);
                 if ($translated && !in_array($translated, $categoryNames)) {
                     $categoryNames[] = $translated;
                 }
             }
         }
-        
+
         // Get brand name
         $brandName = $product->brand ? $product->brand->getTranslation('name', $locale) : null;
-        
+
         // Get tag names
         $tagNames = [];
         foreach ($product->tags as $tag) {
@@ -174,7 +223,7 @@ class ElasticsearchService
             'stock_qty' => $product->stock_qty ?? 0,
             'rating_avg' => (float)($product->rating_avg ?? 0),
             'reviews_count' => $product->reviews_count ?? 0,
-            'image_url' => $product->getProductImageUrl('thumb'),
+            'image_url' => $product->getProductImageUrl(),
         ];
 
         $params = [
@@ -185,8 +234,8 @@ class ElasticsearchService
 
         try {
             $this->client->index($params);
-        } catch (\Exception $e) {
-            Log::error("Failed to index product {$product->id}: " . $e->getMessage());
+        } catch (Exception $e) {
+            Log::error("Failed to index product $product->id: " . $e->getMessage());
             throw $e;
         }
     }
@@ -202,25 +251,39 @@ class ElasticsearchService
                 'id' => $productId
             ];
             $this->client->delete($params);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Ignore if document doesn't exist (404)
             $errorCode = method_exists($e, 'getCode') ? $e->getCode() : 0;
             if ($errorCode !== 404 && !str_contains($e->getMessage(), '404')) {
-                Log::error("Failed to delete product {$productId} from index: " . $e->getMessage());
+                Log::error("Failed to delete product $productId from index: " . $e->getMessage());
             }
         }
     }
 
     /**
-     * Search products
+     * @param string $query
+     * @param int $from
+     * @param int $size
+     * @return array
+     * @throws ClientResponseException
+     * @throws MissingParameterException
+     * @throws ServerResponseException
      */
     public function search(string $query, int $from = 0, int $size = 10): array
     {
         if (empty($query)) {
-            return ['hits' => [], 'total' => 0];
+            return [
+                'hits' => [],
+                'total' => 0
+            ];
         }
 
-        $this->createIndex();
+        try {
+            $this->createIndex();
+        } catch (ClientResponseException|MissingParameterException|ServerResponseException $e) {
+            Log::error("Failed to create Elasticsearch index: " . $e->getMessage());
+            throw $e;
+        }
 
         $params = [
             'index' => $this->index,
@@ -265,26 +328,37 @@ class ElasticsearchService
         try {
             $response = $this->client->search($params);
             $responseArray = $response->asArray();
-            
+
             return [
                 'hits' => $responseArray['hits']['hits'] ?? [],
                 'total' => $responseArray['hits']['total']['value'] ?? ($responseArray['hits']['total'] ?? 0)
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("Elasticsearch search failed: " . $e->getMessage());
-            return ['hits' => [], 'total' => 0];
+            return [
+                'hits' => [],
+                'total' => 0
+            ];
         }
     }
 
     /**
-     * Get product IDs from search results
+     * @param string $query
+     * @param int $from
+     * @param int $size
+     * @return array
+     * @throws ClientResponseException
+     * @throws MissingParameterException
+     * @throws ServerResponseException
      */
     public function getProductIds(string $query, int $from = 0, int $size = 10): array
     {
         $results = $this->search($query, $from, $size);
+
         if (empty($results['hits'])) {
             return [];
         }
+
         return array_map(fn($hit) => $hit['_source']['id'], $results['hits']);
     }
 }

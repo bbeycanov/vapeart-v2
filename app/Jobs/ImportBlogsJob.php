@@ -2,42 +2,43 @@
 
 namespace App\Jobs;
 
+use Throwable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
+use App\Services\BlogImportService;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Services\BlogImportService;
 
 class ImportBlogsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
+     * @var int $tries
      */
     public int $tries = 3;
 
     /**
-     * The number of seconds the job can run before timing out.
-     *
-     * @var int
+     * @var int $timeout
      */
-    public int $timeout = 1800; // 30 minutes
+    public int $timeout = 1800;
 
     /**
-     * Create a new job instance.
+     * @param string $apiUrl
+     * @param string|null $notifyEmail
      */
     public function __construct(
-        protected string $apiUrl,
+        protected string  $apiUrl,
         protected ?string $notifyEmail = null
-    ) {}
+    )
+    {
+    }
 
     /**
-     * Execute the job.
+     * @param BlogImportService $importService
+     * @return void
      */
     public function handle(BlogImportService $importService): void
     {
@@ -71,9 +72,10 @@ class ImportBlogsJob implements ShouldQueue
     }
 
     /**
-     * Handle a job failure.
+     * @param Throwable $exception
+     * @return void
      */
-    public function failed(\Throwable $exception): void
+    public function failed(Throwable $exception): void
     {
         Log::error('Blog import job failed', [
             'url' => $this->apiUrl,

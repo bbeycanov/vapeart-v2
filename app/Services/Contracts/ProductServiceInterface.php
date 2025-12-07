@@ -10,9 +10,10 @@ interface ProductServiceInterface
     /**
      * @param array $filters
      * @param int $perPage
+     * @param int $page
      * @return LengthAwarePaginator
      */
-    public function catalog(array $filters = [], int $perPage = 12): LengthAwarePaginator;
+    public function catalog(array $filters = [], int $perPage = 12, int $page = 1): LengthAwarePaginator;
 
     /**
      * @param string $slug

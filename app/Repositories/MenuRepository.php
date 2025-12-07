@@ -43,7 +43,10 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
                     $q->active()->with([
                         'media',
                         'children' => function ($qq) {
-                            $qq->active()->with(['children', 'media']);
+                            $qq->active()->with([
+                                'children',
+                                'media'
+                            ]);
                         },
                         'widgets.media'
                     ]);

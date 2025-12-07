@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Web;
 
+use Exception;
 use App\Models\Product;
-use App\Services\ElasticsearchService;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
+use App\Services\ElasticsearchService;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchController extends Controller
@@ -24,25 +26,32 @@ class SearchController extends Controller
     public function autocomplete(string $locale, Request $request, ElasticsearchService $elasticsearchService): JsonResponse
     {
         app()->setLocale($locale);
-        
+
         $query = $request->get('q', '');
-        
+
         if (empty($query) || strlen($query) < 1) {
             return response()->json(['products' => []]);
         }
-        
+
         try {
             // Search in Elasticsearch
-            $results = $elasticsearchService->search($query, 0, 10);
+            $results = $elasticsearchService->search($query);
             $productIds = array_map(fn($hit) => $hit['_source']['id'], $results['hits']);
-            
+
             if (empty($productIds)) {
-                return response()->json(['products' => [], 'total' => 0]);
+                return response()->json([
+                    'products' => [],
+                    'total' => 0
+                ]);
             }
-            
+
             // Get products from database
             $products = Product::whereIn('id', $productIds)
-                ->with(['brand', 'categories', 'tags'])
+                ->with([
+                    'brand',
+                    'categories',
+                    'tags'
+                ])
                 ->get()
                 ->sortBy(function ($product) use ($productIds) {
                     return array_search($product->id, $productIds);
@@ -56,25 +65,31 @@ class SearchController extends Controller
                         'price' => number_format($product->price, 2),
                         'currency' => $product->currency ?? 'AZN',
                         'image' => $product->getProductImageUrl('thumb'),
-                        'url' => route('products.show', [$locale, $product->slug]),
+                        'url' => route('products.show', [
+                            $locale,
+                            $product->slug
+                        ]),
                     ];
                 });
-            
+
             return response()->json([
                 'products' => $products,
                 'total' => $results['total'],
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Fallback to database search if Elasticsearch fails
-            \Log::error('Elasticsearch search failed: ' . $e->getMessage());
-            
+            Log::error('Elasticsearch search failed: ' . $e->getMessage());
+
             $products = Product::where('is_active', true)
                 ->where(function ($q) use ($query, $locale) {
-                    $q->whereRaw("JSON_EXTRACT(name, '$.{$locale}') LIKE ?", ["%{$query}%"])
-                      ->orWhereRaw("JSON_EXTRACT(short_description, '$.{$locale}') LIKE ?", ["%{$query}%"])
-                      ->orWhereRaw("JSON_EXTRACT(description, '$.{$locale}') LIKE ?", ["%{$query}%"]);
+                    $q->whereRaw("JSON_EXTRACT(name, '$.$locale') LIKE ?", ["%$query%"])
+                        ->orWhereRaw("JSON_EXTRACT(short_description, '$.$locale') LIKE ?", ["%$query%"])
+                        ->orWhereRaw("JSON_EXTRACT(description, '$.$locale') LIKE ?", ["%$query%"]);
                 })
-                ->with(['brand', 'categories'])
+                ->with([
+                    'brand',
+                    'categories'
+                ])
                 ->take(10)
                 ->get()
                 ->map(function ($product) use ($locale) {
@@ -85,10 +100,13 @@ class SearchController extends Controller
                         'price' => number_format($product->price, 2),
                         'currency' => $product->currency ?? 'AZN',
                         'image' => $product->getProductImageUrl('thumb'),
-                        'url' => route('products.show', [$locale, $product->slug]),
+                        'url' => route('products.show', [
+                            $locale,
+                            $product->slug
+                        ]),
                     ];
                 });
-            
+
             return response()->json([
                 'products' => $products,
                 'total' => $products->count(),
@@ -107,18 +125,18 @@ class SearchController extends Controller
     public function index(string $locale, Request $request, ElasticsearchService $elasticsearchService): Factory|View
     {
         app()->setLocale($locale);
-        
+
         $query = $request->get('q', '');
-        $perPage = 24;
         $page = $request->get('page', 1);
-        
+        $perPage = $request->get('perPage', 24);
+
         try {
             if (!empty($query)) {
                 // Search in Elasticsearch
                 $from = ($page - 1) * $perPage;
                 $results = $elasticsearchService->search($query, $from, $perPage);
                 $productIds = array_map(fn($hit) => $hit['_source']['id'], $results['hits']);
-                
+
                 if (empty($productIds)) {
                     $products = new LengthAwarePaginator([], $results['total'], $perPage, $page, [
                         'path' => $request->url(),
@@ -127,14 +145,18 @@ class SearchController extends Controller
                 } else {
                     // Get products from database maintaining order
                     $dbProducts = Product::whereIn('id', $productIds)
-                        ->with(['brand', 'categories', 'tags'])
+                        ->with([
+                            'brand',
+                            'categories',
+                            'tags'
+                        ])
                         ->get()
                         ->keyBy('id');
-                    
+
                     $orderedProducts = collect($productIds)
                         ->map(fn($id) => $dbProducts->get($id))
                         ->filter();
-                    
+
                     $products = new LengthAwarePaginator(
                         $orderedProducts,
                         $results['total'],
@@ -153,18 +175,20 @@ class SearchController extends Controller
                     ->orderBy('sort_order')
                     ->paginate($perPage);
             }
-        } catch (\Exception $e) {
-            // Fallback to database search
-            \Log::error('Elasticsearch search failed: ' . $e->getMessage());
-            
+        } catch (Exception $e) {
+            Log::error('Elasticsearch search failed: ' . $e->getMessage());
+
             if (!empty($query)) {
                 $products = Product::where('is_active', true)
                     ->where(function ($q) use ($query, $locale) {
-                        $q->whereRaw("JSON_EXTRACT(name, '$.{$locale}') LIKE ?", ["%{$query}%"])
-                          ->orWhereRaw("JSON_EXTRACT(short_description, '$.{$locale}') LIKE ?", ["%{$query}%"])
-                          ->orWhereRaw("JSON_EXTRACT(description, '$.{$locale}') LIKE ?", ["%{$query}%"]);
+                        $q->whereRaw("JSON_EXTRACT(name, '$.$locale') LIKE ?", ["%$query%"])
+                            ->orWhereRaw("JSON_EXTRACT(short_description, '$.$locale') LIKE ?", ["%$query%"])
+                            ->orWhereRaw("JSON_EXTRACT(description, '$.$locale') LIKE ?", ["%$query%"]);
                     })
-                    ->with(['brand', 'categories'])
+                    ->with([
+                        'brand',
+                        'categories'
+                    ])
                     ->orderBy('sort_order')
                     ->paginate($perPage);
             } else {
@@ -174,7 +198,7 @@ class SearchController extends Controller
                     ->paginate($perPage);
             }
         }
-        
+
         return view('pages.search.index', compact('products', 'query'));
     }
 }

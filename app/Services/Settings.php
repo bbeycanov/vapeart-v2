@@ -28,9 +28,9 @@ class Settings
         }
 
         $raw = $value->getAttribute('value');
-        
+
         // If value is boolean or not an array, return it directly (non-translatable)
-        if (!is_array($raw) || is_bool($raw)) {
+        if (!is_array($raw)) {
             return $raw ?? $default;
         }
 

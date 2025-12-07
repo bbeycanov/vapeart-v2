@@ -40,28 +40,27 @@ use App\Repositories\Contracts\ContactMessageRepositoryInterface;
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
-     * Register services.
+     * @return void
      */
     public function register(): void
     {
+        $this->app->bind(TagRepositoryInterface::class, fn($app) => new TagRepository(new Tag()));
         $this->app->bind(PageRepositoryInterface::class, fn($app) => new PageRepository(new Page()));
         $this->app->bind(BlogRepositoryInterface::class, fn($app) => new BlogRepository(new Blog()));
         $this->app->bind(MenuRepositoryInterface::class, fn($app) => new MenuRepository(new Menu()));
+        $this->app->bind(BrandRepositoryInterface::class, fn($app) => new BrandRepository(new Brand()));
+        $this->app->bind(BranchRepositoryInterface::class, fn($app) => new BranchRepository(new Branch()));
+        $this->app->bind(ReviewRepositoryInterface::class, fn($app) => new ReviewRepository(new Review()));
+        $this->app->bind(ProductRepositoryInterface::class, fn($app) => new ProductRepository(new Product()));
         $this->app->bind(BannerRepositoryInterface::class, fn($app) => new BannerRepository(new Banner()));
-        $this->app->bind(CategoryRepositoryInterface::class, fn() => new CategoryRepository(new Category()));
-        $this->app->bind(BrandRepositoryInterface::class, fn() => new BrandRepository(new Brand()));
-        $this->app->bind(BranchRepositoryInterface::class, fn() => new BranchRepository(new Branch()));
-        $this->app->bind(ContactMessageRepositoryInterface::class, fn() => new ContactMessageRepository(new ContactMessage()));
-        $this->app->bind(TagRepositoryInterface::class, fn() => new TagRepository(new Tag()));
-        $this->app->bind(ProductRepositoryInterface::class, fn() => new ProductRepository(new Product()));
-        $this->app->bind(ReviewRepositoryInterface::class, fn() => new ReviewRepository(new Review()));
+        $this->app->bind(CategoryRepositoryInterface::class, fn($app) => new CategoryRepository(new Category()));
+        $this->app->bind(ContactMessageRepositoryInterface::class, fn($app) => new ContactMessageRepository(new ContactMessage()));
     }
 
     /**
-     * Bootstrap services.
+     * @return void
      */
     public function boot(): void
     {
-        //
     }
 }

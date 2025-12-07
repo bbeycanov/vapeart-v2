@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use Exception;
 use App\Models\Blog;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
@@ -36,13 +38,13 @@ class BlogImportService implements BlogImportServiceInterface
         $hasMorePages = true;
 
         while ($hasMorePages) {
-            $url = $apiUrl . (str_contains($apiUrl, '?') ? '&' : '?') . "page={$page}";
+            $url = $apiUrl . (str_contains($apiUrl, '?') ? '&' : '?') . "page=$page";
 
             try {
                 $response = Http::timeout(30)->get($url);
 
                 if (!$response->successful()) {
-                    $stats['errors'][] = "Failed to fetch page {$page}: HTTP {$response->status()}";
+                    $stats['errors'][] = "Failed to fetch page $page: HTTP {$response->status()}";
                     break;
                 }
 
@@ -85,8 +87,8 @@ class BlogImportService implements BlogImportServiceInterface
 
                 $page++;
 
-            } catch (\Exception $e) {
-                $stats['errors'][] = "Page {$page} error: " . $e->getMessage();
+            } catch (Exception $e) {
+                $stats['errors'][] = "Page $page error: " . $e->getMessage();
                 Log::error('Blog import API error', [
                     'page' => $page,
                     'error' => $e->getMessage()
@@ -150,7 +152,7 @@ class BlogImportService implements BlogImportServiceInterface
                 ];
             });
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Blog import failed', [
                 'api_blog' => $apiBlog['id'] ?? $apiBlog['slug'] ?? 'unknown',
                 'error' => $e->getMessage(),
@@ -269,15 +271,14 @@ class BlogImportService implements BlogImportServiceInterface
     /**
      * Import media from URL
      *
-     * @param \Spatie\MediaLibrary\HasMedia $model
+     * @param HasMedia $model
      * @param string $url
      * @param string $collection
      * @return void
      */
-    protected function importMedia($model, string $url, string $collection): void
+    protected function importMedia(HasMedia $model, string $url, string $collection): void
     {
         try {
-            // Skip if URL is invalid
             if (!filter_var($url, FILTER_VALIDATE_URL)) {
                 return;
             }
@@ -285,7 +286,7 @@ class BlogImportService implements BlogImportServiceInterface
             $model->addMediaFromUrl($url)
                 ->toMediaCollection($collection);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::warning('Failed to import blog media', [
                 'url' => $url,
                 'collection' => $collection,

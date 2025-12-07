@@ -90,7 +90,7 @@ class CategoryService extends AbstractService implements CategoryServiceInterfac
                         ->url(route('categories.show', [
                             'locale' => $locale,
                             'slug' => $child->slug
-                        ], true))
+                        ]))
                     )->toArray()
                 );
 

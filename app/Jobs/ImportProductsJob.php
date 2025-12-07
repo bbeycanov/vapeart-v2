@@ -2,50 +2,52 @@
 
 namespace App\Jobs;
 
+use Throwable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;
+use App\Services\ProductImportService;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Services\ProductImportService;
 
 class ImportProductsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
+     * @var int $tries
      */
     public int $tries = 3;
 
     /**
-     * The number of seconds the job can run before timing out.
-     *
-     * @var int
+     * @var int $timeout
      */
-    public int $timeout = 3600; // 1 hour
+    public int $timeout = 3600;
 
     /**
-     * Create a new job instance.
+     * @param string $apiUrl
+     * @param string|null $notifyEmail
      */
     public function __construct(
-        protected string $apiUrl,
+        protected string  $apiUrl,
         protected ?string $notifyEmail = null
-    ) {}
+    )
+    {
+    }
 
     /**
-     * Execute the job.
+     * @param ProductImportService $importService
+     * @return void
      */
     public function handle(ProductImportService $importService): void
     {
         Log::info('Starting product import job', ['url' => $this->apiUrl]);
 
         $stats = $importService->importFromApi($this->apiUrl, function ($result, $stats) {
-            // Log progress every 50 products
+
             $total = $stats['imported'] + $stats['updated'] + $stats['failed'];
+
             if ($total % 50 === 0) {
                 Log::info('Import progress', [
                     'imported' => $stats['imported'],
@@ -62,23 +64,22 @@ class ImportProductsJob implements ShouldQueue
             'errors_count' => count($stats['errors']),
         ]);
 
-        // Log errors for debugging
         if (!empty($stats['errors'])) {
             Log::warning('Product import errors', [
                 'errors' => array_slice($stats['errors'], 0, 50),
             ]);
         }
 
-        // Optional: Send notification email
         if ($this->notifyEmail) {
             $this->sendCompletionNotification($stats);
         }
     }
 
     /**
-     * Handle a job failure.
+     * @param Throwable $exception
+     * @return void
      */
-    public function failed(\Throwable $exception): void
+    public function failed(Throwable $exception): void
     {
         Log::error('Product import job failed', [
             'url' => $this->apiUrl,
@@ -88,7 +89,8 @@ class ImportProductsJob implements ShouldQueue
     }
 
     /**
-     * Send completion notification
+     * @param array $stats
+     * @return void
      */
     protected function sendCompletionNotification(array $stats): void
     {

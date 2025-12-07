@@ -20,15 +20,14 @@ use BezhanSalleh\LanguageSwitch\LanguageSwitch;
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * @return void
      */
     public function register(): void
     {
-        //
     }
 
     /**
-     * Bootstrap any application services.
+     * @return void
      */
     public function boot(): void
     {
@@ -40,11 +39,11 @@ class AppServiceProvider extends ServiceProvider
             ->setPermissionClass(Permission::class)
             ->setRoleClass(Role::class);
 
-        Gate::before(function ($user, $ability) {
+        Gate::before(function ($user) {
             return $user->hasRole('admin') ? true : null;
         });
 
-        // Tabloların varlığını kontrol et (migration sırasında hata önlemek için)
+        // Check if the 'languages' table exists before querying it
         if (!Schema::hasTable('languages')) {
             return;
         }
@@ -77,7 +76,7 @@ class AppServiceProvider extends ServiceProvider
         // Share HEADER menus to all views (cached) - using View::composer
         View::composer('*', function ($view) {
             $locale = app()->getLocale();
-            $headerMenus = Cache::remember("header_menus:{$locale}", 3600, function () {
+            $headerMenus = Cache::remember("header_menus:$locale", 3600, function () {
                 $menuService = app(MenuServiceInterface::class);
                 return $menuService->getTree(MenuPosition::HEADER);
             });
@@ -87,7 +86,7 @@ class AppServiceProvider extends ServiceProvider
         // Share FOOTER menus to all views (cached) - using View::composer
         View::composer('*', function ($view) {
             $locale = app()->getLocale();
-            $footerMenus = Cache::remember("footer_menus:{$locale}", 3600, function () {
+            $footerMenus = Cache::remember("footer_menus:$locale", 3600, function () {
                 $menuService = app(MenuServiceInterface::class);
                 return $menuService->getTree(MenuPosition::FOOTER);
             });
@@ -97,7 +96,7 @@ class AppServiceProvider extends ServiceProvider
         // Share MOBILE menus to all views (cached) - using View::composer
         View::composer('*', function ($view) {
             $locale = app()->getLocale();
-            $mobileMenus = Cache::remember("mobile_menus:{$locale}", 3600, function () {
+            $mobileMenus = Cache::remember("mobile_menus:$locale", 3600, function () {
                 $menuService = app(MenuServiceInterface::class);
                 return $menuService->getTree(MenuPosition::MOBILE_MENU);
             });
@@ -107,7 +106,7 @@ class AppServiceProvider extends ServiceProvider
         // Share BRANCHES to all views (cached) - using View::composer
         View::composer('*', function ($view) {
             $locale = app()->getLocale();
-            $branches = Cache::remember("branches:active:{$locale}", 3600, function () use ($locale) {
+            $branches = Cache::remember("branches:active:$locale", 3600, function () use ($locale) {
                 return Branch::where('is_active', true)
                     ->orderBy('sort_order')
                     ->get()

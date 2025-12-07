@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Models\Menu;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -34,12 +35,14 @@ class BrandController extends Controller
 
         $items = Brand::query()
             ->where('is_active', true)
-            ->withCount(['products' => function($query) {
-                $query->where('is_active', true);
-            }])
+            ->withCount([
+                'products' => function ($query) {
+                    $query->where('is_active', true);
+                }
+            ])
             ->orderBy('sort_order')
             ->paginate(24);
-            
+
         return view('pages.brands.index', compact('items'));
     }
 
@@ -54,9 +57,11 @@ class BrandController extends Controller
 
         $items = Brand::query()
             ->where('is_active', true)
-            ->withCount(['products' => function($query) {
-                $query->where('is_active', true);
-            }])
+            ->withCount([
+                'products' => function ($query) {
+                    $query->where('is_active', true);
+                }
+            ])
             ->orderBy('sort_order')
             ->paginate(24, ['*'], 'page', $page);
 
@@ -91,14 +96,11 @@ class BrandController extends Controller
         ]);
         $filters['brand_id'] = $brand->id;
 
-        // If menu_id is provided, filter products by menu
         $menu = null;
         if ($request->has('menu_id')) {
-            $menu = \App\Models\Menu::find($request->get('menu_id'));
+            $menu = Menu::find($request->get('menu_id'));
             if ($menu) {
-                // Get product IDs from menu
                 $menuProductIds = $menu->products()->where('is_active', true)->pluck('products.id')->toArray();
-                // Add to filters - we'll handle this in ProductService
                 $filters['menu_product_ids'] = $menuProductIds;
             }
         }

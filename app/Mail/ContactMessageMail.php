@@ -14,17 +14,16 @@ class ContactMessageMail extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * Create a new message instance.
+     * @param ContactMessage $contactMessage
      */
     public function __construct(
         public ContactMessage $contactMessage
     )
     {
-        //
     }
 
     /**
-     * Get the message envelope.
+     * @return Envelope
      */
     public function envelope(): Envelope
     {
@@ -34,7 +33,7 @@ class ContactMessageMail extends Mailable
     }
 
     /**
-     * Get the message content definition.
+     * @return Content
      */
     public function content(): Content
     {
@@ -47,9 +46,7 @@ class ContactMessageMail extends Mailable
     }
 
     /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array
      */
     public function attachments(): array
     {

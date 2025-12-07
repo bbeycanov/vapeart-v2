@@ -12,6 +12,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @property mixed $type
+ * @property mixed $amount
+ */
 class Discount extends Model implements HasMedia, Sortable
 {
     use HasFactory, SoftDeletes, HasTranslations, InteractsWithMedia, SortableTrait;

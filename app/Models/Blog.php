@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property mixed $slug
  * @property mixed $published_at
  * @property mixed $updated_at
+ * @property mixed $id
+ * @property mixed $created_at
  */
 class Blog extends Model implements HasMedia
 {
@@ -87,7 +89,7 @@ class Blog extends Model implements HasMedia
 
     /**
      * Register media conversions for different sizes
-     * 
+     *
      * @param Media|null $media
      * @return void
      */

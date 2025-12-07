@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Models\Product;
 use Spatie\SchemaOrg\Schema;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Psr\SimpleCache\InvalidArgumentException;
 use App\Services\Contracts\ProductServiceInterface;
@@ -138,9 +139,9 @@ class ProductService extends AbstractService implements ProductServiceInterface
     /**
      * @param Product $product
      * @param int $limit
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
-    public function getRelatedProducts(Product $product, int $limit = 8): \Illuminate\Support\Collection
+    public function getRelatedProducts(Product $product, int $limit = 8): Collection
     {
         return $this->remember($this->cacheKey('relatedProducts', [
             $product->id,

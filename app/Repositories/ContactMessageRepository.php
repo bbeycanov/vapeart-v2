@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\ContactMessage;
+use Psr\SimpleCache\InvalidArgumentException;
 use App\Repositories\Contracts\ContactMessageRepositoryInterface;
 
 class ContactMessageRepository extends BaseRepository implements ContactMessageRepositoryInterface
@@ -26,6 +27,7 @@ class ContactMessageRepository extends BaseRepository implements ContactMessageR
     /**
      * @param array $data
      * @return ContactMessage
+     * @throws InvalidArgumentException
      */
     public function create(array $data): ContactMessage
     {

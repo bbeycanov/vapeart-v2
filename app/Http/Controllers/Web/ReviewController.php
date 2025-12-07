@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Web;
 
+use Exception;
 use App\Models\Product;
 use App\Models\Blog;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreReviewRequest;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 use App\Services\Contracts\ReviewServiceInterface;
 use App\Services\Contracts\BlogServiceInterface;
 
@@ -19,7 +22,7 @@ class ReviewController extends Controller
      */
     public function __construct(
         private readonly ReviewServiceInterface $svc,
-        private readonly BlogServiceInterface $blogService
+        private readonly BlogServiceInterface   $blogService
     )
     {
     }
@@ -29,28 +32,30 @@ class ReviewController extends Controller
      * @param Product $product
      * @param StoreReviewRequest $request
      * @return JsonResponse|RedirectResponse
+     * @throws ValidationException
+     * @throws Exception
      */
     public function store(string $locale, Product $product, StoreReviewRequest $request): JsonResponse|RedirectResponse
     {
         app()->setLocale($locale);
 
         try {
-        $data = $request->validated();
-        $data['status'] = 1;
-        $data['published_at'] = now();
+            $data = $request->validated();
+            $data['status'] = 1;
+            $data['published_at'] = now();
 
-        $review = $this->svc->createFor(Product::class, $product->id, $data);
+            $review = $this->svc->createFor(Product::class, $product->id, $data);
 
-        $stat = $product
-            ->reviews()
-            ->where('status', 1)
-            ->selectRaw('count(*) as c, avg(rating) as r')
-            ->first();
+            $stat = $product
+                ->reviews()
+                ->where('status', 1)
+                ->selectRaw('count(*) as c, avg(rating) as r')
+                ->first();
 
-        $product->update([
-            'reviews_count' => (int)($stat->c ?? 0),
-            'rating_avg' => round((float)($stat->r ?? 0), 2),
-        ]);
+            $product->update([
+                'reviews_count' => (int)($stat->c ?? 0),
+                'rating_avg' => round((float)($stat->r ?? 0), 2),
+            ]);
 
             // If AJAX request, return JSON
             if ($request->wantsJson() || $request->ajax()) {
@@ -68,22 +73,22 @@ class ReviewController extends Controller
                 ]);
             }
 
-        return back()->with('success', __('Thanks for your review!'));
-        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()->with('success', __('Thanks for your review!'));
+        } catch (ValidationException $e) {
             if ($request->wantsJson() || $request->ajax()) {
                 return response()->json([
                     'success' => false,
                     'message' => __('Validation failed'),
                     'errors' => $e->errors()
-                ], 422);
+                ], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
             throw $e;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($request->wantsJson() || $request->ajax()) {
                 return response()->json([
                     'success' => false,
                     'message' => $e->getMessage() ?: __('An error occurred while submitting your review')
-                ], 500);
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
             throw $e;
         }
@@ -124,17 +129,17 @@ class ReviewController extends Controller
                 'message' => __('Thanks for your review!'),
                 'review' => $reviewHtml
             ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
+        } catch (ValidationException $e) {
             return response()->json([
                 'success' => false,
                 'message' => __('Validation failed'),
                 'errors' => $e->errors()
-            ], 422);
-        } catch (\Exception $e) {
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        } catch (Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage() ?: __('An error occurred while submitting your review')
-            ], 500);
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

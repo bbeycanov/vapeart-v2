@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * @method static firstOrNew(string[] $array)
  * @method static whereIn(string $string, array $miss)
+ * @property mixed $key
  */
 class Setting extends Model
 {
@@ -60,6 +61,6 @@ class Setting extends Model
      */
     public static function cacheKey(string $key): string
     {
-        return "setting:{$key}";
+        return "setting:$key";
     }
 }

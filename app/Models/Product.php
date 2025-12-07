@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use Closure;
+use Exception;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Container\Attributes\Log;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\HigherOrderCollectionProxy;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Image\Enums\Fit;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,6 +28,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property mixed $slug
  * @property mixed $brand
  * @property mixed $sku
+ * @property mixed $is_active
+ * @property HigherOrderCollectionProxy|mixed $categories
+ * @property mixed $id
+ * @property mixed $compare_at_price
+ * @property mixed $stock_qty
+ * @property mixed $is_track_stock
+ * @property mixed $tags
+ * @property mixed $name
+ * @property mixed $description
+ * @property mixed $brand_id
  */
 class Product extends Model implements HasMedia
 {
@@ -150,7 +165,7 @@ class Product extends Model implements HasMedia
 
     /**
      * Register media conversions for different sizes
-     * 
+     *
      * @param Media|null $media
      * @return void
      */
@@ -183,14 +198,14 @@ class Product extends Model implements HasMedia
 
     /**
      * Get product image URL with fallback
-     * 
+     *
      * @param string $conversion
      * @return string
      */
     public function getProductImageUrl(string $conversion = 'thumb'): string
     {
         $media = $this->getFirstMedia('thumbnail') ?: $this->getFirstMedia('images');
-        
+
         if ($media) {
             // Always use conversion if available, otherwise use original
             try {
@@ -200,22 +215,22 @@ class Product extends Model implements HasMedia
                 }
                 // If conversion doesn't exist, try to generate it or use original
                 return $media->getUrl();
-            } catch (\Exception $e) {
-                // If conversion fails, use original
+            } catch (Exception $e) {
+                Log::error('Error getting media URL: ' . $e->getMessage());
                 return $media->getUrl();
             }
         }
-        
+
         return asset('storefront/images/products/placeholder.jpg');
     }
 
     /**
      * Scope to get products that are on discount
-     * 
+     *
      * @param $query
      * @return mixed
      */
-    public function scopeOnDiscount($query)
+    public function scopeOnDiscount($query): mixed
     {
         return $query->whereHas('discounts', function ($q) {
             $q->active();
@@ -224,23 +239,23 @@ class Product extends Model implements HasMedia
 
     /**
      * Get active discounts for this product
-     * 
-     * @return \Illuminate\Database\Eloquent\Collection
+     *
+     * @return Collection
      */
-    public function getActiveDiscounts()
+    public function getActiveDiscounts(): Collection
     {
         return $this->discounts()->active()->get();
     }
 
     /**
      * Get the best active discount (highest percentage or fixed amount)
-     * 
-     * @return Discount|null
+     *
+     * @return Closure|null
      */
-    public function getBestDiscount()
+    public function getBestDiscount(): ?Closure
     {
         $discounts = $this->getActiveDiscounts();
-        
+
         if ($discounts->isEmpty()) {
             return null;
         }
@@ -258,13 +273,16 @@ class Product extends Model implements HasMedia
 
     /**
      * Calculate discounted price
-     * 
+     *
      * @return float
      */
     public function getDiscountedPrice(): float
     {
+        /**
+         * @var Discount $discount
+         */
         $discount = $this->getBestDiscount();
-        
+
         if (!$discount) {
             return $this->price;
         }
@@ -279,13 +297,16 @@ class Product extends Model implements HasMedia
 
     /**
      * Get discount percentage or amount text
-     * 
+     *
      * @return string|null
      */
     public function getDiscountText(): ?string
     {
+        /**
+         * @var Discount $discount
+         */
         $discount = $this->getBestDiscount();
-        
+
         if (!$discount) {
             return null;
         }

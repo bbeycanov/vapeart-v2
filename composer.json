@@ -21,7 +21,8 @@
         "spatie/laravel-permission": "^6.21",
         "spatie/laravel-query-builder": "^6.3",
         "spatie/laravel-translatable": "^6.11",
-        "spatie/schema-org": "^3.23"
+        "spatie/schema-org": "^3.23",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

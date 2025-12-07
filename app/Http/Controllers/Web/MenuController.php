@@ -28,6 +28,7 @@ class MenuController extends Controller
      */
     public function byPosition(string $locale, string $position): JsonResponse
     {
+        app()->setLocale($locale);
         $tree = $this->menus->getTree(MenuPosition::from($position)->value);
         return response()->json($tree);
     }
@@ -51,12 +52,13 @@ class MenuController extends Controller
         // Group by brand and count products
         $brands = $menuProducts
             ->groupBy('brand_id')
-            ->map(function ($products, $brandId) {
+            ->map(function ($products) {
                 $brand = $products->first()->brand;
+
                 if (!$brand) {
                     return null;
                 }
-                
+
                 return [
                     'brand' => $brand,
                     'product_count' => $products->count()

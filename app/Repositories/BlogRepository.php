@@ -49,12 +49,12 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
     {
         return $this->query()
             ->published()
-            ->where(function($q) use ($blog) {
+            ->where(function ($q) use ($blog) {
                 $q->where('published_at', '<', $blog->published_at ?? $blog->created_at)
-                  ->orWhere(function($q2) use ($blog) {
-                      $q2->whereNull('published_at')
-                         ->where('created_at', '<', $blog->created_at);
-                  });
+                    ->orWhere(function ($q2) use ($blog) {
+                        $q2->whereNull('published_at')
+                            ->where('created_at', '<', $blog->created_at);
+                    });
             })
             ->orderBy('published_at', 'desc')
             ->orderBy('created_at', 'desc')
@@ -69,12 +69,12 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
     {
         return $this->query()
             ->published()
-            ->where(function($q) use ($blog) {
+            ->where(function ($q) use ($blog) {
                 $q->where('published_at', '>', $blog->published_at ?? $blog->created_at)
-                  ->orWhere(function($q2) use ($blog) {
-                      $q2->whereNull('published_at')
-                         ->where('created_at', '>', $blog->created_at);
-                  });
+                    ->orWhere(function ($q2) use ($blog) {
+                        $q2->whereNull('published_at')
+                            ->where('created_at', '>', $blog->created_at);
+                    });
             })
             ->orderBy('published_at', 'asc')
             ->orderBy('created_at', 'asc')

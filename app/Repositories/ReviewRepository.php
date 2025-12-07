@@ -10,19 +10,19 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 class ReviewRepository extends BaseRepository implements ReviewRepositoryInterface
 {
     /**
-     * @return string
-     */
-    public static function modelClass(): string
-    {
-        return Review::class;
-    }
-
-    /**
      * @param Review $model
      */
     public function __construct(Review $model)
     {
         parent::__construct($model);
+    }
+
+    /**
+     * @return string
+     */
+    public static function modelClass(): string
+    {
+        return Review::class;
     }
 
     /**

@@ -1,18 +1,33 @@
 <?php
 
 use App\Services\Settings;
-use Illuminate\Support\Arr;
+use Psr\Container\NotFoundExceptionInterface;
+use Psr\Container\ContainerExceptionInterface;
 
 if (!function_exists('settings')) {
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     function settings(string $key, mixed $default = null, ?string $locale = null): mixed
     {
-        /** @var Settings $svc */
-        $svc = app(Settings::class);
-        return $svc->get($key, $default, $locale);
+        /**
+         * @var Settings $svc
+         */
+        $settingService = app(Settings::class);
+
+        return $settingService->get($key, $default, $locale);
     }
 }
 
 if (!function_exists('localized_url')) {
+    /**
+     * @param string $toLocale
+     * @param string|null $fallbackRouteName
+     * @param array $fallbackParams
+     * @return string
+     */
     function localized_url(string $toLocale, ?string $fallbackRouteName = null, array $fallbackParams = []): string
     {
         $route = request()->route();
@@ -40,7 +55,9 @@ if (!function_exists('localized_url')) {
         }
 
         $newPath = implode('/', $segments);
-        $qs = request()->getQueryString();
-        return url($newPath . ($qs ? '?' . $qs : ''));
+
+        $queryString = request()->getQueryString();
+
+        return url($newPath . ($queryString ? '?' . $queryString : ''));
     }
 }

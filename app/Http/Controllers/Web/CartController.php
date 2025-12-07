@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Models\Product;
 use App\Models\Branch;
+use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 
 class CartController extends Controller
@@ -19,6 +19,7 @@ class CartController extends Controller
     public function index(string $locale): Factory|View
     {
         app()->setLocale($locale);
+
         $branches = Branch::where('is_active', true)
             ->orderBy('sort_order')
             ->get()
@@ -31,9 +32,10 @@ class CartController extends Controller
                     'whatsapp' => $branch->whatsapp,
                 ];
             });
+
         return view('pages.carts.index', compact('branches'));
     }
-    
+
     /**
      * @param string $locale
      * @return JsonResponse
@@ -41,6 +43,7 @@ class CartController extends Controller
     public function getBranches(string $locale): JsonResponse
     {
         app()->setLocale($locale);
+
         $branches = Branch::where('is_active', true)
             ->orderBy('sort_order')
             ->get()
@@ -53,7 +56,7 @@ class CartController extends Controller
                     'whatsapp' => $branch->whatsapp,
                 ];
             });
-        
+
         return response()->json([
             'success' => true,
             'branches' => $branches
@@ -74,13 +77,13 @@ class CartController extends Controller
 
         app()->setLocale($locale);
 
-        $product = Product::with(['brand', 'media'])->findOrFail($request->product_id);
+        $product = Product::with([
+            'brand',
+            'media'
+        ])->findOrFail($request->post('product_id'));
+
         $quantity = $request->input('quantity', 1);
-        
-        // Burada cart logic'i implement edilecek
-        // Şimdilik sadece success response döndürüyoruz
-        // Frontend'de localStorage kullanılıyor
-        
+
         return response()->json([
             'success' => true,
             'message' => __('Product added to cart successfully'),
@@ -91,7 +94,10 @@ class CartController extends Controller
                 'price' => $product->price,
                 'currency' => $product->currency ?? 'AZN',
                 'image' => $product->getFirstMediaUrl('thumbnail') ?: $product->getFirstMediaUrl('images'),
-                'url' => route('products.show', [app()->getLocale(), $product->slug]),
+                'url' => route('products.show', [
+                    app()->getLocale(),
+                    $product->slug
+                ]),
                 'quantity' => $quantity,
             ]
         ]);
