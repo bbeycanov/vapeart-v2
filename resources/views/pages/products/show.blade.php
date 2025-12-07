@@ -427,6 +427,20 @@
         // Tab persistence with URL hash
         const tabLinks = document.querySelectorAll('[data-bs-toggle="tab"]');
         const hash = window.location.hash;
+        const navTabs = document.querySelector('.product-single__details-tab > .nav-tabs');
+        
+        // Function to scroll active tab to center
+        function scrollTabToCenter(tabLink) {
+            if (navTabs && window.innerWidth <= 575.98) {
+                const navItem = tabLink.closest('.nav-item');
+                if (navItem) {
+                    const navTabsRect = navTabs.getBoundingClientRect();
+                    const navItemRect = navItem.getBoundingClientRect();
+                    const scrollLeft = navItem.offsetLeft - (navTabsRect.width / 2) + (navItemRect.width / 2);
+                    navTabs.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+                }
+            }
+        }
         
         // Restore active tab from URL hash on page load
         if (hash) {
@@ -434,16 +448,24 @@
             if (tabLink) {
                 const tab = new bootstrap.Tab(tabLink);
                 tab.show();
+                setTimeout(() => scrollTabToCenter(tabLink), 100);
+            }
+        } else {
+            // Scroll active tab to center on page load
+            const activeTab = document.querySelector('.product-single__details-tab .nav-link.active');
+            if (activeTab) {
+                setTimeout(() => scrollTabToCenter(activeTab), 100);
             }
         }
         
-        // Save active tab to URL hash when tab is changed
+        // Save active tab to URL hash when tab is changed and scroll to center
         tabLinks.forEach(function(tabLink) {
             tabLink.addEventListener('shown.bs.tab', function(e) {
                 const hash = e.target.getAttribute('href');
                 if (hash) {
                     history.replaceState(null, null, hash);
                 }
+                scrollTabToCenter(e.target);
             });
         });
         // Quantity control
