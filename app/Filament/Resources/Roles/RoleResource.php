@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BezhanSalleh\FilamentShield\Resources\Roles;
+namespace App\Filament\Resources\Roles;
 
 use UnitEnum;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;

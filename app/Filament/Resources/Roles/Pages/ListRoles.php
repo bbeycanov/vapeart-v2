@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BezhanSalleh\FilamentShield\Resources\Roles\Pages;
+namespace App\Filament\Resources\Roles\Pages;
 
 use BezhanSalleh\FilamentShield\Resources\Roles\RoleResource;
 use Filament\Actions\CreateAction;
