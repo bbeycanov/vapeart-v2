@@ -24148,4 +24148,13 @@ body.coming-soon-page .header {
 
 .product-single__media-col {
   position: relative;
-}
+
+  /* Quick View Modal Scrollbar Hide */
+  .modal-dialog.quick-view .modal-content ::-webkit-scrollbar {
+    display: none;
+  }
+
+  .modal-dialog.quick-view .modal-content {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
