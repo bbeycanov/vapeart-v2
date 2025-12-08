@@ -256,7 +256,6 @@ class ProductsTable
                     RestoreBulkAction::make(),
                 ]),
             ])
-            ->reorderable('sort_order')
-            ->defaultSort('sort_order');
+            ->defaultSort('created_at', 'desc');
     }
 }

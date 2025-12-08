@@ -52,13 +52,13 @@ class Dashboard extends BaseDashboard
     {
         return [
             StatsOverview::class,
+            ProductsStatsWidget::class,
+            DiscountsStatsWidget::class,
+            TopCategoriesChart::class,
+            TopBrandsChart::class,
             ProductsChart::class,
             ReviewRatingsChart::class,
             ProductPriceRangeChart::class,
-            TopCategoriesChart::class,
-            TopBrandsChart::class,
-            DiscountsStatsWidget::class,
-            ProductsStatsWidget::class,
         ];
     }
 

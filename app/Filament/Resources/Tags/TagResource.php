@@ -25,6 +25,17 @@ class TagResource extends Resource
 {
     use Translatable;
 
+    public static function getModelLabel(): string
+    {
+        return __('Tag');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Tags');
+    }
+
+
     protected static ?string $model = Tag::class;
 
     protected static string $routes = 'tags';

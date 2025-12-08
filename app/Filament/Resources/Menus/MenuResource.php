@@ -24,6 +24,17 @@ class MenuResource extends Resource
 {
     use Translatable;
 
+    public static function getModelLabel(): string
+    {
+        return __('Menu');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Menus');
+    }
+
+
     protected static ?string $model = Menu::class;
 
     protected static string $routes = 'menus';

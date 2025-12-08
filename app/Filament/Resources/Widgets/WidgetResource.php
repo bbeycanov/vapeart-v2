@@ -25,6 +25,17 @@ class WidgetResource extends Resource
 {
     use Translatable;
 
+    public static function getModelLabel(): string
+    {
+        return __('Widget');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Widgets');
+    }
+
+
     protected static ?string $model = Widget::class;
 
     protected static string $routes = 'widgets';

@@ -3,7 +3,6 @@
     "Content Management": "Управление контентом",
     "User Management": "Управление пользователями",
     "Settings": "Настройки",
-
     "Products": "Продукты",
     "Categories": "Категории",
     "Brands": "Бренды",
@@ -21,7 +20,6 @@
     "Roles": "Роли",
     "Languages": "Языки",
     "General Settings": "Общие настройки",
-
     "ID": "ID",
     "Name": "Имя",
     "Surname": "Фамилия",
@@ -47,7 +45,6 @@
     "Code": "Код",
     "Key": "Ключ",
     "Value": "Значение",
-
     "SKU": "Артикул",
     "Price": "Цена",
     "Stock": "Наличие",
@@ -65,14 +62,12 @@
     "Hot Product": "Горячий продукт",
     "Featured Menus": "Рекомендуемые меню",
     "Sidebar Menus": "Меню боковой панели",
-
     "Attributes": "Атрибуты",
     "Attribute Name": "Название атрибута",
     "Attribute Value": "Значение атрибута",
     "Specifications": "Характеристики",
     "Specification Name": "Название характеристики",
     "Specification Value": "Значение характеристики",
-
     "Amount": "Сумма",
     "Start Date": "Дата начала",
     "End Date": "Дата окончания",
@@ -84,11 +79,9 @@
     "Upcoming": "Предстоящий",
     "Start Date From": "Дата начала от",
     "End Date To": "Дата окончания до",
-
     "Parent Menu": "Родительское меню",
     "Link Target": "Цель ссылки",
     "Icon Class": "Класс иконки",
-
     "Excerpt": "Отрывок",
     "Body": "Текст",
     "Published At": "Опубликовано",
@@ -96,7 +89,6 @@
     "Author Name": "Имя автора",
     "Draft": "Черновик",
     "Published": "Опубликовано",
-
     "Rating": "Рейтинг",
     "Review Type": "Тип отзыва",
     "Item": "Элемент",
@@ -109,12 +101,10 @@
     "Item ID": "ID элемента",
     "Product": "Продукт",
     "Blog": "Блог",
-
     "Read": "Прочитано",
     "Unread": "Непрочитано",
     "Read Status": "Статус прочтения",
     "Read At": "Прочитано в",
-
     "WhatsApp": "WhatsApp",
     "WhatsApp number with country code (e.g., 994501234567)": "Номер WhatsApp с кодом страны (напр., 994501234567)",
     "Working Hours": "Часы работы",
@@ -126,22 +116,18 @@
     "Map longitude coordinate": "Координата долготы на карте",
     "Is Default": "По умолчанию",
     "Set as default branch for contact page": "Установить как филиал по умолчанию для страницы контактов",
-
     "Website": "Веб-сайт",
     "Has Website": "Есть веб-сайт",
     "No Website": "Нет веб-сайта",
     "Social Links": "Социальные ссылки",
     "Platform": "Платформа",
     "Logo": "Логотип",
-
     "Language Code": "Код языка",
     "Language Name": "Название языка",
     "Native Name": "Родное название",
     "Default": "По умолчанию",
-
     "Is Public": "Публичный",
     "Is Active": "Активен",
-
     "Position & Type": "Позиция и тип",
     "Select banner position and type": "Выберите позицию и тип баннера",
     "Enter general information for the banner": "Введите общую информацию для баннера",
@@ -161,11 +147,9 @@
     "Recommended size: 1200x600px, Max size: 1MB": "Рекомендуемый размер: 1200x600px, Макс. размер: 1MB",
     "Recommended size: 600x800px, Max size: 1MB": "Рекомендуемый размер: 600x800px, Макс. размер: 1MB",
     "Recommended size: 100x100px, Max size: 512 MB": "Рекомендуемый размер: 100x100px, Макс. размер: 512 MB",
-
     "Button Text": "Текст кнопки",
     "Button URL": "URL кнопки",
     "Enter general information for the widget": "Введите общую информацию для виджета",
-
     "All": "Все",
     "All Positions": "Все позиции",
     "All Types": "Все типы",
@@ -183,12 +167,10 @@
     "Price To": "Цена до",
     "Created From": "Создано от",
     "Created To": "Создано до",
-
     "Deleted Records": "Удаленные записи",
     "Without Deleted": "Без удаленных",
     "With Deleted": "С удаленными",
     "Only Deleted": "Только удаленные",
-
     "General": "Общее",
     "Seo": "SEO",
     "General Information": "Общая информация",
@@ -201,7 +183,6 @@
     "Switcher": "Переключатель",
     "Position and Type": "Позиция и тип",
     "Review Information": "Информация об отзыве",
-
     "Define the category information for the product.": "Определите информацию о категории для продукта.",
     "Define the price information for the product.": "Определите информацию о цене для продукта.",
     "Product appearance depends on stock.": "Отображение продукта зависит от наличия на складе.",
@@ -226,7 +207,6 @@
     "Set the status and settings for the blog post": "Установите статус и настройки для записи блога",
     "Enter general information for the page": "Введите общую информацию для страницы",
     "Enter seo information for the page": "Введите SEO информацию для страницы",
-
     "Meta Title": "Мета заголовок",
     "Meta Description": "Мета описание",
     "Meta title": "Мета заголовок",
@@ -236,11 +216,9 @@
     "Gallery Images": "Изображения галереи",
     "You can upload multiple images. Max size per image: 5MB": "Вы можете загрузить несколько изображений. Макс. размер на изображение: 5MB",
     "Track Stock": "Отслеживать наличие",
-
     "Password": "Пароль",
     "Role": "Роль",
     "Admin": "Админ",
-
     "Dashboard": "Панель управления",
     "Start Date": "Дата начала",
     "End Date": "Дата окончания",
@@ -273,5 +251,22 @@
     "Avg. Price": "Сред. цена",
     "Average product price": "Средняя цена товара",
     "Latest Reviews": "Последние отзывы",
-    "Date": "Дата"
+    "Date": "Дата",
+    "Branch": "Филиал",
+    "Page": "Страница",
+    "Tag": "Тег",
+    "User": "Пользователь",
+    "Banner": "Баннер",
+    "Menu": "Меню",
+    "Review": "Отзыв",
+    "Contact Message": "Сообщение",
+    "Discount": "Скидка",
+    "Language": "Язык",
+    "Widget": "Виджет",
+    "Setting": "Настройка",
+    "Create": "Создать",
+    "Create :label": "Создать :label",
+    "New :label": "Новый :label",
+    "Edit": "Редактировать",
+    "Edit :label": "Редактировать :label"
 }

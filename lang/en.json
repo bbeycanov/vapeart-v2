@@ -3,7 +3,6 @@
     "Content Management": "Content Management",
     "User Management": "User Management",
     "Settings": "Settings",
-
     "Products": "Products",
     "Categories": "Categories",
     "Brands": "Brands",
@@ -21,7 +20,6 @@
     "Roles": "Roles",
     "Languages": "Languages",
     "General Settings": "General Settings",
-
     "ID": "ID",
     "Name": "Name",
     "Surname": "Surname",
@@ -47,7 +45,6 @@
     "Code": "Code",
     "Key": "Key",
     "Value": "Value",
-
     "SKU": "SKU",
     "Price": "Price",
     "Stock": "Stock",
@@ -65,14 +62,12 @@
     "Hot Product": "Hot Product",
     "Featured Menus": "Featured Menus",
     "Sidebar Menus": "Sidebar Menus",
-
     "Attributes": "Attributes",
     "Attribute Name": "Attribute Name",
     "Attribute Value": "Attribute Value",
     "Specifications": "Specifications",
     "Specification Name": "Specification Name",
     "Specification Value": "Specification Value",
-
     "Amount": "Amount",
     "Start Date": "Start Date",
     "End Date": "End Date",
@@ -84,11 +79,9 @@
     "Upcoming": "Upcoming",
     "Start Date From": "Start Date From",
     "End Date To": "End Date To",
-
     "Parent Menu": "Parent Menu",
     "Link Target": "Link Target",
     "Icon Class": "Icon Class",
-
     "Excerpt": "Excerpt",
     "Body": "Body",
     "Published At": "Published At",
@@ -96,7 +89,6 @@
     "Author Name": "Author Name",
     "Draft": "Draft",
     "Published": "Published",
-
     "Rating": "Rating",
     "Review Type": "Review Type",
     "Item": "Item",
@@ -109,12 +101,10 @@
     "Item ID": "Item ID",
     "Product": "Product",
     "Blog": "Blog",
-
     "Read": "Read",
     "Unread": "Unread",
     "Read Status": "Read Status",
     "Read At": "Read At",
-
     "WhatsApp": "WhatsApp",
     "WhatsApp number with country code (e.g., 994501234567)": "WhatsApp number with country code (e.g., 994501234567)",
     "Working Hours": "Working Hours",
@@ -126,22 +116,18 @@
     "Map longitude coordinate": "Map longitude coordinate",
     "Is Default": "Is Default",
     "Set as default branch for contact page": "Set as default branch for contact page",
-
     "Website": "Website",
     "Has Website": "Has Website",
     "No Website": "No Website",
     "Social Links": "Social Links",
     "Platform": "Platform",
     "Logo": "Logo",
-
     "Language Code": "Language Code",
     "Language Name": "Language Name",
     "Native Name": "Native Name",
     "Default": "Default",
-
     "Is Public": "Is Public",
     "Is Active": "Is Active",
-
     "Position & Type": "Position & Type",
     "Select banner position and type": "Select banner position and type",
     "Enter general information for the banner": "Enter general information for the banner",
@@ -161,11 +147,9 @@
     "Recommended size: 1200x600px, Max size: 1MB": "Recommended size: 1200x600px, Max size: 1MB",
     "Recommended size: 600x800px, Max size: 1MB": "Recommended size: 600x800px, Max size: 1MB",
     "Recommended size: 100x100px, Max size: 512 MB": "Recommended size: 100x100px, Max size: 512 MB",
-
     "Button Text": "Button Text",
     "Button URL": "Button URL",
     "Enter general information for the widget": "Enter general information for the widget",
-
     "All": "All",
     "All Positions": "All Positions",
     "All Types": "All Types",
@@ -183,12 +167,10 @@
     "Price To": "Price To",
     "Created From": "Created From",
     "Created To": "Created To",
-
     "Deleted Records": "Deleted Records",
     "Without Deleted": "Without Deleted",
     "With Deleted": "With Deleted",
     "Only Deleted": "Only Deleted",
-
     "General": "General",
     "Seo": "SEO",
     "General Information": "General Information",
@@ -201,7 +183,6 @@
     "Switcher": "Switcher",
     "Position and Type": "Position and Type",
     "Review Information": "Review Information",
-
     "Define the category information for the product.": "Define the category information for the product.",
     "Define the price information for the product.": "Define the price information for the product.",
     "Product appearance depends on stock.": "Product appearance depends on stock.",
@@ -226,7 +207,6 @@
     "Set the status and settings for the blog post": "Set the status and settings for the blog post",
     "Enter general information for the page": "Enter general information for the page",
     "Enter seo information for the page": "Enter SEO information for the page",
-
     "Meta Title": "Meta Title",
     "Meta Description": "Meta Description",
     "Meta title": "Meta title",
@@ -236,11 +216,9 @@
     "Gallery Images": "Gallery Images",
     "You can upload multiple images. Max size per image: 5MB": "You can upload multiple images. Max size per image: 5MB",
     "Track Stock": "Track Stock",
-
     "Password": "Password",
     "Role": "Role",
     "Admin": "Admin",
-
     "Dashboard": "Dashboard",
     "Start Date": "Start Date",
     "End Date": "End Date",
@@ -273,5 +251,22 @@
     "Avg. Price": "Avg. Price",
     "Average product price": "Average product price",
     "Latest Reviews": "Latest Reviews",
-    "Date": "Date"
+    "Date": "Date",
+    "Branch": "Branch",
+    "Page": "Page",
+    "Tag": "Tag",
+    "User": "User",
+    "Banner": "Banner",
+    "Menu": "Menu",
+    "Review": "Review",
+    "Contact Message": "Contact Message",
+    "Discount": "Discount",
+    "Language": "Language",
+    "Widget": "Widget",
+    "Setting": "Setting",
+    "Create": "Create",
+    "Create :label": "Create :label",
+    "New :label": "New :label",
+    "Edit": "Edit",
+    "Edit :label": "Edit :label"
 }

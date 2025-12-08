@@ -24,6 +24,17 @@ class CategoryResource extends Resource
 {
     use Translatable;
 
+    public static function getModelLabel(): string
+    {
+        return __('Category');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Categories');
+    }
+
+
     protected static ?string $model = Category::class;
 
     protected static string $routes = 'categories';

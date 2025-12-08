@@ -24,6 +24,17 @@ class BranchResource extends Resource
 {
     use Translatable;
 
+    public static function getModelLabel(): string
+    {
+        return __('Branch');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Branches');
+    }
+
+
     protected static ?string $model = Branch::class;
 
     protected static string $routes = 'branches';

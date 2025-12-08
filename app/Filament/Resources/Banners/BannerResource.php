@@ -25,6 +25,17 @@ class BannerResource extends Resource
 {
     use Translatable;
 
+    public static function getModelLabel(): string
+    {
+        return __('Banner'); // 'Banner' az.json faylında 'Bannerlər' var, tək halda 'Banner' üçün əmin deyiləm, amma __() işləməlidir.
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Banners');
+    }
+
+
     protected static ?string $model = Banner::class;
 
     protected static string $routes = 'banners';

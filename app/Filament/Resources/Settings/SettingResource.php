@@ -24,6 +24,17 @@ class SettingResource extends Resource
 {
     use Translatable;
 
+    public static function getModelLabel(): string
+    {
+        return __('Setting');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Settings');
+    }
+
+
     protected static ?string $model = Setting::class;
 
     protected static string $routes = 'settings';

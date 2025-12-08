@@ -1,37 +1,40 @@
 
 <div class="header-mobile header_sticky">
-    <div class="container d-flex align-items-center h-100">
-        <a class="mobile-nav-activator d-block position-relative" href="#">
-            <svg class="nav-icon" width="25" height="18" viewBox="0 0 25 18" xmlns="http://www.w3.org/2000/svg"><use href="#icon_nav" /></svg>
-            <span class="btn-close-lg position-absolute top-0 start-0 w-100"></span>
-        </a>
+    <div class="container d-flex align-items-center h-100 position-relative">
+        <div class="d-flex align-items-center">
+            <a class="mobile-nav-activator d-block position-relative me-3" href="#">
+                <svg class="nav-icon" width="25" height="18" viewBox="0 0 25 18" xmlns="http://www.w3.org/2000/svg"><use href="#icon_nav" /></svg>
+                <span class="btn-close-lg position-absolute top-0 start-0 w-100"></span>
+            </a>
 
-        <div class="logo">
+            @if(isset($headerBranches) && $headerBranches->isNotEmpty())
+                <a href="#" class="header-tools__item" data-bs-toggle="modal" data-bs-target="#branchPhoneModal">
+                    <svg class="d-block" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                </a>
+            @endif
+        </div>
+
+        <div class="logo position-absolute start-50 translate-middle-x">
             <a href="{{ route('home', app()->getLocale()) }}">
-                @php
-                    $mobileLogo = settings('site.mobile_logo');
-                    $defaultLogo = asset('storefront/images/logo.svg');
+                @php 
+                    $defaultLogo = asset('storefront/images/vapeart-logo-mobile.svg');
                 @endphp
-                <img src="{{ $mobileLogo ?: $defaultLogo }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image d-block">
+                <img src="{{ $defaultLogo }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image d-block">
             </a>
         </div>
 
-        @if(isset($headerBranches) && $headerBranches->isNotEmpty())
-            <a href="#" class="header-tools__item me-2" data-bs-toggle="modal" data-bs-target="#branchPhoneModal">
-                <svg class="d-block" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                </svg>
+        <div class="d-flex align-items-center ms-auto">
+            <a href="{{ route('wishlist.index', app()->getLocale()) }}" class="header-tools__item header-tools__wishlist me-3">
+                <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_heart" /></svg>
+                <span class="wishlist-amount d-block position-absolute js-wishlist-items-count theme-bg-color">0</span>
             </a>
-        @endif
-
-        <a href="{{ route('wishlist.index', app()->getLocale()) }}" class="header-tools__item header-tools__wishlist">
-            <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_heart" /></svg>
-            <span class="wishlist-amount d-block position-absolute js-wishlist-items-count theme-bg-color">0</span>
-        </a>
-        <a href="#" class="header-tools__item header-tools__cart js-open-aside" data-aside="cartDrawer">
-            <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_cart" /></svg>
-            <span class="cart-amount d-block position-absolute js-cart-items-count">3</span>
-        </a>
+            <a href="#" class="header-tools__item header-tools__cart js-open-aside" data-aside="cartDrawer">
+                <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_cart" /></svg>
+                <span class="cart-amount d-block position-absolute js-cart-items-count">3</span>
+            </a>
+        </div>
     </div>
 
     <nav class="header-mobile__navigation navigation d-flex flex-column w-100 position-absolute top-100 bg-body overflow-auto">
@@ -199,10 +202,9 @@
                 <div class="logo">
                     <a href="{{ route('home', app()->getLocale()) }}">
                         @php
-                            $mobileLogo = settings('site.mobile_logo');
-                            $defaultLogo = asset('storefront/images/logo.svg');
+                            $defaultLogo = asset('storefront/images/vapeart-logo.svg');
                         @endphp
-                        <img src="{{ $mobileLogo ?: $defaultLogo }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image">
+                        <img src="{{   $defaultLogo }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image">
                     </a>
                 </div>
 

@@ -25,6 +25,17 @@ class PageResource extends Resource
 {
     use Translatable;
 
+    public static function getModelLabel(): string
+    {
+        return __('Page');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Pages');
+    }
+
+
     protected static ?string $model = Page::class;
 
     protected static string $routes = 'pages';

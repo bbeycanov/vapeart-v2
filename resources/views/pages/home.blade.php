@@ -294,7 +294,7 @@
                                         <x-product-card :product="$product" />
                                     @endforeach
                                 @else
-                                    <div class="col-12 text-center text-secondary py-5">
+                                    <div class="col-12 d-flex flex-column align-items-center justify-content-center text-secondary" style="min-height: 300px;">
                                         <p>{{ __('product.No products available') }}</p>
                                     </div>
                                 @endif

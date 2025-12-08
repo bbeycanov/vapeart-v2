@@ -25,6 +25,17 @@ class BlogResource extends Resource
 {
     use Translatable;
 
+    public static function getModelLabel(): string
+    {
+        return __('Blog');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Blogs');
+    }
+
+
     protected static ?string $model = Blog::class;
 
     protected static string $routes = 'blogs';

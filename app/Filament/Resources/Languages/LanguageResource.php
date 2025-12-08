@@ -21,6 +21,16 @@ use App\Filament\Resources\Languages\Tables\LanguagesTable;
 
 class LanguageResource extends Resource
 {
+    public static function getModelLabel(): string
+    {
+        return __('Language');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Languages');
+    }
+
     protected static ?string $model = Language::class;
 
     protected static string $routes = 'languages';

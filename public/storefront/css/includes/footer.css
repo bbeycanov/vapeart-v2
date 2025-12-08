@@ -10,9 +10,19 @@
     justify-content: center;
 }
 
-.footer-menu-toggle:focus {
+.footer-menu-toggle:focus,
+.footer-menu-toggle:hover {
     box-shadow: none;
     outline: none;
+    text-decoration: none !important;
+}
+
+.footer-menu-toggle:after,
+.footer-menu-toggle:hover:after,
+.footer-menu-toggle:focus:after {
+    content: none !important;
+    display: none !important;
+    width: 0 !important;
 }
 
 .footer-menu-toggle-icon {
@@ -72,12 +82,12 @@
     min-width: 140px !important;
     padding: 0.5rem 2.5rem 0.5rem 0.75rem !important;
     font-size: 0.875rem !important;
-    font-weight: 400 !important;
+    font-weight: 500 !important;
     line-height: 1.5 !important;
-    color: #495057 !important;
-    background-color: #fff !important;
+    color: #fff !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
     background-image: none !important;
-    border: 1px solid #dee2e6 !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-radius: 6px !important;
     appearance: none !important;
     -webkit-appearance: none !important;
@@ -90,19 +100,19 @@
 
 .footer-language-select:hover,
 #footerSettingsLanguage:hover {
-    background-color: #f8f9fa !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
     background-image: none !important;
-    border-color: #adb5bd !important;
-    color: #495057 !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    color: #fff !important;
 }
 
 .footer-language-select:focus,
 #footerSettingsLanguage:focus {
-    background-color: #fff !important;
+    background-color: rgba(255, 255, 255, 0.15) !important;
     background-image: none !important;
-    border-color: #adb5bd !important;
-    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.05) !important;
-    color: #495057 !important;
+    border-color: #fff !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
     outline: none !important;
 }
 
@@ -124,7 +134,7 @@
     display: none !important;
 }
 
-/* Custom dropdown arrow - dark gray */
+/* Custom dropdown arrow - white */
 .footer-language-select-wrapper::after {
     content: '';
     position: absolute;
@@ -135,7 +145,7 @@
     height: 0;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-top: 6px solid #6c757d;
+    border-top: 6px solid #fff;
     pointer-events: none;
     z-index: 10;
 }
@@ -195,4 +205,3 @@
 .footer-menu .collapse.show .sub-menu__list {
     opacity: 1;
 }
-

@@ -4,7 +4,7 @@
             <div class="footer-column footer-store-info col-12 col-lg-4 mb-4 mb-lg-0">
                 <div class="logo">
                     <a href="{{ route('home', app()->getLocale()) }}">
-                        <img src="{{ asset('storefront/images/logo-white.png') }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image d-block">
+                        <img src="{{ asset('storefront/images/vapeart-logo.svg') }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image d-block">
                     </a>
                 </div>
                 <p class="footer-address">{{ settings('site.address', __('Address')) }}</p>
@@ -73,7 +73,19 @@
                 @foreach($footerMenus as $index => $menu)
                     <div class="footer-column footer-menu {{ $colClass }} mb-4 mb-lg-0">
                         <h6 class="sub-menu__title text-uppercase d-flex align-items-center justify-content-between justify-content-lg-start mb-0 mb-lg-2">
-                            <span>{{ $menu->getTranslation('title', app()->getLocale()) }}</span>
+                            @if($menu->children->isNotEmpty())
+                                <span class="d-lg-none" 
+                                      style="cursor: pointer;"
+                                      data-bs-toggle="collapse" 
+                                      data-bs-target="#footer-menu-{{ $index }}" 
+                                      aria-expanded="false" 
+                                      aria-controls="footer-menu-{{ $index }}" 
+                                      role="button">{{ $menu->getTranslation('title', app()->getLocale()) }}</span>
+                                <span class="d-none d-lg-block">{{ $menu->getTranslation('title', app()->getLocale()) }}</span>
+                            @else
+                                <span>{{ $menu->getTranslation('title', app()->getLocale()) }}</span>
+                            @endif
+
                             @if($menu->children->isNotEmpty())
                                 <button class="footer-menu-toggle d-lg-none btn btn-link text-white p-0 ms-2" 
                                         type="button" 
@@ -143,31 +155,26 @@
 <script src="{{ asset('storefront/js/includes/footer.js') }}" defer></script>
 @endpush
 
-<footer class="footer-mobile container w-100 px-5 d-md-none bg-body">
-    <div class="row text-center">
-        <div class="col-3">
-            <a href="{{ route('home', app()->getLocale()) }}" class="footer-mobile__link d-flex flex-column align-items-center">
-                <svg class="d-block" width="18" height="18" viewBox="0 0 18 18" fill="none"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <use href="#icon_home"/>
-                </svg>
-                <span>{{ __('footer.Home') }}</span>
-            </a>
-        </div>
+<footer class="footer-mobile w-100 px-4 d-md-none theme-bg-color-secondary text-white">
+    <div class="d-flex justify-content-between align-items-center w-100">
+        <a href="{{ route('home', app()->getLocale()) }}" class="footer-mobile__link d-flex flex-column align-items-center text-white">
+            <svg class="d-block" width="18" height="18" viewBox="0 0 18 18" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <use href="#icon_home"/>
+            </svg>
+            <span>{{ __('footer.Home') }}</span>
+        </a>
 
-        <div class="col-3">
-            <a href="{{ route('categories.index', app()->getLocale()) }}" class="footer-mobile__link d-flex flex-column align-items-center">
-                <svg class="d-block" width="18" height="18" viewBox="0 0 18 18" fill="none"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <use href="#icon_hanger"/>
-                </svg>
-                <span>{{ __('footer.Categories') }}</span>
-            </a>
-        </div>
+        <a href="{{ route('categories.index', app()->getLocale()) }}" class="footer-mobile__link d-flex flex-column align-items-center text-white">
+            <svg class="d-block" width="18" height="18" viewBox="0 0 18 18" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <use href="#icon_hanger"/>
+            </svg>
+            <span>{{ __('footer.Categories') }}</span>
+        </a>
 
         @if(isset($headerBranches) && $headerBranches->isNotEmpty())
-        <div class="col-3">
-            <a href="#" class="footer-mobile__link d-flex flex-column align-items-center" data-bs-toggle="modal" data-bs-target="#branchPhoneModal">
+            <a href="#" class="footer-mobile__link d-flex flex-column align-items-center text-white" data-bs-toggle="modal" data-bs-target="#branchPhoneModal">
                 <div class="position-relative">
                     <svg class="d-block" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -175,10 +182,8 @@
                 </div>
                 <span>{{ __('footer.Phone') }}</span>
             </a>
-        </div>
         @else
-        <div class="col-3">
-            <a href="{{ route('contacts.index', app()->getLocale()) }}" class="footer-mobile__link d-flex flex-column align-items-center">
+            <a href="{{ route('contacts.index', app()->getLocale()) }}" class="footer-mobile__link d-flex flex-column align-items-center text-white">
                 <div class="position-relative">
                     <svg class="d-block" width="18" height="18" viewBox="0 0 20 20" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
@@ -187,18 +192,16 @@
                 </div>
                 <span>{{ __('footer.Phone') }}</span>
             </a>
-        </div>
         @endif
-        <div class="col-3">
-            <a href="#" class="footer-mobile__link d-flex flex-column align-items-center js-mobile-search-trigger">
-                <div class="position-relative">
-                    <svg class="d-block" width="18" height="18" viewBox="0 0 20 20" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <use href="#icon_search"/>
-                    </svg>
-                </div>
-                <span>{{ __('footer.Search') }}</span>
-            </a>
-        </div>
+
+        <a href="#" class="footer-mobile__link d-flex flex-column align-items-center js-mobile-search-trigger text-white">
+            <div class="position-relative">
+                <svg class="d-block" width="18" height="18" viewBox="0 0 20 20" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <use href="#icon_search"/>
+                </svg>
+            </div>
+            <span>{{ __('footer.Search') }}</span>
+        </a>
     </div>
 </footer>

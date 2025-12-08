@@ -24,6 +24,17 @@ class BrandResource extends Resource
 {
     use Translatable;
 
+    public static function getModelLabel(): string
+    {
+        return __('Brand');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Brands');
+    }
+
+
     protected static ?string $model = Brand::class;
 
     protected static string $routes = 'brands';

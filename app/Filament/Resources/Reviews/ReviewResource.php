@@ -20,6 +20,16 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ReviewResource extends Resource
 {
+    public static function getModelLabel(): string
+    {
+        return __('Review');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Reviews');
+    }
+
     protected static ?string $model = Review::class;
 
     protected static string $routes = 'reviews';

@@ -31,7 +31,7 @@
 
         <!-- Page Header -->
         <div class="mb-4 mb-md-5">
-            <h1 class="page-title mb-2 mb-md-3">{{ $menuTitle }} - {{ __('navigation.Brands') }}</h1>
+            <h1 class="page-title mb-2 mb-md-3">{{ $menuTitle }}</h1>
             <p class="text-secondary">{{ __('common.Browse brands available in this category') }}</p>
         </div>
 

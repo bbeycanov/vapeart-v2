@@ -22,6 +22,16 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ContactMessageResource extends Resource
 {
+    public static function getModelLabel(): string
+    {
+        return __('Contact Message');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Contact Messages');
+    }
+
     protected static ?string $model = ContactMessage::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Envelope;

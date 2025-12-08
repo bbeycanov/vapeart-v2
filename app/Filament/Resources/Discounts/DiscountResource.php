@@ -25,6 +25,17 @@ class DiscountResource extends Resource
 {
     use Translatable;
 
+    public static function getModelLabel(): string
+    {
+        return __('Discount');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Discounts');
+    }
+
+
     protected static ?string $model = Discount::class;
 
     protected static string $routes = 'discounts';

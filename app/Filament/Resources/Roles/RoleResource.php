@@ -39,6 +39,17 @@ class RoleResource extends Resource
     use Essentials\HasNavigation;
     use HasShieldFormComponents;
 
+    public static function getModelLabel(): string
+    {
+        return __('Role');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Roles');
+    }
+
+
     protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?int $navigationSort = 2;

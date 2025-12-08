@@ -24,6 +24,17 @@ class ProductResource extends Resource
 {
     use Translatable;
 
+    public static function getModelLabel(): string
+    {
+        return __('Product');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Products');
+    }
+
+
     protected static ?string $model = Product::class;
 
     protected static string $routes = 'products';

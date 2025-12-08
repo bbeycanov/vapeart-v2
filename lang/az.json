@@ -3,7 +3,6 @@
     "Content Management": "Kontent İdarəetməsi",
     "User Management": "İstifadəçi İdarəetməsi",
     "Settings": "Parametrlər",
-
     "Products": "Məhsullar",
     "Categories": "Kateqoriyalar",
     "Brands": "Brendlər",
@@ -21,7 +20,6 @@
     "Roles": "Rollar",
     "Languages": "Dillər",
     "General Settings": "Ümumi Parametrlər",
-
     "ID": "ID",
     "Name": "Ad",
     "Surname": "Soyad",
@@ -47,7 +45,6 @@
     "Code": "Kod",
     "Key": "Açar",
     "Value": "Dəyər",
-
     "SKU": "Məhsul Kodu",
     "Price": "Qiymət",
     "Stock": "Stok",
@@ -65,14 +62,12 @@
     "Hot Product": "İsti Məhsul",
     "Featured Menus": "Seçilmiş Menyular",
     "Sidebar Menus": "Yan Panel Menyuları",
-
     "Attributes": "Atributlar",
     "Attribute Name": "Atribut Adı",
     "Attribute Value": "Atribut Dəyəri",
     "Specifications": "Xüsusiyyətlər",
     "Specification Name": "Xüsusiyyət Adı",
     "Specification Value": "Xüsusiyyət Dəyəri",
-
     "Amount": "Məbləğ",
     "Start Date": "Başlama Tarixi",
     "End Date": "Bitmə Tarixi",
@@ -84,11 +79,9 @@
     "Upcoming": "Gələcək",
     "Start Date From": "Başlama Tarixi (Başlanğıc)",
     "End Date To": "Bitmə Tarixi (Son)",
-
     "Parent Menu": "Əsas Menyu",
     "Link Target": "Keçid Hədəfi",
     "Icon Class": "İkon Sinifi",
-
     "Excerpt": "Xülasə",
     "Body": "Mətn",
     "Published At": "Nəşr tarixi",
@@ -96,7 +89,6 @@
     "Author Name": "Müəllif Adı",
     "Draft": "Qaralama",
     "Published": "Nəşr edilmiş",
-
     "Rating": "Reytinq",
     "Review Type": "Rəy Növü",
     "Item": "Element",
@@ -109,12 +101,10 @@
     "Item ID": "Element ID",
     "Product": "Məhsul",
     "Blog": "Bloq",
-
     "Read": "Oxunmuş",
     "Unread": "Oxunmamış",
     "Read Status": "Oxunma Statusu",
     "Read At": "Oxunma Tarixi",
-
     "WhatsApp": "WhatsApp",
     "WhatsApp number with country code (e.g., 994501234567)": "Ölkə kodu ilə WhatsApp nömrəsi (məs., 994501234567)",
     "Working Hours": "İş Saatları",
@@ -126,22 +116,18 @@
     "Map longitude coordinate": "Xəritə uzunluq koordinatı",
     "Is Default": "Əsas",
     "Set as default branch for contact page": "Əlaqə səhifəsi üçün əsas filial olaraq təyin edin",
-
     "Website": "Veb Sayt",
     "Has Website": "Veb Saytı Var",
     "No Website": "Veb Saytı Yoxdur",
     "Social Links": "Sosial Keçidlər",
     "Platform": "Platforma",
     "Logo": "Loqo",
-
     "Language Code": "Dil Kodu",
     "Language Name": "Dil Adı",
     "Native Name": "Yerli Ad",
     "Default": "Əsas",
-
     "Is Public": "İctimai",
     "Is Active": "Aktivdir",
-
     "Position & Type": "Mövqe və Növ",
     "Select banner position and type": "Banner mövqeyini və növünü seçin",
     "Enter general information for the banner": "Banner üçün ümumi məlumatları daxil edin",
@@ -161,11 +147,9 @@
     "Recommended size: 1200x600px, Max size: 1MB": "Tövsiyə olunan ölçü: 1200x600px, Maksimum ölçü: 1MB",
     "Recommended size: 600x800px, Max size: 1MB": "Tövsiyə olunan ölçü: 600x800px, Maksimum ölçü: 1MB",
     "Recommended size: 100x100px, Max size: 512 MB": "Tövsiyə olunan ölçü: 100x100px, Maksimum ölçü: 512 MB",
-
     "Button Text": "Düymə Mətni",
     "Button URL": "Düymə URL",
     "Enter general information for the widget": "Vidjet üçün ümumi məlumatları daxil edin",
-
     "All": "Hamısı",
     "All Positions": "Bütün Mövqelər",
     "All Types": "Bütün Növlər",
@@ -183,12 +167,10 @@
     "Price To": "Qiymət (Son)",
     "Created From": "Yaradılma (Başlanğıc)",
     "Created To": "Yaradılma (Son)",
-
     "Deleted Records": "Silinmiş Qeydlər",
     "Without Deleted": "Silinmişlər olmadan",
     "With Deleted": "Silinmişlər ilə",
     "Only Deleted": "Yalnız Silinmişlər",
-
     "General": "Ümumi",
     "Seo": "SEO",
     "General Information": "Ümumi Məlumat",
@@ -201,7 +183,6 @@
     "Switcher": "Keçirici",
     "Position and Type": "Mövqe və Növ",
     "Review Information": "Rəy Məlumatı",
-
     "Define the category information for the product.": "Məhsul üçün kateqoriya məlumatını təyin edin.",
     "Define the price information for the product.": "Məhsul üçün qiymət məlumatını təyin edin.",
     "Product appearance depends on stock.": "Məhsulun görünüşü stokdan asılıdır.",
@@ -226,7 +207,6 @@
     "Set the status and settings for the blog post": "Bloq yazısı üçün status və parametrləri təyin edin",
     "Enter general information for the page": "Səhifə üçün ümumi məlumatları daxil edin",
     "Enter seo information for the page": "Səhifə üçün SEO məlumatlarını daxil edin",
-
     "Meta Title": "Meta Başlıq",
     "Meta Description": "Meta Təsvir",
     "Meta title": "Meta başlıq",
@@ -236,11 +216,9 @@
     "Gallery Images": "Qalereya Şəkilləri",
     "You can upload multiple images. Max size per image: 5MB": "Birdən çox şəkil yükləyə bilərsiniz. Hər şəkil üçün maksimum ölçü: 5MB",
     "Track Stock": "Stoku İzlə",
-
     "Password": "Şifrə",
     "Role": "Rol",
     "Admin": "Admin",
-
     "Dashboard": "İdarə Paneli",
     "Start Date": "Başlanğıc Tarixi",
     "End Date": "Son Tarix",
@@ -273,5 +251,22 @@
     "Avg. Price": "Ort. Qiymət",
     "Average product price": "Orta məhsul qiyməti",
     "Latest Reviews": "Son Rəylər",
-    "Date": "Tarix"
+    "Date": "Tarix",
+    "Branch": "Filial",
+    "Page": "Səhifə",
+    "Tag": "Etiket",
+    "User": "İstifadəçi",
+    "Banner": "Banner",
+    "Menu": "Menyu",
+    "Review": "Rəy",
+    "Contact Message": "Əlaqə Mesajı",
+    "Discount": "Endirim",
+    "Language": "Dil",
+    "Widget": "Vidjet",
+    "Setting": "Parametr",
+    "Create": "Yarat",
+    "Create :label": "Yeni :label",
+    "New :label": "Yeni :label",
+    "Edit": "Redaktə et",
+    "Edit :label": ":label Redaktə et"
 }
