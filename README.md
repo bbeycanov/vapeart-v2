@@ -805,6 +805,149 @@ php artisan elasticsearch:sync --fresh
 
 Scheduler'ın çalıştığından emin olun (crontab veya `php artisan schedule:work`).
 
+## 🗺️ Sitemap Generator
+
+Bu sistem SEO için XML sitemap dosyaları oluşturur.
+
+### Özellikler
+
+- **Sitemap Index**: Tüm sitemap'leri birleştiren ana index dosyası
+- **Çoklu Sitemap**: Her içerik türü için ayrı sitemap dosyaları
+- **Çoklu Dil Desteği**: Tüm diller (az, en, ru) için URL'ler oluşturulur
+- **Otomatik Zamanlama**: Günlük gece yarısı otomatik güncelleme
+- **Queue Desteği**: Arka planda çalışabilir
+- **Görsel Desteği**: Ürün görselleri sitemap'e dahil edilir
+
+### Oluşturulan Sitemap Dosyaları
+
+| Dosya | Açıklama | İçerik |
+|-------|----------|--------|
+| `/sitemap.xml` | Sitemap Index | Tüm sitemap'lerin listesi |
+| `/sitemaps/sitemap-static.xml` | Statik Sayfalar | Ana sayfa, kategoriler, brendler, blog index |
+| `/sitemaps/sitemap-categories.xml` | Kategoriler | Tüm aktif kategoriler |
+| `/sitemaps/sitemap-products.xml` | Ürünler | Tüm aktif ürünler (görseller dahil) |
+| `/sitemaps/sitemap-blogs.xml` | Blog Yazıları | Yayınlanmış blog yazıları |
+| `/sitemaps/sitemap-brands.xml` | Brendler | Tüm aktif brendler |
+| `/sitemaps/sitemap-pages.xml` | Sayfalar | Aktif CMS sayfaları |
+
+### Kullanım
+
+#### Manuel Oluşturma
+
+```bash
+# Sitemap'leri oluştur
+php artisan sitemap:generate
+
+# Queue ile oluştur (arka planda)
+php artisan sitemap:generate --queue
+```
+
+#### Çıktı Örneği
+
+```
+Generating sitemaps...
+Sitemaps generated successfully in 2.59 seconds!
++------------------------+--------------------------------------------------+
+| Sitemap                | Path                                             |
++------------------------+--------------------------------------------------+
+| sitemap.xml            | /var/www/vapeart-v2/public/sitemap.xml           |
+| sitemap-static.xml     | /var/www/vapeart-v2/public/sitemaps/sitemap-static.xml |
+| sitemap-categories.xml | /var/www/vapeart-v2/public/sitemaps/sitemap-categories.xml |
+| sitemap-products.xml   | /var/www/vapeart-v2/public/sitemaps/sitemap-products.xml |
+| sitemap-blogs.xml      | /var/www/vapeart-v2/public/sitemaps/sitemap-blogs.xml |
+| sitemap-brands.xml     | /var/www/vapeart-v2/public/sitemaps/sitemap-brands.xml |
+| sitemap-pages.xml      | /var/www/vapeart-v2/public/sitemaps/sitemap-pages.xml |
++------------------------+--------------------------------------------------+
+```
+
+### Otomatik Zamanlama (Schedule)
+
+Sitemap her gece **00:00**'da otomatik olarak yenilenir.
+
+**Konfigürasyon:** `routes/console.php`
+
+```php
+Schedule::command('sitemap:generate --queue')->dailyAt('00:00')
+    ->withoutOverlapping()
+    ->appendOutputTo(storage_path('logs/sitemap-generate.log'));
+```
+
+**Scheduler'ın çalışması için:**
+
+Local development:
+```bash
+php artisan schedule:work
+```
+
+Production (crontab):
+```bash
+* * * * * cd /var/www/vapeart-v2 && php artisan schedule:run >> /dev/null 2>&1
+```
+
+### Sitemap URL Yapısı
+
+Sitemap index'e erişim:
+```
+https://vapeartbaku.com/sitemap.xml
+```
+
+Örnek sitemap index içeriği:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <sitemap>
+        <loc>https://vapeartbaku.com/sitemaps/sitemap-static.xml</loc>
+        <lastmod>2025-12-08T00:00:05+00:00</lastmod>
+    </sitemap>
+    <sitemap>
+        <loc>https://vapeartbaku.com/sitemaps/sitemap-products.xml</loc>
+        <lastmod>2025-12-08T00:00:05+00:00</lastmod>
+    </sitemap>
+    ...
+</sitemapindex>
+```
+
+Örnek URL yapısı (her dil için):
+```xml
+<url>
+    <loc>https://vapeartbaku.com/az/products/product-slug</loc>
+    <lastmod>2025-12-08T00:00:03+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+        <image:loc>https://vapeartbaku.com/storage/products/image.jpg</image:loc>
+        <image:title>Product Name</image:title>
+    </image:image>
+</url>
+```
+
+### Log Dosyası
+
+Otomatik sitemap logları: `storage/logs/sitemap-generate.log`
+
+### Sitemap Dosyaları
+
+| Dosya | Açıklama |
+|-------|----------|
+| `app/Services/SitemapGenerator.php` | Ana sitemap oluşturma servisi |
+| `app/Console/Commands/GenerateSitemap.php` | Artisan command |
+| `app/Jobs/GenerateSitemapJob.php` | Queue job |
+
+### Google Search Console'a Gönderme
+
+1. Google Search Console'a gidin
+2. Sitemap bölümüne tıklayın
+3. `https://vapeartbaku.com/sitemap.xml` URL'ini ekleyin
+4. Gönder'e tıklayın
+
+### .env Konfigürasyonu
+
+Sitemap'lerde kullanılacak base URL `.env` dosyasındaki `APP_URL` değerinden alınır:
+
+```env
+APP_URL=https://vapeartbaku.com
+```
+
 ## 🔄 Queue Worker Yönetimi (Ubuntu Server)
 
 ### Supervisor ile Queue Worker Kurulumu

@@ -13,3 +13,8 @@ Schedule::command('elasticsearch:sync')->dailyAt('00:00')
     ->withoutOverlapping()
     ->runInBackground()
     ->appendOutputTo(storage_path('logs/elasticsearch-sync.log'));
+
+// Daily generate sitemap at midnight (00:00)
+Schedule::command('sitemap:generate --queue')->dailyAt('00:00')
+    ->withoutOverlapping()
+    ->appendOutputTo(storage_path('logs/sitemap-generate.log'));
