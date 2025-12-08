@@ -39,6 +39,7 @@ return [
     
     // Actions
     'Add to Cart' => 'Add to Cart',
+    'WhatsApp ilə sifariş et' => 'Order via WhatsApp',
     'Add to Wishlist' => 'Add to Wishlist',
     'Remove from Wishlist' => 'Remove from Wishlist',
     'Quick View' => 'Quick View',

@@ -49,7 +49,7 @@ class ImportProductsFromApi extends Command
         $stats = $importService->importFromApi($url, function ($result, $stats) use ($progressBar) {
             $progressBar->advance();
             $progressBar->setMessage(
-                "Imported: {$stats['imported']} | Updated: {$stats['updated']} | Failed: {$stats['failed']}"
+                "Imported: {$stats['imported']} | Updated: {$stats['updated']} | Failed: {$stats['failed']} | Product Slug: " . ($result['slug'] ?? 'N/A')
             );
         });
 

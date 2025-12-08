@@ -28,9 +28,19 @@
     @endphp
     <div class="mb-md-1 pb-md-3"></div>
     <section class="product-single container">
-        <div class="row">
-            <div class="col-lg-7">
-                <div class="product-single__media" data-media-type="horizontal-thumbnail">
+        <div class="row product-single__row">
+            <div class="col-lg-7 product-single__media-col">
+                <!-- Slider Loading Skeleton -->
+                <div class="product-slider-skeleton" id="sliderSkeleton">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-thumbnails">
+                        <div class="skeleton-thumb"></div>
+                        <div class="skeleton-thumb"></div>
+                        <div class="skeleton-thumb"></div>
+                        <div class="skeleton-thumb"></div>
+                    </div>
+                </div>
+                <div class="product-single__media product-single__media-sticky" data-media-type="horizontal-thumbnail" id="productSlider" style="opacity: 0; transition: opacity 0.3s ease;">
                     <div class="product-single__image position-relative">
                         @if($hasDiscount && $discountText)
                             <div class="position-absolute top-0 start-0 m-3" style="z-index: 10;">
@@ -87,18 +97,36 @@
                     </div><!-- /.breadcrumb -->
                 </div>
                 <h1 class="product-single__name">{{ $productName }}</h1>
-                @if($productData['brand'] && $productData['brand']['logo'])
-                <div class="product-single__brand mb-3">
-                    @if($productData['brand']['slug'])
-                        <a href="{{ route('brands.show', [$locale, $productData['brand']['slug']]) }}" class="d-inline-block">
+                <div class="d-flex align-items-center gap-3 flex-wrap mb-2">
+                    @if($productData['brand'] && $productData['brand']['logo'])
+                    <div class="product-single__brand mb-3">
+                        @if($productData['brand']['slug'])
+                            <a href="{{ route('brands.show', [$locale, $productData['brand']['slug']]) }}" class="d-inline-block">
+                                <img src="{{ $productData['brand']['logo'] }}" alt="{{ $productData['brand']['name'] }}" style="max-height: 60px; max-width: 150px; object-fit: contain;">
+                            </a>
+                        @else
                             <img src="{{ $productData['brand']['logo'] }}" alt="{{ $productData['brand']['name'] }}" style="max-height: 60px; max-width: 150px; object-fit: contain;">
-                        </a>
-                    @else
-                        <img src="{{ $productData['brand']['logo'] }}" alt="{{ $productData['brand']['name'] }}" style="max-height: 60px; max-width: 150px; object-fit: contain;">
+                        @endif
+                    </div>
                     @endif
+                    <div class="d-flex align-items-center flex-wrap mb-2">
+                        <div class="meta-item w-100 mb-0">
+                            <label>{{ __('product.SKU') }}:</label>
+                            <span>{{ $productSku }}</span>
+                        </div>
+                        @if($productCategories->isNotEmpty())
+                        <div class="meta-item w-100">
+                            <label>{{ __('product.Categories') }}:</label>
+                            <span>
+                                @foreach($productCategories as $index => $category)
+                                    @if($index > 0), @endif
+                                    <a href="{{ route('products.index', [$locale, 'category_id' => $category['id']]) }}" class="text-decoration-none">{{ $category['name'] }}</a>
+                                @endforeach
+                            </span>
+                        </div>
+                        @endif
+                    </div>
                 </div>
-                @endif
-                @if($reviewsCount > 0 || $ratingAvg > 0)
                 <div class="product-single__rating">
                     <div class="reviews-group d-flex">
                         @for($i = 1; $i <= 5; $i++)
@@ -109,7 +137,6 @@
                         <span class="reviews-note text-lowercase text-secondary ms-1">{{ $reviewsCount }} {{ __('reviews') }}</span>
                     @endif
                 </div>
-                @endif
                 <div class="product-single__price">
                     @if($hasDiscount)
                         <div class="d-flex align-items-center gap-3 flex-wrap mb-2">
@@ -139,13 +166,29 @@
                             <div class="qty-control__reduce">-</div>
                             <div class="qty-control__increase">+</div>
                         </div><!-- .qty-control -->
-                    <button type="button" class="btn btn-primary btn-addtocart js-add-cart js-open-aside" 
-                            data-aside="cartDrawer" 
+                    <button type="button" class="btn btn-primary btn-addtocart js-add-cart js-open-aside"
+                            data-aside="cartDrawer"
                             data-product-id="{{ $productData['id'] }}"
                             id="addToCartBtn">
                         {{ __('buttons.Add to Cart') }}
                     </button>
                     </div>
+                <div class="product-single__whatsapp-order mb-4">
+                    <button type="button" class="btn btn-whatsapp w-100" id="productWhatsappOrderBtn"
+                            data-product-id="{{ $productData['id'] }}"
+                            data-product-name="{{ $productName }}"
+                            data-product-price="{{ $productPrice }}"
+                            data-product-original-price="{{ $originalPrice }}"
+                            data-product-currency="{{ $productCurrency }}"
+                            data-product-url="{{ route('products.show', [$locale, $product->slug]) }}"
+                            data-product-has-discount="{{ $hasDiscount ? 'true' : 'false' }}"
+                            data-product-discount-text="{{ $discountText }}">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="me-2" style="vertical-align: middle;">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                        {{ __('product.WhatsApp ilə sifariş et') }}
+                    </button>
+                </div>
                 <div class="product-single__addtolinks">
                     <a href="#" class="menu-link menu-link_us-s js-add-wishlist" data-product-id="{{ $productData['id'] }}">
                         <svg class="js-wishlist-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_heart" /></svg>
@@ -176,33 +219,6 @@
                     <script src="./js/share.js" defer="defer"></script>
                 </div>
                 <div class="product-single__meta-info">
-                    <div class="meta-item">
-                        <label>{{ __('product.SKU') }}:</label>
-                        <span>{{ $productSku }}</span>
-                    </div>
-                    @if($productData['brand'])
-                    <div class="meta-item">
-                        <label>{{ __('product.Brand') }}:</label>
-                        <span>
-                            @if($productData['brand']['slug'])
-                                <a href="{{ route('brands.show', [$locale, $productData['brand']['slug']]) }}" class="text-decoration-none">{{ $productData['brand']['name'] }}</a>
-                            @else
-                                {{ $productData['brand']['name'] }}
-                            @endif
-                        </span>
-                    </div>
-                    @endif
-                    @if($productCategories->isNotEmpty())
-                    <div class="meta-item">
-                        <label>{{ __('product.Categories') }}:</label>
-                        <span>
-                            @foreach($productCategories as $index => $category)
-                                @if($index > 0), @endif
-                                <a href="{{ route('products.index', [$locale, 'category_id' => $category['id']]) }}" class="text-decoration-none">{{ $category['name'] }}</a>
-                            @endforeach
-                        </span>
-                    </div>
-                    @endif
                     @if($productTags->isNotEmpty())
                     <div class="meta-item">
                         <label>{{ __('product.Tags') }}:</label>
@@ -401,7 +417,7 @@
 <script>
 (function() {
     'use strict';
-    
+
     // Configure Toastr
     if (typeof toastr !== 'undefined') {
         toastr.options = {
@@ -428,7 +444,7 @@
         const tabLinks = document.querySelectorAll('[data-bs-toggle="tab"]');
         const hash = window.location.hash;
         const navTabs = document.querySelector('.product-single__details-tab > .nav-tabs');
-        
+
         // Function to scroll active tab to center
         function scrollTabToCenter(tabLink) {
             if (navTabs && window.innerWidth <= 575.98) {
@@ -441,7 +457,7 @@
                 }
             }
         }
-        
+
         // Restore active tab from URL hash on page load
         if (hash) {
             const tabLink = document.querySelector(`[href="${hash}"]`);
@@ -457,7 +473,7 @@
                 setTimeout(() => scrollTabToCenter(activeTab), 100);
             }
         }
-        
+
         // Save active tab to URL hash when tab is changed and scroll to center
         tabLinks.forEach(function(tabLink) {
             tabLink.addEventListener('shown.bs.tab', function(e) {
@@ -473,7 +489,7 @@
         const qtyReduce = document.querySelector('.qty-control__reduce');
         const qtyIncrease = document.querySelector('.qty-control__increase');
         const addToCartBtn = document.getElementById('addToCartBtn');
-        
+
         if (qtyReduce && qtyInput) {
             qtyReduce.addEventListener('click', function() {
                 const currentValue = parseInt(qtyInput.value) || 1;
@@ -482,21 +498,21 @@
                 }
             });
         }
-        
+
         if (qtyIncrease && qtyInput) {
             qtyIncrease.addEventListener('click', function() {
                 const currentValue = parseInt(qtyInput.value) || 1;
                 qtyInput.value = currentValue + 1;
             });
         }
-        
+
         // Add to cart with quantity
         if (addToCartBtn) {
             addToCartBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 const productId = this.getAttribute('data-product-id');
                 const quantity = parseInt(qtyInput ? qtyInput.value : 1) || 1;
-                
+
                 // Use existing addToCart function from scripts.blade.php
                 if (typeof addToCart === 'function') {
                     addToCart(productId, quantity).then(success => {
@@ -516,7 +532,7 @@
                 }
             });
         }
-        
+
         // Review Form - AJAX submission
         const reviewForm = document.getElementById('product-review-form');
         if (reviewForm) {
@@ -525,7 +541,7 @@
                 csrfToken: document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
                 locale: document.documentElement.lang || 'en'
             };
-            
+
             // Star rating functionality
             const starIcons = document.querySelectorAll('.star-rating__star-icon');
             const ratingInput = document.getElementById('form-input-rating');
@@ -722,6 +738,101 @@
                         submitBtn.textContent = originalText;
                     }
                 });
+            });
+        }
+
+        // Slider Loading - Show slider after images load
+        (function() {
+            const slider = document.getElementById('productSlider');
+            const skeleton = document.getElementById('sliderSkeleton');
+
+            if (!slider || !skeleton) return;
+
+            const images = slider.querySelectorAll('img');
+            let loadedCount = 0;
+            const totalImages = images.length;
+
+            function showSlider() {
+                skeleton.classList.add('hidden');
+                slider.style.opacity = '1';
+            }
+
+            function onImageLoad() {
+                loadedCount++;
+                if (loadedCount >= Math.min(totalImages, 2)) {
+                    // Show after first 2 images load (or all if less)
+                    showSlider();
+                }
+            }
+
+            if (totalImages === 0) {
+                showSlider();
+            } else {
+                images.forEach(function(img) {
+                    if (img.complete) {
+                        onImageLoad();
+                    } else {
+                        img.addEventListener('load', onImageLoad);
+                        img.addEventListener('error', onImageLoad);
+                    }
+                });
+
+                // Fallback - show after 2 seconds max
+                setTimeout(showSlider, 2000);
+            }
+        })();
+
+        // Fix overflow for CSS sticky to work
+        (function() {
+            if (window.innerWidth < 992) return;
+
+            const slider = document.querySelector('.product-single__media-sticky');
+            if (!slider) return;
+
+            let parent = slider.parentElement;
+            while (parent && parent !== document.body) {
+                const style = window.getComputedStyle(parent);
+                if (style.overflow !== 'visible' || style.overflowX !== 'visible' || style.overflowY !== 'visible') {
+                    parent.style.overflow = 'visible';
+                }
+                parent = parent.parentElement;
+            }
+        })();
+
+        // WhatsApp Single Product Order
+        const productWhatsappBtn = document.getElementById('productWhatsappOrderBtn');
+        if (productWhatsappBtn) {
+            productWhatsappBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Get product data from button attributes
+                const productData = {
+                    id: this.getAttribute('data-product-id'),
+                    name: this.getAttribute('data-product-name'),
+                    price: parseFloat(this.getAttribute('data-product-price')) || 0,
+                    originalPrice: parseFloat(this.getAttribute('data-product-original-price')) || 0,
+                    currency: this.getAttribute('data-product-currency') || 'AZN',
+                    url: this.getAttribute('data-product-url'),
+                    hasDiscount: this.getAttribute('data-product-has-discount') === 'true',
+                    discountText: this.getAttribute('data-product-discount-text')
+                };
+
+                // Get quantity
+                const qtyInput = document.getElementById('productQuantity');
+                const quantity = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+
+                // Store product data in window for use by branch selection
+                window.singleProductOrder = {
+                    product: productData,
+                    quantity: quantity
+                };
+
+                // Open branch selection modal
+                if (typeof window.loadBranchesAndShowModal === 'function') {
+                    window.loadBranchesAndShowModalForSingleProduct('branchSelectionModal', 'branchList');
+                } else {
+                    console.error('loadBranchesAndShowModal function not found');
+                }
             });
         }
     });

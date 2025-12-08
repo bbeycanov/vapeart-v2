@@ -32,11 +32,7 @@ class CategoryController extends Controller
     {
         app()->setLocale($locale);
 
-        $parentId = $request->get('parent_id');
-
-        $parentCategory = $parentId ? Category::find($parentId) : null;
-
-        $categories = $this->cats->getTree($parentId);
+        $categories = $this->cats->getTree(null);
 
         $categoriesWithCounts = $categories->map(function ($category) {
             $productCount = $category->products()
@@ -49,7 +45,7 @@ class CategoryController extends Controller
             ];
         });
 
-        return view('pages.categories.index', compact('categoriesWithCounts', 'parentCategory'));
+        return view('pages.categories.index', compact('categoriesWithCounts'))->with('parentCategory', null);
     }
 
     /**
@@ -62,8 +58,25 @@ class CategoryController extends Controller
     {
         app()->setLocale($locale);
 
+        // Load parent relationship for breadcrumb
+        $category->load('parent');
+
         $schemaJsonLd = $this->cats->buildSchemaFor($category);
 
+        // Get child categories if exists
+        $childCategories = $category->children()->where('is_active', true)->get();
+        $childCategoriesWithCounts = $childCategories->map(function ($cat) {
+            $productCount = $cat->products()
+                ->where('is_active', true)
+                ->count();
+
+            return [
+                'category' => $cat,
+                'product_count' => $productCount
+            ];
+        });
+
+        // Get products
         $filters = $request->only([
             'brand_id',
             'tag_id',
@@ -90,7 +103,7 @@ class CategoryController extends Controller
 
         return view(
             view: 'pages.categories.show',
-            data: compact('category', 'list', 'brands', 'schemaJsonLd')
+            data: compact('category', 'list', 'brands', 'schemaJsonLd', 'childCategoriesWithCounts')
         );
     }
 }

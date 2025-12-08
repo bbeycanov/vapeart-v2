@@ -16,7 +16,6 @@ use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Filters\TrashedFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 use LaraZeus\SpatieTranslatable\Actions\LocaleSwitcher;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
@@ -29,7 +28,6 @@ class MenusTable
             ->columns([
                 TextColumn::make('id')
                     ->label(__('ID'))
-                    ->searchable()
                     ->numeric()
                     ->sortable(),
                 SpatieMediaLibraryImageColumn::make('image')
@@ -38,24 +36,25 @@ class MenusTable
                 TextColumn::make('title')
                     ->label(__('Title'))
                     ->sortable()
-                    ->searchable(),
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->where(function ($q) use ($search) {
+                            $q->where('title', 'like', "%{$search}%")
+                              ->orWhere('url', 'like', "%{$search}%");
+                        });
+                    }),
                 TextColumn::make('parent.title')
-                    ->label(__('Parent Menu'))
-                    ->searchable(),
+                    ->label(__('Parent Menu')),
                 TextColumn::make('type')
                     ->label(__('Type'))
                     ->formatStateUsing(fn($state) => ucfirst(strtolower($state)))
-                    ->sortable()
-                    ->searchable(),
+                    ->sortable(),
                 TextColumn::make('position')
                     ->label(__('Position'))
                     ->formatStateUsing(fn($state) => ucfirst(strtolower($state)))
-                    ->sortable()
-                    ->searchable(),
+                    ->sortable(),
                 TextColumn::make('url')
                     ->label(__('URL'))
-                    ->sortable()
-                    ->searchable(),
+                    ->sortable(),
                 ToggleColumn::make('is_active')
                     ->label(__('Active')),
                 TextColumn::make('created_at')
@@ -80,24 +79,36 @@ class MenusTable
                             ->searchable()
                             ->options(MenuPosition::labels())
                             ->label(__('Position'))
-                            ->columnSpanFull()
-                            ->placeholder(__('Position')),
+                            ->placeholder(__('All Positions')),
                         Select::make('type')
                             ->searchable()
                             ->options(MenuType::labels())
                             ->label(__('Type'))
-                            ->columnSpanFull()
-                            ->placeholder(__('Type')),
+                            ->placeholder(__('All Types')),
                         Select::make('parent')
                             ->label(__('Parent Menu'))
                             ->searchable()
-                            ->columnSpanFull()
                             ->relationship('parent', 'title')
-                            ->placeholder(__('Parent Menu')),
+                            ->placeholder(__('All')),
+                        Select::make('trashed')
+                            ->label(__('Deleted Records'))
+                            ->options([
+                                '' => __('Without Deleted'),
+                                'with' => __('With Deleted'),
+                                'only' => __('Only Deleted'),
+                            ])
+                            ->placeholder(__('Without Deleted')),
                     ])
-                    ->columns(5)
+                    ->columns(4)
                     ->columnSpanFull()
                     ->query(function (Builder $query, array $data) {
+                        // Handle trashed records
+                        if (($data['trashed'] ?? '') === 'with') {
+                            $query->withTrashed();
+                        } elseif (($data['trashed'] ?? '') === 'only') {
+                            $query->onlyTrashed();
+                        }
+
                         return $query
                             ->when($data['position'] ?? null, function (Builder $query, $value) {
                                 $query->where('position', $value);
@@ -124,10 +135,19 @@ class MenusTable
                             $indicators[] = __('Parent Menu') . ': ' . $data['parent'];
                         }
 
+                        if ($data['trashed'] ?? null) {
+                            $trashedLabels = [
+                                'with' => __('With Deleted'),
+                                'only' => __('Only Deleted'),
+                            ];
+                            $indicators[] = __('Deleted Records') . ': ' . ($trashedLabels[$data['trashed']] ?? '');
+                        }
+
                         return $indicators;
                     }),
-                TrashedFilter::make(),
             ], layout: FiltersLayout::Modal)
+            ->filtersFormWidth('2xl')
+            ->filtersFormColumns(3)
             ->recordActions([
                 EditAction::make()
                     ->button(),

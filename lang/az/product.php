@@ -38,6 +38,7 @@ return [
     
     // Actions
     'Add to Cart' => 'Səbətə əlavə et',
+    'WhatsApp ilə sifariş et' => 'WhatsApp ilə sifariş et',
     'Add to Wishlist' => 'İstək siyahısına əlavə et',
     'Remove from Wishlist' => 'İstək siyahısından sil',
     'Quick View' => 'Sürətli baxış',

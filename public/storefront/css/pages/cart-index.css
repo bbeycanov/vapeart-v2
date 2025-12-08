@@ -6,7 +6,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.9375rem 3.125rem;
+    padding: 0.9375rem 0;
     font-size: 0.875rem;
     font-weight: 400;
     text-transform: uppercase;
@@ -60,6 +60,7 @@
 .branch-list {
     max-height: 400px;
     overflow-y: auto;
+    padding: 15px;
 }
 
 .branch-list .branch-item {

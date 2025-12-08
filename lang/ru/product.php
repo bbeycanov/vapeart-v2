@@ -38,6 +38,7 @@ return [
     
     // Actions
     'Add to Cart' => 'В корзину',
+    'WhatsApp ilə sifariş et' => 'Заказать через WhatsApp',
     'Add to Wishlist' => 'В избранное',
     'Remove from Wishlist' => 'Удалить из избранного',
     'Quick View' => 'Быстрый просмотр',

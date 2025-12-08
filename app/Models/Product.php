@@ -126,7 +126,12 @@ class Product extends Model implements HasMedia
      */
     public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class, 'product_tags');
+        return $this->belongsToMany(
+            Tag::class,
+            'product_tags',
+            'product_id',
+            'tag_id'
+        );
     }
 
     /**

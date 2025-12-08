@@ -8,11 +8,15 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class ContactMessagesTable
 {
@@ -22,7 +26,6 @@ class ContactMessagesTable
             ->columns([
                 TextColumn::make('id')
                     ->label(__('ID'))
-                    ->searchable()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('name')
@@ -36,8 +39,7 @@ class ContactMessagesTable
                     ->sortable(),
                 TextColumn::make('message')
                     ->label(__('Message'))
-                    ->limit(50)
-                    ->searchable(),
+                    ->limit(50),
                 IconColumn::make('is_read')
                     ->label(__('Read'))
                     ->boolean()
@@ -67,8 +69,77 @@ class ContactMessagesTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                TrashedFilter::make(),
-            ])
+                Filter::make('filter')
+                    ->schema([
+                        Select::make('is_read')
+                            ->label(__('Read Status'))
+                            ->options([
+                                '1' => __('Read'),
+                                '0' => __('Unread'),
+                            ])
+                            ->placeholder(__('All')),
+                        DatePicker::make('created_from')
+                            ->label(__('Created From')),
+                        DatePicker::make('created_to')
+                            ->label(__('Created To')),
+                        Select::make('trashed')
+                            ->label(__('Deleted Records'))
+                            ->options([
+                                '' => __('Without Deleted'),
+                                'with' => __('With Deleted'),
+                                'only' => __('Only Deleted'),
+                            ])
+                            ->placeholder(__('Without Deleted')),
+                    ])
+                    ->columns(3)
+                    ->columnSpanFull()
+                    ->query(function (Builder $query, array $data) {
+                        // Handle trashed records
+                        if (($data['trashed'] ?? '') === 'with') {
+                            $query->withTrashed();
+                        } elseif (($data['trashed'] ?? '') === 'only') {
+                            $query->onlyTrashed();
+                        }
+
+                        return $query
+                            ->when(isset($data['is_read']) && $data['is_read'] !== null && $data['is_read'] !== '', function (Builder $query) use ($data) {
+                                $query->where('is_read', (bool) $data['is_read']);
+                            })
+                            ->when($data['created_from'] ?? null, function (Builder $query, $value) {
+                                $query->whereDate('created_at', '>=', $value);
+                            })
+                            ->when($data['created_to'] ?? null, function (Builder $query, $value) {
+                                $query->whereDate('created_at', '<=', $value);
+                            });
+                    })
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+
+                        if (isset($data['is_read']) && $data['is_read'] !== null && $data['is_read'] !== '') {
+                            $indicators[] = __('Read Status') . ': ' . ($data['is_read'] ? __('Read') : __('Unread'));
+                        }
+
+                        if ($data['created_from'] ?? null) {
+                            $indicators[] = __('Created From') . ': ' . $data['created_from'];
+                        }
+
+                        if ($data['created_to'] ?? null) {
+                            $indicators[] = __('Created To') . ': ' . $data['created_to'];
+                        }
+
+                        if ($data['trashed'] ?? null) {
+                            $trashedLabels = [
+                                'with' => __('With Deleted'),
+                                'only' => __('Only Deleted'),
+                            ];
+                            $indicators[] = __('Deleted Records') . ': ' . ($trashedLabels[$data['trashed']] ?? '');
+                        }
+
+                        return $indicators;
+                    }),
+            ], layout: FiltersLayout::Modal)
+            ->filtersFormWidth('2xl')
+            ->filtersFormColumns(3)
             ->recordActions([
                 ViewAction::make(),
                 DeleteAction::make(),

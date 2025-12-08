@@ -164,6 +164,132 @@
         attachCartDrawerWhatsappListener();
     }
     
+    // Unified function to load branches and show modal for single product order
+    window.loadBranchesAndShowModalForSingleProduct = function(modalId = 'branchSelectionModal', branchListId = 'branchList') {
+        const branchList = document.getElementById(branchListId);
+        const modalEl = document.getElementById(modalId);
+        if (!modalEl || !branchList) return;
+        
+        const modal = new bootstrap.Modal(modalEl);
+        
+        branchList.innerHTML = '<div class="text-center py-4"><div class="spinner-border" role="status"><span class="visually-hidden">{{ __("scripts.Loading...") }}</span></div></div>';
+        modal.show();
+        
+        fetch(`/${locale}/cart/branches`, {
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.branches && data.branches.length > 0) {
+                let html = '';
+                data.branches.forEach(branch => {
+                    const hasWhatsapp = branch.whatsapp || branch.phone;
+                    html += `
+                        <button type="button" class="branch-item w-100 ${!hasWhatsapp ? 'disabled' : ''}" 
+                                data-branch-id="${branch.id}" 
+                                data-branch-whatsapp="${branch.whatsapp || branch.phone || ''}"
+                                data-order-type="single-product"
+                                ${!hasWhatsapp ? 'disabled' : ''}>
+                            <div class="d-flex align-items-center">
+                                <div class="branch-item-icon me-3">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="${hasWhatsapp ? '#25D366' : '#6c757d'}">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-grow-1 text-start">
+                                    <h6 class="mb-1 fw-bold">${branch.name}</h6>
+                                    ${branch.address ? `<p class="mb-1 text-secondary small"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: -2px; margin-right: 4px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>${branch.address}</p>` : ''}
+                                    ${branch.phone ? `<p class="mb-0 text-muted small"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: -2px; margin-right: 4px;"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>${branch.phone}</p>` : ''}
+                                </div>
+                                ${hasWhatsapp ? '<div class="ms-2"><svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></div>' : '<div class="ms-2"><span class="badge bg-secondary">WhatsApp yoxdur</span></div>'}
+                            </div>
+                        </button>
+                    `;
+                });
+                branchList.innerHTML = html;
+                
+                // Attach click listeners to branch items for single product
+                document.querySelectorAll(`#${branchListId} .branch-item[data-order-type="single-product"]:not(.disabled)`).forEach(item => {
+                    item.addEventListener('click', function() {
+                        const branchWhatsapp = this.getAttribute('data-branch-whatsapp');
+                        selectBranchAndOpenWhatsAppForSingleProduct(branchWhatsapp, modalId);
+                    });
+                });
+            } else {
+                branchList.innerHTML = '<div class="alert alert-warning">{{ __("branch.Filial tapılmadı.") }}</div>';
+            }
+        })
+        .catch(error => {
+            console.error('Error loading branches:', error);
+            branchList.innerHTML = '<div class="alert alert-danger">{{ __("branch.Filiallar yüklənərkən xəta baş verdi.") }}</div>';
+        });
+    }
+    
+    // Function to open WhatsApp for single product order
+    window.selectBranchAndOpenWhatsAppForSingleProduct = function(branchWhatsapp, modalId = 'branchSelectionModal') {
+        if (!branchWhatsapp) {
+            alert('{{ __("branch.Bu filialın WhatsApp nömrəsi yoxdur. Lütfən başqa bir filial seçin.") }}');
+            return;
+        }
+        
+        if (!window.singleProductOrder) {
+            console.error('Single product order data not found');
+            return;
+        }
+        
+        const { product, quantity } = window.singleProductOrder;
+        const currency = product.currency || 'AZN';
+        const itemTotal = product.price * quantity;
+        const hasDiscount = product.hasDiscount && product.originalPrice > product.price;
+        
+        let message = '🛒 *SİFARİŞ*\n\n';
+        message += 'Salam! Aşağıdakı məhsulu sifariş etmək istəyirəm:\n\n';
+        message += '━━━━━━━━━━━━━━━━━━━━\n\n';
+        
+        message += `📦 *${product.name}*\n`;
+        message += `   └─ Miqdar: ${quantity} ədəd\n`;
+        if (hasDiscount) {
+            message += `   └─ Orijinal Qiymət: ${product.originalPrice.toFixed(2)} ${currency}\n`;
+            if (product.discountText) {
+                message += `   └─ Endirim: ${product.discountText}\n`;
+            }
+            message += `   └─ Endirimli Qiymət: ${product.price.toFixed(2)} ${currency}\n`;
+        } else {
+            message += `   └─ Qiymət: ${product.price.toFixed(2)} ${currency}\n`;
+        }
+        message += `   └─ Cəmi: ${itemTotal.toFixed(2)} ${currency}\n`;
+        message += `   └─ Link: ${product.url}\n`;
+        
+        message += '\n━━━━━━━━━━━━━━━━━━━━\n\n';
+        if (hasDiscount) {
+            const discountAmount = (product.originalPrice - product.price) * quantity;
+            message += `💸 *ÜMUMİ ENDİRİM: -${discountAmount.toFixed(2)} ${currency}*\n`;
+        }
+        message += `💰 *ÜMUMİ MƏBLƏĞ: ${itemTotal.toFixed(2)} ${currency}*\n\n`;
+        message += 'Təşəkkürlər! 🙏';
+        
+        const phoneNumber = branchWhatsapp.replace(/[\s+]/g, '');
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+        
+        // Close modal
+        const modalEl = document.getElementById(modalId);
+        if (modalEl) {
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) {
+                modal.hide();
+            }
+        }
+        
+        // Clear single product order data
+        window.singleProductOrder = null;
+        
+        window.open(whatsappUrl, '_blank');
+    }
+    
     // Unified function to load branches and show modal (works for both cart page and cart drawer)
     window.loadBranchesAndShowModal = function(modalId = 'branchSelectionModal', branchListId = 'branchList') {
         const branchList = document.getElementById(branchListId);
@@ -702,6 +828,20 @@
                         
                         quickViewModal.show();
                     }
+                    
+                    // Setup WhatsApp button for Quick View
+                    const quickViewWhatsappBtn = document.getElementById('quickViewWhatsappOrderBtn');
+                    if (quickViewWhatsappBtn) {
+                        // Store product data for WhatsApp order
+                        quickViewWhatsappBtn.setAttribute('data-product-id', product.id);
+                        quickViewWhatsappBtn.setAttribute('data-product-name', product.name);
+                        quickViewWhatsappBtn.setAttribute('data-product-price', productPrice);
+                        quickViewWhatsappBtn.setAttribute('data-product-original-price', originalPrice);
+                        quickViewWhatsappBtn.setAttribute('data-product-currency', product.currency || 'AZN');
+                        quickViewWhatsappBtn.setAttribute('data-product-url', product.url || `${window.location.origin}/${locale}/products/${product.slug || product.id}`);
+                        quickViewWhatsappBtn.setAttribute('data-product-has-discount', hasDiscount ? 'true' : 'false');
+                        quickViewWhatsappBtn.setAttribute('data-product-discount-text', discountText || '');
+                    }
                 }
             },
             error: function(xhr, status, error) {
@@ -976,6 +1116,54 @@
                     }
                 }
             }
+        }
+    });
+    
+    // Quick View WhatsApp button handler
+    document.addEventListener('click', function(e) {
+        const whatsappBtn = e.target.closest('#quickViewWhatsappOrderBtn');
+        if (whatsappBtn) {
+            e.preventDefault();
+            
+            // Get product data from button attributes
+            const productData = {
+                id: whatsappBtn.getAttribute('data-product-id'),
+                name: whatsappBtn.getAttribute('data-product-name'),
+                price: parseFloat(whatsappBtn.getAttribute('data-product-price')) || 0,
+                originalPrice: parseFloat(whatsappBtn.getAttribute('data-product-original-price')) || 0,
+                currency: whatsappBtn.getAttribute('data-product-currency') || 'AZN',
+                url: whatsappBtn.getAttribute('data-product-url'),
+                hasDiscount: whatsappBtn.getAttribute('data-product-has-discount') === 'true',
+                discountText: whatsappBtn.getAttribute('data-product-discount-text')
+            };
+            
+            // Get quantity from quick view
+            const qtyInput = document.getElementById('quickViewQuantity');
+            const quantity = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+            
+            // Store product data in window for use by branch selection
+            window.singleProductOrder = {
+                product: productData,
+                quantity: quantity
+            };
+            
+            // Close quick view modal first
+            const quickViewModalEl = document.getElementById('quickView');
+            if (quickViewModalEl) {
+                const quickViewModal = bootstrap.Modal.getInstance(quickViewModalEl);
+                if (quickViewModal) {
+                    quickViewModal.hide();
+                }
+            }
+            
+            // Open branch selection modal after quick view closes
+            setTimeout(function() {
+                if (typeof window.loadBranchesAndShowModalForSingleProduct === 'function') {
+                    window.loadBranchesAndShowModalForSingleProduct('branchSelectionModal', 'branchList');
+                } else {
+                    console.error('loadBranchesAndShowModalForSingleProduct function not found');
+                }
+            }, 300);
         }
     });
     

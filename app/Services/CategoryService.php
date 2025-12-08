@@ -66,7 +66,7 @@ class CategoryService extends AbstractService implements CategoryServiceInterfac
         $title = $category->getTranslation('meta_title', $locale) ?: $category->getTranslation('name', $locale);
         $desc = $category->getTranslation('meta_description', $locale) ?: $category->getTranslation('description', $locale);
 
-        $url = route('categories.show', ['locale' => $locale, 'category' => 'test'], false);
+        $url = route('categories.show', ['locale' => $locale, 'category' => $category->slug]);
 
         $collection = Schema::collectionPage()
             ->name($title)
@@ -89,7 +89,7 @@ class CategoryService extends AbstractService implements CategoryServiceInterfac
                         ->name($child->getTranslation('name', $locale))
                         ->url(route('categories.show', [
                             'locale' => $locale,
-                            'slug' => $child->slug
+                            'category' => $child->slug
                         ]))
                     )->toArray()
                 );

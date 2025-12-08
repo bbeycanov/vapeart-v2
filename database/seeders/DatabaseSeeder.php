@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             //PageSeeder::class,
             //BlogSeeder::class,
-            //MenuSeeder::class,
+            MenuSeeder::class,
             //BannerSeeder::class,
             //CategorySeeder::class,
             //BrandSeeder::class,

@@ -62,6 +62,9 @@ return [
     'Call' => 'Zəng et',
     'Select Branch' => 'Filial seçin',
     
+    // Subcategories
+    'Subcategories' => 'Alt kateqoriyalar',
+
     // Empty States
     'No products found' => 'Məhsul tapılmadı',
     'No brands found' => 'Brend tapılmadı',

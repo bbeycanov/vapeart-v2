@@ -201,4 +201,82 @@ class SearchController extends Controller
 
         return view('pages.search.index', compact('products', 'query'));
     }
+
+    /**
+     * Load more search results via AJAX
+     *
+     * @param string $locale
+     * @param Request $request
+     * @param ElasticsearchService $elasticsearchService
+     * @return Factory|View
+     */
+    public function loadMore(string $locale, Request $request, ElasticsearchService $elasticsearchService): Factory|View
+    {
+        app()->setLocale($locale);
+
+        $query = $request->get('q', '');
+        $page = $request->get('page', 1);
+        $perPage = $request->get('perPage', 24);
+
+        try {
+            if (!empty($query)) {
+                $from = ($page - 1) * $perPage;
+                $results = $elasticsearchService->search($query, $from, $perPage);
+                $productIds = array_map(fn($hit) => $hit['_source']['id'], $results['hits']);
+
+                if (empty($productIds)) {
+                    $products = new LengthAwarePaginator([], $results['total'], $perPage, $page, [
+                        'path' => $request->url(),
+                        'query' => $request->query(),
+                    ]);
+                } else {
+                    $dbProducts = Product::whereIn('id', $productIds)
+                        ->with(['brand', 'categories', 'tags'])
+                        ->get()
+                        ->keyBy('id');
+
+                    $orderedProducts = collect($productIds)
+                        ->map(fn($id) => $dbProducts->get($id))
+                        ->filter();
+
+                    $products = new LengthAwarePaginator(
+                        $orderedProducts,
+                        $results['total'],
+                        $perPage,
+                        $page,
+                        [
+                            'path' => $request->url(),
+                            'query' => $request->query(),
+                        ]
+                    );
+                }
+            } else {
+                $products = Product::where('is_active', true)
+                    ->where('is_featured', true)
+                    ->orderBy('sort_order')
+                    ->paginate($perPage);
+            }
+        } catch (Exception $e) {
+            Log::error('Elasticsearch search failed: ' . $e->getMessage());
+
+            if (!empty($query)) {
+                $products = Product::where('is_active', true)
+                    ->where(function ($q) use ($query, $locale) {
+                        $q->whereRaw("JSON_EXTRACT(name, '$.$locale') LIKE ?", ["%$query%"])
+                            ->orWhereRaw("JSON_EXTRACT(short_description, '$.$locale') LIKE ?", ["%$query%"])
+                            ->orWhereRaw("JSON_EXTRACT(description, '$.$locale') LIKE ?", ["%$query%"]);
+                    })
+                    ->with(['brand', 'categories'])
+                    ->orderBy('sort_order')
+                    ->paginate($perPage);
+            } else {
+                $products = Product::where('is_active', true)
+                    ->where('is_featured', true)
+                    ->orderBy('sort_order')
+                    ->paginate($perPage);
+            }
+        }
+
+        return view('pages.search._products_grid', compact('products'));
+    }
 }

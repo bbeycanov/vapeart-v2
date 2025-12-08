@@ -27,7 +27,13 @@
                     @endif
                 </ol>
                 @if($parentCategory)
-                    <a href="{{ route('categories.index', $locale) }}" class="btn-link btn-link_md default-underline text-uppercase fw-medium d-flex align-items-center">
+                    @php
+                        // If parent has a parent, go to parent's parent, otherwise go to categories index
+                        $backUrl = ($parentCategory->parent && $parentCategory->parent->slug)
+                            ? route('categories.show', [$locale, 'category' => $parentCategory->parent->slug])
+                            : route('categories.index', $locale);
+                    @endphp
+                    <a href="{{ $backUrl }}" class="btn-link btn-link_md default-underline text-uppercase fw-medium d-flex align-items-center">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-1">
                             <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -57,14 +63,9 @@
                         $productCount = $item['product_count'];
                         $categoryName = $category->getTranslation('name', $locale);
                         $categoryImage = $category->getFirstMediaUrl('icon');
-                        $hasChildren = $category->children()->where('is_active', true)->exists();
-                        
-                        // If has children, go to categories index with parent_id, otherwise go to category show page
-                        if ($hasChildren) {
-                            $categoryUrl = route('categories.index', [$locale, 'parent_id' => $category->id]);
-                        } else {
-                            $categoryUrl = route('categories.show', [$locale, $category->slug]);
-                        }
+
+                        // Always use slug-based URL - controller handles the logic
+                        $categoryUrl = route('categories.show', [$locale, 'category' => $category->slug]);
                     @endphp
                     <div class="col">
                         <a href="{{ $categoryUrl }}" 

@@ -68,7 +68,6 @@ class ProductForm
 
                                         Select::make('tags')
                                             ->label(__('Tags'))
-                                            ->required()
                                             ->multiple()
                                             ->relationship('tags', 'name', fn($query) => $query->orderBy('name'))
                                             ->preload()
@@ -135,8 +134,17 @@ class ProductForm
                                                     $set('slug', Str::slug($state));
                                                 }
                                             }),
-                                        Textarea::make('short_description')
+                                        RichEditor::make('short_description')
                                             ->label(__('Short Description'))
+                                            ->toolbarButtons([
+                                                'bold',
+                                                'italic',
+                                                'underline',
+                                                'strike',
+                                                'link',
+                                                'bulletList',
+                                                'orderedList',
+                                            ])
                                             ->columnSpanFull(),
                                         RichEditor::make('description')
                                             ->label(__('Content'))

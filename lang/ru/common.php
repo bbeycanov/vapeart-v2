@@ -62,6 +62,9 @@ return [
     'Call' => 'Позвонить',
     'Select Branch' => 'Выберите филиал',
     
+    // Subcategories
+    'Subcategories' => 'Подкатегории',
+
     // Empty States
     'No products found' => 'Продукты не найдены',
     'No brands found' => 'Бренды не найдены',

@@ -9,11 +9,14 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class ReviewsTable
 {
@@ -23,17 +26,14 @@ class ReviewsTable
             ->columns([
                 TextColumn::make('id')
                     ->label(__('ID'))
-                    ->searchable()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('reviewable_type')
                     ->label(__('Type'))
-                    ->searchable()
                     ->formatStateUsing(fn (string $state): string => class_basename($state))
                     ->sortable(),
                 TextColumn::make('reviewable_id')
                     ->label(__('Item ID'))
-                    ->searchable()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('author_name')
@@ -85,8 +85,90 @@ class ReviewsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                TrashedFilter::make(),
-            ])
+                Filter::make('filter')
+                    ->schema([
+                        Select::make('rating')
+                            ->label(__('Rating'))
+                            ->options([
+                                '5' => '⭐⭐⭐⭐⭐ (5)',
+                                '4' => '⭐⭐⭐⭐ (4)',
+                                '3' => '⭐⭐⭐ (3)',
+                                '2' => '⭐⭐ (2)',
+                                '1' => '⭐ (1)',
+                            ])
+                            ->placeholder(__('All Ratings')),
+                        Select::make('status')
+                            ->label(__('Approval Status'))
+                            ->options([
+                                '1' => __('Approved'),
+                                '0' => __('Pending'),
+                            ])
+                            ->placeholder(__('All')),
+                        Select::make('reviewable_type')
+                            ->label(__('Review Type'))
+                            ->options([
+                                'App\\Models\\Product' => __('Product'),
+                                'App\\Models\\Blog' => __('Blog'),
+                            ])
+                            ->placeholder(__('All Types')),
+                        Select::make('trashed')
+                            ->label(__('Deleted Records'))
+                            ->options([
+                                '' => __('Without Deleted'),
+                                'with' => __('With Deleted'),
+                                'only' => __('Only Deleted'),
+                            ])
+                            ->placeholder(__('Without Deleted')),
+                    ])
+                    ->columns(3)
+                    ->columnSpanFull()
+                    ->query(function (Builder $query, array $data) {
+                        // Handle trashed records
+                        if (($data['trashed'] ?? '') === 'with') {
+                            $query->withTrashed();
+                        } elseif (($data['trashed'] ?? '') === 'only') {
+                            $query->onlyTrashed();
+                        }
+
+                        return $query
+                            ->when($data['rating'] ?? null, function (Builder $query, $value) {
+                                $query->where('rating', (int) $value);
+                            })
+                            ->when(isset($data['status']) && $data['status'] !== null && $data['status'] !== '', function (Builder $query) use ($data) {
+                                $query->where('status', (bool) $data['status']);
+                            })
+                            ->when($data['reviewable_type'] ?? null, function (Builder $query, $value) {
+                                $query->where('reviewable_type', $value);
+                            });
+                    })
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+
+                        if ($data['rating'] ?? null) {
+                            $indicators[] = __('Rating') . ': ' . str_repeat('⭐', (int) $data['rating']);
+                        }
+
+                        if (isset($data['status']) && $data['status'] !== null && $data['status'] !== '') {
+                            $indicators[] = __('Approval Status') . ': ' . ($data['status'] ? __('Approved') : __('Pending'));
+                        }
+
+                        if ($data['reviewable_type'] ?? null) {
+                            $indicators[] = __('Review Type') . ': ' . class_basename($data['reviewable_type']);
+                        }
+
+                        if ($data['trashed'] ?? null) {
+                            $trashedLabels = [
+                                'with' => __('With Deleted'),
+                                'only' => __('Only Deleted'),
+                            ];
+                            $indicators[] = __('Deleted Records') . ': ' . ($trashedLabels[$data['trashed']] ?? '');
+                        }
+
+                        return $indicators;
+                    }),
+            ], layout: FiltersLayout::Modal)
+            ->filtersFormWidth('2xl')
+            ->filtersFormColumns(3)
             ->recordActions([
                 EditAction::make()
                     ->button(),

@@ -1,20 +1,61 @@
-/* Quick View Modal Centering */
-.modal-dialog.quick-view .product-single {
-    display: flex;
-    align-items: center;
-    min-height: 500px;
+/* Quick View Modal - Sticky Slider Layout */
+.modal-dialog.quick-view .modal-content {
+    max-height: 90vh;
+    overflow: hidden;
+    padding: 1.5rem;
 }
 
+.modal-dialog.quick-view .product-single {
+    display: flex;
+    align-items: flex-start;
+    max-height: calc(90vh - 3rem);
+    overflow: hidden;
+    gap: 1.5rem;
+}
+
+/* Left side - Sticky Slider */
 .modal-dialog.quick-view .product-single__media {
+    position: sticky;
+    top: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: flex-start;
+    height: fit-content;
+    flex: 0 0 47%;
+    max-width: 47%;
+    margin: 0;
+    padding: 0;
 }
 
+/* Right side - Scrollable Details */
 .modal-dialog.quick-view .product-single__detail {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    max-height: calc(90vh - 3rem);
+    overflow-y: auto;
+    flex: 0 0 calc(53% - 1.5rem);
+    max-width: calc(53% - 1.5rem);
+    padding: 0 0.5rem 0 0;
+}
+
+/* Custom scrollbar for details */
+.modal-dialog.quick-view .product-single__detail::-webkit-scrollbar {
+    width: 4px;
+}
+
+.modal-dialog.quick-view .product-single__detail::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 2px;
+}
+
+.modal-dialog.quick-view .product-single__detail::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 2px;
+}
+
+.modal-dialog.quick-view .product-single__detail::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
 }
 
 /* Ensure slider container centers content */
@@ -45,19 +86,54 @@
 
 /* Responsive adjustments */
 @media (max-width: 991px) {
+    .modal-dialog.quick-view .modal-content {
+        max-height: 95vh;
+        overflow-y: auto;
+        padding: 1rem;
+    }
+
     .modal-dialog.quick-view .product-single {
         flex-direction: column;
-        min-height: auto;
+        max-height: none;
+        overflow: visible;
+        gap: 1rem;
     }
-    
+
+    .modal-dialog.quick-view .product-single__media {
+        position: relative;
+        flex: 0 0 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .modal-dialog.quick-view .product-single__detail {
+        flex: 0 0 100%;
+        max-width: 100%;
+        max-height: none;
+        overflow-y: visible;
+        padding: 0;
+    }
+
     .modal-dialog.quick-view .swiper-slide.product-single__image-item {
         min-height: 300px;
     }
 }
 
+/* Large screens */
 @media (min-width: 992px) {
+    .modal-dialog.quick-view .modal-content {
+        padding: 2rem;
+    }
+
     .modal-dialog.quick-view .product-single {
-        min-height: 600px;
+        gap: 2rem;
+        max-height: calc(90vh - 4rem);
+    }
+
+    .modal-dialog.quick-view .product-single__detail {
+        max-height: calc(90vh - 4rem);
+        flex: 0 0 calc(53% - 2rem);
+        max-width: calc(53% - 2rem);
     }
 }
 

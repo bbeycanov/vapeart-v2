@@ -163,6 +163,7 @@ class ProductImportService implements ProductImportServiceInterface
 
                 // Handle Tags
                 if (!empty($apiProduct['tags'])) {
+
                     $tagIds = $this->findOrCreateTags($apiProduct['tags']);
                     $product->tags()->sync($tagIds);
                 }
@@ -209,7 +210,7 @@ class ProductImportService implements ProductImportServiceInterface
             'slug' => $this->generateUniqueSlug($apiProduct['slug'] ?? Str::slug($apiProduct['title'] ?? '')),
             'price' => (float)($apiProduct['new_price'] ?? $apiProduct['price'] ?? 0),
             'currency' => 'AZN',
-            'compare_at_price' => (float)($apiProduct['old_price'] ?? 0) > 0 ? (float)$apiProduct['old_price'] : null,
+            'compare_at_price' => (float)($apiProduct['old_price'] ?? 0) > 0 ? (float)$apiProduct['old_price'] : 0,
             'stock_qty' => (int)($apiProduct['smoke_count'] ?? $apiProduct['stock_qty'] ?? 0),
             'is_active' => (bool)($apiProduct['is_stock'] ?? $apiProduct['is_active'] ?? true),
             'is_new' => (bool)($apiProduct['is_new'] ?? false),
@@ -217,11 +218,29 @@ class ProductImportService implements ProductImportServiceInterface
             'is_hot' => (bool)($apiProduct['is_hot'] ?? false),
             'name' => $this->extractTranslations($translations, 'title', $apiProduct['title'] ?? ''),
             'description' => $this->extractTranslations($translations, 'description'),
-            'short_description' => $this->extractTranslations($translations, 'short_description'),
+            'short_description' => $this->extractTranslations($translations, 'info'),
             'meta_title' => $this->extractTranslations($translations, 'meta_title'),
             'meta_description' => $this->extractTranslations($translations, 'meta_description'),
-            'specs' => $this->extractTranslations($translations, 'info'),
+            'specs' => $this->extractSpecsData($translations, 'info'),
         ];
+    }
+
+    /**
+     * @param $translations
+     * @param $field
+     * @param string $fallback
+     * @return array
+     */
+    public function extractSpecsData($translations, $field, string $fallback = ''): array
+    {
+        $result = [];
+
+        foreach ($this->locales as $locale) {
+            $value = $translations[$locale][$field] ?? null;
+            $result[$locale] = extractSpecsFromHtml($value);
+        }
+
+        return $result;
     }
 
     /**
@@ -426,6 +445,31 @@ class ProductImportService implements ProductImportServiceInterface
     }
 
     /**
+     * @param array $translations
+     * @param string $field
+     * @param string $fallback
+     * @return array|string[]
+     */
+    public function extractTagTranslations(array $translations, string $field, string $fallback = ''): array
+    {
+        $result = [];
+
+        foreach ($this->locales as $locale) {
+            $value = $translations[$locale][$field] ?? null;
+
+            if ($value === null) {
+                $value = $fallback;
+            }
+
+            if ($value !== null) {
+                $result[$locale] = $value;
+            }
+        }
+
+        return $result ?: ['az' => $fallback];
+    }
+
+    /**
      * Find or create tags from API data
      *
      * @param array $apiTags
@@ -444,10 +488,14 @@ class ProductImportService implements ProductImportServiceInterface
 
             $tag = Tag::withTrashed()->where('slug', $slug)->first();
 
+
             if (!$tag) {
+
+                $tagName = $this->extractTagTranslations($apiTag['translations'] ?? [], 'title', $apiTag['name'] ?? '');
+
                 $tag = Tag::create([
                     'slug' => $slug,
-                    'name' => ['az' => $apiTag['name'] ?? $slug],
+                    'name' => $tagName,
                     'is_active' => true,
                 ]);
             } elseif ($tag->trashed()) {

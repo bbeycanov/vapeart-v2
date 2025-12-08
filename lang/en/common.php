@@ -62,6 +62,9 @@ return [
     'Call' => 'Call',
     'Select Branch' => 'Select Branch',
     
+    // Subcategories
+    'Subcategories' => 'Subcategories',
+
     // Empty States
     'No products found' => 'No products found',
     'No brands found' => 'No brands found',

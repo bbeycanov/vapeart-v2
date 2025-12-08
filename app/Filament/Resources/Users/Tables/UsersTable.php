@@ -9,13 +9,17 @@ use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
 use Filament\Actions\ForceDeleteBulkAction;
+use Illuminate\Database\Eloquent\Builder;
 use LaraZeus\SpatieTranslatable\Actions\LocaleSwitcher;
+use Spatie\Permission\Models\Role;
 
 class UsersTable
 {
@@ -25,7 +29,6 @@ class UsersTable
             ->columns([
                 TextColumn::make('id')
                     ->label(__('ID'))
-                    ->searchable()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('name')
@@ -55,8 +58,92 @@ class UsersTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                TrashedFilter::make(),
-            ])
+                Filter::make('filter')
+                    ->schema([
+                        Select::make('role')
+                            ->label(__('Role'))
+                            ->searchable()
+                            ->preload()
+                            ->options(Role::query()->pluck('name', 'name'))
+                            ->placeholder(__('All Roles')),
+                        Select::make('is_active')
+                            ->label(__('Status'))
+                            ->options([
+                                '1' => __('Active'),
+                                '0' => __('Inactive'),
+                            ])
+                            ->placeholder(__('All')),
+                        Select::make('email_verified')
+                            ->label(__('Email Verified'))
+                            ->options([
+                                '1' => __('Verified'),
+                                '0' => __('Not Verified'),
+                            ])
+                            ->placeholder(__('All')),
+                        Select::make('trashed')
+                            ->label(__('Deleted Records'))
+                            ->options([
+                                '' => __('Without Deleted'),
+                                'with' => __('With Deleted'),
+                                'only' => __('Only Deleted'),
+                            ])
+                            ->placeholder(__('Without Deleted')),
+                    ])
+                    ->columns(3)
+                    ->columnSpanFull()
+                    ->query(function (Builder $query, array $data) {
+                        // Handle trashed records
+                        if (($data['trashed'] ?? '') === 'with') {
+                            $query->withTrashed();
+                        } elseif (($data['trashed'] ?? '') === 'only') {
+                            $query->onlyTrashed();
+                        }
+
+                        return $query
+                            ->when($data['role'] ?? null, function (Builder $query, $value) {
+                                $query->whereHas('roles', function ($q) use ($value) {
+                                    $q->where('name', $value);
+                                });
+                            })
+                            ->when(isset($data['is_active']) && $data['is_active'] !== null && $data['is_active'] !== '', function (Builder $query) use ($data) {
+                                $query->where('is_active', (bool) $data['is_active']);
+                            })
+                            ->when(isset($data['email_verified']) && $data['email_verified'] !== null && $data['email_verified'] !== '', function (Builder $query) use ($data) {
+                                if ($data['email_verified']) {
+                                    $query->whereNotNull('email_verified_at');
+                                } else {
+                                    $query->whereNull('email_verified_at');
+                                }
+                            });
+                    })
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+
+                        if ($data['role'] ?? null) {
+                            $indicators[] = __('Role') . ': ' . $data['role'];
+                        }
+
+                        if (isset($data['is_active']) && $data['is_active'] !== null && $data['is_active'] !== '') {
+                            $indicators[] = __('Status') . ': ' . ($data['is_active'] ? __('Active') : __('Inactive'));
+                        }
+
+                        if (isset($data['email_verified']) && $data['email_verified'] !== null && $data['email_verified'] !== '') {
+                            $indicators[] = __('Email Verified') . ': ' . ($data['email_verified'] ? __('Verified') : __('Not Verified'));
+                        }
+
+                        if ($data['trashed'] ?? null) {
+                            $trashedLabels = [
+                                'with' => __('With Deleted'),
+                                'only' => __('Only Deleted'),
+                            ];
+                            $indicators[] = __('Deleted Records') . ': ' . ($trashedLabels[$data['trashed']] ?? '');
+                        }
+
+                        return $indicators;
+                    }),
+            ], layout: FiltersLayout::Modal)
+            ->filtersFormWidth('2xl')
+            ->filtersFormColumns(3)
             ->recordActions([
                 EditAction::make()
                     ->button(),

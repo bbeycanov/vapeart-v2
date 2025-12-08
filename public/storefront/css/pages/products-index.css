@@ -21,6 +21,13 @@
 .category-filter-item label {
     cursor: pointer;
 }
+.category-count {
+    margin-right: 10px;
+}
+
+.brand-count {
+    margin-right: 10px;
+}
 
 .category-filter-item:hover {
     background-color: #f8f9fa;

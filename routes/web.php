@@ -81,6 +81,7 @@ Route::group([
 
     // Search
     Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+    Route::get('/search/load-more', [SearchController::class, 'loadMore'])->name('search.load-more');
     Route::get('/search/autocomplete', [SearchController::class, 'autocomplete'])->name('search.autocomplete');
 
     // Wishlist

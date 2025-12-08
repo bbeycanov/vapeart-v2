@@ -65,10 +65,55 @@
                 <a href="{{ route('home', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Home') }}</a>
                 <span class="breadcrumb-separator menu-link fw-medium ps-1 pe-1">/</span>
                 <a href="{{ route('categories.index', $locale) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ __('navigation.Categories') }}</a>
+                @if($category->parent && $category->parent->slug)
+                    <span class="breadcrumb-separator menu-link fw-medium ps-1 pe-1">/</span>
+                    <a href="{{ route('categories.show', [$locale, 'category' => $category->parent->slug]) }}" class="menu-link menu-link_us-s text-uppercase fw-medium">{{ $category->parent->getTranslation('name', $locale) }}</a>
+                @endif
                 <span class="breadcrumb-separator menu-link fw-medium ps-1 pe-1">/</span>
                 <span class="menu-link menu-link_us-s text-uppercase fw-medium">{{ $categoryName }}</span>
             </div>
         </div>
+
+        <!-- Child Categories -->
+        @if($childCategoriesWithCounts && $childCategoriesWithCounts->count() > 0)
+            <section class="mb-4 mb-md-5">
+                <h2 class="h5 fw-bold mb-3 mb-md-4">{{ __('common.Subcategories') }}</h2>
+                <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3">
+                    @foreach($childCategoriesWithCounts as $item)
+                        @php
+                            $childCategory = $item['category'];
+                            $childProductCount = $item['product_count'];
+                            $childCategoryName = $childCategory->getTranslation('name', $locale);
+                            $childCategoryImage = $childCategory->getFirstMediaUrl('icon');
+                        @endphp
+                        <div class="col">
+                            <a href="{{ route('categories.show', [$locale, 'category' => $childCategory->slug]) }}"
+                               class="category-card category-card--small d-block h-100 text-decoration-none">
+                                <div class="category-card__image-wrapper category-card__image-wrapper--small">
+                                    @if($childCategoryImage)
+                                        <img src="{{ $childCategoryImage }}"
+                                             alt="{{ $childCategoryName }}"
+                                             class="category-card__image"
+                                             loading="lazy">
+                                    @else
+                                        <div class="category-card__placeholder">
+                                            <svg width="32" height="32" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
+                                                <path d="M10 6v4M10 14h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                            </svg>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="category-card__content category-card__content--small">
+                                    <h3 class="category-card__title category-card__title--small">{{ $childCategoryName }}</h3>
+                                    <p class="category-card__count category-card__count--small">{{ $childProductCount }} {{ __('common.products') }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </section>
+        @endif
 
         <div class="category-page-wrapper">
             <!-- Sticky Brand Navigation -->
