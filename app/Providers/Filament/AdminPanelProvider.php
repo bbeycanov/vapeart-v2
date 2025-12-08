@@ -37,9 +37,9 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Indigo,
             ])
             ->brandName(config('app.name'))
-            //->brandLogo(asset('images/logo-light.svg'))
-            //->brandLogoHeight('3rem')
-            //->darkModeBrandLogo(asset('images/logo-dark.svg'))
+            ->brandLogo(asset('images/logo-light.svg'))
+            ->brandLogoHeight('3rem')
+            ->darkModeBrandLogo(asset('images/logo-dark.svg'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([

@@ -10,7 +10,7 @@
             <a href="{{ route('home', app()->getLocale()) }}">
                 @php
                     $mobileLogo = settings('site.mobile_logo');
-                    $defaultLogo = asset('storefront/images/logo.png');
+                    $defaultLogo = asset('storefront/images/logo.svg');
                 @endphp
                 <img src="{{ $mobileLogo ?: $defaultLogo }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image d-block">
             </a>
@@ -38,10 +38,10 @@
         <div class="container">
             <form action="{{ route('search.index', app()->getLocale()) }}" method="GET" class="search-field position-relative mt-4 mb-3" id="mobileSearchForm">
                 <div class="position-relative">
-                    <input 
-                        class="search-field__input w-100 border rounded-1" 
-                        type="text" 
-                        name="q" 
+                    <input
+                        class="search-field__input w-100 border rounded-1"
+                        type="text"
+                        name="q"
                         id="mobileSearchInput"
                         placeholder="{{ __('product.Search products...') }}"
                         autocomplete="off"
@@ -61,17 +61,17 @@
                                 <span class="visually-hidden">{{ __('common.Loading...') }}</span>
                             </div>
                         </div>
-                        
+
                         <!-- Results Container -->
                         <div class="autocomplete-results" id="mobileAutocompleteResults" style="max-height: 400px; overflow-y: auto;">
                             <!-- Product suggestions will appear here -->
                         </div>
-                        
+
                         <!-- No Results -->
                         <div class="autocomplete-no-results p-4 text-center text-secondary d-none" id="mobileAutocompleteNoResults">
                             <p class="mb-0">{{ __('common.No products found') }}</p>
                         </div>
-                        
+
                         <!-- View All Results -->
                         <div class="autocomplete-footer border-top p-3 text-center d-none" id="mobileAutocompleteFooter">
                             <a href="{{ route('search.index', app()->getLocale()) }}" class="btn btn-link text-decoration-none">
@@ -92,12 +92,12 @@
                     @php
                         $locale = app()->getLocale();
                     @endphp
-                    
+
                     {{-- 1. Ana Sayfa - Static --}}
                     <li class="navigation__item">
                         <a href="{{ route('home', $locale) }}" class="navigation__link">{{ __('navigation.Home') }}</a>
                     </li>
-                    
+
                     {{-- 2. Categories - Static (goes to categories index page) --}}
                     <li class="navigation__item">
                         <a href="{{ route('categories.index', $locale) }}" class="navigation__link js-nav-right d-flex align-items-center">
@@ -105,7 +105,7 @@
                             <svg class="ms-auto" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg>
                         </a>
                     </li>
-                    
+
                     {{-- 3. Dynamic Menu Items from MobileMenu position --}}
                     @if(isset($mobileMenus) && $mobileMenus->isNotEmpty())
                         @foreach($mobileMenus as $menu)
@@ -198,15 +198,21 @@
             <div class="container d-flex align-items-center">
                 <div class="logo">
                     <a href="{{ route('home', app()->getLocale()) }}">
-                        <img src="{{ asset('storefront/images/logo-white.png') }}" alt="Uomo" class="logo__image">
+                        @php
+                            $mobileLogo = settings('site.mobile_logo');
+                            $defaultLogo = asset('storefront/images/logo.svg');
+                        @endphp
+                        <img src="{{ $mobileLogo ?: $defaultLogo }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image">
                     </a>
                 </div>
 
+
+
                 <form action="{{ route('search.index', app()->getLocale()) }}" method="GET" class="header-search search-field position-relative" id="desktopSearchForm">
-                    <input 
-                        class="header-search__input w-100" 
-                        type="text" 
-                        name="q" 
+                    <input
+                        class="header-search__input w-100"
+                        type="text"
+                        name="q"
                         id="desktopSearchInput"
                         placeholder="{{ __('product.Search products...') }}"
                         autocomplete="off"
@@ -215,7 +221,7 @@
                     <button class="btn header-search__btn" type="submit">
                         <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><use href="#icon_search" /></svg>
                     </button>
-                    
+
                     <button class="btn-icon btn-close-lg d-none" type="button" id="desktopSearchClear" style="position: absolute; right: 3rem; top: 50%; transform: translateY(-50%); padding: 0.25rem;"></button>
 
                     <!-- Desktop Autocomplete Dropdown -->
@@ -227,17 +233,17 @@
                                     <span class="visually-hidden">{{ __('common.Loading...') }}</span>
                                 </div>
                             </div>
-                            
+
                             <!-- Results Container -->
                             <div class="autocomplete-results" id="desktopAutocompleteResults" style="max-height: 400px; overflow-y: auto;">
                                 <!-- Product suggestions will appear here -->
                             </div>
-                            
+
                             <!-- No Results -->
                             <div class="autocomplete-no-results p-4 text-center text-secondary d-none" id="desktopAutocompleteNoResults">
                                 <p class="mb-0">{{ __('common.No products found') }}</p>
                             </div>
-                            
+
                             <!-- View All Results -->
                             <div class="autocomplete-footer border-top p-3 text-center d-none" id="desktopAutocompleteFooter">
                                 <a href="{{ route('search.index', app()->getLocale()) }}" class="btn btn-link text-decoration-none">
@@ -333,7 +339,7 @@
                                                         @endif
                                                     </div>
                                                 @endforeach
-                                                
+
                                                 {{-- Widget Area --}}
                                                 @if($menu->widgets->isNotEmpty())
                                                     @foreach($menu->widgets->where('is_active', true)->sortBy('sort_order') as $widget)
