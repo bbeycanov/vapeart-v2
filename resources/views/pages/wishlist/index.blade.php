@@ -37,7 +37,7 @@
 <script>
 (function() {
     'use strict';
-    
+
     const locale = '{{ app()->getLocale() }}';
     const emptyTitle = @json(__('wishlist.Your Wishlist is Empty'));
     const emptyText = @json(__('wishlist.Start adding products to your wishlist to save them for later. Browse our collection and add items you love!'));
@@ -52,18 +52,18 @@
     const loadingText = @json(__('common.Loading...'));
     const productsUrl = '{{ route('products.index', app()->getLocale()) }}';
     const placeholderImage = '{{ asset('storefront/images/products/placeholder.jpg') }}';
-    
+
     function getWishlist() {
         return JSON.parse(localStorage.getItem('wishlist') || '[]');
     }
-    
+
     async function loadWishlistProducts() {
         const wishlist = getWishlist();
         const container = document.getElementById('wishlistProducts');
         const countEl = document.getElementById('wishlistCount');
-        
+
         if (!container) return;
-        
+
         if (wishlist.length === 0) {
             // Change row classes for empty state
             container.className = 'row row-cols-12 row-cols-md-12 row-cols-lg-12 row-cols-xxl-12';
@@ -92,17 +92,17 @@
             if (countEl) countEl.textContent = '0 ' + itemsText;
             return;
         }
-        
+
         // Reset row classes for products grid
         container.className = 'row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5';
         if (countEl) countEl.textContent = wishlist.length + ' ' + itemsText;
-        
+
         // Show loading
         container.innerHTML = '<div class="col-12 text-center py-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">' + loadingText + '</span></div></div>';
-        
+
         try {
             // Load products from API
-            const productPromises = wishlist.map(productId => 
+            const productPromises = wishlist.map(productId =>
                 fetch(`/${locale}/quick-view?product_id=${productId}`, {
                     headers: {
                         'Accept': 'application/json',
@@ -110,12 +110,12 @@
                     }
                 }).then(res => res.json())
             );
-            
+
             const results = await Promise.all(productPromises);
             const products = results
                 .filter(data => data.success && data.product)
                 .map(data => data.product);
-            
+
             if (products.length === 0) {
                 // Change row classes for empty state
                 container.className = 'row row-cols-12 row-cols-md-12 row-cols-lg-12 row-cols-xxl-12';
@@ -143,10 +143,10 @@
                 `;
                 return;
             }
-            
+
             // Reset row classes for products grid
             container.className = 'row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5';
-            
+
             // Render products
             container.innerHTML = products.map(product => {
                 const productUrl = `/${locale}/products/${product.slug}`;
@@ -155,7 +155,7 @@
                 const salePrice = product.sale_price ? parseFloat(product.sale_price) : null;
                 const displayPrice = salePrice && salePrice < price ? salePrice : price;
                 const oldPrice = salePrice && salePrice < price ? price : null;
-                
+
                 return `
                     <div class="col mb-3 mb-md-4 mb-xxl-5">
                         <div class="product-card product-card_style9 border rounded-3 mb-3 mb-md-4">
@@ -184,7 +184,7 @@
                                 </div>
                             </div>
                             <div class="pc__info position-relative">
-                                ${product.brand ? `<p class="pc__category">${product.brand}</p>` : ''}
+                                ${product.brand ? `<p class="pc__category">${product.brand.name}</p>` : ''}
                                 <h6 class="pc__title"><a href="${productUrl}">${product.name}</a></h6>
                                 <div class="product-card__price d-flex">
                                     ${oldPrice ? `<span class="money price-old me-2" style="text-decoration: line-through; color: #999;">${oldPrice.toFixed(2)} ${product.currency}</span>` : ''}
@@ -195,7 +195,7 @@
                     </div>
                 `;
             }).join('');
-            
+
         } catch (error) {
             console.error('Error loading wishlist products:', error);
             // Change row classes for empty state
@@ -224,23 +224,23 @@
             `;
         }
     }
-    
+
     // Load products on page load
     document.addEventListener('DOMContentLoaded', function() {
         loadWishlistProducts();
-        
+
         // Listen for wishlist changes
         window.addEventListener('storage', function(e) {
             if (e.key === 'wishlist') {
                 loadWishlistProducts();
             }
         });
-        
+
         // Also listen for custom event (for same-tab updates)
         document.addEventListener('wishlistUpdated', function() {
             loadWishlistProducts();
         });
-        
+
         // Listen for wishlist button clicks on this page
         document.addEventListener('click', function(e) {
             const wishlistBtn = e.target.closest('.js-add-wishlist');

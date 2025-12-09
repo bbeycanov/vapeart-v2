@@ -9,7 +9,7 @@
     $productSlug = $product->slug;
     $productPrice = $product->price ?? 0;
     $productCurrency = $product->currency ?? 'AZN';
-    $productImage = $product->getProductImageUrl('thumb');
+    $productImage = $product->getProductImageUrl('large');
     $brandName = $product->brand ? $product->brand->getTranslation('name', app()->getLocale()) : '';
     $productUrl = route('products.show', [app()->getLocale(), $productSlug]);
 

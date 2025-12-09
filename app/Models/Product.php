@@ -207,7 +207,7 @@ class Product extends Model implements HasMedia
      * @param string $conversion
      * @return string
      */
-    public function getProductImageUrl(string $conversion = 'thumb'): string
+    public function getProductImageUrl(string $conversion = 'large'): string
     {
         $media = $this->getFirstMedia('thumbnail') ?: $this->getFirstMedia('images');
 

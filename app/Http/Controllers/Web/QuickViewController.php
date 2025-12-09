@@ -50,7 +50,7 @@ class QuickViewController extends Controller
             // Convert to URLs
             $imageUrls = $allImages->map(function($media) use ($product) {
                 try {
-                    $url = $media->getUrl('medium');
+                    $url = $media->getUrl('large');
                     // Ensure we're using the conversion, not original
                     if ($url && $url !== $media->getUrl()) {
                         return $url;
