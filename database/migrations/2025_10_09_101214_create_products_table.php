@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('brand_id')->nullable()->constrained('brands')->nullOnDelete();
 
-            $table->string('sku')->unique();
+            $table->string('sku')->nullable();
             $table->string('slug')->unique();
 
             $table->json('name');

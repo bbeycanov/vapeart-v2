@@ -43,11 +43,10 @@ class ProductImportService implements ProductImportServiceInterface
         $hasMorePages = true;
 
         while ($hasMorePages) {
-            Log::info('Fetching products from API', ['page' => $page]);
             $url = $apiUrl . (str_contains($apiUrl, '?') ? '&' : '?') . "page=$page";
 
             try {
-                $response = Http::timeout(60)->get($url);
+                $response = Http::timeout(30)->get($url);
 
                 if (!$response->successful()) {
                     $stats['errors'][] = "Failed to fetch page $page: HTTP {$response->status()}";
