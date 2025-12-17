@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Closure;
 use Exception;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Container\Attributes\Log;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\HigherOrderCollectionProxy;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Spatie\Image\Enums\Fit;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\HigherOrderCollectionProxy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use Filament\Schemas\Components\Group;
 use App\Filament\Widgets\DiscountsStatsWidget;
 use App\Filament\Widgets\ProductPriceRangeChart;
 use App\Filament\Widgets\ProductsChart;
@@ -32,19 +33,24 @@ class Dashboard extends BaseDashboard
     public function filtersForm(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Section::make()
                     ->schema([
-                        DatePicker::make('startDate')
-                            ->label(__('Start Date'))
-                            ->default(now()->subDays(30))
-                            ->live(),
-                        DatePicker::make('endDate')
-                            ->label(__('End Date'))
-                            ->default(now())
-                            ->live(),
+                        Group::make()
+                            ->schema([
+                                DatePicker::make('startDate')
+                                    ->label(__('Start Date'))
+                                    ->default(now())
+                                    ->live(),
+                                DatePicker::make('endDate')
+                                    ->label(__('End Date'))
+                                    ->default(now())
+                                    ->live(),
+                            ])
+                        ->columns(2)
                     ])
-                    ->columns(2),
+                    ->columnSpanFull()
             ]);
     }
 
