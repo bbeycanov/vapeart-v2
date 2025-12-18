@@ -2,19 +2,19 @@
 
 namespace App\Filament\Pages;
 
+use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Group;
 use App\Filament\Widgets\DiscountsStatsWidget;
-use App\Filament\Widgets\ProductPriceRangeChart;
-use App\Filament\Widgets\ProductsChart;
 use App\Filament\Widgets\ProductsStatsWidget;
-use App\Filament\Widgets\ReviewRatingsChart;
+use App\Filament\Widgets\ProductsChart;
 use App\Filament\Widgets\StatsOverview;
 use App\Filament\Widgets\TopBrandsChart;
-use App\Filament\Widgets\TopCategoriesChart;
-use Filament\Forms\Components\DatePicker;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\DatePicker;
+use App\Filament\Widgets\ReviewRatingsChart;
+use App\Filament\Widgets\TopCategoriesChart;
 use Filament\Pages\Dashboard as BaseDashboard;
+use App\Filament\Widgets\ProductPriceRangeChart;
 
 class Dashboard extends BaseDashboard
 {
