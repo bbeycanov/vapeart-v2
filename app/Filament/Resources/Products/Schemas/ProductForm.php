@@ -22,6 +22,8 @@ use App\Forms\Components\GoogleSearchPreview;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Utilities\Get;
 
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+
 class ProductForm
 {
     public static function generateSKU($prefix = 'PRD'): string
@@ -151,6 +153,19 @@ class ProductForm
                                             ->toolbarButtons(RichEditorFullToolBarButton::getAll())
                                             ->columnSpanFull()
                                     ]),
+                            ]),
+                        Tab::make(__('Images'))
+                            ->schema([
+                                SpatieMediaLibraryFileUpload::make('thumbnail')
+                                    ->label(__('Thumbnail'))
+                                    ->collection('thumbnail')
+                                    ->image(),
+                                SpatieMediaLibraryFileUpload::make('images')
+                                    ->label(__('Gallery Images'))
+                                    ->collection('images')
+                                    ->multiple()
+                                    ->reorderable()
+                                    ->image(),
                             ]),
                         Tab::make(__('Seo'))
                             ->schema([
