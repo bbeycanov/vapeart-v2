@@ -215,8 +215,8 @@
                             </div>
                         </details>
                     </share-button>
-                    <script src="./js/details-disclosure.js" defer="defer"></script>
-                    <script src="./js/share.js" defer="defer"></script>
+                    <script src="{{asset('storefront/js/details-disclosure.js')}}" defer="defer"></script>
+                    <script src="{{asset('storefront/js/share.js')}}" defer="defer"></script>
                 </div>
                 <div class="product-single__meta-info">
                     @if($productTags->isNotEmpty())
