@@ -92,7 +92,7 @@
                                 <div id="Article-share-template__main" class="share-button__fallback flex items-center absolute top-full left-0 w-full px-2 py-4 bg-container shadow-theme border-t z-10">
                                     <div class="field grow mr-4">
                                         <label class="field__label sr-only" for="url">Link</label>
-                                        <input type="text" class="field__input w-full" id="url" value="https://uomo-crystal.myshopify.com/blogs/news/go-to-wellness-tips-for-mental-health" placeholder="Link" onclick="this.select();" readonly="">
+                                        <input type="text" class="field__input w-full" id="product-url" value="" placeholder="Link" onclick="this.select();" readonly="">
                                     </div>
                                     <button class="share-button__copy no-js-hidden">
                                         <svg class="icon icon-clipboard inline-block mr-1" width="11" height="13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 11 13">
