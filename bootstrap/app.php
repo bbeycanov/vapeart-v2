@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'setLocale' => SetLocaleFromUrl::class,
         ]);
+
+        $middleware->appendToGroup('web', [
+            \App\Http\Middleware\DebugLivewireSignature::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->report(function (Throwable $e) {
