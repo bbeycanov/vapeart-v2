@@ -13,7 +13,7 @@
     $categoryBanner = $category->getFirstMediaUrl('banner');
     $selectedBrandId = request()->get('brand_id');
     $selectedBrand = $selectedBrandId ? $brands->firstWhere('id', $selectedBrandId) : null;
-    
+
     // Prepare brands array for JavaScript
     $brandsArray = [];
     if ($brands) {
@@ -29,11 +29,10 @@
 @endphp
 
 @section('content')
-    
     <div class="mb-md-1 pb-md-3"></div>
 
     <div class="container">
-        
+
         <!-- Category Banner & Hero Section -->
         <section class="mb-4 mb-md-5">
             <div class="shop-banner position-relative rounded-3 overflow-hidden" style="min-height: 320px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
@@ -49,7 +48,7 @@
                     <h1 class="h1 text-uppercase fw-bold mb-3 mb-md-4 {{ $categoryBanner ? 'text-white' : 'text-dark' }}" style="font-size: clamp(1.75rem, 4vw, 2.5rem);">
                         {{ $categoryName }}
                     </h1>
-                    
+
                     @if($categoryDescription)
                         <div class="category-description mx-auto {{ $categoryBanner ? 'text-white' : 'text-secondary' }}" style="max-width: 800px; font-size: 1.05rem; line-height: 1.6;">
                             {!! $categoryDescription !!}
@@ -122,19 +121,19 @@
                     <div class="brand-scroll-container py-3 py-md-3.5 d-flex align-items-center px-3 px-md-4 position-relative">
                         <div class="brand-scroll-wrapper d-flex gap-2 gap-md-3 overflow-auto no-scrollbar w-100" style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch;">
                             <!-- All Brands Button -->
-                            <button type="button" 
+                            <button type="button"
                                     class="brand-pill btn btn-sm {{ !$selectedBrandId ? 'btn-dark' : 'btn-outline-light text-dark border-secondary-subtle' }} rounded-pill px-3 px-md-4 py-2 py-md-2.5 flex-shrink-0 fw-medium d-flex align-items-center gap-2 transition-all"
                                     data-brand-id="">
                                 <span>{{ __('product.All Brands') }}</span>
                             </button>
-                            
+
                             <!-- Brand List -->
                             @foreach($brands as $brand)
-                                @php 
+                                @php
                                     $isActive = $selectedBrandId == $brand->id;
                                     $brandLogo = $brand->getFirstMediaUrl('logo');
                                 @endphp
-                                <button type="button" 
+                                <button type="button"
                                         class="brand-pill btn btn-sm {{ $isActive ? 'btn-dark' : 'btn-outline-light text-dark border-secondary-subtle' }} rounded-pill px-3 px-md-4 py-2 py-md-2.5 flex-shrink-0 fw-medium d-flex align-items-center gap-2 transition-all"
                                         data-brand-id="{{ $brand->id }}">
                                     @if($brandLogo)
@@ -187,15 +186,15 @@
                             <div class="load-more-section text-center mt-4 mt-md-5 pt-3">
                                 <!-- Progress Bar -->
                                 <div class="progress mb-4 mx-auto" style="height: 4px; width: 200px; max-width: 100%; background-color: #f0f0f0; border-radius: 2px;">
-                                    <div class="progress-bar bg-dark" 
-                                         role="progressbar" 
-                                         style="width: {{ $list->total() > 0 ? ($list->lastItem() / $list->total() * 100) : 0 }}%; border-radius: 2px; transition: width 0.3s ease;" 
-                                         aria-valuenow="{{ $list->lastItem() ?? 0 }}" 
-                                         aria-valuemin="0" 
+                                    <div class="progress-bar bg-dark"
+                                         role="progressbar"
+                                         style="width: {{ $list->total() > 0 ? ($list->lastItem() / $list->total() * 100) : 0 }}%; border-radius: 2px; transition: width 0.3s ease;"
+                                         aria-valuenow="{{ $list->lastItem() ?? 0 }}"
+                                         aria-valuemin="0"
                                          aria-valuemax="{{ $list->total() }}">
                                     </div>
                                 </div>
-                                
+
                                 <!-- Status Text -->
                                 <p class="text-muted small mb-3 d-none">
                                     {{ __('Showing') }} <span class="fw-bold text-dark">{{ $list->firstItem() ?? 0 }} - {{ $list->lastItem() ?? 0 }}</span> {{ __('of') }} {{ $list->total() }} {{ __('products') }}
@@ -208,9 +207,9 @@
                                             <span class="visually-hidden">{{ __('common.Loading...') }}</span>
                                         </div>
                                         <!-- Hidden button for fallback/JS data storage -->
-                                        <button type="button" class="d-none" id="load-more-btn" 
-                                                data-page="{{ $list->currentPage() + 1 }}" 
-                                                data-category-slug="{{ $category->slug }}" 
+                                        <button type="button" class="d-none" id="load-more-btn"
+                                                data-page="{{ $list->currentPage() + 1 }}"
+                                                data-category-slug="{{ $category->slug }}"
                                                 data-locale="{{ $locale }}">
                                         </button>
                                     @endif

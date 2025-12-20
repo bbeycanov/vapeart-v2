@@ -107,15 +107,13 @@ class BrandForm
                             ->label(__('Logo'))
                             ->disk(config('filesystems.default'))
                             ->collection('logo')
-                            ->maxSize(1024)
                             ->imagePreviewHeight('250')
                             ->helperText(__('Recommended size: 1200x600px, Max size: 1MB')),
                         SpatieMediaLibraryFileUpload::make('banner')
                             ->image()
                             ->label(__('Banner Image'))
                             ->disk(config('filesystems.default'))
-                            ->collection('featured')
-                            ->maxSize(1024)
+                            ->collection('banner')
                             ->imagePreviewHeight('250')
                             ->helperText(__('Recommended size: 1200x600px, Max size: 1MB')),
                     ]),

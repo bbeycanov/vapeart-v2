@@ -60,6 +60,7 @@ class CategoryController extends Controller
 
         // Load parent relationship for breadcrumb
         $category->load('parent');
+        $category->load('media');
 
         $schemaJsonLd = $this->cats->buildSchemaFor($category);
 

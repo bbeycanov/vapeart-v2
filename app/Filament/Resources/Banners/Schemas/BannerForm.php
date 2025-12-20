@@ -16,6 +16,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\FileUpload;
 use App\Enums\RichEditorFullToolBarButton;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 class BannerForm
 {
@@ -80,34 +81,30 @@ class BannerForm
                     ->collapsible()
                     ->description(__('Upload images and media for the banner'))
                     ->schema([
-                        FileUpload::make('image')
+                        SpatieMediaLibraryFileUpload::make('image')
                             ->image()
                             ->label(__('Desktop Image'))
                             ->disk(config('filesystems.default'))
-                            ->directory('banners')
-                            ->maxSize(1024)
+                            ->collection('image')
                             ->imagePreviewHeight('250')
                             ->helperText(__('Recommended size: 1200x600px, Max size: 1MB')),
-                        FileUpload::make('image_mobile')
+                        SpatieMediaLibraryFileUpload::make('image_mobile')
                             ->image()
                             ->label(__('Mobile Image'))
                             ->disk(config('filesystems.default'))
-                            ->directory('banners')
-                            ->maxSize(1024)
+                            ->collection('image_mobile')
                             ->imagePreviewHeight('250')
                             ->helperText(__('Recommended size: 600x800px, Max size: 1MB')),
-                        FileUpload::make('video')
+                        SpatieMediaLibraryFileUpload::make('video')
                             ->label(__('Video'))
                             ->disk(config('filesystems.default'))
-                            ->directory('banners')
-                            ->maxSize(5120)
+                            ->collection('video')
                             ->helperText('Max size: 5MB'),
-                        FileUpload::make('icon')
+                        SpatieMediaLibraryFileUpload::make('icon')
                             ->image()
                             ->label(__('Icon'))
                             ->disk(config('filesystems.default'))
-                            ->directory('banners')
-                            ->maxSize(512)
+                            ->collection('icon')
                             ->imagePreviewHeight('100')
                             ->helperText(__('Recommended size: 100x100px, Max size: 512 MB'))
                     ]),

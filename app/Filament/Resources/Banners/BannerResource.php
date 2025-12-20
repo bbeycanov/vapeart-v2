@@ -21,6 +21,7 @@ use App\Filament\Resources\Banners\Pages\CreateBanner;
 use App\Filament\Resources\Banners\Tables\BannersTable;
 use LaraZeus\SpatieTranslatable\Resources\Concerns\Translatable;
 
+
 class BannerResource extends Resource
 {
     use Translatable;

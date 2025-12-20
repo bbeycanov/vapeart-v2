@@ -116,14 +116,12 @@ class BlogForm
                                     ->label(__('Featured Image'))
                                     ->disk(config('filesystems.default'))
                                     ->collection('featured')
-                                    ->maxSize(1024)
                                     ->imagePreviewHeight('250')
                                     ->helperText(__('Recommended size: 1200x600px, Max size: 1MB')),
                                 SpatieMediaLibraryFileUpload::make('gallery')
                                     ->label(__('Gallery Images'))
                                     ->disk(config('filesystems.default'))
                                     ->collection('gallery')
-                                    ->maxSize(5120)
                                     ->imagePreviewHeight('250')
                                     ->helperText(__('You can upload multiple images. Max size per image: 5MB'))
                                     ->multiple(),

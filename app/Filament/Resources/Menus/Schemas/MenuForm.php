@@ -117,7 +117,6 @@ class MenuForm
                                     ->label(__('Icon'))
                                     ->disk('public')
                                     ->collection('icon')
-                                    ->maxSize(1024)
                                     ->imagePreviewHeight('250')
                                     ->helperText(__('Recommended size: 1200x600px, Max size: 1MB')),
                             ]),
