@@ -106,7 +106,7 @@ class MenusTable
                             ])
                             ->placeholder(__('Without Deleted')),
                     ])
-                    ->columns(4)
+                    ->columns(1)
                     ->columnSpanFull()
                     ->query(function (Builder $query, array $data) {
                         // Handle trashed records
@@ -169,7 +169,7 @@ class MenusTable
                     }),
             ], layout: FiltersLayout::Modal)
             ->filtersFormWidth('2xl')
-            ->filtersFormColumns(3)
+            ->filtersFormColumns(1)
             ->recordActions([
                 EditAction::make()
                     ->button(),
