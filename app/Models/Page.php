@@ -77,8 +77,7 @@ class Page extends Model implements HasMedia
      */
     public function scopePublished($q): mixed
     {
-        return $q->where('status', 1)->where('is_active', true)
-            ->whereNotNull('published_at')->where('published_at', '<=', now());
+        return $q->where('is_active', true);
     }
 
     /**
