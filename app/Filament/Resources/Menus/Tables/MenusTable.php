@@ -85,6 +85,13 @@ class MenusTable
                             ->options(MenuType::labels())
                             ->label(__('Type'))
                             ->placeholder(__('All Types')),
+                        Select::make('hierarchy_type')
+                            ->label(__('Hierarchy Level'))
+                            ->options([
+                                'parent' => __('Parent Menus'),
+                                'child' => __('Child Menus'),
+                            ])
+                            ->placeholder(__('All')),
                         Select::make('parent')
                             ->label(__('Parent Menu'))
                             ->searchable()
@@ -116,6 +123,13 @@ class MenusTable
                             ->when($data['type'] ?? null, function (Builder $query, $value) {
                                 $query->where('type', $value);
                             })
+                            ->when($data['hierarchy_type'] ?? null, function (Builder $query, $value) {
+                                if ($value === 'parent') {
+                                    $query->whereNull('parent_id');
+                                } elseif ($value === 'child') {
+                                    $query->whereNotNull('parent_id');
+                                }
+                            })
                             ->when($data['parent'] ?? null, function (Builder $query, $value) {
                                 $query->where('parent_id', $value);
                             });
@@ -129,6 +143,14 @@ class MenusTable
 
                         if ($data['type'] ?? null) {
                             $indicators[] = __('Type') . ': ' . $data['type'];
+                        }
+
+                        if ($data['hierarchy_type'] ?? null) {
+                            $labels = [
+                                'parent' => __('Parent Menus'),
+                                'child' => __('Child Menus'),
+                            ];
+                            $indicators[] = __('Hierarchy') . ': ' . ($labels[$data['hierarchy_type']] ?? $data['hierarchy_type']);
                         }
 
                         if ($data['parent'] ?? null) {
