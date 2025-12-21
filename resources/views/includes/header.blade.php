@@ -18,7 +18,7 @@
 
         <div class="logo position-absolute start-50 translate-middle-x">
             <a href="{{ route('home', app()->getLocale()) }}">
-                @php 
+                @php
                     $defaultLogo = asset('storefront/images/vapeart-logo-mobile.svg');
                 @endphp
                 <img src="{{ $defaultLogo }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image d-block">
@@ -370,7 +370,7 @@
                                                                         @endif
                                                                     @endif
                                                                     @if($widgetContent)
-                                                                        <p class="mega-menu__content mb-2">{{ $widgetContent }}</p>
+                                                                        <p class="mega-menu__content mb-2"> {!! $widgetContent !!} </p>
                                                                     @endif
                                                                     @if($widgetButtonText && $widgetButtonUrl)
                                                                         <a href="{{ $widgetButtonUrl }}" class="btn-link default-underline fw-medium">{{ strtoupper($widgetButtonText) }}</a>
