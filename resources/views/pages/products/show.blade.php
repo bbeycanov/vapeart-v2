@@ -220,19 +220,6 @@
                         </details>
                     </share-button>
                 </div>
-                <div class="product-single__meta-info">
-                    @if($productTags->isNotEmpty())
-                    <div class="meta-item">
-                        <label>{{ __('product.Tags') }}:</label>
-                        <span>
-                            @foreach($productTags as $index => $tag)
-                                @if($index > 0), @endif
-                                {{ $tag['name'] }}
-                            @endforeach
-                        </span>
-                    </div>
-                    @endif
-                </div>
             </div>
         </div>
         <div class="product-single__details-tab">
@@ -256,6 +243,14 @@
                             <p class="content">{{ __('common.No description available.') }}</p>
                         @endif
                     </div>
+                    @if($productTags->isNotEmpty())
+                    <div class="product-single__tags mt-4 pt-3 border-top">
+                        <span class="fw-medium me-2">{{ __('product.Tags') }}:</span>
+                        @foreach($productTags as $index => $tag)
+                            <span class="badge bg-light text-dark me-1 mb-1 py-2 px-3">{{ $tag['name'] }}</span>
+                        @endforeach
+                    </div>
+                    @endif
                 </div>
                 <div class="tab-pane fade" id="tab-additional-info" role="tabpanel" aria-labelledby="tab-additional-info-tab">
                     <div class="product-single__addtional-info">
