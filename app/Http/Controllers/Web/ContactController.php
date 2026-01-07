@@ -82,8 +82,14 @@ class ContactController extends Controller
             $name = $branch->getTranslation('name', $locale);
             $address = $branch->getTranslation('address', $locale);
 
-            $localBusiness = Schema::localBusiness()
-                ->name($name);
+            // Use Store type for better SEO
+            $localBusiness = Schema::store()
+                ->name($name)
+                ->setProperty('@type', 'Store')
+                ->url(config('app.url'))
+                ->priceRange('$$')
+                ->currenciesAccepted('AZN')
+                ->paymentAccepted('Cash, Credit Card');
 
             if ($branch->phone) {
                 $localBusiness->telephone($branch->phone);
@@ -94,7 +100,8 @@ class ContactController extends Controller
             }
 
             if ($address) {
-                $postalAddress = Schema::postalAddress();
+                $postalAddress = Schema::postalAddress()
+                    ->addressCountry('AZ');
 
                 $addressLines = explode("\n", $address);
                 if (count($addressLines) > 0) {
@@ -113,6 +120,17 @@ class ContactController extends Controller
                     ->longitude((float)$branch->longitude);
                 $localBusiness->geo($geo);
             }
+
+            // Add opening hours if available
+            if ($branch->working_hours) {
+                $localBusiness->openingHours($branch->working_hours);
+            } else {
+                // Default opening hours
+                $localBusiness->openingHours(['Mo-Su 10:00-22:00']);
+            }
+
+            // Add logo/image
+            $localBusiness->image(asset(settings('site.og_image', 'storefront/images/og-image.jpg')));
 
             $schemaScripts .= PHP_EOL . $localBusiness->toScript();
         }

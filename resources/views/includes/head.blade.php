@@ -6,10 +6,22 @@
 {{-- SEO Meta Tags --}}
 <meta name="description" content="@hasSection('meta_description')@yield('meta_description')@else{{ settings('site.description', 'VapeArt Baku - Bakıda elektron siqaretlər, vape cihazları, snus və premium tütün məhsulları mağazası.') }}@endif">
 <meta name="keywords" content="@hasSection('meta_keywords')@yield('meta_keywords')@else{{ settings('site.keywords', 'vape, elektron siqaret, snus, tütün, vape baku') }}@endif">
-<meta name="robots" content="@hasSection('robots')@yield('robots')@else{{ 'index, follow' }}@endif">
 
-{{-- Canonical URL --}}
-<link rel="canonical" href="@hasSection('canonical')@yield('canonical')@else{{ url()->current() }}@endif">
+{{-- Robots Meta Tag - noindex for filtered/sorted pages to prevent duplicate content --}}
+@php
+    $filterParams = ['sort', 'order', 'filter', 'brand_id', 'category_id', 'min_price', 'max_price', 'page', 'per_page', 'q', 'search'];
+    $hasFilterParams = collect($filterParams)->contains(fn($param) => request()->has($param));
+    $robotsContent = $hasFilterParams ? 'noindex, follow' : 'index, follow';
+@endphp
+<meta name="robots" content="@hasSection('robots')@yield('robots')@else{{ $robotsContent }}@endif">
+
+{{-- Canonical URL - always point to clean URL without filter params --}}
+@php
+    $canonicalUrl = url()->current();
+    // Remove query parameters for canonical
+    $cleanCanonical = strtok($canonicalUrl, '?');
+@endphp
+<link rel="canonical" href="@hasSection('canonical')@yield('canonical')@else{{ $cleanCanonical }}@endif">
 
 {{-- Hreflang Tags for Multilingual SEO --}}
 @php

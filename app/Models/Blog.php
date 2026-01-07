@@ -95,7 +95,7 @@ class Blog extends Model implements HasMedia
      */
     public function registerMediaConversions(Media $media = null): void
     {
-        // Blog index thumbnail: 450x400 (for blog grid items) - maintains aspect ratio
+        // Blog index thumbnail: 450x400 (for blog grid items)
         $this->addMediaConversion('thumb')
             ->width(450)
             ->height(400)
@@ -103,13 +103,61 @@ class Blog extends Model implements HasMedia
             ->performOnCollections('featured')
             ->nonQueued();
 
-        // Blog detail: 1410x550 (for blog detail page) - maintains aspect ratio
+        // Blog index thumbnail WebP: 450x400
+        $this->addMediaConversion('thumb-webp')
+            ->width(450)
+            ->height(400)
+            ->fit(Fit::Contain, 450, 400)
+            ->format('webp')
+            ->performOnCollections('featured')
+            ->nonQueued();
+
+        // Blog detail: 1410x550 (for blog detail page)
         $this->addMediaConversion('large')
             ->width(1410)
             ->height(550)
             ->fit(Fit::Contain, 1410, 550)
             ->performOnCollections('featured')
             ->nonQueued();
+
+        // Blog detail WebP: 1410x550
+        $this->addMediaConversion('large-webp')
+            ->width(1410)
+            ->height(550)
+            ->fit(Fit::Contain, 1410, 550)
+            ->format('webp')
+            ->performOnCollections('featured')
+            ->nonQueued();
+    }
+
+    /**
+     * Get blog featured image URLs (both original and WebP)
+     *
+     * @param string $conversion
+     * @return array{src: string, webp: string|null}
+     */
+    public function getFeaturedImageUrls(string $conversion = 'thumb'): array
+    {
+        $media = $this->getFirstMedia('featured');
+        $placeholder = asset('storefront/images/products/placeholder.jpg');
+
+        if (!$media) {
+            return ['src' => $placeholder, 'webp' => null];
+        }
+
+        $src = $media->getUrl($conversion) ?: $media->getUrl();
+        $webp = null;
+
+        try {
+            $webpUrl = $media->getUrl($conversion . '-webp');
+            if ($webpUrl && $webpUrl !== $media->getUrl()) {
+                $webp = $webpUrl;
+            }
+        } catch (\Exception $e) {
+            // WebP not available
+        }
+
+        return ['src' => $src ?: $placeholder, 'webp' => $webp];
     }
 
     /**

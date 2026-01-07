@@ -1,5 +1,9 @@
 @extends('layouts.default')
 
+@section('title', $product->getTranslation('meta_title', app()->getLocale()) ?? $product->getTranslation('name', app()->getLocale()))
+
+@section('meta_description', $product->getTranslation('meta_description', app()->getLocale()) ?? $product->getTranslation('short_description', app()->getLocale()))
+
 @section('head')
     {!! $schemaJsonLd !!}
 @endsection

@@ -1,5 +1,9 @@
 @extends('layouts.default')
 
+@section('title', __('cart.Shopping Cart'))
+
+@section('robots', 'noindex, nofollow')
+
 @section('content')
     <div class="mb-5 pb-5"></div>
     <section class="shop-checkout container py-4">

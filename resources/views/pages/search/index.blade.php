@@ -1,5 +1,11 @@
 @extends('layouts.default')
 
+@section('title', $query ? __('page.Search Results for') . ': ' . $query : __('page.Search'))
+
+@section('head')
+    {!! $schemaJsonLd ?? '' !!}
+@endsection
+
 @php
     $locale = app()->getLocale();
 @endphp

@@ -1,5 +1,9 @@
 @extends('layouts.default')
 
+@section('head')
+    {!! $schemaJsonLd !!}
+@endsection
+
 @section('title', __('page.Discounted Products'))
 
 @php

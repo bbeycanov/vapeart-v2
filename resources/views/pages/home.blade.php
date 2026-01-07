@@ -1,5 +1,7 @@
 @extends('layouts.default')
 
+@section('title', __('page.Home'))
+
 @section('head')
     @if(isset($organizationSchema))
         {!! $organizationSchema !!}
@@ -30,8 +32,7 @@
                 @foreach($heroBanners as $banner)
                     @php
                         $locale = app()->getLocale();
-                        $imageUrl = $banner->getFirstMediaUrl('image');
-                        $imageMobileUrl = $banner->getFirstMediaUrl('image_mobile');
+                        $bannerImages = $banner->getBannerImageUrls();
                         $videoUrl = $banner->getFirstMediaUrl('video');
                         $title = $banner->getTranslation('title', $locale);
                         $subtitle = $banner->getTranslation('subtitle', $locale);
@@ -47,13 +48,31 @@
                                     <video autoplay muted loop playsinline class="slideshow-bg__video object-fit-cover w-100 h-100" style="position: absolute; top: 0; left: 0;">
                                         <source src="{{ $videoUrl }}" type="video/mp4">
                                     </video>
-                                @elseif($imageUrl)
+                                @elseif($bannerImages['desktop'])
                                     <picture>
-                                        @if($imageMobileUrl)
-                                            <source media="(max-width: 768px)" srcset="{{ $imageMobileUrl }}">
+                                        {{-- Mobile WebP --}}
+                                        @if($bannerImages['mobile_webp'])
+                                            <source media="(max-width: 768px)" srcset="{{ $bannerImages['mobile_webp'] }}" type="image/webp">
                                         @endif
+                                        {{-- Mobile fallback --}}
+                                        @if($bannerImages['mobile'])
+                                            <source media="(max-width: 768px)" srcset="{{ $bannerImages['mobile'] }}">
+                                        @endif
+                                        {{-- Tablet WebP --}}
+                                        @if($bannerImages['tablet_webp'])
+                                            <source media="(max-width: 1024px)" srcset="{{ $bannerImages['tablet_webp'] }}" type="image/webp">
+                                        @endif
+                                        {{-- Tablet fallback --}}
+                                        @if($bannerImages['tablet'])
+                                            <source media="(max-width: 1024px)" srcset="{{ $bannerImages['tablet'] }}">
+                                        @endif
+                                        {{-- Desktop WebP --}}
+                                        @if($bannerImages['desktop_webp'])
+                                            <source srcset="{{ $bannerImages['desktop_webp'] }}" type="image/webp">
+                                        @endif
+                                        {{-- Desktop fallback --}}
                                         <img loading="lazy"
-                                             src="{{ $imageUrl }}"
+                                             src="{{ $bannerImages['desktop'] }}"
                                              width="1920"
                                              height="560"
                                              alt="{{ $title ?? __('common.Banner') }}"

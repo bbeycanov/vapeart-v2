@@ -100,24 +100,49 @@ class ProductService extends AbstractService implements ProductServiceInterface
             ->url($url)
             ->sku($product->sku);
 
-        if ($img = $product->getFirstMediaUrl('gallery')) {
+        // Get product image - check thumbnail first, then images collection
+        $img = $product->getFirstMediaUrl('thumbnail', 'large')
+            ?: $product->getFirstMediaUrl('images', 'large')
+            ?: $product->getFirstMediaUrl('thumbnail')
+            ?: $product->getFirstMediaUrl('images');
+
+        if ($img) {
             $schema->image($img);
         }
 
-        $price = (float)($product->sale_price ?? $product->price);
+        // Get discount information
+        $bestDiscount = $product->getBestDiscount();
+        $hasDiscount = $bestDiscount !== null;
+        $originalPrice = (float)$product->price;
+        $discountedPrice = $hasDiscount ? (float)$product->getDiscountedPrice() : $originalPrice;
 
         /**
          * @var ItemAvailabilityContract $availability
          */
-        $availability = $product->stock_quantity && $product->stock_quantity > 0
+        $availability = $product->stock_qty && $product->stock_qty > 0
             ? 'https://schema.org/InStock'
             : 'https://schema.org/OutOfStock';
 
         $offer = Schema::offer()
-            ->price($price)
-            ->priceCurrency($product->currency)
+            ->price($discountedPrice)
+            ->priceCurrency($product->currency ?? 'AZN')
             ->availability($availability)
             ->url($url);
+
+        // Add discount-specific properties
+        if ($hasDiscount) {
+            // Add original price as highPrice for comparison
+            $offer->setProperty('priceSpecification', Schema::priceSpecification()
+                ->price($discountedPrice)
+                ->priceCurrency($product->currency ?? 'AZN')
+                ->valueAddedTaxIncluded(true)
+            );
+
+            // If discount has end date, add priceValidUntil
+            if ($bestDiscount->ends_at) {
+                $offer->priceValidUntil($bestDiscount->ends_at->format('Y-m-d'));
+            }
+        }
 
         $schema->offers($offer);
 

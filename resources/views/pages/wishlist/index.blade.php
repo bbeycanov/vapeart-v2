@@ -1,5 +1,9 @@
 @extends('layouts.default')
 
+@section('title', __('page.Wishlist'))
+
+@section('robots', 'noindex, nofollow')
+
 @section('content')
     <div class="mb-md-1 pb-md-3"></div>
     <section class="products-page container py-4 py-md-5">

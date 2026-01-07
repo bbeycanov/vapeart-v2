@@ -6,10 +6,12 @@ use App\Models\Menu;
 use App\Models\Brand;
 use App\Enums\BannerPosition;
 use Illuminate\Http\Request;
+use Spatie\SchemaOrg\Schema;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Services\Contracts\BrandServiceInterface;
 use App\Services\Contracts\BannerServiceInterface;
 use App\Services\Contracts\ProductServiceInterface;
@@ -49,7 +51,62 @@ class BrandController extends Controller
 
         $pageBanner = $this->bannerService->byPosition(BannerPosition::BRANDS_INDEX_HEADER)->first();
 
-        return view('pages.brands.index', compact('items', 'pageBanner'));
+        $schemaJsonLd = $this->buildIndexSchemaFor($items);
+
+        return view('pages.brands.index', compact('items', 'pageBanner', 'schemaJsonLd'));
+    }
+
+    /**
+     * Build structured data schema for brands index page
+     *
+     * @param LengthAwarePaginator $brands
+     * @return string
+     */
+    private function buildIndexSchemaFor(LengthAwarePaginator $brands): string
+    {
+        $locale = app()->getLocale();
+        $url = route('brands.index', ['locale' => $locale]);
+        $pageTitle = __('navigation.Brands');
+
+        // WebPage Schema
+        $webPage = Schema::collectionPage()
+            ->name($pageTitle)
+            ->url($url)
+            ->inLanguage($locale)
+            ->description(__('page.Browse all brands available in our store.'));
+
+        // Breadcrumb Schema
+        $breadcrumb = Schema::breadcrumbList()->itemListElement([
+            Schema::listItem()->position(1)->name(__('navigation.Home'))->item(route('home', $locale)),
+            Schema::listItem()->position(2)->name($pageTitle)->item($url),
+        ]);
+
+        // ItemList Schema with brands
+        $itemListElements = [];
+        $position = 1;
+
+        foreach ($brands as $brand) {
+            $brandName = $brand->getTranslation('name', $locale);
+            $brandUrl = route('brands.show', ['locale' => $locale, 'brand' => $brand->slug]);
+            $brandLogo = $brand->getFirstMediaUrl('logo') ?: asset('storefront/images/brand-placeholder.jpg');
+
+            $brandSchema = Schema::brand()
+                ->name($brandName)
+                ->url($brandUrl)
+                ->logo($brandLogo);
+
+            $itemListElements[] = Schema::listItem()
+                ->position($position)
+                ->item($brandSchema);
+
+            $position++;
+        }
+
+        $itemList = Schema::itemList()
+            ->itemListElement($itemListElements)
+            ->numberOfItems($brands->total());
+
+        return $webPage->toScript() . PHP_EOL . $breadcrumb->toScript() . PHP_EOL . $itemList->toScript();
     }
 
     /**

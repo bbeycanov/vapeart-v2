@@ -1,5 +1,9 @@
 @extends('layouts.default')
 
+@section('head')
+    {!! $schemaJsonLd ?? '' !!}
+@endsection
+
 @section('title', $parentCategory ? $parentCategory->getTranslation('name', app()->getLocale()) . ' - ' . __('page.Categories') : __('page.Categories'))
 
 @php

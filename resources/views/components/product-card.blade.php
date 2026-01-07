@@ -9,7 +9,13 @@
     $productSlug = $product->slug;
     $productPrice = $product->price ?? 0;
     $productCurrency = $product->currency ?? 'AZN';
-    $productImage = $product->getProductImageUrl('large');
+    // Responsive images - different sizes for different screens
+    $thumbImages = $product->getProductImageUrls('thumb');
+    $mediumImages = $product->getProductImageUrls('medium');
+    $productImage = $mediumImages['src'];
+    $productImageWebp = $mediumImages['webp'];
+    $thumbWebp = $thumbImages['webp'];
+    $thumbSrc = $thumbImages['src'];
     $brandName = $product->brand ? $product->brand->getTranslation('name', app()->getLocale()) : '';
     $productUrl = route('products.show', [app()->getLocale(), $productSlug]);
 
@@ -34,12 +40,25 @@
 
             <div class="pc__img-wrapper pc__img-wrapper_wide3">
                 <a href="{{ $productUrl }}">
-                    <img loading="lazy"
-                         src="{{ $productImage }}"
-                         width="256" height="256" alt="{{ $productName }}"
-                         class="pc__img"
-                         style="object-fit: cover;"
-                         onerror="this.src='{{ asset('storefront/images/products/placeholder.jpg') }}'">
+                    <picture>
+                        {{-- WebP with responsive srcset --}}
+                        @if($productImageWebp && $thumbWebp)
+                            <source srcset="{{ $thumbWebp }} 256w, {{ $productImageWebp }} 512w"
+                                    sizes="(max-width: 576px) 256px, 512px"
+                                    type="image/webp">
+                        @elseif($productImageWebp)
+                            <source srcset="{{ $productImageWebp }}" type="image/webp">
+                        @endif
+                        {{-- Fallback with responsive srcset --}}
+                        <img loading="lazy"
+                             src="{{ $productImage }}"
+                             srcset="{{ $thumbSrc }} 256w, {{ $productImage }} 512w"
+                             sizes="(max-width: 576px) 256px, 512px"
+                             width="256" height="256" alt="{{ $productName }}"
+                             class="pc__img"
+                             style="object-fit: cover;"
+                             onerror="this.onerror=null; this.src='{{ asset('storefront/images/products/placeholder.jpg') }}'">
+                    </picture>
                 </a>
             </div>
             @if($showAddToCart || $showQuickView)

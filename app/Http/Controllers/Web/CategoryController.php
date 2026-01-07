@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Web;
 use App\Models\Category;
 use App\Enums\BannerPosition;
 use Illuminate\Http\Request;
+use Spatie\SchemaOrg\Schema;
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
@@ -51,7 +53,64 @@ class CategoryController extends Controller
 
         $pageBanner = $this->bannerService->byPosition(BannerPosition::CATEGORIES_INDEX_HEADER)->first();
 
-        return view('pages.categories.index', compact('categoriesWithCounts', 'pageBanner'))->with('parentCategory', null);
+        $schemaJsonLd = $this->buildIndexSchemaFor($categoriesWithCounts);
+
+        return view('pages.categories.index', compact('categoriesWithCounts', 'pageBanner', 'schemaJsonLd'))->with('parentCategory', null);
+    }
+
+    /**
+     * Build structured data schema for categories index page
+     *
+     * @param Collection $categoriesWithCounts
+     * @return string
+     */
+    private function buildIndexSchemaFor(Collection $categoriesWithCounts): string
+    {
+        $locale = app()->getLocale();
+        $url = route('categories.index', ['locale' => $locale]);
+        $pageTitle = __('navigation.Categories');
+
+        // WebPage Schema
+        $webPage = Schema::collectionPage()
+            ->name($pageTitle)
+            ->url($url)
+            ->inLanguage($locale)
+            ->description(__('page.Browse all product categories available in our store.'));
+
+        // Breadcrumb Schema
+        $breadcrumb = Schema::breadcrumbList()->itemListElement([
+            Schema::listItem()->position(1)->name(__('navigation.Home'))->item(route('home', $locale)),
+            Schema::listItem()->position(2)->name($pageTitle)->item($url),
+        ]);
+
+        // ItemList Schema with categories
+        $itemListElements = [];
+        $position = 1;
+
+        foreach ($categoriesWithCounts as $item) {
+            $category = $item['category'];
+            $categoryName = $category->getTranslation('name', $locale);
+            $categoryUrl = route('categories.show', ['locale' => $locale, 'category' => $category->slug]);
+            $categoryImage = $category->getFirstMediaUrl('icon') ?: asset('storefront/images/category-placeholder.jpg');
+
+            $categorySchema = Schema::thing()
+                ->setProperty('@type', 'Thing')
+                ->name($categoryName)
+                ->url($categoryUrl)
+                ->image($categoryImage);
+
+            $itemListElements[] = Schema::listItem()
+                ->position($position)
+                ->item($categorySchema);
+
+            $position++;
+        }
+
+        $itemList = Schema::itemList()
+            ->itemListElement($itemListElements)
+            ->numberOfItems($categoriesWithCounts->count());
+
+        return $webPage->toScript() . PHP_EOL . $breadcrumb->toScript() . PHP_EOL . $itemList->toScript();
     }
 
     /**

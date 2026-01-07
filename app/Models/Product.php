@@ -176,7 +176,7 @@ class Product extends Model implements HasMedia
      */
     public function registerMediaConversions(Media $media = null): void
     {
-        // Thumbnail: 256x256 (for product cards, cart items) - maintains aspect ratio, no cropping
+        // Thumbnail: 256x256 (for product cards, cart items)
         $this->addMediaConversion('thumb')
             ->width(256)
             ->height(256)
@@ -184,7 +184,16 @@ class Product extends Model implements HasMedia
             ->performOnCollections('images', 'thumbnail')
             ->nonQueued();
 
-        // Medium: 512x512 (for cart drawer, quick view) - maintains aspect ratio, no cropping
+        // Thumbnail WebP: 256x256
+        $this->addMediaConversion('thumb-webp')
+            ->width(256)
+            ->height(256)
+            ->fit(Fit::Contain, 256, 256)
+            ->format('webp')
+            ->performOnCollections('images', 'thumbnail')
+            ->nonQueued();
+
+        // Medium: 512x512 (for cart drawer, quick view)
         $this->addMediaConversion('medium')
             ->width(512)
             ->height(512)
@@ -192,11 +201,29 @@ class Product extends Model implements HasMedia
             ->performOnCollections('images', 'thumbnail')
             ->nonQueued();
 
-        // Large: 1024x1024 (for product detail page) - maintains aspect ratio, no cropping
+        // Medium WebP: 512x512
+        $this->addMediaConversion('medium-webp')
+            ->width(512)
+            ->height(512)
+            ->fit(Fit::Contain, 512, 512)
+            ->format('webp')
+            ->performOnCollections('images', 'thumbnail')
+            ->nonQueued();
+
+        // Large: 1024x1024 (for product detail page)
         $this->addMediaConversion('large')
             ->width(1024)
             ->height(1024)
             ->fit(Fit::Contain, 1024, 1024)
+            ->performOnCollections('images', 'thumbnail')
+            ->nonQueued();
+
+        // Large WebP: 1024x1024
+        $this->addMediaConversion('large-webp')
+            ->width(1024)
+            ->height(1024)
+            ->fit(Fit::Contain, 1024, 1024)
+            ->format('webp')
             ->performOnCollections('images', 'thumbnail')
             ->nonQueued();
     }
@@ -227,6 +254,45 @@ class Product extends Model implements HasMedia
         }
 
         return asset('storefront/images/products/placeholder.jpg');
+    }
+
+    /**
+     * Get product image URL in WebP format
+     *
+     * @param string $conversion
+     * @return string|null
+     */
+    public function getProductImageWebpUrl(string $conversion = 'large'): ?string
+    {
+        $media = $this->getFirstMedia('thumbnail') ?: $this->getFirstMedia('images');
+
+        if ($media) {
+            try {
+                $webpConversion = $conversion . '-webp';
+                $url = $media->getUrl($webpConversion);
+                if ($url && $url !== $media->getUrl()) {
+                    return $url;
+                }
+            } catch (Exception $e) {
+                // WebP not available, return null
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Get product image URLs (both original and WebP)
+     *
+     * @param string $conversion
+     * @return array{src: string, webp: string|null}
+     */
+    public function getProductImageUrls(string $conversion = 'large'): array
+    {
+        return [
+            'src' => $this->getProductImageUrl($conversion),
+            'webp' => $this->getProductImageWebpUrl($conversion),
+        ];
     }
 
     /**

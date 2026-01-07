@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Web;
 
 use App\Enums\BannerPosition;
 use Illuminate\Http\Request;
+use Spatie\SchemaOrg\Schema;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Services\Contracts\BannerServiceInterface;
 use App\Services\Contracts\ProductServiceInterface;
 
@@ -53,7 +55,87 @@ class DiscountController extends Controller
 
         $pageBanner = $this->bannerService->byPosition(BannerPosition::DISCOUNTS_INDEX_HEADER)->first();
 
-        return view('pages.discounts.index', compact('list', 'pageBanner'));
+        $schemaJsonLd = $this->buildSchemaFor($list);
+
+        return view('pages.discounts.index', compact('list', 'pageBanner', 'schemaJsonLd'));
+    }
+
+    /**
+     * Build structured data schema for discounts page
+     *
+     * @param LengthAwarePaginator $products
+     * @return string
+     */
+    private function buildSchemaFor(LengthAwarePaginator $products): string
+    {
+        $locale = app()->getLocale();
+        $url = route('discounts.index', ['locale' => $locale]);
+        $pageTitle = __('page.Discounted Products');
+
+        // WebPage Schema
+        $webPage = Schema::collectionPage()
+            ->name($pageTitle)
+            ->url($url)
+            ->inLanguage($locale)
+            ->description(__('page.Browse our discounted products and save on your favorite items.'));
+
+        // Breadcrumb Schema
+        $breadcrumb = Schema::breadcrumbList()->itemListElement([
+            Schema::listItem()->position(1)->name(__('navigation.Home'))->item(route('home', $locale)),
+            Schema::listItem()->position(2)->name($pageTitle)->item($url),
+        ]);
+
+        // ItemList Schema with products
+        $itemListElements = [];
+        $position = 1;
+
+        foreach ($products as $product) {
+            $productName = $product->getTranslation('name', $locale);
+            $productUrl = route('products.show', ['locale' => $locale, 'product' => $product->slug]);
+            $originalPrice = (float)$product->price;
+            $bestDiscount = $product->getBestDiscount();
+            $discountedPrice = $bestDiscount ? (float)$product->getDiscountedPrice() : $originalPrice;
+            $productImage = $product->getFirstMediaUrl('images', 'large') ?: asset('storefront/images/product-placeholder.jpg');
+
+            $offer = Schema::offer()
+                ->url($productUrl)
+                ->priceCurrency('AZN')
+                ->price($discountedPrice)
+                ->availability($product->stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock')
+                ->itemCondition('https://schema.org/NewCondition');
+
+            // Add discount validity if available
+            if ($bestDiscount && isset($bestDiscount->end_date) && $bestDiscount->end_date) {
+                $endDate = $bestDiscount->end_date;
+                if ($endDate instanceof \Carbon\Carbon) {
+                    $offer->priceValidUntil($endDate->format('Y-m-d'));
+                } elseif (is_string($endDate)) {
+                    $offer->priceValidUntil(date('Y-m-d', strtotime($endDate)));
+                }
+            }
+
+            $productSchema = Schema::product()
+                ->name($productName)
+                ->url($productUrl)
+                ->image($productImage)
+                ->offers($offer);
+
+            if ($product->sku) {
+                $productSchema->sku($product->sku);
+            }
+
+            $itemListElements[] = Schema::listItem()
+                ->position($position)
+                ->item($productSchema);
+
+            $position++;
+        }
+
+        $itemList = Schema::itemList()
+            ->itemListElement($itemListElements)
+            ->numberOfItems($products->total());
+
+        return $webPage->toScript() . PHP_EOL . $breadcrumb->toScript() . PHP_EOL . $itemList->toScript();
     }
 }
 

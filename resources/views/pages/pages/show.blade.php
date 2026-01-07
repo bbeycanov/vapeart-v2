@@ -11,7 +11,7 @@
     $pageTitle = $page->getTranslation('title', $locale);
     $pageExcerpt = $page->getTranslation('excerpt', $locale);
     $pageBody = $page->getTranslation('body', $locale);
-    $featuredImage = $page->getFirstMediaUrl('featured');
+    $featuredImages = $page->getFeaturedImageUrls();
     $galleryImages = $page->getMedia('gallery');
 @endphp
 
@@ -22,15 +22,37 @@
     ]" />
 
     {{-- Hero Section with Featured Image --}}
-    @if($featuredImage)
+    @if($featuredImages['desktop'])
         <section class="page-hero mb-4 mb-xl-5">
             <div class="container">
                 <div class="page-hero__banner position-relative rounded-3 overflow-hidden" style="min-height: 280px; max-height: 400px;">
-                    <img loading="lazy"
-                         src="{{ $featuredImage }}"
-                         alt="{{ $pageTitle }}"
-                         class="w-100 h-100 object-fit-cover"
-                         style="position: absolute; top: 0; left: 0;">
+                    <picture>
+                        {{-- Mobile WebP --}}
+                        @if($featuredImages['mobile_webp'])
+                            <source media="(max-width: 768px)" srcset="{{ $featuredImages['mobile_webp'] }}" type="image/webp">
+                        @endif
+                        {{-- Mobile fallback --}}
+                        @if($featuredImages['mobile'])
+                            <source media="(max-width: 768px)" srcset="{{ $featuredImages['mobile'] }}">
+                        @endif
+                        {{-- Tablet WebP --}}
+                        @if($featuredImages['tablet_webp'])
+                            <source media="(max-width: 1024px)" srcset="{{ $featuredImages['tablet_webp'] }}" type="image/webp">
+                        @endif
+                        {{-- Tablet fallback --}}
+                        @if($featuredImages['tablet'])
+                            <source media="(max-width: 1024px)" srcset="{{ $featuredImages['tablet'] }}">
+                        @endif
+                        {{-- Desktop WebP --}}
+                        @if($featuredImages['desktop_webp'])
+                            <source srcset="{{ $featuredImages['desktop_webp'] }}" type="image/webp">
+                        @endif
+                        <img loading="lazy"
+                             src="{{ $featuredImages['desktop'] }}"
+                             alt="{{ $pageTitle }}"
+                             class="w-100 h-100 object-fit-cover"
+                             style="position: absolute; top: 0; left: 0;">
+                    </picture>
                     <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
                          style="background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5));">
                         <div class="text-center text-white p-4">

@@ -12,8 +12,8 @@
         $locale = app()->getLocale();
         $brandName = $brand->getTranslation('name', $locale);
         $brandDescription = $brand->getTranslation('description', $locale);
-        $brandLogo = $brand->getFirstMediaUrl('logo');
-        $brandBanner = $brand->getFirstMediaUrl('banner');
+        $brandLogoImages = $brand->getLogoImageUrls();
+        $brandBannerImages = $brand->getBannerImageUrls();
     @endphp
 
     <!-- Brand Banner Section -->
@@ -21,20 +21,47 @@
         <div style="border-color: #eeeeee;">
             <div class="shop-banner position-relative">
                 <div class="background-img background-img_overlay" style="background-color: #eeeeee;">
-                    @if($brandBanner)
-                        <img loading="lazy" src="{{ $brandBanner }}" width="1903" height="420" alt="{{ $brandName }}" class="slideshow-bg__img object-fit-cover">
+                    @if($brandBannerImages['desktop'])
+                        <picture>
+                            {{-- Mobile WebP --}}
+                            @if($brandBannerImages['mobile_webp'])
+                                <source media="(max-width: 768px)" srcset="{{ $brandBannerImages['mobile_webp'] }}" type="image/webp">
+                            @endif
+                            {{-- Mobile fallback --}}
+                            @if($brandBannerImages['mobile'])
+                                <source media="(max-width: 768px)" srcset="{{ $brandBannerImages['mobile'] }}">
+                            @endif
+                            {{-- Tablet WebP --}}
+                            @if($brandBannerImages['tablet_webp'])
+                                <source media="(max-width: 1024px)" srcset="{{ $brandBannerImages['tablet_webp'] }}" type="image/webp">
+                            @endif
+                            {{-- Tablet fallback --}}
+                            @if($brandBannerImages['tablet'])
+                                <source media="(max-width: 1024px)" srcset="{{ $brandBannerImages['tablet'] }}">
+                            @endif
+                            {{-- Desktop WebP --}}
+                            @if($brandBannerImages['desktop_webp'])
+                                <source srcset="{{ $brandBannerImages['desktop_webp'] }}" type="image/webp">
+                            @endif
+                            <img loading="lazy" src="{{ $brandBannerImages['desktop'] }}" width="1920" height="400" alt="{{ $brandName }}" class="slideshow-bg__img object-fit-cover">
+                        </picture>
                     @else
                         <img loading="lazy" src="{{ asset('storefront/images/blog_title_bg.jpg') }}" width="1903" height="420" alt="{{ $brandName }}" class="slideshow-bg__img object-fit-cover">
                     @endif
                 </div>
 
                 <div class="shop-banner__content container position-absolute start-50 top-50 translate-middle">
-                    @if($brandLogo)
+                    @if($brandLogoImages['src'])
                         <div class="brand-banner-logo mb-3 mb-xl-4 mb-xl-5 text-center">
-                            <img loading="lazy" 
-                                 src="{{ $brandLogo }}" 
-                                 alt="{{ $brandName }}"
-                                 style="max-width: 200px; max-height: 120px; object-fit: contain;">
+                            <picture>
+                                @if($brandLogoImages['webp'])
+                                    <source srcset="{{ $brandLogoImages['webp'] }}" type="image/webp">
+                                @endif
+                                <img loading="lazy"
+                                     src="{{ $brandLogoImages['src'] }}"
+                                     alt="{{ $brandName }}"
+                                     style="max-width: 200px; max-height: 120px; object-fit: contain;">
+                            </picture>
                         </div>
                     @endif
                     <h2 class="h1 text-uppercase text-white text-center fw-bold mb-3 mb-xl-4 mb-xl-5">{{ $brandName }}</h2>
