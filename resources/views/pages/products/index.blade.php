@@ -2,6 +2,8 @@
 
 @section('title', __('page.Products'))
 
+@section('meta_description', __('page.Browse our extensive collection of premium vape products, electronic cigarettes, and accessories. Find the best deals on quality vape devices.'))
+
 @php
     $locale = app()->getLocale();
     
