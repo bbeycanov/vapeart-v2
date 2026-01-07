@@ -1,6 +1,8 @@
 @extends('layouts.default')
 
-@section('title', __('page.Home'))
+@section('title', __('page.home_title'))
+
+@section('meta_description', __('page.home_meta_description'))
 
 @section('head')
     @if(isset($organizationSchema))
@@ -9,6 +11,9 @@
 @endsection
 
 @section('content')
+    {{-- Single H1 for SEO - visually hidden but accessible --}}
+    <h1 class="visually-hidden">{{ __('page.home_title') }} - VapeArt Baku</h1>
+
     @if(isset($heroBanners) && $heroBanners && $heroBanners->isNotEmpty())
         <section class="swiper-container js-swiper-slider slideshow type3 slideshow-navigation-white-sm"
                  data-settings='{
@@ -43,9 +48,9 @@
                     @endphp
                     <div class="swiper-slide">
                         <div class="overflow-hidden position-relative h-100">
-                            <div class="slideshow-bg" style="background-color: #f5e6e0;">
+                            <div class="slideshow-bg">
                                 @if($videoUrl)
-                                    <video autoplay muted loop playsinline class="slideshow-bg__video object-fit-cover w-100 h-100" style="position: absolute; top: 0; left: 0;">
+                                    <video autoplay muted loop playsinline class="slideshow-bg__video object-fit-cover w-100 h-100">
                                         <source src="{{ $videoUrl }}" type="video/mp4">
                                     </video>
                                 @elseif($bannerImages['desktop'])
@@ -87,7 +92,7 @@
                                             <p class="slideshow-subtitle mb-2">{{ $subtitle }}</p>
                                         @endif
                                         @if($title)
-                                            <h1 class="slideshow-title mb-3">{{ $title }}</h1>
+                                            <h2 class="slideshow-title mb-3">{{ $title }}</h2>
                                         @endif
                                         @if($content)
                                             <div class="slideshow-text mb-4">{{ $content }}</div>
@@ -245,29 +250,26 @@
                                         <div class="col">
                                             <a href="{{ $menuUrl }}"
                                                class="category-mini-card d-flex border rounded-3 p-3 text-decoration-none h-100"
-                                               style="min-height: 80px; transition: all 0.2s ease;"
-                                               onmouseover="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)'; this.style.transform='translateY(-2px)';"
-                                               onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)';"
                                                @if($child->target) target="{{ $child->target }}" @endif>
-                                                <div class="category-mini-card__icon d-flex align-items-center justify-content-center bg-light me-3" style="width: 48px; height: 48px; min-width: 48px; border-radius: 8px; overflow: hidden; flex-shrink: 0;">
+                                                <div class="category-mini-card__icon d-flex align-items-center justify-content-center bg-light me-3">
                                                     @if($iconUrl)
-                                                        <img src="{{ $iconUrl }}" alt="{{ $menuTitle }}" style="width: 100%; height: 100%; object-fit: contain; padding: 6px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none; color: #6c757d;">
+                                                        <img src="{{ $iconUrl }}" alt="{{ $menuTitle }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                                        <svg class="fallback-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                                             <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
                                                             <path d="M10 6v4M10 14h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                                                         </svg>
                                                     @elseif($child->icon_class)
-                                                        <i class="{{ $child->icon_class }}" style="font-size: 20px; color: #6c757d;"></i>
+                                                        <i class="{{ $child->icon_class }}" aria-hidden="true"></i>
                                                     @else
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: #6c757d;">
+                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                                             <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
                                                             <path d="M10 6v4M10 14h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                                                         </svg>
                                                     @endif
                                                 </div>
-                                                <div class="category-mini-card__content d-flex flex-column justify-content-center flex-grow-1" style="min-width: 0;">
-                                                    <span class="category-mini-card__name text-dark fw-medium mb-1" style="font-size: 0.9rem; line-height: 1.3; word-wrap: break-word; overflow-wrap: break-word;">{{ $menuTitle }}</span>
-                                                    <span class="category-mini-card__count text-muted" style="font-size: 0.75rem; line-height: 1.2;">{{ $productCount }} {{ __('common.products') }}</span>
+                                                <div class="category-mini-card__content d-flex flex-column justify-content-center flex-grow-1">
+                                                    <span class="category-mini-card__name text-dark fw-medium mb-1">{{ $menuTitle }}</span>
+                                                    <span class="category-mini-card__count text-muted">{{ $productCount }} {{ __('common.products') }}</span>
                                                 </div>
                                             </a>
                                         </div>
@@ -472,6 +474,35 @@
             @endif
 
             <div class="mt-3 mt-xl-5 pb-3 pt-1 pb-xl-5"></div>
+        </div>
+    </section>
+
+    {{-- SEO Content Section --}}
+    <section class="seo-content-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="seo-content bg-light rounded-3 p-4 p-md-5">
+                        <h2 class="h4 mb-4">{{ __('home.seo_title') }}</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="text-secondary mb-3">{{ __('home.seo_paragraph_1') }}</p>
+                                <p class="text-secondary mb-3">{{ __('home.seo_paragraph_2') }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-secondary mb-3">{{ __('home.seo_paragraph_3') }}</p>
+                                <h3 class="h6 mb-2">{{ __('home.seo_features_title') }}</h3>
+                                <ul class="text-secondary mb-0">
+                                    <li>{{ __('home.seo_feature_1') }}</li>
+                                    <li>{{ __('home.seo_feature_2') }}</li>
+                                    <li>{{ __('home.seo_feature_3') }}</li>
+                                    <li>{{ __('home.seo_feature_4') }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 

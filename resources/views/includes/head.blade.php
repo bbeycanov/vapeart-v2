@@ -3,6 +3,17 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="author" content="VapeArt Baku">
 
+{{-- Google Analytics --}}
+@if(config('services.google.analytics_id'))
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.google.analytics_id') }}"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ config('services.google.analytics_id') }}');
+</script>
+@endif
+
 {{-- SEO Meta Tags --}}
 <meta name="description" content="@hasSection('meta_description')@yield('meta_description')@else{{ settings('site.description', 'VapeArt Baku - Bakıda elektron siqaretlər, vape cihazları, snus və premium tütün məhsulları mağazası.') }}@endif">
 <meta name="keywords" content="@hasSection('meta_keywords')@yield('meta_keywords')@else{{ settings('site.keywords', 'vape, elektron siqaret, snus, tütün, vape baku') }}@endif">
@@ -92,46 +103,5 @@
 <link rel="stylesheet" href="{{ asset('storefront/css/includes/footer.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('storefront/css/includes/quick-view.css') }}" type="text/css">
 
-{{-- Inline Styles --}}
-<style>
-    * {
-        font-family: "Inter", Arial, Helvetica, sans-serif !important;
-    }
-    /* Toastr Success - Green */
-    .toast-success {
-        background-color: #51A351 !important;
-        color: #ffffff !important;
-    }
-    /* Toastr Error - Red */
-    .toast-error {
-        background-color: #BD362F !important;
-        color: #ffffff !important;
-    }
-    /* Toastr Warning - Orange */
-    .toast-warning {
-        background-color: #F89406 !important;
-        color: #ffffff !important;
-    }
-    /* Toastr Info - Blue */
-    .toast-info {
-        background-color: #2F96B4 !important;
-        color: #ffffff !important;
-    }
-    /* Toastr Title */
-    #toast-container > div .toast-title {
-        color: #ffffff !important;
-        font-weight: bold;
-    }
-    /* Toastr Message */
-    #toast-container > div .toast-message {
-        color: #ffffff !important;
-    }
-    /* Toastr Close Button */
-    #toast-container > div .toast-close-button {
-        color: #ffffff !important;
-        opacity: 0.8;
-    }
-    #toast-container > div .toast-close-button:hover {
-        opacity: 1;
-    }
-</style>
+{{-- Toastr Custom Styles (moved from inline) --}}
+<link rel="stylesheet" href="{{ asset('storefront/css/includes/toastr-custom.css') }}" type="text/css">

@@ -205,3 +205,19 @@
 .footer-menu .collapse.show .sub-menu__list {
     opacity: 1;
 }
+
+/* Footer Menu Title Clickable */
+.footer-menu .sub-menu__title span[data-bs-toggle="collapse"] {
+    cursor: pointer;
+}
+
+/* Footer Store Info */
+.footer-store-info .logo__image {
+    max-width: 180px;
+    height: auto;
+}
+
+.footer-address {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+}

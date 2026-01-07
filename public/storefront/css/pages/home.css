@@ -136,18 +136,25 @@
 
 /* Category Mini Card Styles */
 .category-mini-card {
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     background-color: #fff;
+    min-height: 80px;
 }
 
 .category-mini-card:hover {
     background-color: #faf9f8;
     border-color: #222222 !important;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .category-mini-card__icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
     color: #767676;
     transition: all 0.3s ease;
 }
@@ -155,6 +162,75 @@
 .category-mini-card:hover .category-mini-card__icon {
     color: #222222;
     transform: scale(1.1);
+}
+
+.category-mini-card__icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 6px;
+}
+
+.category-mini-card__icon svg {
+    color: #6c757d;
+}
+
+.category-mini-card__icon i {
+    font-size: 20px;
+    color: #6c757d;
+}
+
+.category-mini-card__content {
+    min-width: 0;
+}
+
+.category-mini-card__name {
+    font-size: 0.9rem;
+    line-height: 1.3;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.category-mini-card__count {
+    font-size: 0.75rem;
+    line-height: 1.2;
+}
+
+/* Fallback icon hidden by default */
+.category-mini-card__icon .fallback-icon {
+    display: none;
+}
+
+/* Slideshow Background */
+.slideshow-bg {
+    background-color: #f5e6e0;
+}
+
+.slideshow-bg__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* SEO Content Section */
+.seo-content-section {
+    background-color: #f8f9fa;
+}
+
+.seo-content {
+    line-height: 1.7;
+}
+
+.seo-content h2 {
+    color: #222222;
+}
+
+.seo-content ul {
+    padding-left: 1.25rem;
+}
+
+.seo-content ul li {
+    margin-bottom: 0.5rem;
 }
 
 @media (max-width: 768px) {

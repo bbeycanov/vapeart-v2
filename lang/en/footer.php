@@ -16,5 +16,10 @@ return [
     // Social
     'Follow Us' => 'Follow Us',
     'Connect With Us' => 'Connect With Us',
+    'Follow us on Facebook' => 'Follow us on Facebook',
+    'Follow us on X (Twitter)' => 'Follow us on X (Twitter)',
+    'Follow us on Instagram' => 'Follow us on Instagram',
+    'Subscribe on YouTube' => 'Subscribe on YouTube',
+    'Follow us on Pinterest' => 'Follow us on Pinterest',
 ];
 

@@ -3,12 +3,12 @@
  * PWA offline support and caching strategy
  */
 
-const CACHE_NAME = 'vapeart-cache-v3';
+const CACHE_NAME = 'vapeart-cache-v4';
 const OFFLINE_URL = '/offline.html';
 
 // Assets to cache immediately on install
+// Note: Don't cache '/' as it redirects to /{locale}
 const PRECACHE_ASSETS = [
-    '/',
     '/offline.html',
     '/storefront/css/style.css',
     '/storefront/js/theme.js',
@@ -78,6 +78,19 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
+    // For navigation requests (HTML pages), let the browser handle redirects
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            fetch(event.request)
+                .catch(() => {
+                    // Network failed, return offline page
+                    return caches.match(OFFLINE_URL);
+                })
+        );
+        return;
+    }
+
+    // For non-navigation requests, use cache-first strategy
     event.respondWith(
         caches.match(event.request)
             .then((cachedResponse) => {
@@ -107,10 +120,7 @@ self.addEventListener('fetch', (event) => {
                         return response;
                     })
                     .catch(() => {
-                        // Network failed, return offline page for navigation requests
-                        if (event.request.mode === 'navigate') {
-                            return caches.match(OFFLINE_URL);
-                        }
+                        // Network failed for static asset
                         return new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
                     });
             })

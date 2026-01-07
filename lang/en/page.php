@@ -3,6 +3,8 @@
 return [
     // Page Titles
     'Home' => 'Home',
+    'home_title' => 'Premium Vape, E-Cigarettes & Snus Shop in Baku',
+    'home_meta_description' => 'VapeArt Baku - Baku\'s largest vape, e-cigarette, snus and premium tobacco products store. Quality products, affordable prices and fast delivery service.',
     'Products' => 'Products',
     'Product Details' => 'Product Details',
     'Categories' => 'Categories',

@@ -121,7 +121,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Build Organization schema for homepage SEO
+     * Build Organization and LocalBusiness schema for homepage SEO
      *
      * @return string
      * @throws ContainerExceptionInterface
@@ -141,12 +141,12 @@ class HomeController extends Controller
                 ->addressLocality('Baku')
                 ->addressCountry('AZ')
             )
-            ->sameAs([
-                settings('facebook', 'https://www.facebook.com'),
-                settings('instagram', 'https://www.instagram.com'),
-                settings('youtube', 'https://www.youtube.com'),
-                settings('tiktok', 'https://www.tiktok.com'),
-            ]);
+            ->sameAs(array_filter([
+                settings('facebook'),
+                settings('instagram'),
+                settings('youtube'),
+                settings('tiktok'),
+            ]));
 
         $webSite = Schema::webSite()
             ->name(settings('site.title', 'VapeArt Baku'))
@@ -156,6 +156,40 @@ class HomeController extends Controller
                 ->setProperty('query-input', 'required name=search_term_string')
             );
 
-        return $organization->toScript() . $webSite->toScript();
+        // LocalBusiness schema for local SEO
+        $localBusiness = Schema::store()
+            ->setProperty('@type', 'Store')
+            ->name(settings('site.title', 'VapeArt Baku'))
+            ->description(settings('site.description', 'VapeArt Baku - Electronic cigarettes, vape devices, snus and premium tobacco products store in Baku.'))
+            ->url(config('app.url'))
+            ->image(asset(settings('site.og_image', 'storefront/images/og-image.jpg')))
+            ->telephone(settings('site.phone', '+994 50 123 45 67'))
+            ->email(settings('site.email', 'info@vapeartbaku.com'))
+            ->address(Schema::postalAddress()
+                ->streetAddress(settings('site.address', 'Baku, Azerbaijan'))
+                ->addressLocality('Baku')
+                ->addressRegion('Baku')
+                ->postalCode('AZ1000')
+                ->addressCountry('AZ')
+            )
+            ->geo(Schema::geoCoordinates()
+                ->latitude(40.4093)
+                ->longitude(49.8671)
+            )
+            ->priceRange('$$')
+            ->openingHoursSpecification([
+                Schema::openingHoursSpecification()
+                    ->dayOfWeek(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+                    ->opens('10:00')
+                    ->closes('22:00')
+            ])
+            ->sameAs(array_filter([
+                settings('facebook'),
+                settings('instagram'),
+                settings('youtube'),
+                settings('tiktok'),
+            ]));
+
+        return $organization->toScript() . $webSite->toScript() . $localBusiness->toScript();
     }
 }

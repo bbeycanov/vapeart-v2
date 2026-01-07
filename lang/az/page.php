@@ -3,6 +3,8 @@
 return [
     // Page Titles
     'Home' => 'Ana səhifə',
+    'home_title' => 'Vape, Elektron Siqaret və Snus Mağazası Bakıda',
+    'home_meta_description' => 'VapeArt Baku - Bakının ən böyük vape, elektron siqaret, snus və premium tütün məhsulları mağazası. Keyfiyyətli məhsullar, münasib qiymətlər və sürətli çatdırılma xidməti.',
     'Products' => 'Məhsullar',
     'Product Details' => 'Məhsul detalları',
     'Categories' => 'Kateqoriyalar',

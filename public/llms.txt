@@ -1,0 +1,59 @@
+# VapeArt Baku - LLMs.txt
+
+> VapeArt Baku is an e-commerce store specializing in vape products, e-cigarettes, snus, and premium tobacco products in Baku, Azerbaijan.
+
+## About VapeArt Baku
+
+VapeArt Baku is the leading online and retail store for vaping products in Azerbaijan. We offer a wide selection of:
+- Electronic cigarettes and vape devices
+- E-liquids and nic salts
+- Snus and nicotine pouches
+- Premium tobacco products
+- Vaping accessories and replacement parts
+
+## Main Sections
+
+- /az - Azerbaijani language homepage
+- /en - English language homepage
+- /ru - Russian language homepage
+- /az/products - All products catalog
+- /az/category - Product categories
+- /az/brands - Brand listings
+- /az/discounts - Discounted products
+- /az/new-products - New arrivals
+- /az/blog - Blog articles
+- /az/contacts - Contact information
+
+## Contact Information
+
+- Website: https://vapeartbaku.com
+- Email: info@vapeartbaku.com
+- Location: Baku, Azerbaijan
+
+## Languages
+
+This website is available in three languages:
+- Azerbaijani (az) - Primary
+- English (en)
+- Russian (ru)
+
+## Product Categories
+
+- Vape Devices
+- E-Liquids
+- Nic Salts
+- Snus
+- Disposable Vapes
+- Pods & Cartridges
+- Accessories
+- Tobacco Products
+
+## Policies
+
+- Age restriction: 18+ only
+- Shipping: Local delivery in Baku
+- Payment: Cash on delivery, online payment
+
+## For AI/LLM Access
+
+This llms.txt file provides structured information about VapeArt Baku for AI systems and language models. For API access or additional data, please contact us.
