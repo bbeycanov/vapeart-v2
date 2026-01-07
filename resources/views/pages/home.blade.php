@@ -26,6 +26,7 @@
                         $locale = app()->getLocale();
                         $imageUrl = $banner->getFirstMediaUrl('image');
                         $imageMobileUrl = $banner->getFirstMediaUrl('image_mobile');
+                        $videoUrl = $banner->getFirstMediaUrl('video');
                         $title = $banner->getTranslation('title', $locale);
                         $subtitle = $banner->getTranslation('subtitle', $locale);
                         $content = $banner->getTranslation('content', $locale);
@@ -36,16 +37,20 @@
                     <div class="swiper-slide">
                         <div class="overflow-hidden position-relative h-100">
                             <div class="slideshow-bg" style="background-color: #f5e6e0;">
-                                @if($imageUrl)
+                                @if($videoUrl)
+                                    <video autoplay muted loop playsinline class="slideshow-bg__video object-fit-cover w-100 h-100" style="position: absolute; top: 0; left: 0;">
+                                        <source src="{{ $videoUrl }}" type="video/mp4">
+                                    </video>
+                                @elseif($imageUrl)
                                     <picture>
                                         @if($imageMobileUrl)
                                             <source media="(max-width: 768px)" srcset="{{ $imageMobileUrl }}">
                                         @endif
                                         <img loading="lazy"
-                                             src="{{ $imageUrl }}" 
+                                             src="{{ $imageUrl }}"
                                              width="1920"
-                                             height="560" 
-                                             alt="{{ $title ?? __('common.Banner') }}" 
+                                             height="560"
+                                             alt="{{ $title ?? __('common.Banner') }}"
                                              class="slideshow-bg__img object-fit-cover">
                                     </picture>
                                 @endif

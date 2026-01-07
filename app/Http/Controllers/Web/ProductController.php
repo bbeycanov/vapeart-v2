@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Web;
 
 use App\Models\Brand;
 use App\Models\Product;
+use App\Enums\BannerPosition;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 use App\Services\Contracts\BrandServiceInterface;
+use App\Services\Contracts\BannerServiceInterface;
 use App\Services\Contracts\ProductServiceInterface;
 use App\Services\Contracts\CategoryServiceInterface;
 
@@ -18,11 +20,13 @@ class ProductController extends Controller
      * @param ProductServiceInterface $productService
      * @param CategoryServiceInterface $categoryService
      * @param BrandServiceInterface $brandService
+     * @param BannerServiceInterface $bannerService
      */
     public function __construct(
         private readonly ProductServiceInterface $productService,
         private readonly CategoryServiceInterface $categoryService,
-        public readonly BrandServiceInterface $brandService
+        public readonly BrandServiceInterface $brandService,
+        private readonly BannerServiceInterface $bannerService
     )
     {
     }
@@ -61,8 +65,11 @@ class ProductController extends Controller
         $priceMin = Product::where('is_active', true)->min('price') ?? 0;
         $priceMax = Product::where('is_active', true)->max('price') ?? 1000;
 
+        // Get shop top banner
+        $shopBanner = $this->bannerService->byPosition(BannerPosition::SHOP_TOP_BANNER)->first();
+
         // Always return full page - JavaScript will parse it
-        return view('pages.products.index', compact('products', 'categories', 'brands', 'priceMin', 'priceMax', 'filters'));
+        return view('pages.products.index', compact('products', 'categories', 'brands', 'priceMin', 'priceMax', 'filters', 'shopBanner'));
     }
 
     /**

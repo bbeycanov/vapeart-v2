@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use Exception;
+use App\Enums\BannerPosition;
 use Illuminate\Http\Request;
 use Spatie\SchemaOrg\Schema;
 use App\Mail\ContactMessageMail;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\View\Factory;
 use App\Services\Contracts\BranchServiceInterface;
+use App\Services\Contracts\BannerServiceInterface;
 use App\Services\Contracts\ContactMessageServiceInterface;
 
 class ContactController extends Controller
@@ -21,10 +23,12 @@ class ContactController extends Controller
     /**
      * @param BranchServiceInterface $branches
      * @param ContactMessageServiceInterface $contactMessages
+     * @param BannerServiceInterface $bannerService
      */
     public function __construct(
         private readonly BranchServiceInterface         $branches,
-        private readonly ContactMessageServiceInterface $contactMessages
+        private readonly ContactMessageServiceInterface $contactMessages,
+        private readonly BannerServiceInterface         $bannerService
     )
     {
     }
@@ -43,7 +47,12 @@ class ContactController extends Controller
 
         $schemaJsonLd = $this->buildSchemaFor($branches);
 
-        return view('pages.contacts.index', compact('branches', 'defaultBranch', 'schemaJsonLd'));
+        // Get page header banner for contact page
+        $pageBanner = $this->bannerService->byPosition(BannerPosition::PAGE_HEADER)
+            ->where('key', 'contact-page-header')
+            ->first();
+
+        return view('pages.contacts.index', compact('branches', 'defaultBranch', 'schemaJsonLd', 'pageBanner'));
     }
 
     /**

@@ -15,8 +15,12 @@
 
     <section class="blog-page-title mb-4 mb-xl-5">
         <div class="container">
-            <div class="title-bg">
-                @if($banner && $banner->getFirstMediaUrl('image'))
+            <div class="title-bg position-relative overflow-hidden">
+                @if($banner && $banner->getFirstMediaUrl('video'))
+                    <video autoplay muted loop playsinline class="w-100 h-100 object-fit-cover" style="position: absolute; top: 0; left: 0;">
+                        <source src="{{ $banner->getFirstMediaUrl('video') }}" type="video/mp4">
+                    </video>
+                @elseif($banner && $banner->getFirstMediaUrl('image'))
                     <img loading="lazy" src="{{ $banner->getFirstMediaUrl('image') }}" width="1780" height="420" alt="{{ $banner->getTranslation('title', app()->getLocale()) }}">
                 @else
                     <img loading="lazy" src="{{ asset('storefront/images/blog_title_bg.jpg') }}" width="1780" height="420" alt="Blog">

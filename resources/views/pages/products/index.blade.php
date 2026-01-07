@@ -56,6 +56,32 @@
 @endphp
 
 @section('content')
+    @if(isset($shopBanner) && $shopBanner)
+        <section class="shop-banner-section mb-4">
+            <div class="container">
+                <div class="shop-banner position-relative rounded-3 overflow-hidden" style="min-height: 200px;">
+                    @if($shopBanner->getFirstMediaUrl('video'))
+                        <video autoplay muted loop playsinline class="w-100 h-100 object-fit-cover" style="position: absolute; top: 0; left: 0;">
+                            <source src="{{ $shopBanner->getFirstMediaUrl('video') }}" type="video/mp4">
+                        </video>
+                    @elseif($shopBanner->getFirstMediaUrl('image'))
+                        <img loading="lazy" src="{{ $shopBanner->getFirstMediaUrl('image') }}" alt="{{ $shopBanner->getTranslation('title', app()->getLocale()) }}" class="w-100 h-100 object-fit-cover" style="position: absolute; top: 0; left: 0;">
+                    @endif
+                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background: rgba(0,0,0,0.3);">
+                        <div class="text-center text-white p-4">
+                            @if($shopBanner->getTranslation('title', app()->getLocale()))
+                                <h1 class="mb-2 fw-bold">{{ $shopBanner->getTranslation('title', app()->getLocale()) }}</h1>
+                            @endif
+                            @if($shopBanner->getTranslation('subtitle', app()->getLocale()))
+                                <p class="mb-0">{{ $shopBanner->getTranslation('subtitle', app()->getLocale()) }}</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
+
     <section class="shop-main container d-flex pt-4 pt-xl-5">
         <div class="shop-sidebar side-sticky bg-body" id="shopFilter">
             <div class="aside-header d-flex d-lg-none align-items-center">
