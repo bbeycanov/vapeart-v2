@@ -9,7 +9,9 @@ use App\Models\Category;
 use App\Models\Page;
 use App\Models\Product;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\MediaLibrary\MediaCollections\FileManipulator;
 
 class RegenerateMediaConversions extends Command
 {
@@ -231,20 +233,31 @@ class RegenerateMediaConversions extends Command
     {
         try {
             if ($force) {
-                // Delete existing conversions and regenerate
-                $media->deleteGeneratedConversions();
+                // Delete existing conversion files manually
+                $this->deleteConversionFiles($media);
+
+                // Reset the generated_conversions field
+                $media->generated_conversions = [];
+                $media->save();
             }
 
-            // Regenerate all conversions for this media
-            $media->model->registerMediaConversions($media);
-
-            foreach ($media->getMediaConversionNames() as $conversionName) {
-                if ($force || !$media->hasGeneratedConversion($conversionName)) {
-                    $media->model->addMediaConversion($conversionName);
-                }
-            }
+            // Use FileManipulator to regenerate conversions
+            app(FileManipulator::class)->createDerivedFiles($media);
         } catch (\Exception $e) {
             $this->error("Error processing media ID {$media->id}: {$e->getMessage()}");
+        }
+    }
+
+    /**
+     * Delete conversion files for a media item
+     */
+    protected function deleteConversionFiles(Media $media): void
+    {
+        $conversionsDirectory = $media->getPath();
+        $directory = dirname($conversionsDirectory) . '/conversions';
+
+        if (File::isDirectory($directory)) {
+            File::deleteDirectory($directory);
         }
     }
 }
