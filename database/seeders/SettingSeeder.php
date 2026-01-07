@@ -15,10 +15,24 @@ class SettingSeeder extends Seeder
         $svc = app(Settings::class);
 
         $svc->set('site.title', [
-            'az' => 'VapeArtBaku.com',
-            'en' => 'VapeArtBaku.com',
-            'ru' => 'VapeArtBaku.com',
+            'az' => 'VapeArt Baku',
+            'en' => 'VapeArt Baku',
+            'ru' => 'VapeArt Baku',
         ]);
+
+        $svc->set('site.description', [
+            'az' => 'VapeArt Baku - Bakıda elektron siqaretlər, vape cihazları, snus və premium tütün məhsulları mağazası. Pulsuz çatdırılma, keyfiyyət zəmanəti.',
+            'en' => 'VapeArt Baku - Electronic cigarettes, vape devices, snus and premium tobacco products store in Baku. Free delivery, quality guarantee.',
+            'ru' => 'VapeArt Baku - Магазин электронных сигарет, вейп устройств, снюса и премиальных табачных изделий в Баку. Бесплатная доставка, гарантия качества.',
+        ]);
+
+        $svc->set('site.keywords', [
+            'az' => 'vape, elektron siqaret, snus, tütün, vape baku, elfbar, vozol, hqd, nikotin',
+            'en' => 'vape, electronic cigarette, snus, tobacco, vape baku, elfbar, vozol, hqd, nicotine',
+            'ru' => 'вейп, электронная сигарета, снюс, табак, вейп баку, elfbar, vozol, hqd, никотин',
+        ]);
+
+        $svc->set('site.og_image', '/storefront/images/og-image.jpg');
 
         $svc->set('site.email', [
             'az' => 'info@vapeartbaku.com',

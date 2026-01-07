@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Web;
 use App\Models\Discount;
 use App\Enums\MenuPosition;
 use App\Enums\BannerPosition;
+use Spatie\SchemaOrg\Schema;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Contracts\View\Factory;
+use Psr\Container\NotFoundExceptionInterface;
+use Psr\Container\ContainerExceptionInterface;
 use App\Services\Contracts\MenuServiceInterface;
 use App\Services\Contracts\BlogServiceInterface;
 use App\Services\Contracts\BannerServiceInterface;
@@ -100,6 +103,9 @@ class HomeController extends Controller
                 ->first();
         });
 
+        // Build organization schema for homepage
+        $organizationSchema = $this->buildOrganizationSchema();
+
         return view(
             view: 'pages.home',
             data: compact(
@@ -108,8 +114,48 @@ class HomeController extends Controller
                 'latestBlogs',
                 'heroBanners',
                 'discountProducts',
-                'activeDiscount'
+                'activeDiscount',
+                'organizationSchema'
             )
         );
+    }
+
+    /**
+     * Build Organization schema for homepage SEO
+     *
+     * @return string
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    private function buildOrganizationSchema(): string
+    {
+        $organization = Schema::organization()
+            ->name(settings('site.title', 'VapeArt Baku'))
+            ->description(settings('site.description', 'VapeArt Baku - Electronic cigarettes, vape devices, snus and premium tobacco products store in Baku.'))
+            ->url(config('app.url'))
+            ->logo(asset(settings('site.og_image', 'storefront/images/og-image.jpg')))
+            ->email(settings('site.email', 'info@vapeartbaku.com'))
+            ->telephone(settings('site.phone', '+994 50 123 45 67'))
+            ->address(Schema::postalAddress()
+                ->streetAddress(settings('site.address', 'Baku, Azerbaijan'))
+                ->addressLocality('Baku')
+                ->addressCountry('AZ')
+            )
+            ->sameAs([
+                settings('facebook', 'https://www.facebook.com'),
+                settings('instagram', 'https://www.instagram.com'),
+                settings('youtube', 'https://www.youtube.com'),
+                settings('tiktok', 'https://www.tiktok.com'),
+            ]);
+
+        $webSite = Schema::webSite()
+            ->name(settings('site.title', 'VapeArt Baku'))
+            ->url(config('app.url'))
+            ->potentialAction(Schema::searchAction()
+                ->target(config('app.url') . '/' . app()->getLocale() . '/search?q={search_term_string}')
+                ->setProperty('query-input', 'required name=search_term_string')
+            );
+
+        return $organization->toScript() . $webSite->toScript();
     }
 }

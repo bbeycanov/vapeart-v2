@@ -1,2 +1,74 @@
+# VapeArt Baku - Robots.txt
+# https://vapeartbaku.com
+
 User-agent: *
-Disallow:
+Allow: /
+
+# Sitemap
+Sitemap: https://vapeartbaku.com/sitemap.xml
+
+# Disallow admin and dashboard areas
+Disallow: /admin
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /dashboard/
+
+# Disallow API endpoints
+Disallow: /api/
+Disallow: /api
+
+# Disallow Laravel internal paths
+Disallow: /storage/
+Disallow: /vendor/
+Disallow: /_debugbar/
+Disallow: /telescope/
+Disallow: /horizon/
+
+# Disallow authentication pages
+Disallow: /login
+Disallow: /register
+Disallow: /password/
+Disallow: /email/verify
+
+# Disallow checkout and cart (duplicate content prevention)
+Disallow: /*/cart
+Disallow: /*/checkout
+
+# Disallow search result pages (prevent thin content indexing)
+Disallow: /*?*sort=
+Disallow: /*?*page=
+Disallow: /*?*filter=
+
+# Allow important static assets
+Allow: /storefront/
+Allow: /images/
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.svg
+Allow: /*.webp
+
+# Google specific rules
+User-agent: Googlebot
+Allow: /
+
+# Bing specific rules
+User-agent: Bingbot
+Allow: /
+
+# Yandex specific rules (important for Azerbaijan/Russia region)
+User-agent: Yandex
+Allow: /
+
+# Crawl-delay for less important bots
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10

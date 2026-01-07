@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="{{ app()->getLocale() }}">
     <head>
-        <title>VapeartBaku.com</title>
+        <title>@hasSection('title')@yield('title') | {{ settings('site.title', 'VapeArt Baku') }}@else{{ settings('site.title', 'VapeArt Baku') }}@endif</title>
 
         @include('includes.head')
 

@@ -133,7 +133,65 @@ class ProductService extends AbstractService implements ProductServiceInterface
             $schema->brand(Schema::brand()->name($brand->getTranslation('name', $loc)));
         }
 
-        return $schema->toScript();
+        // Add breadcrumb schema
+        $breadcrumbSchema = $this->buildBreadcrumbSchema($product);
+
+        return $schema->toScript() . $breadcrumbSchema;
+    }
+
+    /**
+     * Build BreadcrumbList schema for product
+     *
+     * @param Product $product
+     * @return string
+     */
+    private function buildBreadcrumbSchema(Product $product): string
+    {
+        $loc = App::getLocale();
+        $listItems = [];
+
+        // Home
+        $listItems[] = Schema::listItem()
+            ->position(1)
+            ->name(__('navigation.Home'))
+            ->item(route('home', $loc));
+
+        // Shop
+        $listItems[] = Schema::listItem()
+            ->position(2)
+            ->name(__('navigation.Shop'))
+            ->item(route('products.index', $loc));
+
+        $position = 3;
+
+        // Category (first category if exists)
+        $category = $product->categories->first();
+        if ($category) {
+            $listItems[] = Schema::listItem()
+                ->position($position)
+                ->name($category->getTranslation('name', $loc))
+                ->item(route('categories.show', ['locale' => $loc, 'category' => $category->slug]));
+            $position++;
+        }
+
+        // Brand (if exists)
+        if ($product->brand) {
+            $listItems[] = Schema::listItem()
+                ->position($position)
+                ->name($product->brand->getTranslation('name', $loc))
+                ->item(route('brands.show', ['locale' => $loc, 'brand' => $product->brand->slug]));
+            $position++;
+        }
+
+        // Product
+        $listItems[] = Schema::listItem()
+            ->position($position)
+            ->name($product->getTranslation('name', $loc))
+            ->item(route('products.show', ['locale' => $loc, 'product' => $product->slug]));
+
+        $breadcrumb = Schema::breadcrumbList()->itemListElement($listItems);
+
+        return $breadcrumb->toScript();
     }
 
     /**

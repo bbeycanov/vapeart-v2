@@ -97,7 +97,63 @@ class CategoryService extends AbstractService implements CategoryServiceInterfac
             $collection->hasPart($itemList);
         }
 
-        return $collection->toScript();
+        // Add breadcrumb schema
+        $breadcrumbSchema = $this->buildBreadcrumbSchema($category);
+
+        return $collection->toScript() . $breadcrumbSchema;
+    }
+
+    /**
+     * Build BreadcrumbList schema for category
+     *
+     * @param Category $category
+     * @return string
+     */
+    private function buildBreadcrumbSchema(Category $category): string
+    {
+        $locale = app()->getLocale();
+        $listItems = [];
+
+        // Home
+        $listItems[] = Schema::listItem()
+            ->position(1)
+            ->name(__('navigation.Home'))
+            ->item(route('home', $locale));
+
+        // Categories
+        $listItems[] = Schema::listItem()
+            ->position(2)
+            ->name(__('navigation.Categories'))
+            ->item(route('categories.index', $locale));
+
+        $position = 3;
+
+        // Parent category chain
+        $parents = [];
+        $current = $category->parent;
+        while ($current) {
+            $parents[] = $current;
+            $current = $current->parent;
+        }
+        $parents = array_reverse($parents);
+
+        foreach ($parents as $parent) {
+            $listItems[] = Schema::listItem()
+                ->position($position)
+                ->name($parent->getTranslation('name', $locale))
+                ->item(route('categories.show', ['locale' => $locale, 'category' => $parent->slug]));
+            $position++;
+        }
+
+        // Current category
+        $listItems[] = Schema::listItem()
+            ->position($position)
+            ->name($category->getTranslation('name', $locale))
+            ->item(route('categories.show', ['locale' => $locale, 'category' => $category->slug]));
+
+        $breadcrumb = Schema::breadcrumbList()->itemListElement($listItems);
+
+        return $breadcrumb->toScript();
     }
 
     /**

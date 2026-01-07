@@ -1346,7 +1346,7 @@
 <script>
 (function() {
     'use strict';
-    
+
     // Mobile search trigger from bottom menu
     document.addEventListener('DOMContentLoaded', function() {
         const mobileSearchTrigger = document.querySelector('.js-mobile-search-trigger');
@@ -1355,14 +1355,14 @@
         const body = document.body;
         const headerMobile = document.querySelector('.header-mobile');
         const mobileDropdown = headerMobile ? headerMobile.querySelector('.header-mobile__navigation') : null;
-        
+
         if (mobileSearchTrigger && mobileNavActivator && mobileSearchInput) {
             mobileSearchTrigger.addEventListener('click', function(e) {
                 e.preventDefault();
-                
+
                 // Check if menu is already open
                 const isMenuOpen = body.classList.contains('mobile-menu-opened');
-                
+
                 // If menu is not open, open it first
                 if (!isMenuOpen) {
                     // Open mobile menu (same logic as theme.js)
@@ -1374,7 +1374,7 @@
                             mobileDropdown.style.paddingRight = scrollWidth + 'px';
                         }
                     }
-                    
+
                     // Wait for menu animation to complete, then focus input
                     setTimeout(function() {
                         if (mobileSearchInput) {
@@ -1392,4 +1392,19 @@
         }
     });
 })();
+</script>
+
+<!-- Service Worker Registration (PWA) -->
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('[PWA] Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('[PWA] Service Worker registration failed:', error);
+            });
+    });
+}
 </script>

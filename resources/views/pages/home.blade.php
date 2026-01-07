@@ -1,5 +1,11 @@
 @extends('layouts.default')
 
+@section('head')
+    @if(isset($organizationSchema))
+        {!! $organizationSchema !!}
+    @endif
+@endsection
+
 @section('content')
     @if(isset($heroBanners) && $heroBanners && $heroBanners->isNotEmpty())
         <section class="swiper-container js-swiper-slider slideshow type3 slideshow-navigation-white-sm"
