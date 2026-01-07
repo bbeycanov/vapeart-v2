@@ -211,11 +211,9 @@
                                             $menuTitle = $child->getTranslation('title', app()->getLocale());
                                             // Get product count from sidebar menu
                                             $productCount = $child->products()->where('is_active', true)->count();
-                                            // Catalog URL for brands page
-                                            $catalogUrl = route('catalog.brands', [app()->getLocale(), $child->id]);
                                         @endphp
                                         <div class="col">
-                                            <a href="{{ $catalogUrl }}" 
+                                            <a href="{{ $menuUrl }}"
                                                class="category-mini-card d-flex border rounded-3 p-3 text-decoration-none h-100"
                                                style="min-height: 80px; transition: all 0.2s ease;"
                                                onmouseover="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)'; this.style.transform='translateY(-2px)';"

@@ -89,6 +89,8 @@ class CategoryController extends Controller
 
         $list = $this->products->catalog($filters);
 
+        $selectedBrandId = $request->get('brand_id');
+
         $brands = $category->products()
             ->where('is_active', true)
             ->whereNotNull('brand_id')
@@ -97,8 +99,12 @@ class CategoryController extends Controller
             ->pluck('brand')
             ->filter()
             ->unique('id')
-            ->sortBy(function ($brand) {
-                return $brand->getTranslation('name', app()->getLocale());
+            ->sortBy(function ($brand) use ($selectedBrandId) {
+                // Selected brand comes first, then sort by name
+                if ($selectedBrandId && $brand->id == $selectedBrandId) {
+                    return '0_' . $brand->getTranslation('name', app()->getLocale());
+                }
+                return '1_' . $brand->getTranslation('name', app()->getLocale());
             })
             ->values();
 

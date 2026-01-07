@@ -59,6 +59,7 @@ class DiscountForm
                                         ->label(__('Usage Limit')),
                                     TextInput::make('used_count')
                                         ->numeric()
+                                        ->default(0)
                                         ->label(__('Used Count')),
                                 ]),
                             Section::make(__('Switcher'))

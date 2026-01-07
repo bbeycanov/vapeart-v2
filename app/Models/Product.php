@@ -255,9 +255,9 @@ class Product extends Model implements HasMedia
     /**
      * Get the best active discount (highest percentage or fixed amount)
      *
-     * @return Closure|null
+     * @return Discount|null
      */
-    public function getBestDiscount(): ?Closure
+    public function getBestDiscount(): ?Discount
     {
         $discounts = $this->getActiveDiscounts();
 
