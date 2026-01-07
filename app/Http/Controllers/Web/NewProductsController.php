@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Enums\BannerPosition;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
+use App\Services\Contracts\BannerServiceInterface;
 use App\Services\Contracts\ProductServiceInterface;
 
 class NewProductsController extends Controller
 {
     /**
      * @param ProductServiceInterface $products
+     * @param BannerServiceInterface $bannerService
      */
     public function __construct(
-        private readonly ProductServiceInterface $products
+        private readonly ProductServiceInterface $products,
+        private readonly BannerServiceInterface  $bannerService
     )
     {
     }
@@ -42,7 +46,9 @@ class NewProductsController extends Controller
             page: $page
         );
 
-        return view('pages.new-products.index', compact('list'));
+        $pageBanner = $this->bannerService->byPosition(BannerPosition::NEW_PRODUCTS_INDEX_HEADER)->first();
+
+        return view('pages.new-products.index', compact('list', 'pageBanner'));
     }
 }
 

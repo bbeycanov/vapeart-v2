@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Blog;
 use App\Models\Page;
 use App\Models\Brand;
+use RuntimeException;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Language;
@@ -26,8 +27,8 @@ class SitemapGenerator
         $this->locales = Language::where('is_active', true)->pluck('code')->toArray();
 
         // Ensure sitemap directory exists
-        if (!is_dir($this->sitemapPath)) {
-            mkdir($this->sitemapPath, 0755, true);
+        if (!is_dir($this->sitemapPath) && !mkdir($concurrentDirectory = $this->sitemapPath, 0755, true) && !is_dir($concurrentDirectory)) {
+            throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
     }
 
@@ -100,7 +101,7 @@ class SitemapGenerator
 
             // Categories index
             $sitemap->add(
-                Url::create("{$this->baseUrl}/{$locale}/categories")
+                Url::create("{$this->baseUrl}/{$locale}/category")
                     ->setLastModificationDate($now)
                     ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
                     ->setPriority(0.9)
@@ -122,17 +123,25 @@ class SitemapGenerator
                     ->setPriority(0.8)
             );
 
+            // Discounts index
+            $sitemap->add(
+                Url::create("{$this->baseUrl}/{$locale}/discounts")
+                    ->setLastModificationDate($now)
+                    ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
+                    ->setPriority(0.8)
+            );
+
+            // New Products index
+            $sitemap->add(
+                Url::create("{$this->baseUrl}/{$locale}/new-products")
+                    ->setLastModificationDate($now)
+                    ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
+                    ->setPriority(0.8)
+            );
+
             // Contact
             $sitemap->add(
                 Url::create("{$this->baseUrl}/{$locale}/contact")
-                    ->setLastModificationDate($now)
-                    ->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY)
-                    ->setPriority(0.6)
-            );
-
-            // About
-            $sitemap->add(
-                Url::create("{$this->baseUrl}/{$locale}/about")
                     ->setLastModificationDate($now)
                     ->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY)
                     ->setPriority(0.6)
@@ -153,7 +162,7 @@ class SitemapGenerator
         foreach ($categories as $category) {
             foreach ($this->locales as $locale) {
                 $sitemap->add(
-                    Url::create("{$this->baseUrl}/{$locale}/categories/{$category->slug}")
+                    Url::create("{$this->baseUrl}/{$locale}/category/{$category->slug}")
                         ->setLastModificationDate($category->updated_at ?? Carbon::now())
                         ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
                         ->setPriority(0.8)
@@ -225,7 +234,7 @@ class SitemapGenerator
         foreach ($brands as $brand) {
             foreach ($this->locales as $locale) {
                 $sitemap->add(
-                    Url::create("{$this->baseUrl}/{$locale}/brands/{$brand->slug}")
+                    Url::create("{$this->baseUrl}/{$locale}/brand/{$brand->slug}")
                         ->setLastModificationDate($brand->updated_at ?? Carbon::now())
                         ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
                         ->setPriority(0.7)
@@ -247,7 +256,7 @@ class SitemapGenerator
         foreach ($pages as $page) {
             foreach ($this->locales as $locale) {
                 $sitemap->add(
-                    Url::create("{$this->baseUrl}/{$locale}/pages/{$page->slug}")
+                    Url::create("{$this->baseUrl}/{$locale}/page/{$page->slug}")
                         ->setLastModificationDate($page->updated_at ?? Carbon::now())
                         ->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY)
                         ->setPriority(0.5)

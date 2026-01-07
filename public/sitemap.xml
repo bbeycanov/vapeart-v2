@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <sitemap>
-        <loc>http://localhost:8000/sitemaps/sitemap-static.xml</loc>
-            <lastmod>2025-12-08T01:49:50+00:00</lastmod>
+        <loc>http://127.0.0.1:8000/sitemaps/sitemap-static.xml</loc>
+            <lastmod>2026-01-07T21:12:07+00:00</lastmod>
     </sitemap>
     <sitemap>
-        <loc>http://localhost:8000/sitemaps/sitemap-categories.xml</loc>
-            <lastmod>2025-12-08T01:49:50+00:00</lastmod>
+        <loc>http://127.0.0.1:8000/sitemaps/sitemap-categories.xml</loc>
+            <lastmod>2026-01-07T21:12:07+00:00</lastmod>
     </sitemap>
     <sitemap>
-        <loc>http://localhost:8000/sitemaps/sitemap-products.xml</loc>
-            <lastmod>2025-12-08T01:49:50+00:00</lastmod>
+        <loc>http://127.0.0.1:8000/sitemaps/sitemap-products.xml</loc>
+            <lastmod>2026-01-07T21:12:07+00:00</lastmod>
     </sitemap>
     <sitemap>
-        <loc>http://localhost:8000/sitemaps/sitemap-blogs.xml</loc>
-            <lastmod>2025-12-08T01:49:50+00:00</lastmod>
+        <loc>http://127.0.0.1:8000/sitemaps/sitemap-blogs.xml</loc>
+            <lastmod>2026-01-07T21:12:07+00:00</lastmod>
     </sitemap>
     <sitemap>
-        <loc>http://localhost:8000/sitemaps/sitemap-brands.xml</loc>
-            <lastmod>2025-12-08T01:49:50+00:00</lastmod>
+        <loc>http://127.0.0.1:8000/sitemaps/sitemap-brands.xml</loc>
+            <lastmod>2026-01-07T21:12:07+00:00</lastmod>
     </sitemap>
     <sitemap>
-        <loc>http://localhost:8000/sitemaps/sitemap-pages.xml</loc>
-            <lastmod>2025-12-08T01:49:50+00:00</lastmod>
+        <loc>http://127.0.0.1:8000/sitemaps/sitemap-pages.xml</loc>
+            <lastmod>2026-01-07T21:12:07+00:00</lastmod>
     </sitemap>
 </sitemapindex>

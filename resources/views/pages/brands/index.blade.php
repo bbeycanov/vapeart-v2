@@ -13,14 +13,29 @@
         ['label' => __('navigation.Brands'), 'url' => route('brands.index', app()->getLocale())]
     ]" />
 
-    <section class="brand-page-title mb-4 mb-xl-5">
-        <div class="container">
-            <div class="title-bg">
-                <img loading="lazy" src="{{ asset('storefront/images/blog_title_bg.jpg') }}" width="1780" height="420" alt="Brands">
+    @if(isset($pageBanner) && $pageBanner && ($pageBanner->getFirstMediaUrl('image') || $pageBanner->getFirstMediaUrl('video')))
+        <section class="brand-page-title mb-4 mb-xl-5">
+            <div class="container">
+                <div class="page-banner position-relative rounded-3 overflow-hidden mb-4" style="min-height: 200px;">
+                    @if($pageBanner->getFirstMediaUrl('video'))
+                        <video autoplay muted loop playsinline class="w-100 h-100 object-fit-cover" style="position: absolute; top: 0; left: 0;">
+                            <source src="{{ $pageBanner->getFirstMediaUrl('video') }}" type="video/mp4">
+                        </video>
+                    @elseif($pageBanner->getFirstMediaUrl('image'))
+                        <img loading="lazy" src="{{ $pageBanner->getFirstMediaUrl('image') }}" alt="{{ $pageBanner->getTranslation('title', app()->getLocale()) }}" class="w-100 h-100 object-fit-cover" style="position: absolute; top: 0; left: 0;">
+                    @endif
+                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background: rgba(0,0,0,0.3);">
+                        <div class="text-center text-white p-4">
+                            <h2 class="page-title mb-0">{{ $pageBanner->getTranslation('title', app()->getLocale()) ?: __('page.Brands') }}</h2>
+                            @if($pageBanner->getTranslation('subtitle', app()->getLocale()))
+                                <p class="mb-0 mt-2">{{ $pageBanner->getTranslation('subtitle', app()->getLocale()) }}</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h2 class="page-title">{{ __('page.Brands') }}</h2>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <section class="brand-page container py-4 py-md-5">
         <h2 class="d-none">{{ __('page.Brands') }}</h2>

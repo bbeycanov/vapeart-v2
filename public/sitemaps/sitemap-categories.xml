@@ -1,416 +1,416 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
     <url>
-    <loc>http://localhost:8000/az/categories/devices</loc>
-    <lastmod>2025-12-07T22:02:52+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/devices</loc>
+    <lastmod>2025-12-20T19:07:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/devices</loc>
-    <lastmod>2025-12-07T22:02:52+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/devices</loc>
+    <lastmod>2025-12-20T19:07:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/devices</loc>
-    <lastmod>2025-12-07T22:02:52+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/devices</loc>
+    <lastmod>2025-12-20T19:07:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/electronic-hookahs</loc>
-    <lastmod>2025-12-07T22:02:52+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/electronic-cigarettes</loc>
+    <lastmod>2025-12-20T20:36:34+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/electronic-hookahs</loc>
-    <lastmod>2025-12-07T22:02:52+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/electronic-cigarettes</loc>
+    <lastmod>2025-12-20T20:36:34+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/electronic-hookahs</loc>
-    <lastmod>2025-12-07T22:02:52+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/electronic-cigarettes</loc>
+    <lastmod>2025-12-20T20:36:34+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/electronic-cigarettes</loc>
-    <lastmod>2025-12-07T22:02:54+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/electronic-hookahs</loc>
+    <lastmod>2025-12-09T22:47:29+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/electronic-cigarettes</loc>
-    <lastmod>2025-12-07T22:02:54+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/electronic-hookahs</loc>
+    <lastmod>2025-12-09T22:47:29+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/electronic-cigarettes</loc>
-    <lastmod>2025-12-07T22:02:54+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/electronic-hookahs</loc>
+    <lastmod>2025-12-09T22:47:29+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/catridge-ve-filterler</loc>
-    <lastmod>2025-12-07T22:02:59+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/mod</loc>
+    <lastmod>2025-12-09T22:47:38+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/catridge-ve-filterler</loc>
-    <lastmod>2025-12-07T22:02:59+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/mod</loc>
+    <lastmod>2025-12-09T22:47:38+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/catridge-ve-filterler</loc>
-    <lastmod>2025-12-07T22:02:59+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/mod</loc>
+    <lastmod>2025-12-09T22:47:38+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/mod</loc>
-    <lastmod>2025-12-07T22:03:01+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/catridge-ve-filterler</loc>
+    <lastmod>2025-12-09T22:47:53+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/mod</loc>
-    <lastmod>2025-12-07T22:03:01+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/catridge-ve-filterler</loc>
+    <lastmod>2025-12-09T22:47:53+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/mod</loc>
-    <lastmod>2025-12-07T22:03:01+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/catridge-ve-filterler</loc>
+    <lastmod>2025-12-09T22:47:53+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/disposable-devices</loc>
-    <lastmod>2025-12-07T22:03:36+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/disposable-devices</loc>
+    <lastmod>2025-12-09T22:48:10+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/disposable-devices</loc>
-    <lastmod>2025-12-07T22:03:36+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/disposable-devices</loc>
+    <lastmod>2025-12-09T22:48:10+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/disposable-devices</loc>
-    <lastmod>2025-12-07T22:03:36+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/disposable-devices</loc>
+    <lastmod>2025-12-09T22:48:10+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/liquids-for-electronic-cigarette</loc>
-    <lastmod>2025-12-07T22:03:37+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/liquids-for-electronic-cigarette</loc>
+    <lastmod>2025-12-09T22:48:10+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/liquids-for-electronic-cigarette</loc>
-    <lastmod>2025-12-07T22:03:37+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/liquids-for-electronic-cigarette</loc>
+    <lastmod>2025-12-09T22:48:10+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/liquids-for-electronic-cigarette</loc>
-    <lastmod>2025-12-07T22:03:37+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/liquids-for-electronic-cigarette</loc>
+    <lastmod>2025-12-09T22:48:10+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/liquids-for-electronic-hookah</loc>
-    <lastmod>2025-12-07T22:03:38+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/liquids-for-electronic-hookah</loc>
+    <lastmod>2025-12-09T22:48:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/liquids-for-electronic-hookah</loc>
-    <lastmod>2025-12-07T22:03:38+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/liquids-for-electronic-hookah</loc>
+    <lastmod>2025-12-09T22:48:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/liquids-for-electronic-hookah</loc>
-    <lastmod>2025-12-07T22:03:38+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/liquids-for-electronic-hookah</loc>
+    <lastmod>2025-12-09T22:48:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/cigar-and-cigarillos</loc>
-    <lastmod>2025-12-07T22:04:08+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/snus</loc>
+    <lastmod>2025-12-09T22:48:56+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/cigar-and-cigarillos</loc>
-    <lastmod>2025-12-07T22:04:08+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/snus</loc>
+    <lastmod>2025-12-09T22:48:56+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/cigar-and-cigarillos</loc>
-    <lastmod>2025-12-07T22:04:08+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/snus</loc>
+    <lastmod>2025-12-09T22:48:56+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/cigarillos</loc>
-    <lastmod>2025-12-07T22:04:08+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/tobacco</loc>
+    <lastmod>2025-12-09T22:49:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/cigarillos</loc>
-    <lastmod>2025-12-07T22:04:08+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/tobacco</loc>
+    <lastmod>2025-12-09T22:49:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/cigarillos</loc>
-    <lastmod>2025-12-07T22:04:08+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/tobacco</loc>
+    <lastmod>2025-12-09T22:49:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/zippo</loc>
-    <lastmod>2025-12-07T22:04:20+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/zippo</loc>
+    <lastmod>2025-12-09T22:50:31+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/zippo</loc>
-    <lastmod>2025-12-07T22:04:20+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/zippo</loc>
+    <lastmod>2025-12-09T22:50:31+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/zippo</loc>
-    <lastmod>2025-12-07T22:04:20+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/zippo</loc>
+    <lastmod>2025-12-09T22:50:31+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/snus</loc>
-    <lastmod>2025-12-07T22:04:21+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/cigar-and-cigarillos</loc>
+    <lastmod>2025-12-09T22:50:44+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/snus</loc>
-    <lastmod>2025-12-07T22:04:21+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/cigar-and-cigarillos</loc>
+    <lastmod>2025-12-09T22:50:44+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/snus</loc>
-    <lastmod>2025-12-07T22:04:21+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/cigar-and-cigarillos</loc>
+    <lastmod>2025-12-09T22:50:44+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/tobacco</loc>
-    <lastmod>2025-12-07T23:14:40+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/cigarillos</loc>
+    <lastmod>2025-12-09T22:50:44+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/tobacco</loc>
-    <lastmod>2025-12-07T23:14:40+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/cigarillos</loc>
+    <lastmod>2025-12-09T22:50:44+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/tobacco</loc>
-    <lastmod>2025-12-07T23:14:40+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/cigarillos</loc>
+    <lastmod>2025-12-09T22:50:44+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/pre-rolled-cones</loc>
-    <lastmod>2025-12-07T22:04:25+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/lighters-accessories</loc>
+    <lastmod>2025-12-09T22:50:54+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/pre-rolled-cones</loc>
-    <lastmod>2025-12-07T22:04:25+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/lighters-accessories</loc>
+    <lastmod>2025-12-09T22:50:54+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/pre-rolled-cones</loc>
-    <lastmod>2025-12-07T22:04:25+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/lighters-accessories</loc>
+    <lastmod>2025-12-09T22:50:54+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/rolling-machines</loc>
-    <lastmod>2025-12-07T22:04:26+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/cigar</loc>
+    <lastmod>2025-12-09T22:52:16+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/rolling-machines</loc>
-    <lastmod>2025-12-07T22:04:26+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/cigar</loc>
+    <lastmod>2025-12-09T22:52:16+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/rolling-machines</loc>
-    <lastmod>2025-12-07T22:04:26+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/cigar</loc>
+    <lastmod>2025-12-09T22:52:16+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/rolling-tobacco</loc>
-    <lastmod>2025-12-07T22:04:28+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/rolling-tobacco</loc>
+    <lastmod>2025-12-09T22:52:47+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/rolling-tobacco</loc>
-    <lastmod>2025-12-07T22:04:28+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/rolling-tobacco</loc>
+    <lastmod>2025-12-09T22:52:47+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/rolling-tobacco</loc>
-    <lastmod>2025-12-07T22:04:28+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/rolling-tobacco</loc>
+    <lastmod>2025-12-09T22:52:47+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/cigar</loc>
-    <lastmod>2025-12-07T22:05:01+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/pre-rolled-cones</loc>
+    <lastmod>2025-12-09T22:52:48+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/cigar</loc>
-    <lastmod>2025-12-07T22:05:01+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/pre-rolled-cones</loc>
+    <lastmod>2025-12-09T22:52:48+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/cigar</loc>
-    <lastmod>2025-12-07T22:05:01+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/pre-rolled-cones</loc>
+    <lastmod>2025-12-09T22:52:48+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/cigarette-injector-machines</loc>
-    <lastmod>2025-12-07T22:05:07+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/rolling-machines</loc>
+    <lastmod>2025-12-09T22:52:51+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/cigarette-injector-machines</loc>
-    <lastmod>2025-12-07T22:05:07+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/rolling-machines</loc>
+    <lastmod>2025-12-09T22:52:51+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/cigarette-injector-machines</loc>
-    <lastmod>2025-12-07T22:05:07+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/rolling-machines</loc>
+    <lastmod>2025-12-09T22:52:51+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/lighters-accessories</loc>
-    <lastmod>2025-12-07T22:06:16+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/cigarette-injector-machines</loc>
+    <lastmod>2025-12-09T22:52:53+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/lighters-accessories</loc>
-    <lastmod>2025-12-07T22:06:16+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/cigarette-injector-machines</loc>
+    <lastmod>2025-12-09T22:52:53+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/lighters-accessories</loc>
-    <lastmod>2025-12-07T22:06:16+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/cigarette-injector-machines</loc>
+    <lastmod>2025-12-09T22:52:53+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/grinder</loc>
-    <lastmod>2025-12-07T22:07:35+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/grinder</loc>
+    <lastmod>2025-12-09T22:52:55+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/grinder</loc>
-    <lastmod>2025-12-07T22:07:35+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/grinder</loc>
+    <lastmod>2025-12-09T22:52:55+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/grinder</loc>
-    <lastmod>2025-12-07T22:07:35+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/grinder</loc>
+    <lastmod>2025-12-09T22:52:55+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/rolling-papers</loc>
-    <lastmod>2025-12-07T22:07:36+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/rolling-papers</loc>
+    <lastmod>2025-12-09T22:52:56+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/rolling-papers</loc>
-    <lastmod>2025-12-07T22:07:36+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/rolling-papers</loc>
+    <lastmod>2025-12-09T22:52:56+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/rolling-papers</loc>
-    <lastmod>2025-12-07T22:07:36+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/rolling-papers</loc>
+    <lastmod>2025-12-09T22:52:56+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/cigarette-filters</loc>
-    <lastmod>2025-12-07T22:07:46+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/cigarette-filters</loc>
+    <lastmod>2025-12-09T22:53:07+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/cigarette-filters</loc>
-    <lastmod>2025-12-07T22:07:46+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/cigarette-filters</loc>
+    <lastmod>2025-12-09T22:53:07+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/cigarette-filters</loc>
-    <lastmod>2025-12-07T22:07:46+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/cigarette-filters</loc>
+    <lastmod>2025-12-09T22:53:07+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories/rolling-tubes</loc>
-    <lastmod>2025-12-07T22:07:50+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category/rolling-tubes</loc>
+    <lastmod>2025-12-09T22:53:10+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories/rolling-tubes</loc>
-    <lastmod>2025-12-07T22:07:50+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category/rolling-tubes</loc>
+    <lastmod>2025-12-09T22:53:10+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories/rolling-tubes</loc>
-    <lastmod>2025-12-07T22:07:50+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category/rolling-tubes</loc>
+    <lastmod>2025-12-09T22:53:10+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>

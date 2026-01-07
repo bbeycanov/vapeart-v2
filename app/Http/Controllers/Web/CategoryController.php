@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Web;
 
 use App\Models\Category;
+use App\Enums\BannerPosition;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
+use App\Services\Contracts\BannerServiceInterface;
 use App\Services\Contracts\ProductServiceInterface;
 use App\Services\Contracts\CategoryServiceInterface;
 
@@ -15,10 +17,12 @@ class CategoryController extends Controller
     /**
      * @param CategoryServiceInterface $cats
      * @param ProductServiceInterface $products
+     * @param BannerServiceInterface $bannerService
      */
     public function __construct(
         private readonly CategoryServiceInterface $cats,
-        private readonly ProductServiceInterface  $products
+        private readonly ProductServiceInterface  $products,
+        private readonly BannerServiceInterface   $bannerService
     )
     {
     }
@@ -45,7 +49,9 @@ class CategoryController extends Controller
             ];
         });
 
-        return view('pages.categories.index', compact('categoriesWithCounts'))->with('parentCategory', null);
+        $pageBanner = $this->bannerService->byPosition(BannerPosition::CATEGORIES_INDEX_HEADER)->first();
+
+        return view('pages.categories.index', compact('categoriesWithCounts', 'pageBanner'))->with('parentCategory', null);
     }
 
     /**

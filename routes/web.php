@@ -34,7 +34,7 @@ Route::group([
     Route::get('', [HomeController::class, 'index'])->name('home');
 
     // Static Pages
-    Route::get('pages/{slug}', [PageController::class, 'show'])->name('pages.show');
+    Route::get('page/{slug}', [PageController::class, 'show'])->name('pages.show');
 
     // Blog
     Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
@@ -55,17 +55,17 @@ Route::group([
     Route::get('/products/{product}',  [ProductController::class, 'show'])->name('products.show');
 
     // Categories
-    Route::get('/categories',          [CategoryController::class, 'index'])->name('categories.index');
-    Route::get('/categories/{category}',[CategoryController::class, 'show'])->name('categories.show');
+    Route::get('/category',          [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/category/{category}',[CategoryController::class, 'show'])->name('categories.show');
 
     // Brands
     Route::get('/brands',              [BrandController::class, 'index'])->name('brands.index');
     Route::get('/brands/load-more',    [BrandController::class, 'loadMore'])->name('brands.load-more');
-    Route::get('/brands/{brand}',      [BrandController::class, 'show'])->name('brands.show');
+    Route::get('/brand/{brand}',      [BrandController::class, 'show'])->name('brands.show');
 
     // Contacts
-    Route::get('/contacts',            [ContactController::class, 'index'])->name('contacts.index');
-    Route::post('/contacts',           [ContactController::class, 'store'])->name('contacts.store');
+    Route::get('/contact',            [ContactController::class, 'index'])->name('contacts.index');
+    Route::post('/contact',           [ContactController::class, 'store'])->name('contacts.store');
 
     // Reviews
     Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('products.reviews.store');

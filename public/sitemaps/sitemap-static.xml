@@ -1,128 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
     <url>
-    <loc>http://localhost:8000/az</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/products</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/products</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/categories</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/category</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/brands</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/brands</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/blog</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/blog</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/contact</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/az/discounts</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://127.0.0.1:8000/az/new-products</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://127.0.0.1:8000/az/contact</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/az/about</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-            </url>
-    <url>
-    <loc>http://localhost:8000/en</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/products</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/products</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/categories</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/category</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/brands</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/brands</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/blog</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/blog</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/contact</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/en/discounts</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://127.0.0.1:8000/en/new-products</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://127.0.0.1:8000/en/contact</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/en/about</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-            </url>
-    <url>
-    <loc>http://localhost:8000/ru</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/products</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/products</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/categories</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/category</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/brands</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/brands</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/blog</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/blog</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/contact</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>http://127.0.0.1:8000/ru/discounts</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://localhost:8000/ru/about</loc>
-    <lastmod>2025-12-08T01:49:47+00:00</lastmod>
+    <loc>http://127.0.0.1:8000/ru/new-products</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://127.0.0.1:8000/ru/contact</loc>
+    <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
             </url>

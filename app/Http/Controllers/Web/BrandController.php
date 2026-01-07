@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Web;
 
 use App\Models\Menu;
 use App\Models\Brand;
+use App\Enums\BannerPosition;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 use App\Services\Contracts\BrandServiceInterface;
+use App\Services\Contracts\BannerServiceInterface;
 use App\Services\Contracts\ProductServiceInterface;
 
 class BrandController extends Controller
@@ -17,10 +19,12 @@ class BrandController extends Controller
     /**
      * @param BrandServiceInterface $brands
      * @param ProductServiceInterface $products
+     * @param BannerServiceInterface $bannerService
      */
     public function __construct(
         private readonly BrandServiceInterface   $brands,
-        private readonly ProductServiceInterface $products
+        private readonly ProductServiceInterface $products,
+        private readonly BannerServiceInterface  $bannerService
     )
     {
     }
@@ -43,7 +47,9 @@ class BrandController extends Controller
             ->orderBy('sort_order')
             ->paginate(24);
 
-        return view('pages.brands.index', compact('items'));
+        $pageBanner = $this->bannerService->byPosition(BannerPosition::BRANDS_INDEX_HEADER)->first();
+
+        return view('pages.brands.index', compact('items', 'pageBanner'));
     }
 
     /**

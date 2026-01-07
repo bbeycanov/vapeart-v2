@@ -9,6 +9,30 @@
 @section('content')
     <div class="mb-md-1 pb-md-3"></div>
 
+    @if(isset($pageBanner) && $pageBanner && ($pageBanner->getFirstMediaUrl('image') || $pageBanner->getFirstMediaUrl('video')))
+        <section class="new-products-page-title mb-4 mb-xl-5">
+            <div class="container">
+                <div class="page-banner position-relative rounded-3 overflow-hidden mb-4" style="min-height: 200px;">
+                    @if($pageBanner->getFirstMediaUrl('video'))
+                        <video autoplay muted loop playsinline class="w-100 h-100 object-fit-cover" style="position: absolute; top: 0; left: 0;">
+                            <source src="{{ $pageBanner->getFirstMediaUrl('video') }}" type="video/mp4">
+                        </video>
+                    @elseif($pageBanner->getFirstMediaUrl('image'))
+                        <img loading="lazy" src="{{ $pageBanner->getFirstMediaUrl('image') }}" alt="{{ $pageBanner->getTranslation('title', app()->getLocale()) }}" class="w-100 h-100 object-fit-cover" style="position: absolute; top: 0; left: 0;">
+                    @endif
+                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background: rgba(0,0,0,0.3);">
+                        <div class="text-center text-white p-4">
+                            <h1 class="page-title mb-0">{{ $pageBanner->getTranslation('title', app()->getLocale()) ?: __('page.New Products') }}</h1>
+                            @if($pageBanner->getTranslation('subtitle', app()->getLocale()))
+                                <p class="mb-0 mt-2">{{ $pageBanner->getTranslation('subtitle', app()->getLocale()) }}</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
+
     <div class="container mb-5">
         <!-- Breadcrumb Section -->
         <div class="mb-3 mb-md-4 pb-2 pb-md-3">
@@ -24,9 +48,11 @@
             </nav>
         </div>
 
-        <h1 class="page-title mb-4 mb-md-5 text-center text-md-start">
-            {{ __('page.New Products') }}
-        </h1>
+        @if(!(isset($pageBanner) && $pageBanner && ($pageBanner->getFirstMediaUrl('image') || $pageBanner->getFirstMediaUrl('video'))))
+            <h1 class="page-title mb-4 mb-md-5 text-center text-md-start">
+                {{ __('page.New Products') }}
+            </h1>
+        @endif
 
         <div id="products-container">
             @if($list->isNotEmpty())

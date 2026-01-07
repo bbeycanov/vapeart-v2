@@ -221,5 +221,97 @@ class BannerSeeder extends Seeder
                 'sort_order' => 1,
             ]
         );
+
+        // BRANDS INDEX HEADER
+        Banner::updateOrCreate(
+            [
+                'position' => BannerPosition::BRANDS_INDEX_HEADER->value,
+                'key' => 'brands-index-header'
+            ],
+            [
+                'type' => BannerType::IMAGE->value,
+                'title' => [
+                    'en' => 'Our Brands',
+                    'az' => 'Brendlərimiz',
+                    'ru' => 'Наши бренды'
+                ],
+                'subtitle' => [
+                    'en' => 'Discover Premium Brands',
+                    'az' => 'Premium brendləri kəşf edin',
+                    'ru' => 'Откройте премиальные бренды'
+                ],
+                'is_active' => true,
+                'sort_order' => 1,
+            ]
+        );
+
+        // CATEGORIES INDEX HEADER
+        Banner::updateOrCreate(
+            [
+                'position' => BannerPosition::CATEGORIES_INDEX_HEADER->value,
+                'key' => 'categories-index-header'
+            ],
+            [
+                'type' => BannerType::IMAGE->value,
+                'title' => [
+                    'en' => 'Product Categories',
+                    'az' => 'Məhsul Kateqoriyaları',
+                    'ru' => 'Категории товаров'
+                ],
+                'subtitle' => [
+                    'en' => 'Browse All Categories',
+                    'az' => 'Bütün kateqoriyalara baxın',
+                    'ru' => 'Просмотреть все категории'
+                ],
+                'is_active' => true,
+                'sort_order' => 1,
+            ]
+        );
+
+        // DISCOUNTS INDEX HEADER
+        Banner::updateOrCreate(
+            [
+                'position' => BannerPosition::DISCOUNTS_INDEX_HEADER->value,
+                'key' => 'discounts-index-header'
+            ],
+            [
+                'type' => BannerType::IMAGE->value,
+                'title' => [
+                    'en' => 'Special Discounts',
+                    'az' => 'Xüsusi Endirimlər',
+                    'ru' => 'Специальные скидки'
+                ],
+                'subtitle' => [
+                    'en' => 'Save Big on Top Products',
+                    'az' => 'Ən yaxşı məhsullarda böyük qənaət',
+                    'ru' => 'Большая экономия на лучших товарах'
+                ],
+                'is_active' => true,
+                'sort_order' => 1,
+            ]
+        );
+
+        // NEW PRODUCTS INDEX HEADER
+        Banner::updateOrCreate(
+            [
+                'position' => BannerPosition::NEW_PRODUCTS_INDEX_HEADER->value,
+                'key' => 'new-products-index-header'
+            ],
+            [
+                'type' => BannerType::IMAGE->value,
+                'title' => [
+                    'en' => 'New Arrivals',
+                    'az' => 'Yeni Gələnlər',
+                    'ru' => 'Новые поступления'
+                ],
+                'subtitle' => [
+                    'en' => 'Check Out Latest Products',
+                    'az' => 'Ən son məhsullara baxın',
+                    'ru' => 'Ознакомьтесь с новинками'
+                ],
+                'is_active' => true,
+                'sort_order' => 1,
+            ]
+        );
     }
 }
