@@ -11,7 +11,7 @@ use App\Models\Product;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Spatie\MediaLibrary\MediaCollections\FileManipulator;
+use Spatie\MediaLibrary\Conversions\FileManipulator;
 
 class RegenerateMediaConversions extends Command
 {
