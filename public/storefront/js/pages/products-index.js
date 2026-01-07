@@ -20,8 +20,6 @@
         let isLoading = false;
         let infiniteScrollObserver = null;
         
-        console.log('Products page initialized', data);
-        
         // Initialize from URL on page load
         initFiltersFromURL();
         
@@ -66,13 +64,6 @@
                 currentSort = params.get('sort');
             }
             
-            console.log('Initialized filters from URL:', {
-                categories: selectedCategoryIds,
-                brands: selectedBrandIds,
-                priceMin,
-                priceMax,
-                sort: currentSort
-            });
         }
         
         /**
@@ -80,8 +71,7 @@
          */
         function initCategoryFilter() {
             const checkboxes = document.querySelectorAll('.category-checkbox');
-            console.log('Category checkboxes found:', checkboxes.length);
-            
+
             checkboxes.forEach(checkbox => {
                 const categoryId = parseInt(checkbox.getAttribute('data-category-id'));
                 
@@ -101,9 +91,8 @@
                     } else {
                         selectedCategoryIds = selectedCategoryIds.filter(cid => cid !== id);
                     }
-                    
-                    console.log('Categories selected:', selectedCategoryIds);
-            applyFilters();
+
+                    applyFilters();
                 });
             });
         }
@@ -131,8 +120,7 @@
          */
         function initBrandFilter() {
             const checkboxes = document.querySelectorAll('.brand-checkbox');
-            console.log('Brand checkboxes found:', checkboxes.length);
-            
+
             checkboxes.forEach(checkbox => {
                 const brandId = parseInt(checkbox.getAttribute('data-brand-id'));
                 
@@ -152,8 +140,7 @@
                     } else {
                         selectedBrandIds = selectedBrandIds.filter(bid => bid !== id);
                     }
-                    
-                    console.log('Brands selected:', selectedBrandIds);
+
                     applyFilters();
                 });
             });
@@ -196,8 +183,7 @@
                 priceMin = parseFloat(minInput.value) || null;
                 priceMax = parseFloat(maxInput.value) || null;
                 
-                console.log('Price filter applied:', priceMin, '-', priceMax);
-                        applyFilters();
+                applyFilters();
                 });
                 
             // Apply on Enter key
@@ -224,7 +210,6 @@
             
             sortSelect.addEventListener('change', function() {
                 currentSort = this.value === 'default' ? null : this.value;
-                console.log('Sort changed:', currentSort);
                 applyFilters();
             });
         }
@@ -234,7 +219,6 @@
          */
         function applyFilters() {
             if (isLoading) {
-                console.log('Already loading, skipping...');
                 return;
             }
             
@@ -264,8 +248,7 @@
             params.set('page', 1);
             
             const url = `/${locale}/products?${params.toString()}`;
-            console.log('Fetching:', url);
-            
+
             // Fetch products
             fetch(url, {
                 headers: {
@@ -278,18 +261,11 @@
                 return response.text();
             })
             .then(html => {
-                console.log('Response HTML length:', html.length);
-                console.log('First 500 chars:', html.substring(0, 500));
-                
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-                    const newGrid = doc.getElementById('products-grid');
-                
-                console.log('Parsed document title:', doc.title);
-                console.log('Products grid found:', !!newGrid);
-                
+                const newGrid = doc.getElementById('products-grid');
+
                 if (newGrid) {
-                    console.log('Grid has', newGrid.children.length, 'children');
                     productsGrid.innerHTML = newGrid.innerHTML;
                     
                     // Update pagination
@@ -312,17 +288,12 @@
                         top: gridTop - offset,
                         behavior: 'smooth'
                     });
-                    
-                    console.log('Products updated successfully');
-                } else {
-                    console.error('Could not find products grid in response');
                 }
                 
                 // Re-init infinite scroll
                 setTimeout(initInfiniteScroll, 100);
             })
-            .catch(error => {
-                console.error('Error loading products:', error);
+            .catch(() => {
                 alert('Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.');
             })
             .finally(() => {
@@ -362,9 +333,7 @@
                     // Reset sort
                     const sortSelect = document.getElementById('sortSelect');
                     if (sortSelect) sortSelect.value = 'default';
-                    
-                    console.log('All filters cleared');
-                    
+
                     // Reload products
                     applyFilters();
                 }
@@ -454,8 +423,8 @@
                 
                 setTimeout(initInfiniteScroll, 100);
             })
-            .catch(error => {
-                console.error('Error loading more:', error);
+            .catch(() => {
+                // Silent fail for load more
             })
             .finally(() => {
                 isLoading = false;

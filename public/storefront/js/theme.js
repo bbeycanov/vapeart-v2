@@ -316,7 +316,6 @@ function pureFadeOut(e) {
 
       _handleAjaxSearchError: function (error, $form) {
         $form.classList.remove(this.searchInputFocusedClass);
-        console.log(error);
       }
     });
 

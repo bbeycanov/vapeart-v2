@@ -22,7 +22,6 @@ self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
-                console.log('[ServiceWorker] Pre-caching assets');
                 return cache.addAll(PRECACHE_ASSETS);
             })
             .then(() => {
@@ -40,7 +39,6 @@ self.addEventListener('activate', (event) => {
                     cacheNames
                         .filter((cacheName) => cacheName !== CACHE_NAME)
                         .map((cacheName) => {
-                            console.log('[ServiceWorker] Removing old cache:', cacheName);
                             return caches.delete(cacheName);
                         })
                 );
@@ -132,7 +130,7 @@ async function updateCache(request) {
             await cache.put(request, response);
         }
     } catch (error) {
-        console.log('[ServiceWorker] Background update failed:', error);
+        // Background update failed silently
     }
 }
 

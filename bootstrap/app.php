@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Application;
+use App\Http\Middleware\CacheHeaders;
 use App\Http\Middleware\SetLocaleFromUrl;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -16,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'setLocale' => SetLocaleFromUrl::class,
+            'cache.headers' => CacheHeaders::class,
         ]);
 
         $middleware->appendToGroup('web', [

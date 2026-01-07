@@ -39,7 +39,7 @@
             <div class="mt-[2px] h-6 w-6 flex items-center justify-center rounded-full overflow-hidden
                         bg-amber-500 text-white text-xs font-semibold">
                 <template x-if="favicon">
-                    <img :src="favicon" alt="" class="h-6 w-6 rounded-full object-cover" />
+                    <img :src="favicon" :alt="siteName + ' favicon'" class="h-6 w-6 rounded-full object-cover" />
                 </template>
                 <template x-if="!favicon">
                     <span x-text="siteInitial"></span>

@@ -21,8 +21,8 @@
                             <div class="swiper-wrapper" id="quickViewImages">
                                 <!-- Images will be loaded dynamically -->
                             </div>
-                            <div class="swiper-button-prev"><svg width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_prev_sm" /></svg></div>
-                            <div class="swiper-button-next"><svg width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg></div>
+                            <div class="swiper-button-prev" role="button" aria-label="{{ __('common.Previous image') }}"><svg width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_prev_sm" /></svg></div>
+                            <div class="swiper-button-next" role="button" aria-label="{{ __('common.Next image') }}"><svg width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg"><use href="#icon_next_sm" /></svg></div>
                         </div>
                     </div>
                 </div>

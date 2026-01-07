@@ -2,7 +2,7 @@
 <div class="header-mobile header_sticky">
     <div class="container d-flex align-items-center h-100 position-relative">
         <div class="d-flex align-items-center">
-            <a class="mobile-nav-activator d-block position-relative me-3" href="#">
+            <a class="mobile-nav-activator d-block position-relative me-3" href="#" role="button" aria-label="{{ __('common.Open navigation menu') }}" aria-expanded="false">
                 <svg class="nav-icon" width="25" height="18" viewBox="0 0 25 18" xmlns="http://www.w3.org/2000/svg"><use href="#icon_nav" /></svg>
                 <span class="btn-close-lg position-absolute top-0 start-0 w-100"></span>
             </a>

@@ -36,7 +36,7 @@
                         cart[index].image = data.product.image;
                     }
                 } catch (error) {
-                    console.error('Error fetching product image:', error);
+                    // Silent fail for image fetch
                 }
             }
         });
