@@ -238,20 +238,6 @@ class ProductForm
                                     ->searchable()
                                     ->columnSpanFull(),
 
-                                Select::make('sidebar_menus')
-                                    ->label(__('Sidebar Menus'))
-                                    ->multiple()
-                                    ->relationship(
-                                        name: 'menus',
-                                        titleAttribute: 'title',
-                                        modifyQueryUsing: function ($query) {
-                                            $query->where('position', MenuPosition::SIDEBAR->value)->orderBy('title');
-                                        }
-                                    )
-                                    ->preload()
-                                    ->searchable()
-                                    ->columnSpanFull(),
-
                                 Select::make('discounts')
                                     ->label(__('Discounts'))
                                     ->multiple()

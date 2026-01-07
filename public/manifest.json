@@ -61,22 +61,6 @@
             "purpose": "maskable any"
         }
     ],
-    "screenshots": [
-        {
-            "src": "/storefront/images/screenshots/screenshot-wide.png",
-            "sizes": "1280x720",
-            "type": "image/png",
-            "form_factor": "wide",
-            "label": "VapeArt Baku Desktop"
-        },
-        {
-            "src": "/storefront/images/screenshots/screenshot-mobile.png",
-            "sizes": "750x1334",
-            "type": "image/png",
-            "form_factor": "narrow",
-            "label": "VapeArt Baku Mobile"
-        }
-    ],
     "shortcuts": [
         {
             "name": "Mağaza",
@@ -85,7 +69,7 @@
             "url": "/az/shop",
             "icons": [
                 {
-                    "src": "/storefront/images/icons/shop-icon.png",
+                    "src": "/storefront/images/icons/icon-192x192.png",
                     "sizes": "192x192"
                 }
             ]
@@ -97,7 +81,7 @@
             "url": "/az/category",
             "icons": [
                 {
-                    "src": "/storefront/images/icons/category-icon.png",
+                    "src": "/storefront/images/icons/icon-192x192.png",
                     "sizes": "192x192"
                 }
             ]
@@ -109,7 +93,7 @@
             "url": "/az/contacts",
             "icons": [
                 {
-                    "src": "/storefront/images/icons/contact-icon.png",
+                    "src": "/storefront/images/icons/icon-192x192.png",
                     "sizes": "192x192"
                 }
             ]

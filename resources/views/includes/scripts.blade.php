@@ -1226,6 +1226,12 @@
                 backdrop: 'static',
                 keyboard: false
             });
+
+            // Remove aria-hidden when modal is shown to prevent accessibility warning
+            ageVerificationPopup.addEventListener('shown.bs.modal', function() {
+                this.removeAttribute('aria-hidden');
+            });
+
             modal.show();
         }
         
@@ -1237,7 +1243,12 @@
                 setCookie(ageVerificationKey, 'true', 365);
                 // Save to localStorage
                 localStorage.setItem(ageVerificationKey, 'true');
-                
+
+                // Blur focused element to prevent aria-hidden warning
+                if (document.activeElement) {
+                    document.activeElement.blur();
+                }
+
                 // Hide modal
                 const modal = bootstrap.Modal.getInstance(ageVerificationPopup);
                 if (modal) {

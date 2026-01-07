@@ -3,7 +3,7 @@
  * PWA offline support and caching strategy
  */
 
-const CACHE_NAME = 'vapeart-cache-v1';
+const CACHE_NAME = 'vapeart-cache-v3';
 const OFFLINE_URL = '/offline.html';
 
 // Assets to cache immediately on install
@@ -11,18 +11,27 @@ const PRECACHE_ASSETS = [
     '/',
     '/offline.html',
     '/storefront/css/style.css',
-    '/storefront/js/main.js',
+    '/storefront/js/theme.js',
     '/storefront/images/favicon.ico',
-    '/storefront/images/og-image.jpg',
+    '/storefront/images/favicon.png',
+    '/storefront/images/icons/icon-192x192.png',
     '/manifest.json'
 ];
 
-// Install event - cache essential assets
+// Install event - cache essential assets (fault-tolerant)
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
-                return cache.addAll(PRECACHE_ASSETS);
+                // Cache each asset individually to prevent one failure from breaking all
+                return Promise.all(
+                    PRECACHE_ASSETS.map((url) => {
+                        return cache.add(url).catch((err) => {
+                            // Log but don't fail if a single asset fails
+                            console.warn('Failed to cache:', url, err);
+                        });
+                    })
+                );
             })
             .then(() => {
                 return self.skipWaiting();
@@ -56,8 +65,13 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // Skip admin and API requests
+    // Skip non-http(s) requests (chrome-extension, etc.)
     const url = new URL(event.request.url);
+    if (!url.protocol.startsWith('http')) {
+        return;
+    }
+
+    // Skip admin and API requests
     if (url.pathname.startsWith('/admin') ||
         url.pathname.startsWith('/api') ||
         url.pathname.startsWith('/livewire')) {

@@ -3,12 +3,12 @@
 @endphp
 
 @if($ageVerificationEnabled)
-<div class="modal fade" id="ageVerificationPopup" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="ageVerificationPopup" tabindex="-1" aria-labelledby="ageVerificationTitle" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog age-verification-popup modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="age-verification-wrapper text-center">
-                    <h2 class="age-verification-brand mb-4">VAPEART</h2>
+                    <h2 class="age-verification-brand mb-4" id="ageVerificationTitle">VAPEART</h2>
                     
                     <div class="age-verification-icon mb-4">
                         <div class="age-icon-circle">
