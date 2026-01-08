@@ -37,7 +37,12 @@ return [
 
     'google' => [
         'maps_api_key' => env('GOOGLE_MAPS_API_KEY'),
-        'analytics_id' => env('GOOGLE_ANALYTICS_ID'),
+        'analytics_id' => env('GOOGLE_ANALYTICS_ID', 'G-1Q8XCG8GDG'),
+    ],
+
+    'facebook' => [
+        'app_id' => env('FACEBOOK_APP_ID', '326037243047998'),
+        'version' => env('FACEBOOK_APP_VERSION', 'v14.0'),
     ],
 
     'product_api' => [

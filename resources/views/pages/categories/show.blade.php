@@ -2,7 +2,7 @@
 
 @section('title', $category->getTranslation('meta_title', app()->getLocale()) ?? $category->getTranslation('name', app()->getLocale()))
 
-@section('og_image'){{ $category->getFirstMediaUrl('banner') ?: asset('storefront/images/placeholder-og.jpg') }}@endsection
+@section('og_image'){{ $category->getFirstMediaUrl('banner') ?: $category->getFirstMediaUrl('icon') ?: $category->getFirstMediaUrl('gallery') ?: asset('storefront/images/placeholder-og.jpg') }}@endsection
 
 @section('head')
     {!! $schemaJsonLd !!}

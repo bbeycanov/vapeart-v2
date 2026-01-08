@@ -2,7 +2,7 @@
 
 @section('title', $blog->getTranslation('meta_title', app()->getLocale()) ?? $blog->getTranslation('title', app()->getLocale()))
 
-@section('og_image'){{ $blog->getFirstMediaUrl('featured') ?: asset('storefront/images/placeholder-og.jpg') }}@endsection
+@section('og_image'){{ $blog->getFirstMediaUrl('featured') ?: $blog->getFirstMediaUrl('gallery') ?: asset('storefront/images/placeholder-og.jpg') }}@endsection
 
 @section('og_type', 'article')
 
