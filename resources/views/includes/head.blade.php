@@ -58,7 +58,7 @@
 <meta property="og:title" content="@hasSection('title')@yield('title') | {{ settings('site.title', 'VapeArt Baku') }}@else{{ settings('site.title', 'VapeArt Baku') }}@endif">
 <meta property="og:description" content="@hasSection('meta_description')@yield('meta_description')@else{{ settings('site.description', 'VapeArt Baku - Bakıda elektron siqaretlər, vape cihazları, snus və premium tütün məhsulları mağazası.') }}@endif">
 <meta property="og:url" content="@hasSection('canonical')@yield('canonical')@else{{ url()->current() }}@endif">
-<meta property="og:image" content="@hasSection('og_image')@yield('og_image')@else{{ asset(settings('site.og_image', 'storefront/images/og-image.jpg')) }}@endif">
+<meta property="og:image" content="@hasSection('og_image')@yield('og_image')@else{{ asset('storefront/images/placeholder-og.jpg') }}@endif">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
@@ -66,7 +66,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="@hasSection('title')@yield('title') | {{ settings('site.title', 'VapeArt Baku') }}@else{{ settings('site.title', 'VapeArt Baku') }}@endif">
 <meta name="twitter:description" content="@hasSection('meta_description')@yield('meta_description')@else{{ settings('site.description', 'VapeArt Baku - Bakıda elektron siqaretlər, vape cihazları, snus və premium tütün məhsulları mağazası.') }}@endif">
-<meta name="twitter:image" content="@hasSection('og_image')@yield('og_image')@else{{ asset(settings('site.og_image', 'storefront/images/og-image.jpg')) }}@endif">
+<meta name="twitter:image" content="@hasSection('og_image')@yield('og_image')@else{{ asset('storefront/images/placeholder-og.jpg') }}@endif">
 
 {{-- Favicon & Icons --}}
 <link rel="shortcut icon" href="{{ asset('storefront/images/favicon.ico') }}" type="image/x-icon">

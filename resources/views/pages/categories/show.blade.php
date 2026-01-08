@@ -1,10 +1,12 @@
 @extends('layouts.default')
 
+@section('title', $category->getTranslation('meta_title', app()->getLocale()) ?? $category->getTranslation('name', app()->getLocale()))
+
+@section('og_image'){{ $category->getFirstMediaUrl('banner') ?: asset('storefront/images/placeholder-og.jpg') }}@endsection
+
 @section('head')
     {!! $schemaJsonLd !!}
 @endsection
-
-@section('title', $category->getTranslation('meta_title', app()->getLocale()) ?? $category->getTranslation('name', app()->getLocale()))
 
 @php
     $locale = app()->getLocale();

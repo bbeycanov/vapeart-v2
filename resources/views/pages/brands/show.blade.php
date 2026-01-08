@@ -1,10 +1,12 @@
 @extends('layouts.default')
 
+@section('title', $brand->getTranslation('meta_title', app()->getLocale()) ?? $brand->getTranslation('name', app()->getLocale()))
+
+@section('og_image'){{ $brand->getFirstMediaUrl('logo') ?: $brand->getFirstMediaUrl('banner') ?: asset('storefront/images/placeholder-og.jpg') }}@endsection
+
 @section('head')
     {!! $schemaJsonLd !!}
 @endsection
-
-@section('title', $brand->getTranslation('meta_title', app()->getLocale()) ?? $brand->getTranslation('name', app()->getLocale()))
 
 @section('content')
 

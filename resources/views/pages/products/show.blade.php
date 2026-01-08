@@ -4,6 +4,10 @@
 
 @section('meta_description', $product->getTranslation('meta_description', app()->getLocale()) ?? $product->getTranslation('short_description', app()->getLocale()))
 
+@section('og_image'){{ $product->getFirstMediaUrl('images') ?: asset('storefront/images/placeholder-og.jpg') }}@endsection
+
+@section('og_type', 'product')
+
 @section('head')
     {!! $schemaJsonLd !!}
 @endsection
