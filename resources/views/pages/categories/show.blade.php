@@ -10,7 +10,7 @@
     $locale = app()->getLocale();
     $categoryName = $category->getTranslation('name', $locale);
     $categoryDescription = $category->getTranslation('description', $locale);
-    $categoryBannerImages['desktop']Images = $category->getBannerImageUrls();
+    $categoryBannerImages = $category->getBannerImageUrls();
     $selectedBrandId = request()->get('brand_id');
     $selectedBrand = $selectedBrandId ? $brands->firstWhere('id', $selectedBrandId) : null;
 
@@ -37,29 +37,29 @@
         <section class="mb-4 mb-md-5">
             <div class="shop-banner position-relative rounded-3 overflow-hidden" style="min-height: 320px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
                 <div class="background-img background-img_overlay" style="background-color: #f5f5f5;">
-                    @if($categoryBannerImages['desktop']Images['desktop'])
+                    @if($categoryBannerImages['desktop'])
                         <picture>
                             {{-- Mobile WebP --}}
-                            @if($categoryBannerImages['desktop']Images['mobile_webp'])
-                                <source media="(max-width: 768px)" srcset="{{ $categoryBannerImages['desktop']Images['mobile_webp'] }}" type="image/webp">
+                            @if($categoryBannerImages['mobile_webp'])
+                                <source media="(max-width: 768px)" srcset="{{ $categoryBannerImages['mobile_webp'] }}" type="image/webp">
                             @endif
                             {{-- Mobile fallback --}}
-                            @if($categoryBannerImages['desktop']Images['mobile'])
-                                <source media="(max-width: 768px)" srcset="{{ $categoryBannerImages['desktop']Images['mobile'] }}">
+                            @if($categoryBannerImages['mobile'])
+                                <source media="(max-width: 768px)" srcset="{{ $categoryBannerImages['mobile'] }}">
                             @endif
                             {{-- Tablet WebP --}}
-                            @if($categoryBannerImages['desktop']Images['tablet_webp'])
-                                <source media="(max-width: 1024px)" srcset="{{ $categoryBannerImages['desktop']Images['tablet_webp'] }}" type="image/webp">
+                            @if($categoryBannerImages['tablet_webp'])
+                                <source media="(max-width: 1024px)" srcset="{{ $categoryBannerImages['tablet_webp'] }}" type="image/webp">
                             @endif
                             {{-- Tablet fallback --}}
-                            @if($categoryBannerImages['desktop']Images['tablet'])
-                                <source media="(max-width: 1024px)" srcset="{{ $categoryBannerImages['desktop']Images['tablet'] }}">
+                            @if($categoryBannerImages['tablet'])
+                                <source media="(max-width: 1024px)" srcset="{{ $categoryBannerImages['tablet'] }}">
                             @endif
                             {{-- Desktop WebP --}}
-                            @if($categoryBannerImages['desktop']Images['desktop_webp'])
-                                <source srcset="{{ $categoryBannerImages['desktop']Images['desktop_webp'] }}" type="image/webp">
+                            @if($categoryBannerImages['desktop_webp'])
+                                <source srcset="{{ $categoryBannerImages['desktop_webp'] }}" type="image/webp">
                             @endif
-                            <img loading="lazy" src="{{ $categoryBannerImages['desktop']Images['desktop'] }}" width="1920" height="400" alt="{{ $categoryName }}" class="slideshow-bg__img object-fit-cover" style="opacity: 0.9;">
+                            <img loading="lazy" src="{{ $categoryBannerImages['desktop'] }}" width="1920" height="400" alt="{{ $categoryName }}" class="slideshow-bg__img object-fit-cover" style="opacity: 0.9;">
                         </picture>
                         <!-- Dark overlay for better text readability on image -->
                         <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0,0,0,0.35);"></div>
@@ -67,7 +67,7 @@
                 </div>
 
                 <div class="shop-banner__content position-relative z-2 text-center py-4 py-md-5 px-3 px-md-4 w-100">
-                    <h1 class="h1 text-uppercase fw-bold mb-3 mb-md-4 {{ $categoryBannerImages['desktop']Images['desktop'] ? 'text-white' : 'text-dark' }}" style="font-size: clamp(1.75rem, 4vw, 2.5rem);">
+                    <h1 class="h1 text-uppercase fw-bold mb-3 mb-md-4 {{ $categoryBannerImages['desktop'] ? 'text-white' : 'text-dark' }}" style="font-size: clamp(1.75rem, 4vw, 2.5rem);">
                         {{ $categoryName }}
                     </h1>
 
