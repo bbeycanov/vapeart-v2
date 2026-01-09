@@ -479,10 +479,11 @@
             });
         });
         
-        // Update quantity
-        document.querySelectorAll('.qty-control__number').forEach(input => {
+        // Update quantity - only for cart drawer items
+        document.querySelectorAll('#cartDrawerItemsList .qty-control__number').forEach(input => {
             input.addEventListener('change', function() {
                 const index = parseInt(this.getAttribute('data-cart-index'));
+                if (isNaN(index) || !cart[index]) return;
                 const quantity = parseInt(this.value) || 1;
                 if (quantity < 1) {
                     this.value = 1;
@@ -494,24 +495,26 @@
             });
         });
         
-        // Increase quantity
-        document.querySelectorAll('.qty-control__increase').forEach(btn => {
+        // Increase quantity - only for cart drawer items
+        document.querySelectorAll('#cartDrawerItemsList .qty-control__increase').forEach(btn => {
             btn.addEventListener('click', function() {
                 const input = this.parentElement.querySelector('.qty-control__number');
                 const index = parseInt(input.getAttribute('data-cart-index'));
-                cart[index].quantity++;
-                input.value = cart[index].quantity;
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartUI();
+                if (!isNaN(index) && cart[index]) {
+                    cart[index].quantity++;
+                    input.value = cart[index].quantity;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartUI();
+                }
             });
         });
-        
-        // Decrease quantity
-        document.querySelectorAll('.qty-control__reduce').forEach(btn => {
+
+        // Decrease quantity - only for cart drawer items
+        document.querySelectorAll('#cartDrawerItemsList .qty-control__reduce').forEach(btn => {
             btn.addEventListener('click', function() {
                 const input = this.parentElement.querySelector('.qty-control__number');
                 const index = parseInt(input.getAttribute('data-cart-index'));
-                if (cart[index].quantity > 1) {
+                if (!isNaN(index) && cart[index] && cart[index].quantity > 1) {
                     cart[index].quantity--;
                     input.value = cart[index].quantity;
                     localStorage.setItem('cart', JSON.stringify(cart));
@@ -854,14 +857,21 @@
         return false;
     });
     
-    // Add to cart from product card
+    // Add to cart from product card or product detail page
     $(document).on('click', '.js-add-cart:not(.js-add-cart-from-quickview)', function(e) {
         e.preventDefault();
         const btn = $(this);
         const productId = btn.data('product-id');
-        
+
+        // Only read quantity from #productQuantity if this is the product detail page button
+        let quantity = 1;
+        if (btn.attr('id') === 'addToCartBtn') {
+            const productQtyInput = document.getElementById('productQuantity');
+            quantity = productQtyInput ? (parseInt(productQtyInput.value) || 1) : 1;
+        }
+
         if (productId) {
-            addToCart(productId, 1).then(success => {
+            addToCart(productId, quantity).then(success => {
                 if (success) {
                     // Open cart drawer if it has the class, using theme's method
                     if (btn.hasClass('js-open-aside')) {

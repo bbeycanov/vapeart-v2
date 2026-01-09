@@ -3,7 +3,7 @@
  * PWA offline support and caching strategy
  */
 
-const CACHE_NAME = 'vapeart-cache-v4';
+const CACHE_NAME = 'vapeart-cache-v5';
 const OFFLINE_URL = '/offline.html';
 
 // Assets to cache immediately on install

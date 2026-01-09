@@ -485,54 +485,8 @@
                 scrollTabToCenter(e.target);
             });
         });
-        // Quantity control
-        const qtyInput = document.getElementById('productQuantity');
-        const qtyReduce = document.querySelector('.qty-control__reduce');
-        const qtyIncrease = document.querySelector('.qty-control__increase');
-        const addToCartBtn = document.getElementById('addToCartBtn');
-
-        if (qtyReduce && qtyInput) {
-            qtyReduce.addEventListener('click', function() {
-                const currentValue = parseInt(qtyInput.value) || 1;
-                if (currentValue > 1) {
-                    qtyInput.value = currentValue - 1;
-                }
-            });
-        }
-
-        if (qtyIncrease && qtyInput) {
-            qtyIncrease.addEventListener('click', function() {
-                const currentValue = parseInt(qtyInput.value) || 1;
-                qtyInput.value = currentValue + 1;
-            });
-        }
-
-        // Add to cart with quantity
-        if (addToCartBtn) {
-            addToCartBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const productId = this.getAttribute('data-product-id');
-                const quantity = parseInt(qtyInput ? qtyInput.value : 1) || 1;
-
-                // Use existing addToCart function from scripts.blade.php
-                if (typeof addToCart === 'function') {
-                    addToCart(productId, quantity).then(success => {
-                        if (success) {
-                            const aside = this.getAttribute('data-aside');
-                            if (aside) {
-                                const asideEl = document.getElementById(aside);
-                                if (asideEl) {
-                                    if (typeof UomoHelpers !== 'undefined' && UomoHelpers.showPageBackdrop) {
-                                        UomoHelpers.showPageBackdrop();
-                                    }
-                                    asideEl.classList.add('aside_visible');
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-        }
+        // Quantity control is handled by theme.js UomoElements.QtyControl
+        // Add to cart is handled by jQuery handler in scripts.blade.php which reads #productQuantity
 
         // Review Form - AJAX submission
         const reviewForm = document.getElementById('product-review-form');

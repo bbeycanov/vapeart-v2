@@ -130,16 +130,25 @@ function pureFadeOut(e) {
           return;
         }
 
+        // Skip cart drawer and quick view items - they have their own handlers
+        if ($qty.closest('#cartDrawerItemsList') || $qty.closest('.shopping-cart__product-item') || $qty.closest('#quickView')) {
+          return;
+        }
+
         $qty.classList.add('qty-initialized');
         const $reduce = $qty.querySelector('.qty-control__reduce');
         const $increase = $qty.querySelector('.qty-control__increase');
         const $number = $qty.querySelector('.qty-control__number');
 
-        $reduce.addEventListener('click', function() {
+        if (!$reduce || !$increase || !$number) return;
+
+        $reduce.addEventListener('click', function(e) {
+          e.stopPropagation();
           $number.value = parseInt($number.value) > 1 ? parseInt($number.value) - 1 : parseInt($number.value);
         });
 
-        $increase.addEventListener('click', function() {
+        $increase.addEventListener('click', function(e) {
+          e.stopPropagation();
           $number.value = parseInt($number.value) + 1;
         });
       });

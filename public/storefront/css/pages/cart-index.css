@@ -166,3 +166,28 @@
 .branch-list::-webkit-scrollbar-thumb:hover {
     background: #d6600d;
 }
+/* Cart Drawer Dynamic Height */
+.cart-drawer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile */
+    padding-bottom: 0 !important;
+}
+
+.cart-drawer .aside-header {
+    flex-shrink: 0;
+}
+
+.cart-drawer .cart-drawer-items-list {
+    flex: 1;
+    max-height: none !important;
+    overflow-y: auto;
+    padding-bottom: 1rem;
+}
+
+.cart-drawer .cart-drawer-actions {
+    position: relative !important;
+    flex-shrink: 0;
+    bottom: auto !important;
+}
