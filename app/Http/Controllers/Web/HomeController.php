@@ -34,6 +34,8 @@ class HomeController extends Controller
     /**
      * @param string $locale
      * @return Factory|View
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function index(string $locale): Factory|View
     {
@@ -48,7 +50,7 @@ class HomeController extends Controller
         // Her featured menü için ürünleri cache'den yükle
         $featuredMenus->each(function ($menu) use ($locale) {
             $cacheKey = "featured_products_menu_{$menu->id}_$locale";
-            $products = Cache::remember($cacheKey, 3600, function () use ($menu) {
+            $products = Cache::remember($cacheKey, 3600, static function () use ($menu) {
                 return $menu->products()
                     ->where('is_active', true)
                     ->where('is_featured', true)
@@ -57,7 +59,6 @@ class HomeController extends Controller
                         'media'
                     ])
                     ->orderBy('sort_order')
-                    ->limit(10)
                     ->get();
             });
             $menu->setRelation('products', $products);

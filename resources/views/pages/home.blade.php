@@ -98,7 +98,7 @@
                                             <div class="slideshow-text mb-4">{{ $content }}</div>
                                         @endif
                                         @if($linkUrl && $linkText)
-                                            <a href="{{ $linkUrl }}" 
+                                            <a href="{{ $linkUrl }}"
                                                class="btn btn-primary"
                                                @if($target) target="{{ $target }}" @endif>
                                                 {{ $linkText }}
@@ -136,17 +136,17 @@
                     <div class="product-search-wrapper position-relative">
                         <form action="{{ route('search.index', app()->getLocale()) }}" method="GET" class="product-search-form" id="productSearchForm">
                             <div class="product-search-input-wrapper position-relative">
-                                <input 
-                                    type="text" 
-                                    class="product-search-input form-control form-control-lg" 
+                                <input
+                                    type="text"
+                                    class="product-search-input form-control form-control-lg"
                                     id="productSearchInput"
-                                    name="q" 
+                                    name="q"
                                     placeholder="{{ __('product.Search for products...') }}"
                                     autocomplete="off"
                                     aria-label="{{ __('product.Search products') }}"
                                 >
-                                <button 
-                                    type="submit" 
+                                <button
+                                    type="submit"
                                     class="product-search-submit-btn position-absolute"
                                     aria-label="{{ __('common.Search') }}"
                                 >
@@ -154,8 +154,8 @@
                                         <path d="M19 19L13.8571 13.8571M13.8571 13.8571C15.9167 11.7975 15.9167 8.60254 13.8571 6.54286C11.7975 4.48318 8.60254 4.48318 6.54286 6.54286C4.48318 8.60254 4.48318 11.7975 6.54286 13.8571C8.60254 15.9167 11.7975 15.9167 13.8571 13.8571Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </button>
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     class="product-search-clear-btn position-absolute d-none"
                                     id="productSearchClear"
                                     aria-label="{{ __('product.Clear search') }}"
@@ -165,7 +165,7 @@
                                     </svg>
                                 </button>
                             </div>
-                            
+
                             <!-- Autocomplete Dropdown -->
                             <div class="product-search-autocomplete position-absolute w-100 d-none" id="productSearchAutocomplete">
                                 <div class="autocomplete-content bg-white border rounded-3 shadow-lg mt-2 overflow-hidden">
@@ -175,17 +175,17 @@
                                             <span class="visually-hidden">{{ __('common.Loading...') }}</span>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Results Container -->
                                     <div class="autocomplete-results" id="autocompleteResults">
                                         <!-- Product suggestions will appear here -->
                                     </div>
-                                    
+
                                     <!-- No Results -->
                                     <div class="autocomplete-no-results p-4 text-center text-secondary d-none">
                                         <p class="mb-0">{{ __('common.No products found') }}</p>
                                     </div>
-                                    
+
                                     <!-- View All Results -->
                                     <div class="autocomplete-footer border-top p-3 text-center d-none" id="autocompleteFooter">
                                         <a href="{{ route('search.index', app()->getLocale()) }}" class="btn btn-link text-decoration-none" id="viewAllLink">
@@ -216,11 +216,11 @@
                 <ul class="nav nav-tabs justify-content-start mb-4" id="categories-tab" role="tablist">
                     @foreach($sidebarMenus as $index => $menu)
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link nav-link_underscore {{ $index === 0 ? 'active' : '' }}" 
+                            <a class="nav-link nav-link_underscore {{ $index === 0 ? 'active' : '' }}"
                                id="category-tab-{{ $menu->id }}-trigger"
-                               data-bs-toggle="tab" 
-                               href="#category-tab-{{ $menu->id }}" 
-                               role="tab" 
+                               data-bs-toggle="tab"
+                               href="#category-tab-{{ $menu->id }}"
+                               role="tab"
                                aria-controls="category-tab-{{ $menu->id }}"
                                aria-selected="{{ $index === 0 ? 'true' : 'false' }}">
                                 {{ $menu->getTranslation('title', app()->getLocale()) }}
@@ -231,8 +231,8 @@
 
                 <div class="tab-content pt-2" id="categories-tab-content">
                     @foreach($sidebarMenus as $index => $menu)
-                        <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" 
-                             id="category-tab-{{ $menu->id }}" 
+                        <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}"
+                             id="category-tab-{{ $menu->id }}"
                              role="tabpanel"
                              aria-labelledby="category-tab-{{ $menu->id }}-trigger">
                             @if($menu->children && $menu->children->isNotEmpty())
@@ -294,28 +294,27 @@
         <div class="container">
             <div class="d-flex align-items-center justify-content-between flex-wrap mb-3 pb-xl-2 mb-xl-4 gap-md-4">
                 <h2 class="section-title fw-normal">{{ __('home.Featured Products') }}</h2>
-
                 <ul class="nav nav-tabs justify-content-center" id="collections-1-tab" role="tablist">
-                        @foreach($featuredMenus as $index => $menu)
+                    @foreach($featuredMenus as $index => $menu)
                     <li class="nav-item" role="presentation">
-                                <a class="nav-link nav-link_underscore {{ $index === 0 ? 'active' : '' }}" 
-                                   id="collections-tab-{{ $menu->id }}-trigger"
-                                   data-bs-toggle="tab" 
-                                   href="#collections-tab-{{ $menu->id }}" 
-                                   role="tab" 
-                                   aria-controls="collections-tab-{{ $menu->id }}"
-                                   aria-selected="{{ $index === 0 ? 'true' : 'false' }}">
-                                    {{ $menu->getTranslation('title', app()->getLocale()) }}
-                                </a>
+                        <a class="nav-link nav-link_underscore {{ $index === 0 ? 'active' : '' }}"
+                           id="collections-tab-{{ $menu->id }}-trigger"
+                           data-bs-toggle="tab"
+                           href="#collections-tab-{{ $menu->id }}"
+                           role="tab"
+                           aria-controls="collections-tab-{{ $menu->id }}"
+                           aria-selected="{{ $index === 0 ? 'true' : 'false' }}">
+                            {{ $menu->getTranslation('title', app()->getLocale()) }}
+                        </a>
                     </li>
-                        @endforeach
+                    @endforeach
                 </ul>
             </div>
 
             <div class="tab-content pt-2" id="collections-2-tab-content">
                     @foreach($featuredMenus as $index => $menu)
-                        <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" 
-                             id="collections-tab-{{ $menu->id }}" 
+                        <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}"
+                             id="collections-tab-{{ $menu->id }}"
                              role="tabpanel"
                              aria-labelledby="collections-tab-{{ $menu->id }}-trigger">
                     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5">
