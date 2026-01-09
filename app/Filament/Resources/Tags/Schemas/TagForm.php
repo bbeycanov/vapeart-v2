@@ -33,9 +33,9 @@ class TagForm
                             ->live(onBlur: true)
                             ->columnSpanFull()
                             ->required()
-                            ->afterStateUpdated(function ($state, Set $set, Get $get, $livewire) {
-                                // Generate slug if empty or if in English locale
-                                if (empty($get('slug')) || $livewire->activeLocale === 'en') {
+                            ->afterStateUpdated(function ($state, Set $set, $livewire) {
+                                // Only generate slug when in English locale
+                                if ($livewire->activeLocale === 'en') {
                                     $set('slug', Str::slug($state));
                                 }
                             }),
