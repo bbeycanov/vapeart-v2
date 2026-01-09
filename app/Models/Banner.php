@@ -145,12 +145,13 @@ class Banner extends Model implements HasMedia, Sortable
      */
     public function getBannerImageUrls(): array
     {
-        $media = $this->getFirstMedia('image');
-        $mobileMedia = $this->getFirstMedia('image_mobile');
+        $media = $this->getFirstMedia('desktop');
+        $tabletMedia = $this->getFirstMedia('tablet');
+        $mobileMedia = $this->getFirstMedia('mobile');
 
         return [
             'desktop' => $media?->getUrl('desktop') ?: $media?->getUrl() ?: '',
-            'tablet' => $media?->getUrl('tablet') ?: $media?->getUrl() ?: '',
+            'tablet' => $tabletMedia?->getUrl('tablet') ?: $media?->getUrl() ?: '',
             'mobile' => $mobileMedia?->getUrl('mobile') ?: $media?->getUrl('mobile') ?: $media?->getUrl() ?: '',
         ];
     }
