@@ -77,6 +77,21 @@ class Widget extends Model implements HasMedia, Sortable
         $this->addMediaCollection('image')->singleFile();
     }
 
+    /**
+     * Register media conversions
+     *
+     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
+     * @return void
+     */
+    public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void
+    {
+        // Thumb for admin panel
+        $this->addMediaConversion('thumb')
+            ->width(256)
+            ->height(256)
+            ->nonQueued();
+    }
+
     public function scopeIsActive($query)
     {
         return $query->where('is_active', true);

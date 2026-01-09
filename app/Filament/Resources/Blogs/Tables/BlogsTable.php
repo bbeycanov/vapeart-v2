@@ -35,7 +35,8 @@ class BlogsTable
                     ->sortable(),
                 SpatieMediaLibraryImageColumn::make('image')
                     ->label(__('Image'))
-                    ->collection('featured'),
+                    ->collection('featured')
+                    ->conversion('thumb'),
                 TextColumn::make('title')
                     ->label(__('Title'))
                     ->searchable(query: function (Builder $query, string $search): Builder {

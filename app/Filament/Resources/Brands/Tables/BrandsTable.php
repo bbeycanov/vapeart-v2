@@ -25,6 +25,7 @@ class BrandsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->with('media'))
             ->columns([
                 TextColumn::make('id')
                     ->label(__('ID'))
@@ -32,7 +33,8 @@ class BrandsTable
                     ->sortable(),
                 SpatieMediaLibraryImageColumn::make('logo')
                     ->label(__('Image'))
-                    ->collection('logo'),
+                    ->collection('logo')
+                    ->conversion('thumb'),
                 TextColumn::make('name')
                     ->label(__('Name'))
                     ->searchable(query: function (Builder $query, string $search): Builder {

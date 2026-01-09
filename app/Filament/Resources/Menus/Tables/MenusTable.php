@@ -27,6 +27,7 @@ class MenusTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->with('media'))
             ->columns([
                 TextColumn::make('id')
                     ->label(__('ID'))
@@ -34,7 +35,8 @@ class MenusTable
                     ->sortable(),
                 SpatieMediaLibraryImageColumn::make('image')
                     ->label(__('Image'))
-                    ->collection('icon'),
+                    ->collection('icon')
+                    ->conversion('thumb'),
                 TextColumn::make('title')
                     ->label(__('Title'))
                     ->sortable()

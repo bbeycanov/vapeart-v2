@@ -26,6 +26,7 @@ class CategoriesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->with('media'))
             ->columns([
                 TextColumn::make('id')
                     ->label(__('ID'))
@@ -33,7 +34,8 @@ class CategoriesTable
                     ->sortable(),
                 SpatieMediaLibraryImageColumn::make('image')
                     ->label(__('Image'))
-                    ->collection('icon'),
+                    ->collection('icon')
+                    ->conversion('thumb'),
                 TextColumn::make('parent.name')
                     ->label(__('Parent Category')),
                 TextColumn::make('name')

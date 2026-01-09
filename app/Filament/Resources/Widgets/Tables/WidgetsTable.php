@@ -25,13 +25,15 @@ class WidgetsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->with('media'))
             ->columns([
                 TextColumn::make('id')
                     ->label(__('ID'))
                     ->sortable(),
                 SpatieMediaLibraryImageColumn::make('image')
                     ->collection('image')
-                    ->label(__('Image')),
+                    ->label(__('Image'))
+                    ->conversion('thumb'),
                 TextColumn::make('title')
                     ->label(__('Title'))
                     ->searchable(query: function (Builder $query, string $search): Builder {

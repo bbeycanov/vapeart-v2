@@ -16,6 +16,7 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
@@ -27,11 +28,16 @@ class ProductsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->with('media'))
             ->columns([
                 TextColumn::make('id')
                     ->label(__('ID'))
                     ->numeric()
                     ->sortable(),
+                SpatieMediaLibraryImageColumn::make('thumbnail')
+                    ->label(__('Image'))
+                    ->collection('thumbnail')
+                    ->conversion('thumb'),
                 TextColumn::make('brand.name')
                     ->label(__('Brand'))
                     ->searchable(query: function (Builder $query, string $search): Builder {

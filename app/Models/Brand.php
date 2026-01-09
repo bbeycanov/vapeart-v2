@@ -93,6 +93,12 @@ class Brand extends Model implements HasMedia, Sortable
      */
     public function registerMediaConversions(Media $media = null): void
     {
+        // Thumb for admin panel
+        $this->addMediaConversion('thumb')
+            ->width(256)
+            ->height(256)
+            ->nonQueued();
+
         // Desktop banner: Original size with high quality
         $this->addMediaConversion('logo')
             ->width(300)

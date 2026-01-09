@@ -181,6 +181,12 @@ class Category extends Model implements HasMedia, Sortable
      */
     public function registerMediaConversions(Media $media = null): void
     {
+        // Thumb for admin panel
+        $this->addMediaConversion('thumb')
+            ->width(256)
+            ->height(256)
+            ->nonQueued();
+
         // Icon: 128x128 (for category navigation)
         $this->addMediaConversion('icon')
             ->width(128)
