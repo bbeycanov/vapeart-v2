@@ -127,13 +127,13 @@ class Banner extends Model implements HasMedia, Sortable
 
         // Tablet banner: 1200px wide for retina displays
         $this->addMediaConversion('tablet')
-            ->quality(85)
+            ->quality(90)
             ->performOnCollections('tablet')
             ->nonQueued();
 
         // Mobile banner: 800px wide for retina displays
         $this->addMediaConversion('mobile')
-            ->quality(85)
+            ->quality(90)
             ->performOnCollections('mobile')
             ->nonQueued();
     }
