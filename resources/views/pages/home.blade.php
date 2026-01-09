@@ -239,8 +239,6 @@
                                             $iconUrl = $iconMedia ? $iconMedia->getUrl() : null;
                                             $menuUrl = $child->getTranslation('url', app()->getLocale());
                                             $menuTitle = $child->getTranslation('title', app()->getLocale());
-                                            // Get product count from sidebar menu
-                                            $productCount = $child->products()->where('is_active', true)->count();
                                         @endphp
                                         <div class="col">
                                             <a href="{{ $menuUrl }}"
@@ -263,8 +261,7 @@
                                                     @endif
                                                 </div>
                                                 <div class="category-mini-card__content d-flex flex-column justify-content-center flex-grow-1">
-                                                    <span class="category-mini-card__name text-dark fw-medium mb-1">{{ $menuTitle }}</span>
-                                                    <span class="category-mini-card__count text-muted">{{ $productCount }} {{ __('common.products') }}</span>
+                                                    <span class="category-mini-card__name text-dark fw-medium">{{ $menuTitle }}</span>
                                                 </div>
                                             </a>
                                         </div>
