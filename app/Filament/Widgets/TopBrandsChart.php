@@ -3,11 +3,13 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Brand;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Illuminate\Support\Facades\Cache;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class TopBrandsChart extends ApexChartWidget
 {
+    use InteractsWithPageFilters;
     protected static ?string $chartId = 'topBrandsChart';
     protected static ?int $sort = 10;
     protected int|string|array $columnSpan = 1;

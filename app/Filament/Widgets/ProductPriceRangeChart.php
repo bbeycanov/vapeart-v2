@@ -3,11 +3,13 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Product;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Illuminate\Support\Facades\Cache;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class ProductPriceRangeChart extends ApexChartWidget
 {
+    use InteractsWithPageFilters;
     protected static ?string $chartId = 'productPriceRangeChart';
     protected static ?int $sort = 8;
     protected int|string|array $columnSpan = 1;

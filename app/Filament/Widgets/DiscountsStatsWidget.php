@@ -3,12 +3,14 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Discount;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Support\Facades\Cache;
 
 class DiscountsStatsWidget extends BaseWidget
 {
+    use InteractsWithPageFilters;
     protected static ?int $sort = 11;
 
     protected function getStats(): array

@@ -3,11 +3,13 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Category;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Illuminate\Support\Facades\Cache;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class TopCategoriesChart extends ApexChartWidget
 {
+    use InteractsWithPageFilters;
     protected static ?string $chartId = 'topCategoriesChart';
     protected static ?int $sort = 9;
     protected int|string|array $columnSpan = 1;

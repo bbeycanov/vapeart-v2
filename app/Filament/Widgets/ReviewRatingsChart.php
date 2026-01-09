@@ -3,11 +3,13 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Review;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Illuminate\Support\Facades\Cache;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class ReviewRatingsChart extends ApexChartWidget
 {
+    use InteractsWithPageFilters;
     protected static ?string $chartId = 'reviewRatingsChart';
     protected static ?int $sort = 6;
     protected int|string|array $columnSpan = 1;
