@@ -157,6 +157,7 @@
     flex-shrink: 0;
     color: #767676;
     transition: all 0.3s ease;
+    border: 1px solid #e4e4e4;
 }
 
 .category-mini-card:hover .category-mini-card__icon {
@@ -168,7 +169,7 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    padding: 6px;
+    padding: 2px;
 }
 
 .category-mini-card__icon svg {

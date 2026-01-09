@@ -244,7 +244,7 @@
                                             <a href="{{ $menuUrl }}"
                                                class="category-mini-card d-flex border rounded-3 p-3 text-decoration-none h-100"
                                                @if($child->target) target="{{ $child->target }}" @endif>
-                                                <div class="category-mini-card__icon d-flex align-items-center justify-content-center bg-light me-3">
+                                                <div class="category-mini-card__icon d-flex align-items-center justify-content-center me-3">
                                                     @if($iconUrl)
                                                         <img src="{{ $iconUrl }}" alt="{{ $menuTitle }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                                                         <svg class="fallback-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
