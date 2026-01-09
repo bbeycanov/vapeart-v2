@@ -340,19 +340,25 @@
             <div class="col-sm-6 col-md-4 col-lg-3 col-xl-20per">
                 <div class="position-relative w-100 h-sm-100 border-radius-4 overflow-hidden minh-240 mb-4 mb-sm-0">
                     @php
-                        $discountBannerImage = $discountBanner->getFirstMediaUrl('desktop');
-                        $discountName = $activeDiscount->getTranslation('name', app()->getLocale());
-                        $discountAmount = $activeDiscount->amount;
-                        $discountType = $activeDiscount->type;
-                        $discountText = $discountType === 'percentage' ? $discountAmount . '%' : $discountAmount . ' ' . ($activeDiscount->products()->first()->currency ?? 'AZN');
+                        $discountBannerImage = $discountBanner->getBannerImageUrls();
                     @endphp
-                    <div class="background-img"
-                         style="background-image: url('{{ $discountBannerImage ?: asset('storefront/images/home/demo12/deal-bg.jpg') }}');"></div>
-                    <!--<div class="position-absolute position-center text-white text-center w-100 px-3">
-                        <h2 class="section-title fw-bold text-white">{{ $discountText }}</h2>
-                        <h3 class="text-white fw-normal">{{ $discountName }}</h3>
-                        <p>{{ __('product.Limited Time Only') }}</p>
-                    </div>-->
+                    <div class="background-img">
+                        <picture>
+                            {{-- Mobile fallback --}}
+                            @if($discountBannerImage['mobile'])
+                                <source media="(max-width: 768px)" srcset="{{ $discountBannerImage['mobile'] }}">
+                            @endif
+                            {{-- Tablet fallback --}}
+                            @if($discountBannerImage['tablet'])
+                                <source media="(max-width: 1024px)" srcset="{{ $discountBannerImage['tablet'] }}">
+                            @endif
+                            {{-- Desktop: Original image for best quality --}}
+                            <img loading="eager"
+                                 src="{{ $discountBannerImage['desktop'] }}"
+                                 alt="{{ $title ?? __('common.Banner') }}"
+                                 class="slideshow-bg__img object-fit-cover w-100 h-100">
+                        </picture>
+                    </div>
                 </div>
             </div>
             @endif
@@ -360,36 +366,36 @@
                 <div id="deals_carousel" class="position-relative">
                     <div class="swiper-container js-swiper-slider"
                          data-settings='{
-                "autoplay": {
-                  "delay": 5000
-                },
-                "slidesPerView": 4,
-                "slidesPerGroup": 1,
-                "effect": "none",
-                "loop": false,
-                "breakpoints": {
-                  "320": {
-                    "slidesPerView": 1,
-                    "slidesPerGroup": 1,
-                    "spaceBetween": 16
-                  },
-                  "768": {
-                    "slidesPerView": 2,
-                    "slidesPerGroup": 1,
-                    "spaceBetween": 22
-                  },
-                  "992": {
-                    "slidesPerView": 3,
-                    "slidesPerGroup": 1,
-                    "spaceBetween": 28
-                  },
-                  "1200": {
-                    "slidesPerView": 4,
-                    "slidesPerGroup": 1,
-                    "spaceBetween": 34
-                  }
-                }
-              }'>
+                            "autoplay": {
+                              "delay": 5000
+                            },
+                            "slidesPerView": 4,
+                            "slidesPerGroup": 1,
+                            "effect": "none",
+                            "loop": false,
+                            "breakpoints": {
+                              "320": {
+                                "slidesPerView": 1,
+                                "slidesPerGroup": 1,
+                                "spaceBetween": 16
+                              },
+                              "768": {
+                                "slidesPerView": 2,
+                                "slidesPerGroup": 1,
+                                "spaceBetween": 22
+                              },
+                              "992": {
+                                "slidesPerView": 3,
+                                "slidesPerGroup": 1,
+                                "spaceBetween": 28
+                              },
+                              "1200": {
+                                "slidesPerView": 4,
+                                "slidesPerGroup": 1,
+                                "spaceBetween": 34
+                              }
+                            }
+                          }'>
                         <div class="swiper-wrapper">
                             @foreach($discountProducts as $product)
                                 <div class="swiper-slide">
