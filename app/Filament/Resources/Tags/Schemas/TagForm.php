@@ -9,6 +9,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Components\Utilities\Get;
 
 class TagForm
 {
@@ -32,15 +33,16 @@ class TagForm
                             ->live(onBlur: true)
                             ->columnSpanFull()
                             ->required()
-                            ->afterStateUpdated(function ($state, Set $set, $livewire) {
-                                if ($livewire->activeLocale === 'en') {
+                            ->afterStateUpdated(function ($state, Set $set, Get $get, $livewire) {
+                                // Generate slug if empty or if in English locale
+                                if (empty($get('slug')) || $livewire->activeLocale === 'en') {
                                     $set('slug', Str::slug($state));
                                 }
                             }),
                         TextInput::make('slug')
                             ->label(__('Slug'))
                             ->columnSpanFull()
-                            ->required()
+                            ->dehydrated()
                             ->readonly(),
                     ]),
                 Section::make(__('Switcher'))

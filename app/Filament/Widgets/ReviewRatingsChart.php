@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Review;
+use Illuminate\Support\Facades\Cache;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class ReviewRatingsChart extends ApexChartWidget
@@ -18,13 +19,15 @@ class ReviewRatingsChart extends ApexChartWidget
 
     protected function getOptions(): array
     {
-        // Show all approved ratings (not filtered by date)
-        $ratings = [];
-        for ($i = 1; $i <= 5; $i++) {
-            $ratings[$i] = Review::where('rating', $i)
-                ->where('status', 1)
-                ->count();
-        }
+        $data = Cache::remember('dashboard_review_ratings', 3600, function () {
+            $ratings = [];
+            for ($i = 1; $i <= 5; $i++) {
+                $ratings[$i] = Review::where('rating', $i)
+                    ->where('status', 1)
+                    ->count();
+            }
+            return $ratings;
+        });
 
         return [
             'chart' => [
@@ -37,7 +40,7 @@ class ReviewRatingsChart extends ApexChartWidget
             'series' => [
                 [
                     'name' => __('Reviews'),
-                    'data' => array_values($ratings),
+                    'data' => array_values($data),
                 ],
             ],
             'xaxis' => [
@@ -63,4 +66,3 @@ class ReviewRatingsChart extends ApexChartWidget
         ];
     }
 }
-

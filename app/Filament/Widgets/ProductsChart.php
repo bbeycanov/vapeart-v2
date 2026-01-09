@@ -5,6 +5,7 @@ namespace App\Filament\Widgets;
 use App\Models\Product;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
@@ -34,15 +35,25 @@ class ProductsChart extends ApexChartWidget
             $endDate = Carbon::parse($endDate);
         }
 
-        $productsTrend = Trend::model(Product::class)
-            ->between(start: $startDate, end: $endDate)
-            ->perDay()
-            ->count();
+        $cacheKey = 'dashboard_products_chart_' . $startDate->format('Y-m-d') . '_' . $endDate->format('Y-m-d');
 
-        $activeProductsTrend = Trend::query(Product::where('is_active', true))
-            ->between(start: $startDate, end: $endDate)
-            ->perDay()
-            ->count();
+        $data = Cache::remember($cacheKey, 3600, function () use ($startDate, $endDate) {
+            $productsTrend = Trend::model(Product::class)
+                ->between(start: $startDate, end: $endDate)
+                ->perDay()
+                ->count();
+
+            $activeProductsTrend = Trend::query(Product::where('is_active', true))
+                ->between(start: $startDate, end: $endDate)
+                ->perDay()
+                ->count();
+
+            return [
+                'allProducts' => $productsTrend->map(fn(TrendValue $value) => $value->aggregate)->toArray(),
+                'activeProducts' => $activeProductsTrend->map(fn(TrendValue $value) => $value->aggregate)->toArray(),
+                'categories' => $productsTrend->map(fn(TrendValue $value) => Carbon::parse($value->date)->format('M d'))->toArray(),
+            ];
+        });
 
         return [
             'chart' => [
@@ -55,15 +66,15 @@ class ProductsChart extends ApexChartWidget
             'series' => [
                 [
                     'name' => __('All Products'),
-                    'data' => $productsTrend->map(fn(TrendValue $value) => $value->aggregate)->toArray(),
+                    'data' => $data['allProducts'],
                 ],
                 [
                     'name' => __('Active Products'),
-                    'data' => $activeProductsTrend->map(fn(TrendValue $value) => $value->aggregate)->toArray(),
+                    'data' => $data['activeProducts'],
                 ],
             ],
             'xaxis' => [
-                'categories' => $productsTrend->map(fn(TrendValue $value) => Carbon::parse($value->date)->format('M d'))->toArray(),
+                'categories' => $data['categories'],
                 'labels' => [
                     'style' => [
                         'fontFamily' => 'inherit',
@@ -99,4 +110,3 @@ class ProductsChart extends ApexChartWidget
         ];
     }
 }
-

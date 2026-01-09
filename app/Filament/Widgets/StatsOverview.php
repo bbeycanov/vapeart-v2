@@ -2,7 +2,6 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Blog;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ContactMessage;
@@ -15,6 +14,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class StatsOverview extends BaseWidget
 {
@@ -34,65 +34,83 @@ class StatsOverview extends BaseWidget
             $endDate = Carbon::parse($endDate);
         }
 
-        // Products trend
-        $productsTrend = Trend::model(Product::class)
-            ->between(start: $startDate, end: $endDate)
-            ->perDay()
-            ->count();
+        $cacheKey = 'dashboard_stats_overview_' . $startDate->format('Y-m-d') . '_' . $endDate->format('Y-m-d');
 
-        // Reviews trend
-        $reviewsTrend = Trend::model(Review::class)
-            ->between(start: $startDate, end: $endDate)
-            ->perDay()
-            ->count();
+        $data = Cache::remember($cacheKey, 3600, function () use ($startDate, $endDate) {
+            $productsTrend = Trend::model(Product::class)
+                ->between(start: $startDate, end: $endDate)
+                ->perDay()
+                ->count();
 
-        // Contact messages trend
-        $messagesTrend = Trend::model(ContactMessage::class)
-            ->between(start: $startDate, end: $endDate)
-            ->perDay()
-            ->count();
+            $reviewsTrend = Trend::model(Review::class)
+                ->between(start: $startDate, end: $endDate)
+                ->perDay()
+                ->count();
 
-        // Users trend
-        $usersTrend = Trend::model(User::class)
-            ->between(start: $startDate, end: $endDate)
-            ->perDay()
-            ->count();
+            $messagesTrend = Trend::model(ContactMessage::class)
+                ->between(start: $startDate, end: $endDate)
+                ->perDay()
+                ->count();
+
+            $usersTrend = Trend::model(User::class)
+                ->between(start: $startDate, end: $endDate)
+                ->perDay()
+                ->count();
+
+            return [
+                'totalProducts' => Product::count(),
+                'activeProducts' => Product::where('is_active', true)->count(),
+                'productsTrend' => $productsTrend->map(fn(TrendValue $value) => $value->aggregate)->toArray(),
+                'totalCategories' => Category::count(),
+                'categoriesWithProducts' => Category::whereHas('products')->count(),
+                'totalBrands' => Brand::count(),
+                'activeBrands' => Brand::where('is_active', true)->count(),
+                'totalUsers' => User::count(),
+                'newUsers' => User::whereBetween('created_at', [$startDate, $endDate])->count(),
+                'usersTrend' => $usersTrend->map(fn(TrendValue $value) => $value->aggregate)->toArray(),
+                'totalReviews' => Review::count(),
+                'pendingReviews' => Review::where('status', 0)->count(),
+                'reviewsTrend' => $reviewsTrend->map(fn(TrendValue $value) => $value->aggregate)->toArray(),
+                'unreadMessages' => ContactMessage::where('is_read', false)->count(),
+                'totalMessages' => ContactMessage::count(),
+                'messagesTrend' => $messagesTrend->map(fn(TrendValue $value) => $value->aggregate)->toArray(),
+            ];
+        });
 
         return [
-            Stat::make(__('Total Products'), Product::count())
-                ->description(__('Active') . ': ' . Product::where('is_active', true)->count())
+            Stat::make(__('Total Products'), $data['totalProducts'])
+                ->description(__('Active') . ': ' . $data['activeProducts'])
                 ->descriptionIcon('heroicon-m-shopping-cart')
-                ->chart($productsTrend->map(fn(TrendValue $value) => $value->aggregate)->toArray())
+                ->chart($data['productsTrend'])
                 ->color('success'),
 
-            Stat::make(__('Categories'), Category::count())
-                ->description(__('With products') . ': ' . Category::whereHas('products')->count())
+            Stat::make(__('Categories'), $data['totalCategories'])
+                ->description(__('With products') . ': ' . $data['categoriesWithProducts'])
                 ->descriptionIcon('heroicon-m-folder')
                 ->color('info'),
 
-            Stat::make(__('Brands'), Brand::count())
-                ->description(__('Active') . ': ' . Brand::where('is_active', true)->count())
+            Stat::make(__('Brands'), $data['totalBrands'])
+                ->description(__('Active') . ': ' . $data['activeBrands'])
                 ->descriptionIcon('heroicon-m-building-storefront')
                 ->color('warning'),
 
-            Stat::make(__('Users'), User::count())
-                ->description(__('New this period') . ': ' . User::whereBetween('created_at', [$startDate, $endDate])->count())
+            Stat::make(__('Users'), $data['totalUsers'])
+                ->description(__('New this period') . ': ' . $data['newUsers'])
                 ->descriptionIcon('heroicon-m-users')
-                ->chart($usersTrend->map(fn(TrendValue $value) => $value->aggregate)->toArray())
+                ->chart($data['usersTrend'])
                 ->color('primary'),
 
-            Stat::make(__('Reviews'), Review::count())
-                ->description(__('Pending') . ': ' . Review::where('status', 0)->count())
+            Stat::make(__('Reviews'), $data['totalReviews'])
+                ->description(__('Pending') . ': ' . $data['pendingReviews'])
                 ->descriptionIcon('heroicon-m-star')
-                ->chart($reviewsTrend->map(fn(TrendValue $value) => $value->aggregate)->toArray())
+                ->chart($data['reviewsTrend'])
                 ->color('success'),
 
-            Stat::make(__('Unread Messages'), ContactMessage::where('is_read', false)->count())
-                ->description(__('Total') . ': ' . ContactMessage::count())
+            Stat::make(__('Unread Messages'), $data['unreadMessages'])
+                ->description(__('Total') . ': ' . $data['totalMessages'])
                 ->descriptionIcon('heroicon-m-envelope')
-                ->chart($messagesTrend->map(fn(TrendValue $value) => $value->aggregate)->toArray())
+                ->chart($data['messagesTrend'])
                 ->color('danger'),
         ];
     }
 }
-

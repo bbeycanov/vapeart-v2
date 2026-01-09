@@ -12,6 +12,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 class PageForm
@@ -42,8 +43,9 @@ class PageForm
                             ->live(onBlur: true)
                             ->columnSpanFull()
                             ->required()
-                            ->afterStateUpdated(function ($state, Set $set, $livewire) {
-                                if ($livewire->activeLocale === 'en') {
+                            ->afterStateUpdated(function ($state, Set $set, Get $get, $livewire) {
+                                // Generate slug if empty or if in English locale
+                                if (empty($get('slug')) || $livewire->activeLocale === 'en') {
                                     $set('slug', Str::slug($state));
                                 }
                             }),
@@ -63,7 +65,7 @@ class PageForm
                         TextInput::make('slug')
                             ->label(__('Slug'))
                             ->columnSpanFull()
-                            ->required()
+                            ->dehydrated()
                             ->readonly(),
                         TextInput::make('meta_title'),
                         TextInput::make('meta_description'),

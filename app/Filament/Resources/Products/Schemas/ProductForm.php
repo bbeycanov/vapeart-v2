@@ -131,8 +131,9 @@ class ProductForm
                                             ->live(onBlur: true)
                                             ->columnSpanFull()
                                             ->required()
-                                            ->afterStateUpdated(function ($state, Set $set, $livewire) {
-                                                if ($livewire->activeLocale === 'en') {
+                                            ->afterStateUpdated(function ($state, Set $set, Get $get, $livewire) {
+                                                // Generate slug if empty or if in English locale
+                                                if (empty($get('slug')) || $livewire->activeLocale === 'en') {
                                                     $set('slug', Str::slug($state));
                                                 }
                                             }),
@@ -173,7 +174,7 @@ class ProductForm
                                     ->label(__('Slug'))
                                     ->live()
                                     ->columnSpanFull()
-                                    ->required()
+                                    ->dehydrated()
                                     ->readonly(),
                                 TextInput::make('meta_title')
                                     ->live()

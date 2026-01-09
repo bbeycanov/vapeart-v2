@@ -15,6 +15,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\DatePicker;
 use App\Enums\RichEditorFullToolBarButton;
 use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 class BlogForm
@@ -38,21 +39,22 @@ class BlogForm
                                     ->collapsible()
                                     ->description(__('Enter general information for the blog post'))
                                     ->schema([
-                                        TextInput::make('slug')
-                                            ->label(__('Slug'))
-                                            ->columnSpanFull()
-                                            ->required()
-                                            ->readonly(),
                                         TextInput::make('title')
                                             ->label(__('Title'))
                                             ->live(onBlur: true)
                                             ->columnSpanFull()
                                             ->required()
-                                            ->afterStateUpdated(function ($state, Set $set, $livewire) {
-                                                if ($livewire->activeLocale === 'en') {
+                                            ->afterStateUpdated(function ($state, Set $set, Get $get, $livewire) {
+                                                // Generate slug if empty or if in English locale
+                                                if (empty($get('slug')) || $livewire->activeLocale === 'en') {
                                                     $set('slug', Str::slug($state));
                                                 }
                                             }),
+                                        TextInput::make('slug')
+                                            ->label(__('Slug'))
+                                            ->columnSpanFull()
+                                            ->dehydrated()
+                                            ->readonly(),
                                         RichEditor::make('excerpt')
                                             ->label(__('Excerpt'))
                                             ->toolbarButtons(RichEditorFullToolBarButton::getAll())

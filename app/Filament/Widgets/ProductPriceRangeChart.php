@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Product;
+use Illuminate\Support\Facades\Cache;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class ProductPriceRangeChart extends ApexChartWidget
@@ -18,14 +19,15 @@ class ProductPriceRangeChart extends ApexChartWidget
 
     protected function getOptions(): array
     {
-        // Show all active products by price range (not filtered by date)
-        $ranges = [
-            '0-50' => Product::where('is_active', true)->whereBetween('price', [0, 50])->count(),
-            '50-100' => Product::where('is_active', true)->whereBetween('price', [50, 100])->count(),
-            '100-200' => Product::where('is_active', true)->whereBetween('price', [100, 200])->count(),
-            '200-500' => Product::where('is_active', true)->whereBetween('price', [200, 500])->count(),
-            '500+' => Product::where('is_active', true)->where('price', '>', 500)->count(),
-        ];
+        $data = Cache::remember('dashboard_price_distribution', 3600, function () {
+            return [
+                '0-50' => Product::where('is_active', true)->whereBetween('price', [0, 50])->count(),
+                '50-100' => Product::where('is_active', true)->whereBetween('price', [50, 100])->count(),
+                '100-200' => Product::where('is_active', true)->whereBetween('price', [100, 200])->count(),
+                '200-500' => Product::where('is_active', true)->whereBetween('price', [200, 500])->count(),
+                '500+' => Product::where('is_active', true)->where('price', '>', 500)->count(),
+            ];
+        });
 
         return [
             'chart' => [
@@ -38,7 +40,7 @@ class ProductPriceRangeChart extends ApexChartWidget
             'series' => [
                 [
                     'name' => __('Products'),
-                    'data' => array_values($ranges),
+                    'data' => array_values($data),
                 ],
             ],
             'xaxis' => [
@@ -66,4 +68,3 @@ class ProductPriceRangeChart extends ApexChartWidget
         ];
     }
 }
-
