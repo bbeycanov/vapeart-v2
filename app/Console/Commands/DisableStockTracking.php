@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Product;
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Command\Command as CommandAlias;
 
 class DisableStockTracking extends Command
 {
@@ -30,6 +31,6 @@ class DisableStockTracking extends Command
 
         $this->info("Stock tracking disabled for {$count} products.");
 
-        return Command::SUCCESS;
+        return CommandAlias::SUCCESS;
     }
 }
