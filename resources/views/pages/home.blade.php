@@ -348,11 +348,11 @@
                     @endphp
                     <div class="background-img"
                          style="background-image: url('{{ $discountBannerImage ?: asset('storefront/images/home/demo12/deal-bg.jpg') }}');"></div>
-                    <div class="position-absolute position-center text-white text-center w-100 px-3">
+                    <!--<div class="position-absolute position-center text-white text-center w-100 px-3">
                         <h2 class="section-title fw-bold text-white">{{ $discountText }}</h2>
                         <h3 class="text-white fw-normal">{{ $discountName }}</h3>
                         <p>{{ __('product.Limited Time Only') }}</p>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             @endif
