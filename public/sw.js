@@ -3,7 +3,7 @@
  * PWA offline support and caching strategy
  */
 
-const CACHE_NAME = 'vapeart-cache-v5';
+const CACHE_NAME = 'vapeart-cache-v6';
 const OFFLINE_URL = '/offline.html';
 
 // Assets to cache immediately on install
@@ -71,10 +71,18 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // Skip admin and API requests
+    // Skip admin, API, and livewire requests
     if (url.pathname.startsWith('/admin') ||
         url.pathname.startsWith('/api') ||
         url.pathname.startsWith('/livewire')) {
+        return;
+    }
+
+    // Skip AJAX requests (let them go directly to network)
+    // AJAX requests have mode 'cors' or 'same-origin' and usually request HTML or JSON
+    if (event.request.mode === 'cors' ||
+        event.request.headers.get('X-Requested-With') === 'XMLHttpRequest' ||
+        url.searchParams.has('_t')) {
         return;
     }
 

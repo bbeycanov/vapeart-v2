@@ -143,28 +143,28 @@
 <script>
 (function() {
     'use strict';
-    
+
     document.addEventListener('DOMContentLoaded', function() {
         const productsGrid = document.getElementById('products-grid');
         const sortSelect = document.getElementById('sort-select');
-        
+
         let isLoading = false;
         let currentPage = {{ $list->currentPage() }};
         let currentSort = '';
         let infiniteScrollObserver = null;
         const locale = '{{ $locale }}';
         const brandSlug = '{{ $brand->slug }}';
-        
+
         // Get current sort from URL
         const urlParams = new URLSearchParams(window.location.search);
         currentSort = urlParams.get('sort') || '';
         if (sortSelect && currentSort) {
             sortSelect.value = currentSort;
         }
-        
+
         // Initialize Infinite Scroll
         initInfiniteScroll();
-        
+
         // Sort functionality with AJAX
         if (sortSelect) {
             sortSelect.addEventListener('change', function() {
@@ -173,7 +173,7 @@
                 loadProducts(true);
             });
         }
-        
+
         /**
          * Initialize Infinite Scroll Observer
          */
@@ -182,16 +182,16 @@
             if (infiniteScrollObserver) {
                 infiniteScrollObserver.disconnect();
             }
-            
+
             const trigger = document.getElementById('infinite-scroll-trigger');
             if (!trigger) return;
-            
+
             const options = {
                 root: null,
                 rootMargin: '200px',
                 threshold: 0.1
             };
-            
+
             infiniteScrollObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting && !isLoading) {
@@ -203,15 +203,15 @@
                     }
                 });
             }, options);
-            
+
             infiniteScrollObserver.observe(trigger);
         }
-        
+
         function loadProducts(reset = false) {
             if (isLoading) return;
-            
+
             isLoading = true;
-            
+
             // Show loading state
             if (reset) {
                 if (productsGrid) {
@@ -222,11 +222,11 @@
                 const spinner = document.getElementById('btn-loading-spinner');
                 if (spinner) spinner.classList.remove('d-none');
             }
-            
+
             // Add timestamp to prevent cache
             const timestamp = new Date().getTime();
-            const url = `/${locale}/brands/${brandSlug}?page=${currentPage}${currentSort ? '&sort=' + encodeURIComponent(currentSort) : ''}&_t=${timestamp}`;
-            
+            const url = `/${locale}/brand/${brandSlug}?page=${currentPage}${currentSort ? '&sort=' + encodeURIComponent(currentSort) : ''}&_t=${timestamp}`;
+
             fetch(url, {
                 method: 'GET',
                 headers: {
@@ -248,7 +248,7 @@
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
                 const newProductsGrid = doc.getElementById('products-grid');
-                
+
                 if (newProductsGrid && productsGrid) {
                     if (reset) {
                         // Replace products
@@ -270,17 +270,17 @@
                             productsGrid.appendChild(item.cloneNode(true));
                         });
                     }
-                    
+
                     // Update load more section
                     const newLoadMoreSection = doc.querySelector('.load-more-section');
                     const currentLoadMoreSection = document.querySelector('.load-more-section');
-                    
+
                     if (currentLoadMoreSection) currentLoadMoreSection.remove();
-                    
+
                     if (newLoadMoreSection) {
                         productsGrid.parentElement.appendChild(newLoadMoreSection.cloneNode(true));
                     }
-                    
+
                     // Re-initialize infinite scroll
                     setTimeout(initInfiniteScroll, 100);
                 }
@@ -306,7 +306,7 @@
                 }
             });
         }
-        
+
         // Backup scroll listener
         let scrollTimeout;
         window.addEventListener('scroll', function() {
@@ -316,7 +316,7 @@
                 if (trigger && !isLoading) {
                     const rect = trigger.getBoundingClientRect();
                     const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-                    
+
                     if (rect.top <= windowHeight + 200) {
                         const loadMoreSection = document.querySelector('.load-more-section');
                         if (loadMoreSection && loadMoreSection.style.display !== 'none') {
