@@ -36,7 +36,9 @@ class ProductForm
 
     public static function getDefaultTranslatableLocale(): string
     {
-        return Language::query()->where('is_default', true)->value('code') ?? app()->getLocale();
+        return cache()->remember('default_translatable_locale', 3600, function () {
+            return Language::query()->where('is_default', true)->value('code') ?? app()->getLocale();
+        });
     }
 
     public static function configure(Schema $schema): Schema
@@ -132,8 +134,7 @@ class ProductForm
                                             ->columnSpanFull()
                                             ->required()
                                             ->afterStateUpdated(function ($state, Set $set, $livewire) {
-                                                // Only generate slug when in English locale
-                                                if ($livewire->activeLocale === 'en') {
+                                                if ($livewire->activeLocale === self::getDefaultTranslatableLocale()) {
                                                     $set('slug', Str::slug($state));
                                                 }
                                             }),
@@ -174,6 +175,7 @@ class ProductForm
                                     ->label(__('Slug'))
                                     ->live()
                                     ->columnSpanFull()
+                                    ->required()
                                     ->dehydrated()
                                     ->readonly(),
                                 TextInput::make('meta_title')
