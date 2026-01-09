@@ -101,18 +101,18 @@ class ProductForm
                                             ->columnSpanFull()
                                             ->default('AZN')
                                             ->required(),
-                                        Toggle::make('track_stock')
+                                        Toggle::make('is_track_stock')
                                             ->label('Track Stock')
                                             ->live()
-                                            ->aboveLabel(__('Product appearance depends on stock.')),
+                                            ->helperText(__('Product appearance depends on stock.')),
                                         TextInput::make('stock_qty')
                                             ->label(__('Stock Quantity'))
                                             ->required(function (Get $get) {
-                                                return $get('track_stock') == true;
+                                                return $get('is_track_stock') == true;
                                             })
                                             ->numeric()
                                             ->disabled(function (Get $get) {
-                                                return $get('track_stock') == false;
+                                                return $get('is_track_stock') == false;
                                             })
                                             ->default(0),
                                     ]),
