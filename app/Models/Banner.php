@@ -116,54 +116,46 @@ class Banner extends Model implements HasMedia, Sortable
      */
     public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void
     {
-        // Desktop banner: 1920x560
+        // Desktop banner: Original size with high quality
         $this->addMediaConversion('desktop')
-            ->width(1920)
-            ->height(560)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 1920, 560)
+            ->quality(90)
             ->performOnCollections('image')
             ->nonQueued();
 
-        // Desktop WebP
+        // Desktop WebP: Original size with WebP format for quality + compression
         $this->addMediaConversion('desktop-webp')
-            ->width(1920)
-            ->height(560)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 1920, 560)
             ->format('webp')
+            ->quality(90)
             ->performOnCollections('image')
             ->nonQueued();
 
-        // Tablet banner: 1024x400
+        // Tablet banner: 1200px wide for retina displays
         $this->addMediaConversion('tablet')
-            ->width(1024)
-            ->height(400)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 1024, 400)
+            ->width(1200)
+            ->quality(85)
             ->performOnCollections('image')
             ->nonQueued();
 
         // Tablet WebP
         $this->addMediaConversion('tablet-webp')
-            ->width(1024)
-            ->height(400)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 1024, 400)
+            ->width(1200)
             ->format('webp')
+            ->quality(85)
             ->performOnCollections('image')
             ->nonQueued();
 
-        // Mobile banner: 768x400
+        // Mobile banner: 800px wide for retina displays
         $this->addMediaConversion('mobile')
-            ->width(768)
-            ->height(400)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 768, 400)
+            ->width(800)
+            ->quality(85)
             ->performOnCollections('image', 'image_mobile')
             ->nonQueued();
 
         // Mobile WebP
         $this->addMediaConversion('mobile-webp')
-            ->width(768)
-            ->height(400)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 768, 400)
+            ->width(800)
             ->format('webp')
+            ->quality(85)
             ->performOnCollections('image', 'image_mobile')
             ->nonQueued();
 
