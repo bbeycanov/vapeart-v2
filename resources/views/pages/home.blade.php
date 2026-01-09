@@ -336,7 +336,7 @@
         </div>
 
         <div class="row">
-            @if(isset($discountBanner) && $discountBanner && $discountBanner->isNotEmpty())
+            @if($discountBanner)
             <div class="col-sm-6 col-md-4 col-lg-3 col-xl-20per">
                 <div class="position-relative w-100 h-sm-100 border-radius-4 overflow-hidden minh-240 mb-4 mb-sm-0">
                     @php
@@ -356,7 +356,7 @@
                 </div>
             </div>
             @endif
-            <div class="@if(isset($discountBanner) && $discountBanner && $discountBanner->isNotEmpty()) col-sm-6 col-md-8 col-lg-9 col-xl-80per @else col-sm-12 col-md-12 col-lg-12 @endif ">
+            <div class="@if($discountBanner) col-sm-6 col-md-8 col-lg-9 col-xl-80per @else col-sm-12 col-md-12 col-lg-12 @endif ">
                 <div id="deals_carousel" class="position-relative">
                     <div class="swiper-container js-swiper-slider"
                          data-settings='{
