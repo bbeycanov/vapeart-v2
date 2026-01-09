@@ -38,6 +38,7 @@
                     @php
                         $locale = app()->getLocale();
                         $bannerImages = $banner->getBannerImageUrls();
+                        $originalImage = $banner->getFirstMediaUrl('image'); // Original for desktop
                         $videoUrl = $banner->getFirstMediaUrl('video');
                         $title = $banner->getTranslation('title', $locale);
                         $subtitle = $banner->getTranslation('subtitle', $locale);
@@ -53,7 +54,7 @@
                                     <video autoplay muted loop playsinline class="slideshow-bg__video object-fit-cover w-100 h-100">
                                         <source src="{{ $videoUrl }}" type="video/mp4">
                                     </video>
-                                @elseif($bannerImages['desktop'])
+                                @elseif($originalImage || $bannerImages['desktop'])
                                     <picture>
                                         {{-- Mobile WebP --}}
                                         @if($bannerImages['mobile_webp'])
@@ -71,17 +72,11 @@
                                         @if($bannerImages['tablet'])
                                             <source media="(max-width: 1024px)" srcset="{{ $bannerImages['tablet'] }}">
                                         @endif
-                                        {{-- Desktop WebP --}}
-                                        @if($bannerImages['desktop_webp'])
-                                            <source srcset="{{ $bannerImages['desktop_webp'] }}" type="image/webp">
-                                        @endif
-                                        {{-- Desktop fallback --}}
-                                        <img loading="lazy"
-                                             src="{{ $bannerImages['desktop'] }}"
-                                             width="1920"
-                                             height="560"
+                                        {{-- Desktop: Original image for best quality --}}
+                                        <img loading="eager"
+                                             src="{{ $originalImage ?: $bannerImages['desktop'] }}"
                                              alt="{{ $title ?? __('common.Banner') }}"
-                                             class="slideshow-bg__img object-fit-cover">
+                                             class="slideshow-bg__img object-fit-cover w-100 h-100">
                                     </picture>
                                 @endif
                             </div>
