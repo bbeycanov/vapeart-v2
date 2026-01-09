@@ -105,4 +105,8 @@ return [
     'No products available' => 'No products available',
     'Showing' => 'Showing',
     'of' => 'of',
+
+    // Read more
+    'Read more' => 'Read more',
+    'Show less' => 'Show less',
 ];

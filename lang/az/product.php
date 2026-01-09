@@ -104,5 +104,9 @@ return [
     'No products available' => 'Məhsul yoxdur',
     'Showing' => 'Göstərilir',
     'of' => '-dən',
+
+    // Read more
+    'Read more' => 'Daha çox',
+    'Show less' => 'Daha az',
 ];
 

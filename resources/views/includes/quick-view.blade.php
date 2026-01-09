@@ -64,8 +64,57 @@
                         <span class="reviews-note text-lowercase text-secondary ms-2" id="quickViewReviewsCount"></span>
                     </div>
                     <div class="product-single__short-desc">
-                        <p id="quickViewDescription">-</p>
+                        <div id="quickViewDescriptionWrapper" class="position-relative">
+                            <div id="quickViewDescription" class="quickview-desc-collapsed">-</div>
+                            <div id="quickViewFadeOverlay" class="quickview-fade-overlay"></div>
+                            <button type="button" id="quickViewReadMoreBtn" class="btn btn-link p-0 text-decoration-none fw-semibold" style="display: none;">
+                                {{ __('product.Read more') }} <span class="read-more-icon">▼</span>
+                            </button>
+                        </div>
                     </div>
+                    <style>
+                        #quickViewDescriptionWrapper {
+                            position: relative;
+                        }
+                        .quickview-desc-collapsed {
+                            max-height: 200px;
+                            overflow: hidden;
+                            transition: max-height 0.3s ease;
+                        }
+                        .quickview-desc-expanded {
+                            max-height: none;
+                        }
+                        .quickview-fade-overlay {
+                            position: absolute;
+                            bottom: 24px;
+                            left: 0;
+                            right: 0;
+                            height: 50px;
+                            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+                            pointer-events: none;
+                            display: none;
+                        }
+                        .quickview-fade-overlay.visible {
+                            display: block;
+                        }
+                        #quickViewReadMoreBtn {
+                            color: #6c757d !important;
+                            font-size: 0.875rem;
+                            margin-top: 4px;
+                        }
+                        #quickViewReadMoreBtn:hover {
+                            color: #495057 !important;
+                        }
+                        #quickViewReadMoreBtn .read-more-icon {
+                            display: inline-block;
+                            transition: transform 0.3s ease;
+                            font-size: 0.65rem;
+                            margin-left: 2px;
+                        }
+                        #quickViewReadMoreBtn.expanded .read-more-icon {
+                            transform: rotate(180deg);
+                        }
+                    </style>
                     <form name="addtocart-form" method="post" id="quickViewAddToCartForm">
                         <input type="hidden" name="product_id" id="quickViewProductId" value="">
                         <div class="product-single__swatches" style="display: none;">

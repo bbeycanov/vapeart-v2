@@ -730,10 +730,33 @@
                         if (oldPriceEl) oldPriceEl.style.display = 'none';
                     }
                     
-                    // Description
+                    // Description with Read More functionality
                     if (descEl) {
                         const description = product.short_description || product.description || '-';
                         descEl.innerHTML = description;
+
+                        // Reset to collapsed state
+                        descEl.classList.remove('quickview-desc-expanded');
+                        descEl.classList.add('quickview-desc-collapsed');
+
+                        const readMoreBtn = document.getElementById('quickViewReadMoreBtn');
+                        const fadeOverlay = document.getElementById('quickViewFadeOverlay');
+
+                        if (readMoreBtn) {
+                            readMoreBtn.classList.remove('expanded');
+                            readMoreBtn.innerHTML = '{{ __("product.Read more") }} <span class="read-more-icon">▼</span>';
+
+                            // Check if content overflows after render (200px max-height)
+                            setTimeout(function() {
+                                if (descEl.scrollHeight > 200) {
+                                    readMoreBtn.style.display = 'inline-block';
+                                    if (fadeOverlay) fadeOverlay.classList.add('visible');
+                                } else {
+                                    readMoreBtn.style.display = 'none';
+                                    if (fadeOverlay) fadeOverlay.classList.remove('visible');
+                                }
+                            }, 100);
+                        }
                     }
                     
                     // SKU
@@ -1036,7 +1059,29 @@
         }
         return false;
     });
-    
+
+    // Quick view Read More button handler
+    $(document).on('click', '#quickViewReadMoreBtn', function(e) {
+        e.preventDefault();
+        const descEl = document.getElementById('quickViewDescription');
+        const fadeOverlay = document.getElementById('quickViewFadeOverlay');
+        const btn = $(this);
+
+        if (descEl.classList.contains('quickview-desc-collapsed')) {
+            descEl.classList.remove('quickview-desc-collapsed');
+            descEl.classList.add('quickview-desc-expanded');
+            btn.addClass('expanded');
+            btn.html('{{ __("product.Show less") }} <span class="read-more-icon">▼</span>');
+            if (fadeOverlay) fadeOverlay.classList.remove('visible');
+        } else {
+            descEl.classList.remove('quickview-desc-expanded');
+            descEl.classList.add('quickview-desc-collapsed');
+            btn.removeClass('expanded');
+            btn.html('{{ __("product.Read more") }} <span class="read-more-icon">▼</span>');
+            if (fadeOverlay) fadeOverlay.classList.add('visible');
+        }
+    });
+
     // Override theme.js quick view swiper handler to prevent errors
     // Run after DOM and theme.js are loaded
     $(document).ready(function() {

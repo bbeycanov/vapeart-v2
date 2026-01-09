@@ -104,5 +104,9 @@ return [
     'No products available' => 'Продукты недоступны',
     'Showing' => 'Показано',
     'of' => 'из',
+
+    // Read more
+    'Read more' => 'Подробнее',
+    'Show less' => 'Скрыть',
 ];
 
