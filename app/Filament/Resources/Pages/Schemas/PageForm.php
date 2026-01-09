@@ -12,7 +12,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 class PageForm
@@ -40,11 +39,11 @@ class PageForm
                             ->default('default'),
                         TextInput::make('title')
                             ->label(__('Title'))
-                            ->live()
+                            ->live(onBlur: true)
                             ->columnSpanFull()
                             ->required()
-                            ->afterStateUpdated(function ($state, Set $set, Get $get, $livewire) {
-                                if ($livewire->activeLocale == self::getDefaultTranslatableLocale()) {
+                            ->afterStateUpdated(function ($state, Set $set, $livewire) {
+                                if ($livewire->activeLocale === 'en') {
                                     $set('slug', Str::slug($state));
                                 }
                             }),

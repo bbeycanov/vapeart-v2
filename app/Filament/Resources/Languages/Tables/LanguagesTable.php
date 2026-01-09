@@ -5,6 +5,8 @@ namespace App\Filament\Resources\Languages\Tables;
 use Filament\Tables\Table;
 use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Support\Exceptions\Halt;
 use Filament\Actions\DeleteBulkAction;
@@ -75,6 +77,10 @@ class LanguagesTable
                 EditAction::make()
                     ->button(),
                 DeleteAction::make()
+                    ->button(),
+                RestoreAction::make()
+                    ->button(),
+                ForceDeleteAction::make()
                     ->button(),
             ])
             ->toolbarActions([

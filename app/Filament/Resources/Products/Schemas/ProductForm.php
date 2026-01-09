@@ -128,11 +128,11 @@ class ProductForm
                                             ->required(),
                                         TextInput::make('name')
                                             ->label(__('Name'))
-                                            ->live()
+                                            ->live(onBlur: true)
                                             ->columnSpanFull()
                                             ->required()
-                                            ->afterStateUpdated(function ($state, Set $set, Get $get, $livewire) {
-                                                if ($livewire->activeLocale == self::getDefaultTranslatableLocale()) {
+                                            ->afterStateUpdated(function ($state, Set $set, $livewire) {
+                                                if ($livewire->activeLocale === 'en') {
                                                     $set('slug', Str::slug($state));
                                                 }
                                             }),

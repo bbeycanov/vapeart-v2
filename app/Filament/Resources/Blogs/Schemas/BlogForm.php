@@ -14,7 +14,6 @@ use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\DatePicker;
 use App\Enums\RichEditorFullToolBarButton;
-use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
@@ -46,11 +45,11 @@ class BlogForm
                                             ->readonly(),
                                         TextInput::make('title')
                                             ->label(__('Title'))
-                                            ->live()
+                                            ->live(onBlur: true)
                                             ->columnSpanFull()
                                             ->required()
-                                            ->afterStateUpdated(function ($state, Set $set, Get $get, $livewire) {
-                                                if ($livewire->activeLocale == self::getDefaultTranslatableLocale()) {
+                                            ->afterStateUpdated(function ($state, Set $set, $livewire) {
+                                                if ($livewire->activeLocale === 'en') {
                                                     $set('slug', Str::slug($state));
                                                 }
                                             }),

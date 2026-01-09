@@ -8,6 +8,8 @@ use App\Enums\BannerPosition;
 use Filament\Actions\ViewAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
@@ -103,11 +105,11 @@ class BannersTable
                         Select::make('trashed')
                             ->label(__('Deleted Records'))
                             ->options([
-                                '' => __('Without Deleted'),
                                 'with' => __('With Deleted'),
                                 'only' => __('Only Deleted'),
                             ])
-                            ->placeholder(__('Without Deleted')),
+                            ->placeholder(__('Without Deleted'))
+                            ->native(false),
                     ])
                     ->columns(3)
                     ->columnSpanFull()
@@ -117,6 +119,8 @@ class BannersTable
                             $query->withTrashed();
                         } elseif (($data['trashed'] ?? '') === 'only') {
                             $query->onlyTrashed();
+                        } else {
+                            $query->whereNull('deleted_at');
                         }
 
                         return $query
@@ -162,6 +166,10 @@ class BannersTable
                 EditAction::make()
                     ->button(),
                 DeleteAction::make()
+                    ->button(),
+                RestoreAction::make()
+                    ->button(),
+                ForceDeleteAction::make()
                     ->button(),
             ])
             ->headerActions([

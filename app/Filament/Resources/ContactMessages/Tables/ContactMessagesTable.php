@@ -8,6 +8,8 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\ForceDeleteAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
@@ -85,11 +87,11 @@ class ContactMessagesTable
                         Select::make('trashed')
                             ->label(__('Deleted Records'))
                             ->options([
-                                '' => __('Without Deleted'),
                                 'with' => __('With Deleted'),
                                 'only' => __('Only Deleted'),
                             ])
-                            ->placeholder(__('Without Deleted')),
+                            ->placeholder(__('Without Deleted'))
+                            ->native(false),
                     ])
                     ->columns(3)
                     ->columnSpanFull()
@@ -99,6 +101,8 @@ class ContactMessagesTable
                             $query->withTrashed();
                         } elseif (($data['trashed'] ?? '') === 'only') {
                             $query->onlyTrashed();
+                        } else {
+                            $query->whereNull('deleted_at');
                         }
 
                         return $query
@@ -143,6 +147,10 @@ class ContactMessagesTable
             ->recordActions([
                 ViewAction::make(),
                 DeleteAction::make(),
+                RestoreAction::make()
+                    ->button(),
+                ForceDeleteAction::make()
+                    ->button(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
