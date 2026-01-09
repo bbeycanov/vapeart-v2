@@ -93,7 +93,7 @@ class BannerForm
                             ->label(__('Tablet'))
                             ->disk(config('filesystems.default'))
                             ->collection('tablet')
-                            ->imagePreviewHeight('100')
+                            ->imagePreviewHeight('250')
                             ->helperText(__('Recommended size: 800x600px, Max size: 1MB')),
                         SpatieMediaLibraryFileUpload::make('mobile')
                             ->image()
@@ -106,7 +106,8 @@ class BannerForm
                             ->label(__('Video'))
                             ->disk(config('filesystems.default'))
                             ->collection('video')
-                            ->helperText('Max size: 5MB'),
+                            ->imagePreviewHeight('250')
+                            ->helperText('Max size: 15MB'),
                     ]),
 
                 Section::make(__('Schedule'))

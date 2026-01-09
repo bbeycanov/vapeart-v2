@@ -49,6 +49,44 @@ class BannerSeeder extends Seeder
             ]
         );
 
+        // HOME HERO SLIDESHOW - Banner 1
+        Banner::updateOrCreate(
+            [
+                'position' => BannerPosition::HOME_DISCOUNT_BANNER->value,
+                'key' => 'home-discount-1'
+            ],
+            [
+                'type' => BannerType::SLIDE->value,
+                'title' => [
+                    'en' => 'Summer Sale - Up to 30% Off',
+                    'az' => 'Yay Endirimi - 30% Qədər Endirim',
+                    'ru' => 'Летняя распродажа - до 30% скидки'
+                ],
+                'subtitle' => [
+                    'en' => 'Limited Time Offer',
+                    'az' => 'Məhdud müddətli təklif',
+                    'ru' => 'Ограниченное предложение'
+                ],
+                'content' => [
+                    'en' => 'Get the best deals on your favorite vape products this summer',
+                    'az' => 'Bu yay sevimli vape məhsullarınızda ən yaxşı təklifləri əldə edin',
+                    'ru' => 'Получите лучшие предложения на ваши любимые товары этим летом'
+                ],
+                'link_text' => [
+                    'en' => 'Shop Discounts',
+                    'az' => 'Endirimlərə bax',
+                    'ru' => 'Смотреть скидки'
+                ],
+                'link_url' => [
+                    'en' => '/en/discounts',
+                    'az' => '/az/discounts',
+                    'ru' => '/ru/discounts'
+                ],
+                'is_active' => true,
+                'sort_order' => 1,
+            ]
+        );
+
         // HOME HERO SLIDESHOW - Banner 2
         Banner::updateOrCreate(
             [

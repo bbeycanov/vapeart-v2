@@ -6,6 +6,7 @@ enum BannerPosition: string
 {
     // HOME
     case HOME_HERO_SLIDESHOW = 'home_hero_slideshow';    // Ana səhifə swiper/slide, böyük hero
+    case HOME_DISCOUNT_BANNER = 'home_discount_banner';    // Ana səhifə endirim banneri
 
     // SHOP / CATALOG
     case SHOP_TOP_BANNER = 'shop_top_banner';            // Kateqoriya/Shop səhifəsinin üst banneri
@@ -27,6 +28,7 @@ enum BannerPosition: string
     {
         return [
             self::HOME_HERO_SLIDESHOW->value => __('Home Hero Slideshow'),
+            self::HOME_DISCOUNT_BANNER->value => __('Home Discount Banner'),
             self::SHOP_TOP_BANNER->value => __('Shop Top Banner'),
             self::PAGE_HEADER->value => __('Page Header'),
             self::BLOG_INDEX_HEADER->value => __('Blog Index Header'),

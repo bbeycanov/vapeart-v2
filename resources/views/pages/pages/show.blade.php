@@ -13,7 +13,7 @@
     $pageTitle = $page->getTranslation('title', $locale);
     $pageExcerpt = $page->getTranslation('excerpt', $locale);
     $pageBody = $page->getTranslation('body', $locale);
-    $featuredImages = $page->getFeaturedImageUrls();
+    $pageBannerImages = $page->getBannerImageUrls();
     $galleryImages = $page->getMedia('gallery');
 @endphp
 
@@ -23,40 +23,45 @@
         ['label' => $pageTitle]
     ]" />
 
-    {{-- Hero Section with Featured Image --}}
-    @if($featuredImages['desktop'])
-        <section class="page-hero mb-4 mb-xl-5">
-            <div class="container">
-                <div class="page-hero__banner position-relative rounded-3 overflow-hidden" style="min-height: 280px; max-height: 400px;">
-                    <picture>
-                        {{-- Mobile WebP --}}
-                        @if($featuredImages['mobile_webp'])
-                            <source media="(max-width: 768px)" srcset="{{ $featuredImages['mobile_webp'] }}" type="image/webp">
-                        @endif
-                        {{-- Mobile fallback --}}
-                        @if($featuredImages['mobile'])
-                            <source media="(max-width: 768px)" srcset="{{ $featuredImages['mobile'] }}">
-                        @endif
-                        {{-- Tablet WebP --}}
-                        @if($featuredImages['tablet_webp'])
-                            <source media="(max-width: 1024px)" srcset="{{ $featuredImages['tablet_webp'] }}" type="image/webp">
-                        @endif
-                        {{-- Tablet fallback --}}
-                        @if($featuredImages['tablet'])
-                            <source media="(max-width: 1024px)" srcset="{{ $featuredImages['tablet'] }}">
-                        @endif
-                        {{-- Desktop WebP --}}
-                        @if($featuredImages['desktop_webp'])
-                            <source srcset="{{ $featuredImages['desktop_webp'] }}" type="image/webp">
-                        @endif
-                        <img loading="lazy"
-                             src="{{ $featuredImages['desktop'] }}"
-                             alt="{{ $pageTitle }}"
-                             class="w-100 h-100 object-fit-cover"
-                             style="position: absolute; top: 0; left: 0;">
-                    </picture>
-                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-                         style="background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5));">
+    <div class="mb-md-1 pb-md-3"></div>
+
+    <div class="container">
+        {{-- Hero Section with Featured Image --}}
+        @if($pageBannerImages['banner_desktop'])
+            <section class="mb-4 mb-md-5">
+                <div class="shop-banner position-relative rounded-3 overflow-hidden" style="min-height: 320px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                    <div class="background-img background-img_overlay" style="background-color: #f5f5f5;">
+                        <picture>
+                            {{-- Mobile fallback --}}
+                            @if($pageBannerImages['banner_mobile'])
+                                <source media="(max-width: 768px)" srcset="{{ $pageBannerImages['banner_mobile'] }}">
+                            @endif
+                            {{-- Tablet fallback --}}
+                            @if($pageBannerImages['banner_tablet'])
+                                <source media="(max-width: 1024px)" srcset="{{ $pageBannerImages['banner_tablet'] }}">
+                            @endif
+                            {{-- Desktop fallback --}}
+                            <img loading="lazy" src="{{ $pageBannerImages['banner_desktop'] }}" width="1920" height="400" alt="{{ $pageTitle }}" class="slideshow-bg__img object-fit-cover" style="opacity: 0.9;">
+                        </picture>
+                        <!-- Dark overlay for better text readability on image -->
+                        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0,0,0,0.35);"></div>
+                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+                             style="background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5));">
+                            <div class="text-center text-white p-4">
+                                <h1 class="page-hero__title mb-0">{{ $pageTitle }}</h1>
+                                @if($pageExcerpt)
+                                    <p class="page-hero__excerpt mb-0 mt-3 opacity-90">{{ $pageExcerpt }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        @else
+            {{-- Simple Header without Featured Image --}}
+            <section class="mb-4 mb-md-5">
+                <div class="shop-banner position-relative rounded-3 overflow-hidden" style="min-height: 320px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5));">
                         <div class="text-center text-white p-4">
                             <h1 class="page-hero__title mb-0">{{ $pageTitle }}</h1>
                             @if($pageExcerpt)
@@ -65,23 +70,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    @else
-        {{-- Simple Header without Featured Image --}}
-        <section class="page-header mb-4 mb-xl-5">
-            <div class="container">
-                <div class="page-header__content text-center py-4 py-md-5">
-                    <h1 class="page-title mb-0">{{ $pageTitle }}</h1>
-                    @if($pageExcerpt)
-                        <p class="page-header__excerpt text-muted mt-3 mb-0 mx-auto" style="max-width: 700px;">
-                            {{ $pageExcerpt }}
-                        </p>
-                    @endif
-                </div>
-            </div>
-        </section>
-    @endif
+            </section>
+        @endif
+    </div>
 
     {{-- Main Content --}}
     <article class="page-content py-4 py-md-5">

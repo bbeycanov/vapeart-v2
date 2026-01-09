@@ -13,22 +13,49 @@
 @section('content')
     <div class="mb-md-1 pb-md-3"></div>
 
-    @if(isset($pageBanner) && $pageBanner && ($pageBanner->getFirstMediaUrl('image') || $pageBanner->getFirstMediaUrl('video')))
-        <section class="discount-page-title mb-4 mb-xl-5">
+    @if($banner)
+        @php
+            $locale = app()->getLocale();
+            $bannerImages = $banner->getBannerImageUrls();
+            $originalImage = $banner->getFirstMediaUrl('desktop');
+            $videoUrl = $banner->getFirstMediaUrl('video');
+            $title = $banner->getTranslation('title', $locale);
+            $subtitle = $banner->getTranslation('subtitle', $locale);
+            $content = $banner->getTranslation('content', $locale);
+            $linkUrl = $banner->getTranslation('link_url', $locale);
+            $linkText = $banner->getTranslation('link_text', $locale);
+            $target = $banner->target;
+        @endphp
+        <section class="new-products-page-title mb-4 mb-xl-5">
             <div class="container">
                 <div class="page-banner position-relative rounded-3 overflow-hidden mb-4" style="min-height: 200px;">
-                    @if($pageBanner->getFirstMediaUrl('video'))
-                        <video autoplay muted loop playsinline class="w-100 h-100 object-fit-cover" style="position: absolute; top: 0; left: 0;">
-                            <source src="{{ $pageBanner->getFirstMediaUrl('video') }}" type="video/mp4">
+                    @if($videoUrl)
+                        <video autoplay muted loop playsinline class="slideshow-bg__video object-fit-cover w-100 h-100">
+                            <source src="{{ $videoUrl }}" type="video/mp4">
                         </video>
-                    @elseif($pageBanner->getFirstMediaUrl('image'))
-                        <img loading="lazy" src="{{ $pageBanner->getFirstMediaUrl('image') }}" alt="{{ $pageBanner->getTranslation('title', app()->getLocale()) }}" class="w-100 h-100 object-fit-cover" style="position: absolute; top: 0; left: 0;">
+                    @elseif($originalImage || $bannerImages['desktop'])
+                        <picture>
+                            {{-- Mobile fallback --}}
+                            @if($bannerImages['mobile'])
+                                <source media="(max-width: 768px)" srcset="{{ $bannerImages['mobile'] }}">
+                            @endif
+                            {{-- Tablet fallback --}}
+                            @if($bannerImages['tablet'])
+                                <source media="(max-width: 1024px)" srcset="{{ $bannerImages['tablet'] }}">
+                            @endif
+                            {{-- Desktop: Original image for best quality --}}
+                            <img loading="eager"
+                                 src="{{ $originalImage ?: $bannerImages['desktop'] }}"
+                                 alt="{{ $title ?? __('common.Banner') }}"
+                                 class="slideshow-bg__img object-fit-cover w-100 h-100">
+                        </picture>
                     @endif
+
                     <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background: rgba(0,0,0,0.3);">
                         <div class="text-center text-white p-4">
-                            <h1 class="page-title mb-0">{{ $pageBanner->getTranslation('title', app()->getLocale()) ?: __('page.Discounted Products') }}</h1>
-                            @if($pageBanner->getTranslation('subtitle', app()->getLocale()))
-                                <p class="mb-0 mt-2">{{ $pageBanner->getTranslation('subtitle', app()->getLocale()) }}</p>
+                            <h1 class="page-title mb-0">{{ $title ?: __('page.New Products') }}</h1>
+                            @if($subtitle)
+                                <p class="mb-0 mt-2">{{ $subtitle }}</p>
                             @endif
                         </div>
                     </div>
@@ -75,8 +102,8 @@
                             <div id="btn-loading-spinner" class="spinner-border text-primary d-none" role="status" style="width: 2.5rem; height: 2.5rem;">
                                 <span class="visually-hidden">{{ __('common.Loading...') }}</span>
                             </div>
-                            <button id="load-more-btn" 
-                                    class="btn btn-outline-primary d-none" 
+                            <button id="load-more-btn"
+                                    class="btn btn-outline-primary d-none"
                                     data-page="{{ $list->currentPage() + 1 }}"
                                     style="display: none;">
                                 {{ __('common.Load More') }}
@@ -118,20 +145,20 @@
 <script>
 (function() {
     'use strict';
-    
+
     document.addEventListener('DOMContentLoaded', function() {
         const productsGrid = document.getElementById('products-grid');
         const productsContainer = document.getElementById('products-container');
-        
+
         const locale = '{{ $locale }}';
-        
+
         let isLoading = false;
         let currentPage = {{ $list->currentPage() }};
         let infiniteScrollObserver = null;
 
         // Initialize Infinite Scroll
         initInfiniteScroll();
-        
+
         function initInfiniteScroll() {
             // Disconnect existing observer if any
             if (infiniteScrollObserver) {
@@ -140,7 +167,7 @@
 
             const trigger = document.getElementById('infinite-scroll-trigger');
             const loadMoreBtn = document.getElementById('load-more-btn');
-            
+
             // Only initialize if we have a trigger and a button with a next page
             if (trigger && loadMoreBtn && loadMoreBtn.dataset.page) {
                 const options = {
@@ -164,11 +191,11 @@
                 infiniteScrollObserver.observe(trigger);
             }
         }
-        
+
         function loadProducts(reset = false) {
             if (isLoading) return;
             isLoading = true;
-            
+
             // Loading UI
             if (reset) {
                 if (productsGrid) productsGrid.classList.add('loading');
@@ -178,14 +205,14 @@
                 const spinner = document.getElementById('btn-loading-spinner');
                 if (spinner) spinner.classList.remove('d-none');
             }
-            
+
             // URL Params
             const params = new URLSearchParams();
             params.set('page', currentPage);
             params.set('_t', new Date().getTime());
-            
+
             const url = `/${locale}/discounts?${params.toString()}`;
-            
+
             fetch(url, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
@@ -199,7 +226,7 @@
             .then(html => {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-                
+
                 const newGrid = doc.getElementById('products-grid');
                 const newPagination = doc.querySelector('.load-more-section');
 
@@ -207,9 +234,9 @@
                     // Full Replace
                     if (productsContainer) {
                         if(newGrid) {
-                            productsContainer.innerHTML = ''; 
+                            productsContainer.innerHTML = '';
                             productsContainer.appendChild(newGrid);
-                            
+
                             if (newPagination) {
                                 productsContainer.appendChild(newPagination);
                             }
@@ -221,22 +248,22 @@
                              }
                         }
                     }
-                    
+
                     // URL History Update
                     const newUrl = new URL(window.location);
                     newUrl.searchParams.set('page', currentPage);
                     window.history.pushState({}, '', newUrl);
-                    
+
                 } else {
                     // Append
                     if (newGrid && productsGrid) {
                         productsGrid.insertAdjacentHTML('beforeend', newGrid.innerHTML);
                     }
-                    
+
                     // Update Pagination Section
                     const currentPagination = document.querySelector('.load-more-section');
                     if (currentPagination) currentPagination.remove();
-                    
+
                     if (newPagination && productsContainer) {
                         productsContainer.appendChild(newPagination);
                     }
@@ -268,7 +295,7 @@
                 if (trigger && !isLoading) {
                     const rect = trigger.getBoundingClientRect();
                     const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-                    
+
                     // If trigger is visible or within 200px of viewport
                     if (rect.top <= windowHeight + 200) {
                         const btn = document.getElementById('load-more-btn');

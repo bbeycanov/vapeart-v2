@@ -141,7 +141,7 @@ class Banner extends Model implements HasMedia, Sortable
     /**
      * Get banner image URLs for responsive display
      *
-     * @return array{desktop: string, desktop_webp: string|null, tablet: string, tablet_webp: string|null, mobile: string, mobile_webp: string|null}
+     * @return array{desktop: string, tablet: string, mobile: string}
      */
     public function getBannerImageUrls(): array
     {

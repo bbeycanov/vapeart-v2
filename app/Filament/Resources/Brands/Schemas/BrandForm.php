@@ -109,13 +109,27 @@ class BrandForm
                             ->collection('logo')
                             ->imagePreviewHeight('250')
                             ->helperText(__('Recommended size: 1200x600px, Max size: 1MB')),
-                        SpatieMediaLibraryFileUpload::make('banner')
+                        SpatieMediaLibraryFileUpload::make('banner_desktop')
                             ->image()
-                            ->label(__('Banner Image'))
+                            ->label(__('Banner Desktop Image'))
                             ->disk(config('filesystems.default'))
-                            ->collection('banner')
+                            ->collection('banner_desktop')
                             ->imagePreviewHeight('250')
-                            ->helperText(__('Recommended size: 1200x600px, Max size: 1MB')),
+                            ->helperText(__('Recommended size: 1920x600px, Max size: 2MB')),
+                        SpatieMediaLibraryFileUpload::make('banner_tablet')
+                            ->image()
+                            ->label(__('Banner Tablet Image'))
+                            ->disk(config('filesystems.default'))
+                            ->collection('banner_tablet')
+                            ->imagePreviewHeight('250')
+                            ->helperText(__('Recommended size: 800x600px, Max size: 1MB')),
+                        SpatieMediaLibraryFileUpload::make('banner_mobile')
+                            ->image()
+                            ->label(__('Banner Mobile Image'))
+                            ->disk(config('filesystems.default'))
+                            ->collection('banner_mobile')
+                            ->imagePreviewHeight('250')
+                            ->helperText(__('Recommended size: 400x600px, Max size: 1MB')),
                     ]),
 
                 Section::make(__('Switcher'))

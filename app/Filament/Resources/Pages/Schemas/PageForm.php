@@ -71,24 +71,39 @@ class PageForm
                     ]),
 
                 Section::make(__('Image & Media'))
-                    ->columns(2)
+                    ->columns(3)
                     ->collapsible()
                     ->description(__('Upload images and media for the banner'))
                     ->schema([
-                        SpatieMediaLibraryFileUpload::make('featured')
-                            ->image()
-                            ->label(__('Featured Image'))
-                            ->disk(config('filesystems.default'))
-                            ->collection('featured')
-                            ->imagePreviewHeight('250')
-                            ->helperText(__('Recommended size: 1200x600px, Max size: 1MB')),
                         SpatieMediaLibraryFileUpload::make('gallery')
                             ->label(__('Gallery Images'))
                             ->disk(config('filesystems.default'))
                             ->collection('gallery')
                             ->imagePreviewHeight('250')
+                            ->columnSpanFull()
                             ->helperText(__('You can upload multiple images. Max size per image: 5MB'))
                             ->multiple(),
+                        SpatieMediaLibraryFileUpload::make('banner_desktop')
+                            ->image()
+                            ->label(__('Banner Desktop Image'))
+                            ->disk(config('filesystems.default'))
+                            ->collection('banner_desktop')
+                            ->imagePreviewHeight('250')
+                            ->helperText(__('Recommended size: 1920x600px, Max size: 2MB')),
+                        SpatieMediaLibraryFileUpload::make('banner_tablet')
+                            ->image()
+                            ->label(__('Banner Tablet Image'))
+                            ->disk(config('filesystems.default'))
+                            ->collection('banner_tablet')
+                            ->imagePreviewHeight('250')
+                            ->helperText(__('Recommended size: 800x600px, Max size: 1MB')),
+                        SpatieMediaLibraryFileUpload::make('banner_mobile')
+                            ->image()
+                            ->label(__('Banner Mobile Image'))
+                            ->disk(config('filesystems.default'))
+                            ->collection('banner_mobile')
+                            ->imagePreviewHeight('250')
+                            ->helperText(__('Recommended size: 400x600px, Max size: 1MB')),
                     ]),
 
                 Section::make(__('Status'))

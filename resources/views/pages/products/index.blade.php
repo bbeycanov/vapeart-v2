@@ -10,7 +10,7 @@
 
 @php
     $locale = app()->getLocale();
-    
+
     // Prepare categories tree for JavaScript
     $categoriesTree = [];
     foreach ($categories as $category) {
@@ -21,7 +21,7 @@
             'slug' => $category->slug,
             'children' => []
         ];
-        
+
         if ($category->children && $category->children->isNotEmpty()) {
             foreach ($category->children as $child) {
                 $childName = $child->getTranslation('name', $locale);
@@ -31,7 +31,7 @@
                     'slug' => $child->slug,
                     'children' => []
                 ];
-                
+
                 if ($child->children && $child->children->isNotEmpty()) {
                     foreach ($child->children as $grandchild) {
                         $grandchildName = $grandchild->getTranslation('name', $locale);
@@ -42,14 +42,14 @@
                         ];
                     }
                 }
-                
+
                 $categoryData['children'][] = $childData;
             }
         }
-        
+
         $categoriesTree[] = $categoryData;
     }
-    
+
     // Prepare brands array for JavaScript
     $brandsArray = [];
     foreach ($brands as $brand) {
@@ -63,29 +63,51 @@
 
 @section('content')
     @if(isset($shopBanner) && $shopBanner)
-        <section class="shop-banner-section mb-4">
-            <div class="container">
-                <div class="shop-banner position-relative rounded-3 overflow-hidden" style="min-height: 200px;">
-                    @if($shopBanner->getFirstMediaUrl('video'))
-                        <video autoplay muted loop playsinline class="w-100 h-100 object-fit-cover" style="position: absolute; top: 0; left: 0;">
-                            <source src="{{ $shopBanner->getFirstMediaUrl('video') }}" type="video/mp4">
-                        </video>
-                    @elseif($shopBanner->getFirstMediaUrl('image'))
-                        <img loading="lazy" src="{{ $shopBanner->getFirstMediaUrl('image') }}" alt="{{ $shopBanner->getTranslation('title', app()->getLocale()) }}" class="w-100 h-100 object-fit-cover" style="position: absolute; top: 0; left: 0;">
-                    @endif
-                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background: rgba(0,0,0,0.3);">
-                        <div class="text-center text-white p-4">
-                            @if($shopBanner->getTranslation('title', app()->getLocale()))
-                                <h1 class="mb-2 fw-bold">{{ $shopBanner->getTranslation('title', app()->getLocale()) }}</h1>
-                            @endif
-                            @if($shopBanner->getTranslation('subtitle', app()->getLocale()))
-                                <p class="mb-0">{{ $shopBanner->getTranslation('subtitle', app()->getLocale()) }}</p>
-                            @endif
+        @php
+            $bannerImages = $shopBanner->getBannerImageUrls();
+            $originalImage = $shopBanner->getFirstMediaUrl('desktop');
+            $videoUrl = $shopBanner->getFirstMediaUrl('video');
+        @endphp
+        <div class="mb-md-1 pb-md-3"></div>
+        <div class="container">
+            <section class="mb-4 mb-md-5">
+                <div class="shop-banner position-relative rounded-3 overflow-hidden" style="min-height: 320px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                    <div class="background-img background-img_overlay" style="background-color: #f5f5f5;">
+                        @if($videoUrl)
+                            <video autoplay muted loop playsinline class="slideshow-bg__video object-fit-cover w-100 h-100">
+                                <source src="{{ $videoUrl }}" type="video/mp4">
+                            </video>
+                        @elseif($originalImage || $bannerImages['desktop'])
+                            <picture>
+                                {{-- Mobile fallback --}}
+                                @if($bannerImages['mobile'])
+                                    <source media="(max-width: 768px)" srcset="{{ $bannerImages['mobile'] }}">
+                                @endif
+                                {{-- Tablet fallback --}}
+                                @if($bannerImages['tablet'])
+                                    <source media="(max-width: 1024px)" srcset="{{ $bannerImages['tablet'] }}">
+                                @endif
+                                {{-- Desktop: Original image for best quality --}}
+                                <img loading="eager"
+                                     src="{{ $originalImage ?: $bannerImages['desktop'] }}"
+                                     alt="{{ $title ?? __('common.Banner') }}"
+                                     class="slideshow-bg__img object-fit-cover w-100 h-100">
+                            </picture>
+                        @endif
+                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background: rgba(0,0,0,0.3);">
+                            <div class="text-center text-white p-4">
+                                @if($shopBanner->getTranslation('title', app()->getLocale()))
+                                    <h1 class="mb-2 fw-bold">{{ $shopBanner->getTranslation('title', app()->getLocale()) }}</h1>
+                                @endif
+                                @if($shopBanner->getTranslation('subtitle', app()->getLocale()))
+                                    <p class="mb-0">{{ $shopBanner->getTranslation('subtitle', app()->getLocale()) }}</p>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     @endif
 
     <section class="shop-main container d-flex pt-4 pt-xl-5">
@@ -249,13 +271,13 @@
                             <div class="row g-2">
                                 <div class="col-6">
                                     <label class="form-label text-secondary small">{{ __('product.Min Price') }}</label>
-                                    <input type="number" class="form-control form-control-sm" id="priceMinInput" 
+                                    <input type="number" class="form-control form-control-sm" id="priceMinInput"
                                            min="{{ $priceMin }}" max="{{ $priceMax }}" step="5"
                                            value="{{ $filters['price_min'] ?? $priceMin }}" placeholder="{{ $priceMin }}">
                                 </div>
                                 <div class="col-6">
                                     <label class="form-label text-secondary small">{{ __('product.Max Price') }}</label>
-                                    <input type="number" class="form-control form-control-sm" id="priceMaxInput" 
+                                    <input type="number" class="form-control form-control-sm" id="priceMaxInput"
                                            min="{{ $priceMin }}" max="{{ $priceMax }}" step="5"
                                            value="{{ $filters['price_max'] ?? $priceMax }}" placeholder="{{ $priceMax }}">
                             </div>

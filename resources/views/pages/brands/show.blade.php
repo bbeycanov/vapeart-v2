@@ -23,29 +23,18 @@
         <div style="border-color: #eeeeee;">
             <div class="shop-banner position-relative">
                 <div class="background-img background-img_overlay" style="background-color: #eeeeee;">
-                    @if($brandBannerImages['desktop'])
+                    @if($brandBannerImages['banner_desktop'])
                         <picture>
-                            {{-- Mobile WebP --}}
-                            @if($brandBannerImages['mobile_webp'])
-                                <source media="(max-width: 768px)" srcset="{{ $brandBannerImages['mobile_webp'] }}" type="image/webp">
-                            @endif
                             {{-- Mobile fallback --}}
-                            @if($brandBannerImages['mobile'])
-                                <source media="(max-width: 768px)" srcset="{{ $brandBannerImages['mobile'] }}">
-                            @endif
-                            {{-- Tablet WebP --}}
-                            @if($brandBannerImages['tablet_webp'])
-                                <source media="(max-width: 1024px)" srcset="{{ $brandBannerImages['tablet_webp'] }}" type="image/webp">
+                            @if($brandBannerImages['banner_mobile'])
+                                <source media="(max-width: 768px)" srcset="{{ $brandBannerImages['banner_mobile'] }}">
                             @endif
                             {{-- Tablet fallback --}}
-                            @if($brandBannerImages['tablet'])
-                                <source media="(max-width: 1024px)" srcset="{{ $brandBannerImages['tablet'] }}">
+                            @if($brandBannerImages['banner_tablet'])
+                                <source media="(max-width: 1024px)" srcset="{{ $brandBannerImages['banner_tablet'] }}">
                             @endif
-                            {{-- Desktop WebP --}}
-                            @if($brandBannerImages['desktop_webp'])
-                                <source srcset="{{ $brandBannerImages['desktop_webp'] }}" type="image/webp">
-                            @endif
-                            <img loading="lazy" src="{{ $brandBannerImages['desktop'] }}" width="1920" height="400" alt="{{ $brandName }}" class="slideshow-bg__img object-fit-cover">
+                            {{-- Desktop fallback --}}
+                            <img loading="lazy" src="{{ $brandBannerImages['banner_desktop'] }}" width="1920" height="400" alt="{{ $brandName }}" class="slideshow-bg__img object-fit-cover">
                         </picture>
                     @else
                         <img loading="lazy" src="{{ asset('storefront/images/blog_title_bg.jpg') }}" width="1903" height="420" alt="{{ $brandName }}" class="slideshow-bg__img object-fit-cover">

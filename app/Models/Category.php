@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\EloquentSortable\Sortable;
 use App\Support\Traits\BuildsTreePath;
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
@@ -165,124 +167,70 @@ class Category extends Model implements HasMedia, Sortable
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('icon')->singleFile();   // small icon
-        $this->addMediaCollection('banner')->singleFile(); // category banner
         $this->addMediaCollection('gallery');              // additional images
+        $this->addMediaCollection('banner_desktop')->singleFile(); // desktop banner
+        $this->addMediaCollection('banner_tablet')->singleFile();  // tablet banner
+        $this->addMediaCollection('banner_mobile')->singleFile();  // mobile banner
     }
 
     /**
      * Register media conversions for different sizes
      *
-     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
+     * @param Media|null $media
      * @return void
      */
-    public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void
+    public function registerMediaConversions(Media $media = null): void
     {
         // Icon: 128x128 (for category navigation)
         $this->addMediaConversion('icon')
             ->width(128)
             ->height(128)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 128, 128)
+            ->fit(Fit::Contain, 128, 128)
             ->performOnCollections('icon')
-            ->nonQueued();
-
-        // Icon WebP: 128x128
-        $this->addMediaConversion('icon-webp')
-            ->width(128)
-            ->height(128)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 128, 128)
-            ->format('webp')
-            ->performOnCollections('icon')
-            ->nonQueued();
-
-        // Banner desktop: 1920x400
-        $this->addMediaConversion('banner-desktop')
-            ->width(1920)
-            ->height(400)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 1920, 400)
-            ->performOnCollections('banner')
-            ->nonQueued();
-
-        $this->addMediaConversion('banner-desktop-webp')
-            ->width(1920)
-            ->height(400)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 1920, 400)
-            ->format('webp')
-            ->performOnCollections('banner')
-            ->nonQueued();
-
-        // Banner tablet: 1024x300
-        $this->addMediaConversion('banner-tablet')
-            ->width(1024)
-            ->height(300)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 1024, 300)
-            ->performOnCollections('banner')
-            ->nonQueued();
-
-        $this->addMediaConversion('banner-tablet-webp')
-            ->width(1024)
-            ->height(300)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 1024, 300)
-            ->format('webp')
-            ->performOnCollections('banner')
-            ->nonQueued();
-
-        // Banner mobile: 768x250
-        $this->addMediaConversion('banner-mobile')
-            ->width(768)
-            ->height(250)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 768, 250)
-            ->performOnCollections('banner')
-            ->nonQueued();
-
-        $this->addMediaConversion('banner-mobile-webp')
-            ->width(768)
-            ->height(250)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 768, 250)
-            ->format('webp')
-            ->performOnCollections('banner')
             ->nonQueued();
 
         // Gallery thumb: 400x400
         $this->addMediaConversion('gallery-thumb')
             ->width(400)
             ->height(400)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 400, 400)
+            ->fit(Fit::Contain, 400, 400)
             ->performOnCollections('gallery')
             ->nonQueued();
 
-        $this->addMediaConversion('gallery-thumb-webp')
-            ->width(400)
-            ->height(400)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 400, 400)
-            ->format('webp')
-            ->performOnCollections('gallery')
+        // Desktop banner: Original size with high quality
+        $this->addMediaConversion('banner_desktop')
+            ->quality(90)
+            ->performOnCollections('banner_desktop')
+            ->nonQueued();
+
+        // Tablet banner: 1200px wide for retina displays
+        $this->addMediaConversion('banner_tablet')
+            ->quality(90)
+            ->performOnCollections('banner_tablet')
+            ->nonQueued();
+
+        // Mobile banner: 800px wide for retina displays
+        $this->addMediaConversion('banner_mobile')
+            ->quality(90)
+            ->performOnCollections('banner_mobile')
             ->nonQueued();
     }
 
     /**
      * Get banner image URLs for responsive display
      *
-     * @return array
+     * @return array{desktop: string, tablet: string, mobile: string}
      */
     public function getBannerImageUrls(): array
     {
-        $media = $this->getFirstMedia('banner');
-
-        if (!$media) {
-            return [
-                'desktop' => '', 'desktop_webp' => null,
-                'tablet' => '', 'tablet_webp' => null,
-                'mobile' => '', 'mobile_webp' => null,
-            ];
-        }
+        $desktopMedia = $this->getFirstMedia('banner_desktop');
+        $tabletMedia = $this->getFirstMedia('banner_tablet');
+        $mobileMedia = $this->getFirstMedia('banner_mobile');
 
         return [
-            'desktop' => $media->getUrl('banner-desktop') ?: $media->getUrl(),
-            'desktop_webp' => $media->getUrl('banner-desktop-webp') ?: null,
-            'tablet' => $media->getUrl('banner-tablet') ?: $media->getUrl(),
-            'tablet_webp' => $media->getUrl('banner-tablet-webp') ?: null,
-            'mobile' => $media->getUrl('banner-mobile') ?: $media->getUrl(),
-            'mobile_webp' => $media->getUrl('banner-mobile-webp') ?: null,
+            'banner_desktop' => $desktopMedia?->getUrl('banner_desktop') ?: $desktopMedia?->getUrl() ?: '',
+            'banner_tablet' => $tabletMedia?->getUrl('banner_tablet') ?: $desktopMedia?->getUrl() ?: '',
+            'banner_mobile' => $mobileMedia?->getUrl('banner_mobile') ?: $desktopMedia?->getUrl() ?: '',
         ];
     }
 

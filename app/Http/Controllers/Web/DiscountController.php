@@ -53,11 +53,11 @@ class DiscountController extends Controller
             return view('pages.discounts._products_grid', compact('list'));
         }
 
-        $pageBanner = $this->bannerService->byPosition(BannerPosition::DISCOUNTS_INDEX_HEADER)->first();
+        $banner = $this->bannerService->byPosition(BannerPosition::DISCOUNTS_INDEX_HEADER)->first();
 
         $schemaJsonLd = $this->buildSchemaFor($list);
 
-        return view('pages.discounts.index', compact('list', 'pageBanner', 'schemaJsonLd'));
+        return view('pages.discounts.index', compact('list', 'banner', 'schemaJsonLd'));
     }
 
     /**

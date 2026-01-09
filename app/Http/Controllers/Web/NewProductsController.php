@@ -48,11 +48,11 @@ class NewProductsController extends Controller
             page: $page
         );
 
-        $pageBanner = $this->bannerService->byPosition(BannerPosition::NEW_PRODUCTS_INDEX_HEADER)->first();
+        $banner = $this->bannerService->byPosition(BannerPosition::NEW_PRODUCTS_INDEX_HEADER)->first();
 
         $schemaJsonLd = $this->buildSchemaFor($list);
 
-        return view('pages.new-products.index', compact('list', 'pageBanner', 'schemaJsonLd'));
+        return view('pages.new-products.index', compact('list', 'banner', 'schemaJsonLd'));
     }
 
     /**
