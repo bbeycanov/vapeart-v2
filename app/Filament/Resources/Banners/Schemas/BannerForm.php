@@ -81,32 +81,32 @@ class BannerForm
                     ->collapsible()
                     ->description(__('Upload images and media for the banner'))
                     ->schema([
-                        SpatieMediaLibraryFileUpload::make('image')
+                        SpatieMediaLibraryFileUpload::make('desktop')
                             ->image()
                             ->label(__('Desktop Image'))
                             ->disk(config('filesystems.default'))
-                            ->collection('image')
+                            ->collection('desktop')
                             ->imagePreviewHeight('250')
-                            ->helperText(__('Recommended size: 1200x600px, Max size: 1MB')),
-                        SpatieMediaLibraryFileUpload::make('image_mobile')
+                            ->helperText(__('Recommended size: 1920x600px, Max size: 2MB')),
+                        SpatieMediaLibraryFileUpload::make('tablet')
                             ->image()
-                            ->label(__('Mobile Image'))
+                            ->label(__('Tablet'))
                             ->disk(config('filesystems.default'))
-                            ->collection('image_mobile')
+                            ->collection('tablet')
+                            ->imagePreviewHeight('100')
+                            ->helperText(__('Recommended size: 800x600px, Max size: 1MB')),
+                        SpatieMediaLibraryFileUpload::make('mobile')
+                            ->image()
+                            ->label(__('Mobile'))
+                            ->disk(config('filesystems.default'))
+                            ->collection('mobile')
                             ->imagePreviewHeight('250')
-                            ->helperText(__('Recommended size: 600x800px, Max size: 1MB')),
+                            ->helperText(__('Recommended size: 400x600px, Max size: 1MB')),
                         SpatieMediaLibraryFileUpload::make('video')
                             ->label(__('Video'))
                             ->disk(config('filesystems.default'))
                             ->collection('video')
                             ->helperText('Max size: 5MB'),
-                        SpatieMediaLibraryFileUpload::make('icon')
-                            ->image()
-                            ->label(__('Icon'))
-                            ->disk(config('filesystems.default'))
-                            ->collection('icon')
-                            ->imagePreviewHeight('100')
-                            ->helperText(__('Recommended size: 100x100px, Max size: 512 MB'))
                     ]),
 
                 Section::make(__('Schedule'))

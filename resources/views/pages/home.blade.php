@@ -38,7 +38,7 @@
                     @php
                         $locale = app()->getLocale();
                         $bannerImages = $banner->getBannerImageUrls();
-                        $originalImage = $banner->getFirstMediaUrl('image'); // Original for desktop
+                        $originalImage = $banner->getFirstMediaUrl('desktop');
                         $videoUrl = $banner->getFirstMediaUrl('video');
                         $title = $banner->getTranslation('title', $locale);
                         $subtitle = $banner->getTranslation('subtitle', $locale);
@@ -56,17 +56,9 @@
                                     </video>
                                 @elseif($originalImage || $bannerImages['desktop'])
                                     <picture>
-                                        {{-- Mobile WebP --}}
-                                        @if($bannerImages['mobile_webp'])
-                                            <source media="(max-width: 768px)" srcset="{{ $bannerImages['mobile_webp'] }}" type="image/webp">
-                                        @endif
                                         {{-- Mobile fallback --}}
                                         @if($bannerImages['mobile'])
                                             <source media="(max-width: 768px)" srcset="{{ $bannerImages['mobile'] }}">
-                                        @endif
-                                        {{-- Tablet WebP --}}
-                                        @if($bannerImages['tablet_webp'])
-                                            <source media="(max-width: 1024px)" srcset="{{ $bannerImages['tablet_webp'] }}" type="image/webp">
                                         @endif
                                         {{-- Tablet fallback --}}
                                         @if($bannerImages['tablet'])
@@ -347,10 +339,10 @@
             <div class="col-sm-6 col-md-4 col-lg-3 col-xl-20per">
                 <div class="position-relative w-100 h-sm-100 border-radius-4 overflow-hidden minh-240 mb-4 mb-sm-0">
                     @php
-                        $discountBanner = $activeDiscount->getFirstMediaUrl('banner');
+                        $discountBanner = $activeDiscount->getFirstMediaUrl('desktop');
                         $discountName = $activeDiscount->getTranslation('name', app()->getLocale());
                         $discountAmount = $activeDiscount->amount;
-                        $discountType = $activeDiscount->type; // 'percentage' or 'fixed'
+                        $discountType = $activeDiscount->type;
                         $discountText = $discountType === 'percentage' ? $discountAmount . '%' : $discountAmount . ' ' . ($activeDiscount->products()->first()->currency ?? 'AZN');
                     @endphp
                     <div class="background-img"

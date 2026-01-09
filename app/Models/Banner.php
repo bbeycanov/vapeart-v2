@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Exception;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\EloquentSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +12,7 @@ use Spatie\EloquentSortable\SortableTrait;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * @property mixed $type
@@ -102,77 +105,36 @@ class Banner extends Model implements HasMedia, Sortable
      */
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('image')->singleFile();
-        $this->addMediaCollection('image_mobile')->singleFile();
+        $this->addMediaCollection('desktop')->singleFile();
+        $this->addMediaCollection('tablet')->singleFile();
+        $this->addMediaCollection('mobile')->singleFile();
         $this->addMediaCollection('video')->singleFile();
-        $this->addMediaCollection('icon')->singleFile();
     }
 
     /**
      * Register media conversions for responsive images and WebP
      *
-     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
+     * @param Media|null $media
      * @return void
      */
-    public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void
+    public function registerMediaConversions(Media $media = null): void
     {
         // Desktop banner: Original size with high quality
         $this->addMediaConversion('desktop')
             ->quality(90)
-            ->performOnCollections('image')
-            ->nonQueued();
-
-        // Desktop WebP: Original size with WebP format for quality + compression
-        $this->addMediaConversion('desktop-webp')
-            ->format('webp')
-            ->quality(90)
-            ->performOnCollections('image')
+            ->performOnCollections('desktop')
             ->nonQueued();
 
         // Tablet banner: 1200px wide for retina displays
         $this->addMediaConversion('tablet')
-            ->width(1200)
             ->quality(85)
-            ->performOnCollections('image')
-            ->nonQueued();
-
-        // Tablet WebP
-        $this->addMediaConversion('tablet-webp')
-            ->width(1200)
-            ->format('webp')
-            ->quality(85)
-            ->performOnCollections('image')
+            ->performOnCollections('tablet')
             ->nonQueued();
 
         // Mobile banner: 800px wide for retina displays
         $this->addMediaConversion('mobile')
-            ->width(800)
             ->quality(85)
-            ->performOnCollections('image', 'image_mobile')
-            ->nonQueued();
-
-        // Mobile WebP
-        $this->addMediaConversion('mobile-webp')
-            ->width(800)
-            ->format('webp')
-            ->quality(85)
-            ->performOnCollections('image', 'image_mobile')
-            ->nonQueued();
-
-        // Icon conversions
-        $this->addMediaConversion('icon-thumb')
-            ->width(64)
-            ->height(64)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 64, 64)
-            ->performOnCollections('icon')
-            ->nonQueued();
-
-        $this->addMediaConversion('icon-thumb-webp')
-            ->width(64)
-            ->height(64)
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 64, 64)
-            ->format('webp')
-            ->performOnCollections('icon')
+            ->performOnCollections('mobile')
             ->nonQueued();
     }
 
@@ -186,30 +148,10 @@ class Banner extends Model implements HasMedia, Sortable
         $media = $this->getFirstMedia('image');
         $mobileMedia = $this->getFirstMedia('image_mobile');
 
-        $result = [
+        return [
             'desktop' => $media?->getUrl('desktop') ?: $media?->getUrl() ?: '',
-            'desktop_webp' => null,
             'tablet' => $media?->getUrl('tablet') ?: $media?->getUrl() ?: '',
-            'tablet_webp' => null,
             'mobile' => $mobileMedia?->getUrl('mobile') ?: $media?->getUrl('mobile') ?: $media?->getUrl() ?: '',
-            'mobile_webp' => null,
         ];
-
-        // Try to get WebP versions
-        try {
-            if ($media) {
-                $result['desktop_webp'] = $media->getUrl('desktop-webp') ?: null;
-                $result['tablet_webp'] = $media->getUrl('tablet-webp') ?: null;
-            }
-            if ($mobileMedia) {
-                $result['mobile_webp'] = $mobileMedia->getUrl('mobile-webp') ?: null;
-            } elseif ($media) {
-                $result['mobile_webp'] = $media->getUrl('mobile-webp') ?: null;
-            }
-        } catch (\Exception $e) {
-            // WebP not available
-        }
-
-        return $result;
     }
 }
