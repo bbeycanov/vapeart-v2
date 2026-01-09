@@ -766,7 +766,7 @@
                     if (product.brand && product.brand.name) {
                         // Show brand logo if available
                         if (brandLogoEl && product.brand.logo) {
-                            brandLogoEl.innerHTML = `<a href="/${locale}/brands/${product.brand.slug}" target="_blank" class="d-inline-block">
+                            brandLogoEl.innerHTML = `<a href="/${locale}/brand/${product.brand.slug}" target="_blank" class="d-inline-block">
                                 <img src="${product.brand.logo}" alt="${product.brand.name}" style="max-height: 60px; max-width: 150px; object-fit: contain;">
                             </a>`;
                             brandLogoEl.style.display = 'block';
@@ -776,7 +776,7 @@
                         
                         // Brand link in meta
                         if (brandLinkEl) {
-                            brandLinkEl.innerHTML = `<a href="/${locale}/brands/${product.brand.slug}" target="_blank" class="text-decoration-none">${product.brand.name}</a>`;
+                            brandLinkEl.innerHTML = `<a href="/${locale}/brand/${product.brand.slug}" target="_blank" class="text-decoration-none">${product.brand.name}</a>`;
                         }
                         if (brandItemEl) brandItemEl.style.display = 'block';
                     } else {
