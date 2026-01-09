@@ -220,6 +220,7 @@ class ProductController extends Controller
             'description' => $product->getTranslation('description', $locale),
             'stock_quantity' => $product->stock_qty,
             'is_track_stock' => $product->is_track_stock,
+            'is_in_stock' => $product->isInStock(),
             'rating_avg' => $product->rating_avg ?? 0,
             'reviews_count' => $product->reviews_count ?? 0,
             'images' => $this->getProductImages($product),

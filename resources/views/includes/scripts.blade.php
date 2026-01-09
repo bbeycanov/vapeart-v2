@@ -648,7 +648,54 @@
                             discountBadgeEl.style.display = 'none';
                         }
                     }
-                    
+
+                    // Stock status handling
+                    const isInStock = product.is_in_stock !== false;
+                    const stockBadgeEl = document.getElementById('quickViewStockBadge');
+                    const outOfStockTextEl = document.getElementById('quickViewOutOfStockText');
+                    const addToCartSectionEl = document.getElementById('quickViewAddToCartSection');
+                    const outOfStockSectionEl = document.getElementById('quickViewOutOfStockSection');
+                    const whatsappBtnEl = document.getElementById('quickViewWhatsappOrderBtn');
+
+                    if (stockBadgeEl) {
+                        stockBadgeEl.style.display = isInStock ? 'none' : 'block';
+                    }
+                    if (outOfStockTextEl) {
+                        outOfStockTextEl.style.display = isInStock ? 'none' : 'block';
+                    }
+                    if (addToCartSectionEl) {
+                        addToCartSectionEl.style.display = isInStock ? 'flex' : 'none';
+                    }
+                    if (outOfStockSectionEl) {
+                        outOfStockSectionEl.style.display = isInStock ? 'none' : 'block';
+                    }
+
+                    // WhatsApp button stock handling
+                    if (whatsappBtnEl) {
+                        // Dispose existing tooltip if any
+                        const existingTooltip = bootstrap.Tooltip.getInstance(whatsappBtnEl);
+                        if (existingTooltip) {
+                            existingTooltip.dispose();
+                        }
+
+                        if (isInStock) {
+                            whatsappBtnEl.disabled = false;
+                            whatsappBtnEl.classList.remove('btn-secondary', 'disabled');
+                            whatsappBtnEl.classList.add('btn-whatsapp');
+                            whatsappBtnEl.removeAttribute('title');
+                            whatsappBtnEl.removeAttribute('data-bs-original-title');
+                        } else {
+                            whatsappBtnEl.disabled = true;
+                            whatsappBtnEl.classList.remove('btn-whatsapp');
+                            whatsappBtnEl.classList.add('btn-secondary', 'disabled');
+                            whatsappBtnEl.setAttribute('title', '{{ __("product.Out of Stock") }}');
+                            // Initialize tooltip for disabled state
+                            new bootstrap.Tooltip(whatsappBtnEl, {
+                                trigger: 'hover focus'
+                            });
+                        }
+                    }
+
                     // Update wishlist button
                     if (wishlistBtn) {
                         wishlistBtn.setAttribute('data-product-id', product.id);

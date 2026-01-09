@@ -24,6 +24,9 @@
     $discountedPrice = $product->getDiscountedPrice();
     $discountText = $product->getDiscountText();
     $hasDiscount = $bestDiscount !== null;
+
+    // Stock status
+    $isInStock = $product->isInStock();
 @endphp
 
 <div class="product-card-wrapper mb-2">
@@ -34,6 +37,15 @@
                 <div class="position-absolute top-0 start-0 m-2" style="z-index: 10;">
                     <span class="badge text-white px-2 py-1 fw-bold" style="font-size: 0.75rem; border-radius: 6px; box-shadow: 0 3px 8px rgba(220, 53, 69, 0.4); background: linear-gradient(135deg, #ff4757 0%, #ff6348 100%); border: 1px solid rgba(255, 255, 255, 0.3);">
                         {{ $discountText }}
+                    </span>
+                </div>
+            @endif
+
+            <!-- Out of Stock Badge -->
+            @if(!$isInStock)
+                <div class="position-absolute top-0 end-0 m-2" style="z-index: 10;">
+                    <span class="badge bg-secondary text-white px-2 py-1 fw-bold" style="font-size: 0.75rem; border-radius: 6px;">
+                        {{ __('product.Out of Stock') }}
                     </span>
                 </div>
             @endif
@@ -64,10 +76,11 @@
             @if($showAddToCart || $showQuickView)
             <div class="anim_appear-bottom position-absolute w-100 text-center">
                 @if($showAddToCart)
-                <button class="btn btn-round btn-hover-red border-0 text-uppercase me-2 js-add-cart js-open-aside"
+                <button class="btn btn-round btn-hover-red border-0 text-uppercase me-2 {{ $isInStock ? 'js-add-cart js-open-aside' : '' }}"
                         data-aside="cartDrawer"
                         data-product-id="{{ $product->id }}"
-                        title="Add To Cart">
+                        title="{{ $isInStock ? __('buttons.Add to Cart') : __('product.Out of Stock') }}"
+                        {{ !$isInStock ? 'disabled' : '' }}>
                     <svg class="d-inline-block" width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <use href="#icon_cart"/>
                     </svg>

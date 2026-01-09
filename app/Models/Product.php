@@ -135,6 +135,21 @@ class Product extends Model implements HasMedia
     }
 
     /**
+     * Check if product is in stock
+     *
+     * @return bool
+     */
+    public function isInStock(): bool
+    {
+        // If stock tracking is disabled, always in stock
+        if (!$this->is_track_stock) {
+            return true;
+        }
+
+        return $this->stock_qty > 0;
+    }
+
+    /**
      * @return BelongsToMany
      */
     public function menus(): BelongsToMany

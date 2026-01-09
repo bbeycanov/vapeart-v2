@@ -122,6 +122,8 @@ class QuickViewController extends Controller
                     'rating_avg' => $product->rating_avg ?? 0,
                     'reviews_count' => $product->reviews_count ?? 0,
                     'stock_quantity' => $product->stock_qty ?? 0,
+                    'is_track_stock' => $product->is_track_stock ?? false,
+                    'is_in_stock' => $product->isInStock(),
                     'image' => $thumbImage, // For cart - thumb conversion
                     'images' => $imageUrls, // For quick view - medium conversion
                     'url' => route('products.show', [app()->getLocale(), $product->slug]),
