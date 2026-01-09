@@ -3,14 +3,10 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Brand;
-use Filament\Widgets\Concerns\InteractsWithPageFilters;
-use Illuminate\Support\Carbon;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class TopBrandsChart extends ApexChartWidget
 {
-    use InteractsWithPageFilters;
-
     protected static ?string $chartId = 'topBrandsChart';
     protected static ?int $sort = 10;
     protected int|string|array $columnSpan = 1;
@@ -22,20 +18,12 @@ class TopBrandsChart extends ApexChartWidget
 
     protected function getOptions(): array
     {
-        $startDate = $this->filters['startDate'] ?? now()->subDays(30);
-        $endDate = $this->filters['endDate'] ?? now();
-
-        if (is_string($startDate)) {
-            $startDate = Carbon::parse($startDate);
-        }
-        if (is_string($endDate)) {
-            $endDate = Carbon::parse($endDate);
-        }
-
-        $brands = Brand::withCount(['products' => function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('created_at', [$startDate, $endDate]);
+        // Show all active products per brand (not filtered by date)
+        $brands = Brand::withCount(['products' => function ($query) {
+                $query->where('is_active', true);
             }])
             ->where('is_active', true)
+            ->having('products_count', '>', 0)
             ->orderByDesc('products_count')
             ->limit(5)
             ->get();

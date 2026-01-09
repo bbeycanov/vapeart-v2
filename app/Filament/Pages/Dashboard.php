@@ -41,7 +41,7 @@ class Dashboard extends BaseDashboard
                             ->schema([
                                 DatePicker::make('startDate')
                                     ->label(__('Start Date'))
-                                    ->default(now())
+                                    ->default(now()->subDays(30))
                                     ->live(),
                                 DatePicker::make('endDate')
                                     ->label(__('End Date'))

@@ -3,14 +3,10 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Review;
-use Filament\Widgets\Concerns\InteractsWithPageFilters;
-use Illuminate\Support\Carbon;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class ReviewRatingsChart extends ApexChartWidget
 {
-    use InteractsWithPageFilters;
-
     protected static ?string $chartId = 'reviewRatingsChart';
     protected static ?int $sort = 6;
     protected int|string|array $columnSpan = 1;
@@ -22,20 +18,11 @@ class ReviewRatingsChart extends ApexChartWidget
 
     protected function getOptions(): array
     {
-        $startDate = $this->filters['startDate'] ?? now()->subDays(30);
-        $endDate = $this->filters['endDate'] ?? now();
-
-        if (is_string($startDate)) {
-            $startDate = Carbon::parse($startDate);
-        }
-        if (is_string($endDate)) {
-            $endDate = Carbon::parse($endDate);
-        }
-
+        // Show all approved ratings (not filtered by date)
         $ratings = [];
         for ($i = 1; $i <= 5; $i++) {
             $ratings[$i] = Review::where('rating', $i)
-                ->whereBetween('created_at', [$startDate, $endDate])
+                ->where('status', 1)
                 ->count();
         }
 

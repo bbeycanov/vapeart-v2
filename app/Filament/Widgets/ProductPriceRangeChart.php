@@ -3,14 +3,10 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Product;
-use Filament\Widgets\Concerns\InteractsWithPageFilters;
-use Illuminate\Support\Carbon;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class ProductPriceRangeChart extends ApexChartWidget
 {
-    use InteractsWithPageFilters;
-
     protected static ?string $chartId = 'productPriceRangeChart';
     protected static ?int $sort = 8;
     protected int|string|array $columnSpan = 1;
@@ -22,22 +18,13 @@ class ProductPriceRangeChart extends ApexChartWidget
 
     protected function getOptions(): array
     {
-        $startDate = $this->filters['startDate'] ?? now()->subDays(30);
-        $endDate = $this->filters['endDate'] ?? now();
-
-        if (is_string($startDate)) {
-            $startDate = Carbon::parse($startDate);
-        }
-        if (is_string($endDate)) {
-            $endDate = Carbon::parse($endDate);
-        }
-
+        // Show all active products by price range (not filtered by date)
         $ranges = [
-            '0-50' => Product::where('is_active', true)->whereBetween('price', [0, 50])->whereBetween('created_at', [$startDate, $endDate])->count(),
-            '50-100' => Product::where('is_active', true)->whereBetween('price', [50, 100])->whereBetween('created_at', [$startDate, $endDate])->count(),
-            '100-200' => Product::where('is_active', true)->whereBetween('price', [100, 200])->whereBetween('created_at', [$startDate, $endDate])->count(),
-            '200-500' => Product::where('is_active', true)->whereBetween('price', [200, 500])->whereBetween('created_at', [$startDate, $endDate])->count(),
-            '500+' => Product::where('is_active', true)->where('price', '>', 500)->whereBetween('created_at', [$startDate, $endDate])->count(),
+            '0-50' => Product::where('is_active', true)->whereBetween('price', [0, 50])->count(),
+            '50-100' => Product::where('is_active', true)->whereBetween('price', [50, 100])->count(),
+            '100-200' => Product::where('is_active', true)->whereBetween('price', [100, 200])->count(),
+            '200-500' => Product::where('is_active', true)->whereBetween('price', [200, 500])->count(),
+            '500+' => Product::where('is_active', true)->where('price', '>', 500)->count(),
         ];
 
         return [
