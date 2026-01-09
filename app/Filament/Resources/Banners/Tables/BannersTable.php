@@ -185,6 +185,7 @@ class BannersTable
                 ]),
             ])
             ->reorderable('sort_order')
-            ->defaultSort('sort_order');
+            ->defaultSort('sort_order')
+            ->defaultPaginationPageOption(15);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Products\Tables;
 
 use App\Models\Brand;
 use App\Models\Category;
+use Illuminate\Support\Facades\Cache;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -90,13 +91,13 @@ class ProductsTable
                             ->label(__('Brand'))
                             ->searchable()
                             ->preload()
-                            ->options(Brand::query()->pluck('name', 'id'))
+                            ->options(fn () => Cache::remember('admin_brands_options', 3600, fn () => Brand::query()->pluck('name', 'id')->toArray()))
                             ->placeholder(__('All Brands')),
                         Select::make('category_id')
                             ->label(__('Category'))
                             ->searchable()
                             ->preload()
-                            ->options(Category::query()->pluck('name', 'id'))
+                            ->options(fn () => Cache::remember('admin_categories_options', 3600, fn () => Category::query()->pluck('name', 'id')->toArray()))
                             ->placeholder(__('All Categories')),
                         Select::make('is_active')
                             ->label(__('Status'))
@@ -270,6 +271,7 @@ class ProductsTable
                     RestoreBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('created_at', 'desc');
+            ->defaultSort('created_at', 'desc')
+            ->defaultPaginationPageOption(15);
     }
 }

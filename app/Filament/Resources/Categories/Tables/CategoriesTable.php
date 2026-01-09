@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Categories\Tables;
 
 use App\Models\Category;
+use Illuminate\Support\Facades\Cache;
 use Filament\Tables\Table;
 use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
@@ -72,7 +73,7 @@ class CategoriesTable
                             ->label(__('Parent Category'))
                             ->searchable()
                             ->preload()
-                            ->options(Category::query()->whereNull('parent_id')->pluck('name', 'id'))
+                            ->options(fn () => Cache::remember('admin_root_categories_options', 3600, fn () => Category::query()->whereNull('parent_id')->pluck('name', 'id')->toArray()))
                             ->placeholder(__('All Categories')),
                         Select::make('is_active')
                             ->label(__('Status'))
@@ -177,6 +178,7 @@ class CategoriesTable
                 ]),
             ])
             ->reorderable('sort_order')
-            ->defaultSort('sort_order');
+            ->defaultSort('sort_order')
+            ->defaultPaginationPageOption(15);
     }
 }
