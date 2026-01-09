@@ -43,7 +43,9 @@ class BannerRepository extends BaseRepository implements BannerRepositoryInterfa
             ->when($types, fn($q) => $q->whereIn('type', $types))
             ->orderBy('sort_order');
 
-        if (!$this->isCacheEnabled()) return $builder->get();
+        if (!$this->isCacheEnabled()) {
+            return $builder->get();
+        }
 
         $key = $this->cacheKey('listByPosition', [
             $pos,

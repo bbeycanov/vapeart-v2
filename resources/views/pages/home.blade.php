@@ -336,17 +336,18 @@
         </div>
 
         <div class="row">
+            @if(isset($discountBanner) && $discountBanner && $discountBanner->isNotEmpty())
             <div class="col-sm-6 col-md-4 col-lg-3 col-xl-20per">
                 <div class="position-relative w-100 h-sm-100 border-radius-4 overflow-hidden minh-240 mb-4 mb-sm-0">
                     @php
-                        $discountBanner = $activeDiscount->getFirstMediaUrl('desktop');
+                        $discountBannerImage = $discountBanner->getFirstMediaUrl('desktop');
                         $discountName = $activeDiscount->getTranslation('name', app()->getLocale());
                         $discountAmount = $activeDiscount->amount;
                         $discountType = $activeDiscount->type;
                         $discountText = $discountType === 'percentage' ? $discountAmount . '%' : $discountAmount . ' ' . ($activeDiscount->products()->first()->currency ?? 'AZN');
                     @endphp
                     <div class="background-img"
-                         style="background-image: url('{{ $discountBanner ?: asset('storefront/images/home/demo12/deal-bg.jpg') }}');"></div>
+                         style="background-image: url('{{ $discountBannerImage ?: asset('storefront/images/home/demo12/deal-bg.jpg') }}');"></div>
                     <div class="position-absolute position-center text-white text-center w-100 px-3">
                         <h2 class="section-title fw-bold text-white">{{ $discountText }}</h2>
                         <h3 class="text-white fw-normal">{{ $discountName }}</h3>
@@ -354,7 +355,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-8 col-lg-9 col-xl-80per">
+            @endif
+            <div class="@if(isset($discountBanner) && $discountBanner && $discountBanner->isNotEmpty()) col-sm-6 col-md-8 col-lg-9 col-xl-80per @else col-sm-12 col-md-12 col-lg-12 @endif ">
                 <div id="deals_carousel" class="position-relative">
                     <div class="swiper-container js-swiper-slider"
                          data-settings='{

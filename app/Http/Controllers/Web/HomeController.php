@@ -72,9 +72,10 @@ class HomeController extends Controller
 
         // Home page banners - BannerService içinde cache'leniyor
         $heroBanners = $this->bannerService->byPosition(BannerPosition::HOME_HERO_SLIDESHOW);
+        $discountBanner = $this->bannerService->byPosition(BannerPosition::DISCOUNTS_INDEX_HEADER)->first();
 
         // Discount products - Get first active discount and its products
-        $discountProducts = Cache::remember("discount_products:$locale", 3600, function () {
+        $discountProducts = Cache::remember("discount_products:$locale", 3600, static function () {
             $activeDiscount = Discount::active()
                 ->orderBy('sort_order')
                 ->first();
@@ -98,7 +99,7 @@ class HomeController extends Controller
         });
 
         // Get discount info for banner
-        $activeDiscount = Cache::remember("active_discount:$locale", 3600, function () {
+        $activeDiscount = Cache::remember("active_discount:$locale", 3600, static function () {
             return Discount::active()
                 ->orderBy('sort_order')
                 ->first();
@@ -114,6 +115,7 @@ class HomeController extends Controller
                 'featuredMenus',
                 'latestBlogs',
                 'heroBanners',
+                'discountBanner',
                 'discountProducts',
                 'activeDiscount',
                 'organizationSchema'
