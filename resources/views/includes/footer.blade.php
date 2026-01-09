@@ -165,9 +165,11 @@
         </a>
 
         <a href="{{ route('categories.index', app()->getLocale()) }}" class="footer-mobile__link d-flex flex-column align-items-center text-white">
-            <svg class="d-block" width="18" height="18" viewBox="0 0 18 18" fill="none"
-                 xmlns="http://www.w3.org/2000/svg">
-                <use href="#icon_hanger"/>
+            <svg class="d-block" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="13" y="3" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="3" y="13" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="13" y="13" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/>
             </svg>
             <span>{{ __('footer.Categories') }}</span>
         </a>
