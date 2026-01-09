@@ -48,7 +48,10 @@ class CategoryForm
                                 if ($livewire->activeLocale === self::getDefaultTranslatableLocale()) {
                                     $set('slug', Str::slug($state));
                                 }
-                            }),
+                            })
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         RichEditor::make('description')
                             ->label(__('Content'))
                             ->toolbarButtons(RichEditorFullToolBarButton::getAll())
@@ -64,7 +67,10 @@ class CategoryForm
                             ->columnSpanFull()
                             ->required()
                             ->dehydrated()
-                            ->readonly(),
+                            ->readonly()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         TextInput::make('meta_title')
                             ->label(__('Meta Title')),
                         Textarea::make('meta_description')

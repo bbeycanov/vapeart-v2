@@ -268,4 +268,19 @@ return [
 
     // Other
     'Products' => 'Products',
+
+    // Validation Messages
+    'validation' => [
+        'required' => 'This field is required.',
+        'email' => 'Please enter a valid email address.',
+        'url' => 'Please enter a valid URL.',
+        'numeric' => 'This field must be a number.',
+        'min_value' => 'Value must be at least :min.',
+        'max_value' => 'Value must not exceed :max.',
+        'max_length' => 'This field must not exceed :max characters.',
+        'regex' => 'The format is invalid.',
+        'language_code_format' => 'Language code must be 2 lowercase letters (e.g., az, en, ru).',
+        'unique' => 'This value already exists.',
+        'integer' => 'This field must be an integer.',
+    ],
 ];

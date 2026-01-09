@@ -34,12 +34,18 @@ class BannerForm
                             ->required()
                             ->label(__('Position'))
                             ->options(BannerPosition::getNames())
-                            ->default(BannerPosition::HOME_HERO_SLIDESHOW->value),
+                            ->default(BannerPosition::HOME_HERO_SLIDESHOW->value)
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         Select::make('type')
                             ->required()
                             ->label(__('Type'))
                             ->options(BannerType::getNames())
-                            ->default(BannerType::IMAGE->value),
+                            ->default(BannerType::IMAGE->value)
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                     ]),
                 Section::make(__('General Information'))
                     ->columns(1)
@@ -48,7 +54,10 @@ class BannerForm
                     ->schema([
                         TextInput::make('key')
                             ->columnSpanFull()
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         Group::make([
                             TextInput::make('title')
                                 ->placeholder(__('Big Sale')),
@@ -134,7 +143,11 @@ class BannerForm
                     ->numeric()
                     ->default(function () {
                         return Banner::max('sort_order') + 1;
-                    }),
+                    })
+                    ->validationMessages([
+                        'required' => __('admin.validation.required'),
+                        'numeric' => __('admin.validation.numeric'),
+                    ]),
             ]);
     }
 }

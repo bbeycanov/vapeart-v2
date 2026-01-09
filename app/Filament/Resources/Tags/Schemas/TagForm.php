@@ -39,13 +39,19 @@ class TagForm
                                 if ($livewire->activeLocale === self::getDefaultTranslatableLocale()) {
                                     $set('slug', Str::slug($state));
                                 }
-                            }),
+                            })
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         TextInput::make('slug')
                             ->label(__('Slug'))
                             ->columnSpanFull()
                             ->required()
                             ->dehydrated()
-                            ->readonly(),
+                            ->readonly()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                     ]),
                 Section::make(__('Switcher'))
                     ->collapsible()

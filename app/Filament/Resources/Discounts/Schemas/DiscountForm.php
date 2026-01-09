@@ -37,30 +37,54 @@ class DiscountForm
                                     TextInput::make('name')
                                         ->label(__('Name'))
                                         ->live()
-                                        ->required(),
+                                        ->required()
+                                        ->validationMessages([
+                                            'required' => __('admin.validation.required'),
+                                        ]),
                                     TextInput::make('code')
                                         ->label(__('Code'))
-                                        ->required(),
+                                        ->required()
+                                        ->validationMessages([
+                                            'required' => __('admin.validation.required'),
+                                        ]),
                                     Select::make('type')
                                         ->label(__('Type'))
                                         ->options(DiscountType::getNames())
-                                        ->required(),
+                                        ->required()
+                                        ->validationMessages([
+                                            'required' => __('admin.validation.required'),
+                                        ]),
                                     TextInput::make('amount')
                                         ->label(__('Amount'))
-                                        ->required(),
+                                        ->required()
+                                        ->validationMessages([
+                                            'required' => __('admin.validation.required'),
+                                        ]),
                                     DateTimePicker::make('start_date')
                                         ->label(__('Start Date'))
-                                        ->required(),
+                                        ->required()
+                                        ->validationMessages([
+                                            'required' => __('admin.validation.required'),
+                                        ]),
                                     DateTimePicker::make('end_date')
                                         ->label(__('End Date'))
-                                        ->required(),
+                                        ->required()
+                                        ->validationMessages([
+                                            'required' => __('admin.validation.required'),
+                                        ]),
                                     TextInput::make('usage_limit')
                                         ->numeric()
-                                        ->label(__('Usage Limit')),
+                                        ->label(__('Usage Limit'))
+                                        ->validationMessages([
+                                            'numeric' => __('admin.validation.numeric'),
+                                        ]),
                                     TextInput::make('used_count')
                                         ->numeric()
                                         ->default(0)
-                                        ->label(__('Used Count')),
+                                        ->label(__('Used Count'))
+                                        ->validationMessages([
+                                            'numeric' => __('admin.validation.numeric'),
+                                        ]),
                                 ]),
                             Section::make(__('Switcher'))
                                 ->collapsible()
@@ -70,7 +94,11 @@ class DiscountForm
                                         ->hidden()
                                         ->required()
                                         ->numeric()
-                                        ->default(Discount::query()->max('sort_order') + 1),
+                                        ->default(Discount::query()->max('sort_order') + 1)
+                                        ->validationMessages([
+                                            'required' => __('admin.validation.required'),
+                                            'numeric' => __('admin.validation.numeric'),
+                                        ]),
                                     Toggle::make('is_active')
                                         ->label(__('Is Active'))
                                         ->required(),

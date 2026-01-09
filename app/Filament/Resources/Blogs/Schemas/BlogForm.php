@@ -50,13 +50,19 @@ class BlogForm
                                                 if ($livewire->activeLocale === self::getDefaultTranslatableLocale()) {
                                                     $set('slug', Str::slug($state));
                                                 }
-                                            }),
+                                            })
+                                            ->validationMessages([
+                                                'required' => __('admin.validation.required'),
+                                            ]),
                                         TextInput::make('slug')
                                             ->label(__('Slug'))
                                             ->columnSpanFull()
                                             ->required()
                                             ->dehydrated()
-                                            ->readonly(),
+                                            ->readonly()
+                                            ->validationMessages([
+                                                'required' => __('admin.validation.required'),
+                                            ]),
                                         RichEditor::make('excerpt')
                                             ->label(__('Excerpt'))
                                             ->toolbarButtons(RichEditorFullToolBarButton::getAll())
@@ -103,7 +109,11 @@ class BlogForm
                                             ->numeric()
                                             ->readOnly()
                                             ->columnSpanFull()
-                                            ->minValue(1),
+                                            ->minValue(1)
+                                            ->validationMessages([
+                                                'numeric' => __('admin.validation.numeric'),
+                                                'min' => __('admin.validation.min_value', ['min' => 1]),
+                                            ]),
                                     ]),
                             ]),
                     ]),
@@ -141,7 +151,10 @@ class BlogForm
                                         1 => __('Published'),
                                     ])
                                     ->default(0)
-                                    ->required(),
+                                    ->required()
+                                    ->validationMessages([
+                                        'required' => __('admin.validation.required'),
+                                    ]),
                                 Toggle::make('is_active')
                                     ->label(__('Is Active'))
                                     ->default(true),

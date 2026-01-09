@@ -268,4 +268,19 @@ return [
 
     // Other
     'Products' => 'Məhsullar',
+
+    // Validation Messages
+    'validation' => [
+        'required' => 'Bu sahə mütləq doldurulmalıdır.',
+        'email' => 'Düzgün e-poçt ünvanı daxil edin.',
+        'url' => 'Düzgün URL daxil edin.',
+        'numeric' => 'Bu sahə rəqəm olmalıdır.',
+        'min_value' => 'Dəyər minimum :min olmalıdır.',
+        'max_value' => 'Dəyər maksimum :max olmalıdır.',
+        'max_length' => 'Bu sahə maksimum :max simvol olmalıdır.',
+        'regex' => 'Format düzgün deyil.',
+        'language_code_format' => 'Dil kodu 2 kiçik hərf olmalıdır (məs: az, en, ru).',
+        'unique' => 'Bu dəyər artıq mövcuddur.',
+        'integer' => 'Bu sahə tam ədəd olmalıdır.',
+    ],
 ];

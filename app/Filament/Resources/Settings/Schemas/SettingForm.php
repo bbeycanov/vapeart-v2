@@ -24,11 +24,17 @@ class SettingForm
                             ->label(__('Key'))
                             ->live()
                             ->columnSpanFull()
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         TextInput::make('value')
                             ->label(__('Value'))
                             ->columnSpanFull()
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                     ]),
 
                 Section::make(__('Switcher'))
@@ -45,7 +51,11 @@ class SettingForm
                             ->hidden()
                             ->required()
                             ->numeric()
-                            ->default(Setting::query()->max('sort_order') + 1),
+                            ->default(Setting::query()->max('sort_order') + 1)
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                                'numeric' => __('admin.validation.numeric'),
+                            ]),
                     ]),
             ]);
     }

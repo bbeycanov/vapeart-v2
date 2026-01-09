@@ -39,7 +39,10 @@ class PageForm
                             ->required()
                             ->columnSpanFull()
                             ->readOnly()
-                            ->default('default'),
+                            ->default('default')
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         TextInput::make('title')
                             ->label(__('Title'))
                             ->live(onBlur: true)
@@ -49,7 +52,10 @@ class PageForm
                                 if ($livewire->activeLocale === self::getDefaultTranslatableLocale()) {
                                     $set('slug', Str::slug($state));
                                 }
-                            }),
+                            })
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         TextInput::make('excerpt')
                             ->columnSpanFull()
                             ->label(__('Excerpt')),
@@ -68,7 +74,10 @@ class PageForm
                             ->columnSpanFull()
                             ->required()
                             ->dehydrated()
-                            ->readonly(),
+                            ->readonly()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         TextInput::make('meta_title'),
                         TextInput::make('meta_description'),
                     ]),

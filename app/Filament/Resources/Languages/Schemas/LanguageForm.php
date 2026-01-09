@@ -25,13 +25,24 @@ class LanguageForm
                             ->label(__('Language Code'))
                             ->regex('/^[a-z]{2}$/i')
                             ->maxLength(2)
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                                'regex' => __('admin.validation.language_code_format'),
+                                'max' => __('admin.validation.max_length', ['max' => 2]),
+                            ]),
                         TextInput::make('name')
                             ->label(__('Language Name'))
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         TextInput::make('native_name')
                             ->label(__('Native Name'))
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                     ]),
                 Section::make(__('Switcher'))
                     ->collapsible()
@@ -42,7 +53,11 @@ class LanguageForm
                             ->hidden()
                             ->required()
                             ->numeric()
-                            ->default(Language::query()->max('sort_order') + 1),
+                            ->default(Language::query()->max('sort_order') + 1)
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                                'numeric' => __('admin.validation.numeric'),
+                            ]),
                         Toggle::make('is_active')
                             ->label(__('Is Active'))
                             ->required(),

@@ -35,13 +35,19 @@ class MenuForm
                             ->required()
                             ->live()
                             ->options(MenuPosition::labels())
-                            ->afterStateUpdated(fn(Set $set) => $set('parent_id', null)),
+                            ->afterStateUpdated(fn(Set $set) => $set('parent_id', null))
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
 
                         Select::make('type')
                             ->label(__('Type'))
                             ->required()
                             ->live()
-                            ->options(MenuType::labels()),
+                            ->options(MenuType::labels())
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
 
                         Select::make('parent_id')
                             ->label(__('Parent Menu'))
@@ -97,10 +103,16 @@ class MenuForm
                             ->schema([
                                 TextInput::make('title')
                                     ->label(__('Title'))
-                                    ->required(),
+                                    ->required()
+                                    ->validationMessages([
+                                        'required' => __('admin.validation.required'),
+                                    ]),
                                 TextInput::make('url')
                                     ->label(__('URL'))
-                                    ->required(),
+                                    ->required()
+                                    ->validationMessages([
+                                        'required' => __('admin.validation.required'),
+                                    ]),
                                 Select::make('target')
                                     ->label(__('Link Target'))
                                     ->options(UrlTarget::labels()),

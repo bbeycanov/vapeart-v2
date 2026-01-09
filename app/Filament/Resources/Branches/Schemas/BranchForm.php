@@ -43,7 +43,10 @@ class BranchForm
                                 if ($livewire->activeLocale === self::getDefaultTranslatableLocale()) {
                                     $set('slug', Str::slug($state));
                                 }
-                            }),
+                            })
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         Textarea::make('address')
                             ->label(__('Address'))
                             ->columnSpanFull()
@@ -53,7 +56,10 @@ class BranchForm
                             ->tel(),
                         TextInput::make('email')
                             ->label(__('Email'))
-                            ->email(),
+                            ->email()
+                            ->validationMessages([
+                                'email' => __('admin.validation.email'),
+                            ]),
                         TextInput::make('whatsapp')
                             ->label(__('WhatsApp'))
                             ->tel()
@@ -84,12 +90,18 @@ class BranchForm
                             ->label(__('Latitude'))
                             ->numeric()
                             ->step(0.00000001)
-                            ->helperText(__('Map latitude coordinate')),
+                            ->helperText(__('Map latitude coordinate'))
+                            ->validationMessages([
+                                'numeric' => __('admin.validation.numeric'),
+                            ]),
                         TextInput::make('longitude')
                             ->label(__('Longitude'))
                             ->numeric()
                             ->step(0.00000001)
-                            ->helperText(__('Map longitude coordinate')),
+                            ->helperText(__('Map longitude coordinate'))
+                            ->validationMessages([
+                                'numeric' => __('admin.validation.numeric'),
+                            ]),
                     ]),
 
                 Section::make(__('SEO Information'))
@@ -102,7 +114,10 @@ class BranchForm
                             ->columnSpanFull()
                             ->required()
                             ->dehydrated()
-                            ->readonly(),
+                            ->readonly()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         TextInput::make('meta_title')
                             ->label(__('Meta Title')),
                         Textarea::make('meta_description')

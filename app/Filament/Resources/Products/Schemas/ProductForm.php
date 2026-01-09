@@ -60,7 +60,10 @@ class ProductForm
                                         Select::make('brand_id')
                                             ->label(__('Brand'))
                                             ->required()
-                                            ->relationship('brand', 'name'),
+                                            ->relationship('brand', 'name')
+                                            ->validationMessages([
+                                                'required' => __('admin.validation.required'),
+                                            ]),
                                         Select::make('categories')
                                             ->label(__('Categories'))
                                             ->required()
@@ -68,7 +71,10 @@ class ProductForm
                                             ->relationship('categories', 'name', fn($query) => $query->orderBy('name'))
                                             ->preload()
                                             ->searchable()
-                                            ->columnSpanFull(),
+                                            ->columnSpanFull()
+                                            ->validationMessages([
+                                                'required' => __('admin.validation.required'),
+                                            ]),
 
                                         Select::make('tags')
                                             ->label(__('Tags'))
@@ -87,12 +93,20 @@ class ProductForm
                                             ->label(__('Price'))
                                             ->required()
                                             ->numeric()
-                                            ->prefix('$'),
+                                            ->prefix('$')
+                                            ->validationMessages([
+                                                'required' => __('admin.validation.required'),
+                                                'numeric' => __('admin.validation.numeric'),
+                                            ]),
                                         TextInput::make('compare_at_price')
                                             ->label(__('Compare Price'))
                                             ->required()
                                             ->numeric()
-                                            ->prefix('$'),
+                                            ->prefix('$')
+                                            ->validationMessages([
+                                                'required' => __('admin.validation.required'),
+                                                'numeric' => __('admin.validation.numeric'),
+                                            ]),
                                         Select::make('currency')
                                             ->label(__('Currency'))
                                             ->options([
@@ -102,7 +116,10 @@ class ProductForm
                                             ])
                                             ->columnSpanFull()
                                             ->default('AZN')
-                                            ->required(),
+                                            ->required()
+                                            ->validationMessages([
+                                                'required' => __('admin.validation.required'),
+                                            ]),
                                         Toggle::make('is_track_stock')
                                             ->label('Track Stock')
                                             ->live()
@@ -116,7 +133,11 @@ class ProductForm
                                             ->disabled(function (Get $get) {
                                                 return $get('is_track_stock') == false;
                                             })
-                                            ->default(0),
+                                            ->default(0)
+                                            ->validationMessages([
+                                                'required' => __('admin.validation.required'),
+                                                'numeric' => __('admin.validation.numeric'),
+                                            ]),
                                     ]),
                                 Section::make(__('General Information'))
                                     ->collapsible()
@@ -127,7 +148,10 @@ class ProductForm
                                             ->label('SKU')
                                             ->default(self::generateSKU())
                                             ->readOnly()
-                                            ->required(),
+                                            ->required()
+                                            ->validationMessages([
+                                                'required' => __('admin.validation.required'),
+                                            ]),
                                         TextInput::make('name')
                                             ->label(__('Name'))
                                             ->live(onBlur: true)
@@ -137,7 +161,10 @@ class ProductForm
                                                 if ($livewire->activeLocale === self::getDefaultTranslatableLocale()) {
                                                     $set('slug', Str::slug($state));
                                                 }
-                                            }),
+                                            })
+                                            ->validationMessages([
+                                                'required' => __('admin.validation.required'),
+                                            ]),
                                         RichEditor::make('short_description')
                                             ->label(__('Short Description'))
                                             ->toolbarButtons([
@@ -177,7 +204,10 @@ class ProductForm
                                     ->columnSpanFull()
                                     ->required()
                                     ->dehydrated()
-                                    ->readonly(),
+                                    ->readonly()
+                                    ->validationMessages([
+                                        'required' => __('admin.validation.required'),
+                                    ]),
                                 TextInput::make('meta_title')
                                     ->live()
                                     ->label(__('Meta Title')),
@@ -197,7 +227,11 @@ class ProductForm
                                     ->hidden()
                                     ->required()
                                     ->numeric()
-                                    ->default(Language::query()->max('sort_order') + 1),
+                                    ->default(Language::query()->max('sort_order') + 1)
+                                    ->validationMessages([
+                                        'required' => __('admin.validation.required'),
+                                        'numeric' => __('admin.validation.numeric'),
+                                    ]),
 
                                 Select::make('is_new')
                                     ->label(__('New Product'))
@@ -239,7 +273,10 @@ class ProductForm
                                     })
                                     ->preload()
                                     ->searchable()
-                                    ->columnSpanFull(),
+                                    ->columnSpanFull()
+                                    ->validationMessages([
+                                        'required' => __('admin.validation.required'),
+                                    ]),
 
                                 Select::make('discounts')
                                     ->label(__('Discounts'))

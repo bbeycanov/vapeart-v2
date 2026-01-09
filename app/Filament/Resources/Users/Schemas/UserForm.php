@@ -28,20 +28,33 @@ class UserForm
                     ->schema([
                         TextInput::make('name')
                             ->label(__('Name'))
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         TextInput::make('surname')
                             ->label(__('Surname'))
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         TextInput::make('email')
                             ->label(__('Email'))
                             ->email()
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                                'email' => __('admin.validation.email'),
+                            ]),
                         TextInput::make('password')
                             ->label(__('Password'))
                             ->password()
                             ->required(fn (string $operation) => $operation === 'create')
                             ->dehydrated(fn ($state) => filled($state))
-                            ->dehydrateStateUsing(fn ($state) => filled($state) ? Hash::make($state) : null),
+                            ->dehydrateStateUsing(fn ($state) => filled($state) ? Hash::make($state) : null)
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
 
                         Select::make('roles')
                             ->label(__('Roles'))

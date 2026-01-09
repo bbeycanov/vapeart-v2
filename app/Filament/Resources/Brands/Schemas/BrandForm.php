@@ -46,11 +46,17 @@ class BrandForm
                                 if ($livewire->activeLocale === self::getDefaultTranslatableLocale()) {
                                     $set('slug', Str::slug($state));
                                 }
-                            }),
+                            })
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         TextInput::make('website')
                             ->label(__('Website'))
                             ->columnSpanFull()
-                            ->url(),
+                            ->url()
+                            ->validationMessages([
+                                'url' => __('admin.validation.url'),
+                            ]),
                         RichEditor::make('description')
                             ->label(__('Content'))
                             ->toolbarButtons(RichEditorFullToolBarButton::getAll())
@@ -93,7 +99,10 @@ class BrandForm
                             ->columnSpanFull()
                             ->required()
                             ->dehydrated()
-                            ->readonly(),
+                            ->readonly()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         TextInput::make('meta_title')
                             ->label(__('Meta Title')),
                         Textarea::make('meta_description')

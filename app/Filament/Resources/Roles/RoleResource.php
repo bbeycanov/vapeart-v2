@@ -84,13 +84,21 @@ class RoleResource extends Resource
                                         modifyRuleUsing: fn(Unique $rule): Unique => Utils::isTenancyEnabled() ? $rule->where(Utils::getTenantModelForeignKey(), Filament::getTenant()?->id) : $rule
                                     )
                                     ->required()
-                                    ->maxLength(255),
+                                    ->maxLength(255)
+                                    ->validationMessages([
+                                        'required' => __('admin.validation.required'),
+                                        'unique' => __('admin.validation.unique'),
+                                        'max' => __('admin.validation.max_length', ['max' => 255]),
+                                    ]),
 
                                 TextInput::make('guard_name')
                                     ->label(__('filament-shield::filament-shield.field.guard_name'))
                                     ->default(Utils::getFilamentAuthGuard())
                                     ->nullable()
-                                    ->maxLength(255),
+                                    ->maxLength(255)
+                                    ->validationMessages([
+                                        'max' => __('admin.validation.max_length', ['max' => 255]),
+                                    ]),
 
                                 Select::make(config('permission.column_names.team_foreign_key'))
                                     ->label(__('filament-shield::filament-shield.field.team'))

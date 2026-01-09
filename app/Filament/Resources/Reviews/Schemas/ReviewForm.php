@@ -33,11 +33,17 @@ class ReviewForm
                             ->required()
                             ->searchable()
                             ->reactive()
-                            ->afterStateUpdated(fn ($state, callable $set) => $set('reviewable_id', null)),
+                            ->afterStateUpdated(fn ($state, callable $set) => $set('reviewable_id', null))
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ]),
                         Select::make('reviewable_id')
                             ->label(__('Item'))
                             ->required()
                             ->searchable()
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                            ])
                             ->getSearchResultsUsing(function (string $search, callable $get) {
                                 $type = $get('reviewable_type');
                                 if (!$type) {
@@ -93,28 +99,49 @@ class ReviewForm
                         TextInput::make('author_name')
                             ->label(__('Author Name'))
                             ->required()
-                            ->maxLength(120),
+                            ->maxLength(120)
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                                'max' => __('admin.validation.max_length', ['max' => 120]),
+                            ]),
                         TextInput::make('author_email')
                             ->label(__('Author Email'))
                             ->email()
                             ->required()
-                            ->maxLength(150),
+                            ->maxLength(150)
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                                'email' => __('admin.validation.email'),
+                                'max' => __('admin.validation.max_length', ['max' => 150]),
+                            ]),
                         TextInput::make('rating')
                             ->label(__('Rating'))
                             ->numeric()
                             ->required()
                             ->minValue(1)
                             ->maxValue(5)
-                            ->default(5),
+                            ->default(5)
+                            ->validationMessages([
+                                'required' => __('admin.validation.required'),
+                                'numeric' => __('admin.validation.numeric'),
+                                'min' => __('admin.validation.min_value', ['min' => 1]),
+                                'max' => __('admin.validation.max_value', ['max' => 5]),
+                            ]),
                         TextInput::make('title')
                             ->label(__('Title'))
                             ->maxLength(150)
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->validationMessages([
+                                'max' => __('admin.validation.max_length', ['max' => 150]),
+                            ]),
                         Textarea::make('body')
                             ->label(__('Body'))
                             ->rows(4)
                             ->maxLength(5000)
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->validationMessages([
+                                'max' => __('admin.validation.max_length', ['max' => 5000]),
+                            ]),
                     ]),
                 Section::make(__('Status'))
                     ->collapsible()
