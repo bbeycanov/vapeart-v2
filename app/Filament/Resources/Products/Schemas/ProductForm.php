@@ -15,6 +15,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\RichEditor;
+use Kahusoftware\FilamentCkeditorField\CKEditor;
 use Filament\Schemas\Components\Tabs\Tab;
 use App\Enums\RichEditorFullToolBarButton;
 use Filament\Forms\Components\DateTimePicker;
@@ -187,21 +188,13 @@ class ProductForm
                                             ->validationMessages([
                                                 'required' => __('admin.validation.required'),
                                             ]),
-                                        RichEditor::make('short_description')
+                                        CKEditor::make('short_description')
                                             ->label(__('Short Description'))
-                                            ->toolbarButtons([
-                                                'bold',
-                                                'italic',
-                                                'underline',
-                                                'strike',
-                                                'link',
-                                                'bulletList',
-                                                'orderedList',
-                                            ])
+                                            ->uploadUrl(route('admin.ckeditor.upload'))
                                             ->columnSpanFull(),
-                                        RichEditor::make('description')
+                                        CKEditor::make('description')
                                             ->label(__('Content'))
-                                            ->toolbarButtons(RichEditorFullToolBarButton::getAll())
+                                            ->uploadUrl(route('admin.ckeditor.upload'))
                                             ->columnSpanFull()
                                     ]),
                             ]),

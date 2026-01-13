@@ -5,8 +5,7 @@ namespace App\Filament\Resources\Pages\Schemas;
 use App\Models\Language;
 use Illuminate\Support\Str;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\RichEditor;
-use App\Enums\RichEditorFullToolBarButton;
+use Kahusoftware\FilamentCkeditorField\CKEditor;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -59,9 +58,9 @@ class PageForm
                         TextInput::make('excerpt')
                             ->columnSpanFull()
                             ->label(__('Excerpt')),
-                        RichEditor::make('body')
+                        CKEditor::make('body')
                             ->label(__('Content'))
-                            ->toolbarButtons(RichEditorFullToolBarButton::getAll())
+                            ->uploadUrl(route('admin.ckeditor.upload'))
                             ->columnSpanFull(),
                     ]),
                 Section::make(__('Seo Information'))

@@ -24,6 +24,11 @@ Route::get('/', function () {
     return redirect()->to(url($default), Response::HTTP_FOUND);
 })->name('root.redirect');
 
+// CKEditor Upload Route (Admin)
+Route::post('/admin/ckeditor/upload', [\App\Http\Controllers\Admin\CKEditorUploadController::class, 'upload'])
+    ->middleware(['web', 'auth'])
+    ->name('admin.ckeditor.upload');
+
 
 Route::group([
     'prefix' => '{locale}',

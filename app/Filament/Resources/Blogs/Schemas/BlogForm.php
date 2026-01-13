@@ -11,9 +11,8 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\DatePicker;
-use App\Enums\RichEditorFullToolBarButton;
+use Kahusoftware\FilamentCkeditorField\CKEditor;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -63,14 +62,14 @@ class BlogForm
                                             ->validationMessages([
                                                 'required' => __('admin.validation.required'),
                                             ]),
-                                        RichEditor::make('excerpt')
+                                        CKEditor::make('excerpt')
                                             ->label(__('Excerpt'))
-                                            ->toolbarButtons(RichEditorFullToolBarButton::getAll())
+                                            ->uploadUrl(route('admin.ckeditor.upload'))
                                             ->columnSpanFull()
                                             ->helperText(__('Short summary of the blog post')),
-                                        RichEditor::make('body')
+                                        CKEditor::make('body')
                                             ->label(__('Content'))
-                                            ->toolbarButtons(RichEditorFullToolBarButton::getAll())
+                                            ->uploadUrl(route('admin.ckeditor.upload'))
                                             ->columnSpanFull(),
                                     ]),
                             ]),

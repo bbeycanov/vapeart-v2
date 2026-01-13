@@ -11,8 +11,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\RichEditor;
-use App\Enums\RichEditorFullToolBarButton;
+use Kahusoftware\FilamentCkeditorField\CKEditor;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -57,9 +56,9 @@ class BrandForm
                             ->validationMessages([
                                 'url' => __('admin.validation.url'),
                             ]),
-                        RichEditor::make('description')
+                        CKEditor::make('description')
                             ->label(__('Content'))
-                            ->toolbarButtons(RichEditorFullToolBarButton::getAll())
+                            ->uploadUrl(route('admin.ckeditor.upload'))
                             ->columnSpanFull(),
                     ]),
 

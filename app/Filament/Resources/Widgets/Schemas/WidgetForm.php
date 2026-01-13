@@ -7,9 +7,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\FileUpload;
-use App\Enums\RichEditorFullToolBarButton;
+use Kahusoftware\FilamentCkeditorField\CKEditor;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
@@ -28,10 +27,10 @@ class WidgetForm
                         TextInput::make('title')
                             ->columnSpanFull()
                             ->label(__('Title')),
-                        RichEditor::make('content')
+                        CKEditor::make('content')
                             ->columnSpanFull()
                             ->placeholder('<p>Your custom HTML content goes here...</p>')
-                            ->toolbarButtons(RichEditorFullToolBarButton::getAll()),
+                            ->uploadUrl(route('admin.ckeditor.upload')),
                         TextInput::make('button_text')
                             ->label(__('Button Text')),
                         TextInput::make('button_url')

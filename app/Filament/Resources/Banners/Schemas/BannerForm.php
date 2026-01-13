@@ -12,9 +12,8 @@ use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\FileUpload;
-use App\Enums\RichEditorFullToolBarButton;
+use Kahusoftware\FilamentCkeditorField\CKEditor;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
@@ -68,9 +67,9 @@ class BannerForm
                             Textarea::make('content')
                                 ->placeholder(__('Your promotional content goes here...'))
                                 ->rows(3),
-                            RichEditor::make('html')
+                            CKEditor::make('html')
                                 ->placeholder('<p>Your custom HTML content goes here...</p>')
-                                ->toolbarButtons(RichEditorFullToolBarButton::getAll())
+                                ->uploadUrl(route('admin.ckeditor.upload'))
                         ]),
                         Group::make([
                             TextInput::make('link_text')

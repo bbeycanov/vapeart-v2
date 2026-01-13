@@ -10,8 +10,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\RichEditor;
-use App\Enums\RichEditorFullToolBarButton;
+use Kahusoftware\FilamentCkeditorField\CKEditor;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -52,9 +51,9 @@ class CategoryForm
                             ->validationMessages([
                                 'required' => __('admin.validation.required'),
                             ]),
-                        RichEditor::make('description')
+                        CKEditor::make('description')
                             ->label(__('Content'))
-                            ->toolbarButtons(RichEditorFullToolBarButton::getAll())
+                            ->uploadUrl(route('admin.ckeditor.upload'))
                             ->columnSpanFull(),
                     ]),
                 Section::make(__('SEO Information'))

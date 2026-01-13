@@ -9,8 +9,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\RichEditor;
-use App\Enums\RichEditorFullToolBarButton;
+use Kahusoftware\FilamentCkeditorField\CKEditor;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Utilities\Get;
 
@@ -64,9 +63,9 @@ class BranchForm
                             ->label(__('WhatsApp'))
                             ->tel()
                             ->helperText(__('WhatsApp number with country code (e.g., 994501234567)')),
-                        RichEditor::make('description')
+                        CKEditor::make('description')
                             ->label(__('Description'))
-                            ->toolbarButtons(RichEditorFullToolBarButton::getAll())
+                            ->uploadUrl(route('admin.ckeditor.upload'))
                             ->columnSpanFull(),
                     ]),
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d90b0c775a0c6bde7cae2f5cf7a463a0",
+    "content-hash": "b464e7c4425f46c0b2fd973cb398f702",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2598,6 +2598,71 @@
                 "source": "https://github.com/handcraftedinthealps/ElasticsearchDSL/tree/8.3.0"
             },
             "time": "2025-06-06T07:49:52+00:00"
+        },
+        {
+            "name": "kahusoftware/filament-ckeditor-field",
+            "version": "v2.0.1-beta",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kahu-Software-LLC/filament-ckeditor-field.git",
+                "reference": "8fca0a4152c111f97cf35c6aef96c4228bd51772"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kahu-Software-LLC/filament-ckeditor-field/zipball/8fca0a4152c111f97cf35c6aef96c4228bd51772",
+                "reference": "8fca0a4152c111f97cf35c6aef96c4228bd51772",
+                "shasum": ""
+            },
+            "require": {
+                "filament/forms": "^3.0|^4.0",
+                "php": "^8.2|^8.3",
+                "spatie/laravel-package-tools": "^1.15.0"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^8.1",
+                "orchestra/testbench": "^8.0|^9.0|^10.0",
+                "pestphp/pest": "^3.0|^4.0",
+                "pestphp/pest-plugin-arch": "^3.0",
+                "pestphp/pest-plugin-laravel": "^3.0",
+                "phpstan/phpstan": "^2.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kahusoftware\\FilamentCkeditorField\\FilamentCkeditorFieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kahusoftware\\FilamentCkeditorField\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thomas Johnson",
+                    "email": "hello@kahusoftware.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A basic CKEditor 5 form field configured with non-premium features.",
+            "homepage": "https://github.com/kahu-software-llc/filament-ckeditor-field",
+            "keywords": [
+                "Kahu-Software-LLC",
+                "filament-ckeditor-field",
+                "kahusoftware",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/Kahu-Software-LLC/filament-ckeditor-field/discussions/categories/q-a",
+                "source": "https://github.com/Kahu-Software-LLC/filament-ckeditor-field"
+            },
+            "time": "2025-11-24T00:49:41+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
@@ -13093,7 +13158,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "kahusoftware/filament-ckeditor-field": 10
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
