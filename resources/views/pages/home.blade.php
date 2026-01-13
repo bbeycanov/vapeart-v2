@@ -238,22 +238,22 @@
                                                @if($child->target) target="{{ $child->target }}" @endif>
                                                 <div class="category-mini-card__icon d-flex align-items-center justify-content-center me-3">
                                                     @if($iconUrl)
-                                                        <img src="{{ $iconUrl }}" alt="{{ $menuTitle }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                                                        <svg class="fallback-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                        <img src="{{ $iconUrl }}" alt="{{ $menuTitle }}" width="36" height="36" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                                        <svg class="fallback-icon" width="36" height="36" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                                             <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
                                                             <path d="M10 6v4M10 14h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                                                         </svg>
                                                     @elseif($child->icon_class)
-                                                        <i class="{{ $child->icon_class }}" aria-hidden="true"></i>
+                                                        <i class="{{ $child->icon_class }} fs-4" aria-hidden="true"></i>
                                                     @else
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                        <svg width="36" height="36" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                                             <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
                                                             <path d="M10 6v4M10 14h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                                                         </svg>
                                                     @endif
                                                 </div>
                                                 <div class="category-mini-card__content d-flex flex-column justify-content-center flex-grow-1">
-                                                    <span class="category-mini-card__name text-dark fw-medium">{{ $menuTitle }}</span>
+                                                    <span class="category-mini-card__name text-dark fw-bold">{{ $menuTitle }}</span>
                                                 </div>
                                             </a>
                                         </div>
