@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Products\Pages;
 
+use Illuminate\Support\Arr;
+use Illuminate\Validation\ValidationException;
 use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\RestoreAction;
@@ -17,6 +19,37 @@ class EditProduct extends EditRecord
 
     protected static string $resource = ProductResource::class;
 
+    /**
+     * Store non-translatable data separately to preserve during locale switches
+     */
+    public array $nonTranslatableData = [];
+
+    /**
+     * Fields that should be preserved when switching locales
+     */
+    protected array $nonTranslatableFields = [
+        'brand_id',
+        'categories',
+        'tags',
+        'price',
+        'compare_at_price',
+        'currency',
+        'is_track_stock',
+        'stock_qty',
+        'sku',
+        'slug',
+        'is_new',
+        'is_hot',
+        'is_featured',
+        'featured_menus',
+        'sidebar_menus',
+        'discounts',
+        'is_active',
+        'sort_order',
+        'thumbnail',
+        'images',
+    ];
+
     protected function getHeaderActions(): array
     {
         return [
@@ -26,6 +59,56 @@ class EditProduct extends EditRecord
             ForceDeleteAction::make(),
             RestoreAction::make(),
         ];
+    }
+
+    public function updatingActiveLocale(): void
+    {
+        $this->oldActiveLocale = $this->activeLocale;
+
+        // Store non-translatable data before locale switch
+        $currentState = $this->form->getState();
+
+        foreach ($this->nonTranslatableFields as $field) {
+            if (array_key_exists($field, $currentState)) {
+                $this->nonTranslatableData[$field] = $currentState[$field];
+            }
+        }
+    }
+
+    public function updatedActiveLocale(string $newActiveLocale): void
+    {
+        if (blank($this->oldActiveLocale)) {
+            return;
+        }
+
+        $this->resetValidation();
+
+        $translatableAttributes = static::getResource()::getTranslatableAttributes();
+
+        try {
+            $currentState = $this->form->getState();
+
+            // Store translatable data for old locale
+            $this->otherLocaleData[$this->oldActiveLocale] = Arr::only(
+                $currentState,
+                $translatableAttributes
+            );
+
+            // Get translatable data for new locale
+            $newLocaleTranslatableData = $this->otherLocaleData[$this->activeLocale] ?? [];
+
+            // Merge preserved non-translatable data with new locale translatable data
+            $this->form->fill([
+                ...$this->nonTranslatableData,
+                ...$newLocaleTranslatableData,
+            ]);
+
+            unset($this->otherLocaleData[$this->activeLocale]);
+        } catch (ValidationException $e) {
+            $this->activeLocale = $this->oldActiveLocale;
+
+            throw $e;
+        }
     }
 
     protected function mutateFormDataBeforeFill(array $data): array

@@ -4,14 +4,44 @@ namespace App\Filament\Resources\Products\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Resources\Products\ProductResource;
+use App\Filament\Concerns\PreservesNonTranslatableData;
 use LaraZeus\SpatieTranslatable\Actions\LocaleSwitcher;
 use LaraZeus\SpatieTranslatable\Resources\Pages\CreateRecord\Concerns\Translatable;
 
 class CreateProduct extends CreateRecord
 {
-    use Translatable;
+    use Translatable, PreservesNonTranslatableData {
+        PreservesNonTranslatableData::updatingActiveLocale insteadof Translatable;
+        PreservesNonTranslatableData::updatedActiveLocale insteadof Translatable;
+    }
 
     protected static string $resource = ProductResource::class;
+
+    protected function getNonTranslatableFields(): array
+    {
+        return [
+            'brand_id',
+            'categories',
+            'tags',
+            'price',
+            'compare_at_price',
+            'currency',
+            'is_track_stock',
+            'stock_qty',
+            'sku',
+            'slug',
+            'is_new',
+            'is_hot',
+            'is_featured',
+            'featured_menus',
+            'sidebar_menus',
+            'discounts',
+            'is_active',
+            'sort_order',
+            'thumbnail',
+            'images',
+        ];
+    }
 
     protected function getHeaderActions(): array
     {

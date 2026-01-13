@@ -145,6 +145,8 @@ class ProductForm
                                             ]),
                                         Toggle::make('is_track_stock')
                                             ->label('Track Stock')
+                                            ->default(false)
+                                            ->dehydrateStateUsing(fn ($state) => (bool) $state)
                                             ->live()
                                             ->helperText(__('Product appearance depends on stock.')),
                                         TextInput::make('stock_qty')
@@ -248,36 +250,30 @@ class ProductForm
                                         'numeric' => __('admin.validation.numeric'),
                                     ]),
 
-                                Select::make('is_new')
+                                Toggle::make('is_new')
                                     ->label(__('New Product'))
                                     ->default(false)
-                                    ->options([
-                                        true => __('New'),
-                                        false => __('Normal'),
-                                    ]),
+                                    ->dehydrateStateUsing(fn ($state) => (bool) $state)
+                                    ->inline(false),
 
-                                Select::make('is_hot')
+                                Toggle::make('is_hot')
                                     ->label(__('Hot Product'))
                                     ->default(false)
-                                    ->options([
-                                        true => __('Hot'),
-                                        false => __('Normal'),
-                                    ]),
+                                    ->dehydrateStateUsing(fn ($state) => (bool) $state)
+                                    ->inline(false),
 
-                                Select::make('is_featured')
+                                Toggle::make('is_featured')
                                     ->label(__('Featured'))
                                     ->default(false)
+                                    ->dehydrateStateUsing(fn ($state) => (bool) $state)
                                     ->live()
-                                    ->options([
-                                        true => __('Featured'),
-                                        false => __('Normal'),
-                                    ]),
+                                    ->inline(false),
 
                                 Select::make('featured_menus')
                                     ->label(__('Featured Menus'))
                                     ->multiple()
                                     ->hidden(function (Get $get) {
-                                        return $get('is_featured') == '0';
+                                        return !$get('is_featured');
                                     })
                                     ->relationship(
                                         name: 'menus',
@@ -287,7 +283,7 @@ class ProductForm
                                         }
                                     )
                                     ->required(function (Get $get) {
-                                        return $get('is_featured') == true;
+                                        return (bool) $get('is_featured');
                                     })
                                     ->preload()
                                     ->searchable()
@@ -311,6 +307,7 @@ class ProductForm
                                 Toggle::make('is_active')
                                     ->label(__('Active'))
                                     ->default(true)
+                                    ->dehydrateStateUsing(fn ($state) => (bool) $state)
                                     ->columnSpanFull(),
                             ]),
                         Tab::make(__('Attributes'))
