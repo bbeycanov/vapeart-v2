@@ -1,74 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
     <url>
-    <loc>http://127.0.0.1:8000/az/page/about-us</loc>
-    <lastmod>2026-01-07T21:11:57+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/page/haqqimzda</loc>
+    <lastmod>2025-12-21T15:13:24+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/page/about-us</loc>
-    <lastmod>2026-01-07T21:11:57+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/page/haqqimzda</loc>
+    <lastmod>2025-12-21T15:13:24+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/page/about-us</loc>
-    <lastmod>2026-01-07T21:11:57+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/page/haqqimzda</loc>
+    <lastmod>2025-12-21T15:13:24+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/page/delivery</loc>
-    <lastmod>2026-01-07T21:11:57+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/page/about-us</loc>
+    <lastmod>2026-01-07T21:19:09+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/page/delivery</loc>
-    <lastmod>2026-01-07T21:11:57+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/page/about-us</loc>
+    <lastmod>2026-01-07T21:19:09+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/page/delivery</loc>
-    <lastmod>2026-01-07T21:11:57+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/page/about-us</loc>
+    <lastmod>2026-01-07T21:19:09+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/page/payment-methods</loc>
-    <lastmod>2026-01-07T21:11:57+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/page/delivery</loc>
+    <lastmod>2026-01-07T21:19:09+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/page/payment-methods</loc>
-    <lastmod>2026-01-07T21:11:57+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/page/delivery</loc>
+    <lastmod>2026-01-07T21:19:09+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/page/payment-methods</loc>
-    <lastmod>2026-01-07T21:11:57+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/page/delivery</loc>
+    <lastmod>2026-01-07T21:19:09+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/page/guarantee</loc>
-    <lastmod>2026-01-07T21:11:57+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/page/payment-methods</loc>
+    <lastmod>2026-01-07T21:19:09+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/page/guarantee</loc>
-    <lastmod>2026-01-07T21:11:57+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/page/payment-methods</loc>
+    <lastmod>2026-01-07T21:19:09+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/page/guarantee</loc>
-    <lastmod>2026-01-07T21:11:57+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/page/payment-methods</loc>
+    <lastmod>2026-01-07T21:19:09+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+            </url>
+    <url>
+    <loc>https://v2.vapeartbaku.com/az/page/guarantee</loc>
+    <lastmod>2026-01-07T21:19:09+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+            </url>
+    <url>
+    <loc>https://v2.vapeartbaku.com/en/page/guarantee</loc>
+    <lastmod>2026-01-07T21:19:09+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+            </url>
+    <url>
+    <loc>https://v2.vapeartbaku.com/ru/page/guarantee</loc>
+    <lastmod>2026-01-07T21:19:09+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
             </url>

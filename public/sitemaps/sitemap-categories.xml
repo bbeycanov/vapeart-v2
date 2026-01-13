@@ -1,416 +1,398 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
     <url>
-    <loc>http://127.0.0.1:8000/az/category/devices</loc>
-    <lastmod>2025-12-20T19:07:23+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/devices</loc>
+    <lastmod>2025-12-20T21:11:48+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/devices</loc>
-    <lastmod>2025-12-20T19:07:23+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/devices</loc>
+    <lastmod>2025-12-20T21:11:48+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/devices</loc>
-    <lastmod>2025-12-20T19:07:23+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/devices</loc>
+    <lastmod>2025-12-20T21:11:48+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/electronic-cigarettes</loc>
-    <lastmod>2025-12-20T20:36:34+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/electronic-cigarettes</loc>
+    <lastmod>2025-12-28T23:26:03+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/electronic-cigarettes</loc>
-    <lastmod>2025-12-20T20:36:34+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/electronic-cigarettes</loc>
+    <lastmod>2025-12-28T23:26:03+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/electronic-cigarettes</loc>
-    <lastmod>2025-12-20T20:36:34+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/electronic-cigarettes</loc>
+    <lastmod>2025-12-28T23:26:03+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/electronic-hookahs</loc>
-    <lastmod>2025-12-09T22:47:29+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/electronic-hookahs</loc>
+    <lastmod>2025-12-28T23:32:49+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/electronic-hookahs</loc>
-    <lastmod>2025-12-09T22:47:29+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/electronic-hookahs</loc>
+    <lastmod>2025-12-28T23:32:49+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/electronic-hookahs</loc>
-    <lastmod>2025-12-09T22:47:29+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/electronic-hookahs</loc>
+    <lastmod>2025-12-28T23:32:49+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/mod</loc>
-    <lastmod>2025-12-09T22:47:38+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/catridge-ve-filterler</loc>
+    <lastmod>2025-12-27T15:11:55+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/mod</loc>
-    <lastmod>2025-12-09T22:47:38+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/catridge-ve-filterler</loc>
+    <lastmod>2025-12-27T15:11:55+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/mod</loc>
-    <lastmod>2025-12-09T22:47:38+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/catridge-ve-filterler</loc>
+    <lastmod>2025-12-27T15:11:55+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/catridge-ve-filterler</loc>
-    <lastmod>2025-12-09T22:47:53+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/disposable-devices</loc>
+    <lastmod>2025-12-27T15:29:50+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/catridge-ve-filterler</loc>
-    <lastmod>2025-12-09T22:47:53+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/disposable-devices</loc>
+    <lastmod>2025-12-27T15:29:50+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/catridge-ve-filterler</loc>
-    <lastmod>2025-12-09T22:47:53+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/disposable-devices</loc>
+    <lastmod>2025-12-27T15:29:50+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/disposable-devices</loc>
-    <lastmod>2025-12-09T22:48:10+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/liquids-for-electronic-cigarette</loc>
+    <lastmod>2025-12-28T16:32:59+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/disposable-devices</loc>
-    <lastmod>2025-12-09T22:48:10+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/liquids-for-electronic-cigarette</loc>
+    <lastmod>2025-12-28T16:32:59+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/disposable-devices</loc>
-    <lastmod>2025-12-09T22:48:10+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/liquids-for-electronic-cigarette</loc>
+    <lastmod>2025-12-28T16:32:59+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/liquids-for-electronic-cigarette</loc>
-    <lastmod>2025-12-09T22:48:10+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/liquids-for-electronic-hookah</loc>
+    <lastmod>2025-12-28T23:19:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/liquids-for-electronic-cigarette</loc>
-    <lastmod>2025-12-09T22:48:10+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/liquids-for-electronic-hookah</loc>
+    <lastmod>2025-12-28T23:19:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/liquids-for-electronic-cigarette</loc>
-    <lastmod>2025-12-09T22:48:10+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/liquids-for-electronic-hookah</loc>
+    <lastmod>2025-12-28T23:19:12+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/liquids-for-electronic-hookah</loc>
-    <lastmod>2025-12-09T22:48:12+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/snus</loc>
+    <lastmod>2025-12-27T15:39:17+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/liquids-for-electronic-hookah</loc>
-    <lastmod>2025-12-09T22:48:12+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/snus</loc>
+    <lastmod>2025-12-27T15:39:17+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/liquids-for-electronic-hookah</loc>
-    <lastmod>2025-12-09T22:48:12+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/snus</loc>
+    <lastmod>2025-12-27T15:39:17+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/snus</loc>
-    <lastmod>2025-12-09T22:48:56+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/tobacco</loc>
+    <lastmod>2025-12-27T15:46:37+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/snus</loc>
-    <lastmod>2025-12-09T22:48:56+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/tobacco</loc>
+    <lastmod>2025-12-27T15:46:37+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/snus</loc>
-    <lastmod>2025-12-09T22:48:56+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/tobacco</loc>
+    <lastmod>2025-12-27T15:46:37+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/tobacco</loc>
-    <lastmod>2025-12-09T22:49:00+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/zippo</loc>
+    <lastmod>2025-12-27T19:48:35+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/tobacco</loc>
-    <lastmod>2025-12-09T22:49:00+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/zippo</loc>
+    <lastmod>2025-12-27T19:48:35+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/tobacco</loc>
-    <lastmod>2025-12-09T22:49:00+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/zippo</loc>
+    <lastmod>2025-12-27T19:48:35+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/zippo</loc>
-    <lastmod>2025-12-09T22:50:31+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/cigar-and-cigarillos</loc>
+    <lastmod>2025-12-27T21:14:16+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/zippo</loc>
-    <lastmod>2025-12-09T22:50:31+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/cigar-and-cigarillos</loc>
+    <lastmod>2025-12-27T21:14:16+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/zippo</loc>
-    <lastmod>2025-12-09T22:50:31+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/cigar-and-cigarillos</loc>
+    <lastmod>2025-12-27T21:14:16+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/cigar-and-cigarillos</loc>
-    <lastmod>2025-12-09T22:50:44+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/cigarillos</loc>
+    <lastmod>2025-12-27T20:47:54+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/cigar-and-cigarillos</loc>
-    <lastmod>2025-12-09T22:50:44+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/cigarillos</loc>
+    <lastmod>2025-12-27T20:47:54+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/cigar-and-cigarillos</loc>
-    <lastmod>2025-12-09T22:50:44+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/cigarillos</loc>
+    <lastmod>2025-12-27T20:47:54+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/cigarillos</loc>
-    <lastmod>2025-12-09T22:50:44+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/lighters-accessories</loc>
+    <lastmod>2025-12-31T06:27:40+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/cigarillos</loc>
-    <lastmod>2025-12-09T22:50:44+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/lighters-accessories</loc>
+    <lastmod>2025-12-31T06:27:40+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/cigarillos</loc>
-    <lastmod>2025-12-09T22:50:44+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/lighters-accessories</loc>
+    <lastmod>2025-12-31T06:27:40+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/lighters-accessories</loc>
-    <lastmod>2025-12-09T22:50:54+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/cigar</loc>
+    <lastmod>2025-12-27T21:07:39+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/lighters-accessories</loc>
-    <lastmod>2025-12-09T22:50:54+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/cigar</loc>
+    <lastmod>2025-12-27T21:07:39+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/lighters-accessories</loc>
-    <lastmod>2025-12-09T22:50:54+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/cigar</loc>
+    <lastmod>2025-12-27T21:07:39+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/cigar</loc>
-    <lastmod>2025-12-09T22:52:16+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/rolling-tobacco</loc>
+    <lastmod>2025-12-31T05:07:56+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/cigar</loc>
-    <lastmod>2025-12-09T22:52:16+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/rolling-tobacco</loc>
+    <lastmod>2025-12-31T05:07:56+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/cigar</loc>
-    <lastmod>2025-12-09T22:52:16+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/rolling-tobacco</loc>
+    <lastmod>2025-12-31T05:07:56+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/rolling-tobacco</loc>
-    <lastmod>2025-12-09T22:52:47+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/pre-rolled-cones</loc>
+    <lastmod>2025-12-31T05:50:13+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/rolling-tobacco</loc>
-    <lastmod>2025-12-09T22:52:47+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/pre-rolled-cones</loc>
+    <lastmod>2025-12-31T05:50:13+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/rolling-tobacco</loc>
-    <lastmod>2025-12-09T22:52:47+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/pre-rolled-cones</loc>
+    <lastmod>2025-12-31T05:50:13+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/pre-rolled-cones</loc>
-    <lastmod>2025-12-09T22:52:48+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/rolling-machines</loc>
+    <lastmod>2025-12-31T06:19:40+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/pre-rolled-cones</loc>
-    <lastmod>2025-12-09T22:52:48+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/rolling-machines</loc>
+    <lastmod>2025-12-31T06:19:40+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/pre-rolled-cones</loc>
-    <lastmod>2025-12-09T22:52:48+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/rolling-machines</loc>
+    <lastmod>2025-12-31T06:19:40+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/rolling-machines</loc>
-    <lastmod>2025-12-09T22:52:51+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/cigarette-injector-machines</loc>
+    <lastmod>2025-12-31T06:23:34+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/rolling-machines</loc>
-    <lastmod>2025-12-09T22:52:51+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/cigarette-injector-machines</loc>
+    <lastmod>2025-12-31T06:23:34+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/rolling-machines</loc>
-    <lastmod>2025-12-09T22:52:51+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/cigarette-injector-machines</loc>
+    <lastmod>2025-12-31T06:23:34+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/cigarette-injector-machines</loc>
-    <lastmod>2025-12-09T22:52:53+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/grinder</loc>
+    <lastmod>2025-12-31T06:31:27+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/cigarette-injector-machines</loc>
-    <lastmod>2025-12-09T22:52:53+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/grinder</loc>
+    <lastmod>2025-12-31T06:31:27+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/cigarette-injector-machines</loc>
-    <lastmod>2025-12-09T22:52:53+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/grinder</loc>
+    <lastmod>2025-12-31T06:31:27+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/grinder</loc>
-    <lastmod>2025-12-09T22:52:55+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/rolling-papers</loc>
+    <lastmod>2025-12-31T06:05:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/grinder</loc>
-    <lastmod>2025-12-09T22:52:55+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/rolling-papers</loc>
+    <lastmod>2025-12-31T06:05:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/grinder</loc>
-    <lastmod>2025-12-09T22:52:55+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/rolling-papers</loc>
+    <lastmod>2025-12-31T06:05:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/rolling-papers</loc>
-    <lastmod>2025-12-09T22:52:56+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/cigarette-filters</loc>
+    <lastmod>2025-12-31T06:12:18+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/rolling-papers</loc>
-    <lastmod>2025-12-09T22:52:56+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/cigarette-filters</loc>
+    <lastmod>2025-12-31T06:12:18+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/rolling-papers</loc>
-    <lastmod>2025-12-09T22:52:56+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/cigarette-filters</loc>
+    <lastmod>2025-12-31T06:12:18+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/category/cigarette-filters</loc>
-    <lastmod>2025-12-09T22:53:07+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/az/category/rolling-tubes</loc>
+    <lastmod>2025-12-31T06:15:18+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/category/cigarette-filters</loc>
-    <lastmod>2025-12-09T22:53:07+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/en/category/rolling-tubes</loc>
+    <lastmod>2025-12-31T06:15:18+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/category/cigarette-filters</loc>
-    <lastmod>2025-12-09T22:53:07+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-            </url>
-    <url>
-    <loc>http://127.0.0.1:8000/az/category/rolling-tubes</loc>
-    <lastmod>2025-12-09T22:53:10+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-            </url>
-    <url>
-    <loc>http://127.0.0.1:8000/en/category/rolling-tubes</loc>
-    <lastmod>2025-12-09T22:53:10+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-            </url>
-    <url>
-    <loc>http://127.0.0.1:8000/ru/category/rolling-tubes</loc>
-    <lastmod>2025-12-09T22:53:10+00:00</lastmod>
+    <loc>https://v2.vapeartbaku.com/ru/category/rolling-tubes</loc>
+    <lastmod>2025-12-31T06:15:18+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
