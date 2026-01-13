@@ -69,7 +69,7 @@ class DiscountController extends Controller
     private function buildSchemaFor(LengthAwarePaginator $products): string
     {
         $locale = app()->getLocale();
-        $url = route('discounts.index', ['locale' => $locale]);
+        $url = route('discount.index', ['locale' => $locale]);
         $pageTitle = __('page.Discounted Products');
 
         // WebPage Schema

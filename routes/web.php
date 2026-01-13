@@ -88,8 +88,8 @@ Route::group([
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
 
     // Discounted Products
-    Route::get('/discounts', [DiscountController::class, 'index'])->name('discounts.index');
+    Route::get('/discount', [DiscountController::class, 'index'])->name('discount.index');
 
     // New Products
-    Route::get('/new-products', [NewProductsController::class, 'index'])->name('new-products.index');
+    Route::get('/new', [NewProductsController::class, 'index'])->name('new.index');
 });

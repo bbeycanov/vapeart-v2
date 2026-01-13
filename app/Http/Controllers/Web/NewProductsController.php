@@ -64,7 +64,7 @@ class NewProductsController extends Controller
     private function buildSchemaFor(LengthAwarePaginator $products): string
     {
         $locale = app()->getLocale();
-        $url = route('new-products.index', ['locale' => $locale]);
+        $url = route('new.index', ['locale' => $locale]);
         $pageTitle = __('page.New Products');
 
         // WebPage Schema

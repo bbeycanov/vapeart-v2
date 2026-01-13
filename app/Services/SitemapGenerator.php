@@ -125,7 +125,7 @@ class SitemapGenerator
 
             // Discounts index
             $sitemap->add(
-                Url::create("{$this->baseUrl}/{$locale}/discounts")
+                Url::create("{$this->baseUrl}/{$locale}/discount")
                     ->setLastModificationDate($now)
                     ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
                     ->setPriority(0.8)
@@ -133,7 +133,7 @@ class SitemapGenerator
 
             // New Products index
             $sitemap->add(
-                Url::create("{$this->baseUrl}/{$locale}/new-products")
+                Url::create("{$this->baseUrl}/{$locale}/new")
                     ->setLastModificationDate($now)
                     ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
                     ->setPriority(0.8)

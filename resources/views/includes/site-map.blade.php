@@ -68,7 +68,7 @@
                         
                         {{-- 5. Yeni Məhsullar --}}
                         <div class="col-6 col-md-4 col-lg-3">
-                            <a href="{{ route('new-products.index', $locale) }}" class="menu-card menu-card--green">
+                            <a href="{{ route('new.index', $locale) }}" class="menu-card menu-card--green">
                                 <div class="menu-card__icon">
                                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
@@ -82,7 +82,7 @@
                         
                         {{-- 6. Endirimli Məhsullar --}}
                         <div class="col-6 col-md-4 col-lg-3">
-                            <a href="{{ route('discounts.index', $locale) }}" class="menu-card menu-card--red">
+                            <a href="{{ route('discount.index', $locale) }}" class="menu-card menu-card--red">
                                 <div class="menu-card__icon">
                                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

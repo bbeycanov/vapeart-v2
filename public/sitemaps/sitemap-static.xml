@@ -31,13 +31,13 @@
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/discounts</loc>
+    <loc>http://127.0.0.1:8000/az/discount</loc>
     <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/az/new-products</loc>
+    <loc>http://127.0.0.1:8000/az/new</loc>
     <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -79,13 +79,13 @@
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/discounts</loc>
+    <loc>http://127.0.0.1:8000/en/discount</loc>
     <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/en/new-products</loc>
+    <loc>http://127.0.0.1:8000/en/new</loc>
     <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -127,13 +127,13 @@
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/discounts</loc>
+    <loc>http://127.0.0.1:8000/ru/discount</loc>
     <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/ru/new-products</loc>
+    <loc>http://127.0.0.1:8000/ru/new</loc>
     <lastmod>2026-01-07T21:12:02+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>

@@ -247,7 +247,7 @@
             params.set('page', currentPage);
             params.set('_t', new Date().getTime());
 
-            const url = `/${locale}/new-products?${params.toString()}`;
+            const url = `/${locale}/new?${params.toString()}`;
 
             fetch(url, {
                 headers: {

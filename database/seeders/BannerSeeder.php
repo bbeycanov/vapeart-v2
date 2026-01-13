@@ -78,9 +78,9 @@ class BannerSeeder extends Seeder
                     'ru' => 'Смотреть скидки'
                 ],
                 'link_url' => [
-                    'en' => '/en/discounts',
-                    'az' => '/az/discounts',
-                    'ru' => '/ru/discounts'
+                    'en' => '/en/discount',
+                    'az' => '/az/discount',
+                    'ru' => '/ru/discount'
                 ],
                 'is_active' => true,
                 'sort_order' => 1,
@@ -116,9 +116,9 @@ class BannerSeeder extends Seeder
                     'ru' => 'Смотреть коллекцию'
                 ],
                 'link_url' => [
-                    'en' => '/en/new-products',
-                    'az' => '/az/new-products',
-                    'ru' => '/ru/new-products'
+                    'en' => '/en/new',
+                    'az' => '/az/new',
+                    'ru' => '/ru/new'
                 ],
                 'is_active' => true,
                 'sort_order' => 2,
@@ -154,9 +154,9 @@ class BannerSeeder extends Seeder
                     'ru' => 'Смотреть предложения'
                 ],
                 'link_url' => [
-                    'en' => '/en/discounts',
-                    'az' => '/az/discounts',
-                    'ru' => '/ru/discounts'
+                    'en' => '/en/discount',
+                    'az' => '/az/discount',
+                    'ru' => '/ru/discount'
                 ],
                 'is_active' => true,
                 'sort_order' => 3,

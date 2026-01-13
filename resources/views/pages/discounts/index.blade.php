@@ -211,7 +211,7 @@
             params.set('page', currentPage);
             params.set('_t', new Date().getTime());
 
-            const url = `/${locale}/discounts?${params.toString()}`;
+            const url = `/${locale}/discount?${params.toString()}`;
 
             fetch(url, {
                 headers: {
