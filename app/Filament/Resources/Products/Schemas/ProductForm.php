@@ -82,6 +82,27 @@ class ProductForm
                                             ->relationship('tags', 'name', fn($query) => $query->orderBy('name'))
                                             ->preload()
                                             ->searchable()
+                                            ->createOptionForm([
+                                                TextInput::make('name.az')
+                                                    ->label('Ad (AZ)')
+                                                    ->required(),
+                                                TextInput::make('name.en')
+                                                    ->label('Name (EN)'),
+                                                TextInput::make('name.ru')
+                                                    ->label('Название (RU)'),
+                                            ])
+                                            ->createOptionUsing(function (array $data) {
+                                                $tag = \App\Models\Tag::create([
+                                                    'name' => [
+                                                        'az' => $data['name']['az'] ?? $data['name']['az'],
+                                                        'en' => $data['name']['en'] ?? $data['name']['az'],
+                                                        'ru' => $data['name']['ru'] ?? $data['name']['az'],
+                                                    ],
+                                                    'slug' => Str::slug($data['name']['az'] ?? $data['name']['en']),
+                                                    'is_active' => true,
+                                                ]);
+                                                return $tag->id;
+                                            })
                                             ->columnSpanFull(),
                                     ]),
                                 Section::make(__('Price Information'))
