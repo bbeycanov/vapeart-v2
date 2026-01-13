@@ -84,11 +84,24 @@ class Product extends Model implements HasMedia
         'stock_qty' => 'integer',
         'track_stock' => 'boolean',
         'is_active' => 'boolean',
+        'is_featured' => 'boolean',
+        'is_new' => 'boolean',
+        'is_hot' => 'boolean',
         'attributes' => 'array',
         'specs' => 'array',
         'reviews_count' => 'integer',
         'rating_avg' => 'decimal:2',
         'seo' => 'array',
+    ];
+
+    /**
+     * @var array $attributes
+     */
+    protected $attributes = [
+        'is_active' => true,
+        'is_featured' => false,
+        'is_new' => false,
+        'is_hot' => false,
     ];
 
     /**

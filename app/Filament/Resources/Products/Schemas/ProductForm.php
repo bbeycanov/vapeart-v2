@@ -250,6 +250,7 @@ class ProductForm
 
                                 Select::make('is_new')
                                     ->label(__('New Product'))
+                                    ->default(false)
                                     ->options([
                                         true => __('New'),
                                         false => __('Normal'),
@@ -257,6 +258,7 @@ class ProductForm
 
                                 Select::make('is_hot')
                                     ->label(__('Hot Product'))
+                                    ->default(false)
                                     ->options([
                                         true => __('Hot'),
                                         false => __('Normal'),
@@ -264,6 +266,7 @@ class ProductForm
 
                                 Select::make('is_featured')
                                     ->label(__('Featured'))
+                                    ->default(false)
                                     ->live()
                                     ->options([
                                         true => __('Featured'),
@@ -307,6 +310,7 @@ class ProductForm
 
                                 Toggle::make('is_active')
                                     ->label(__('Active'))
+                                    ->default(true)
                                     ->columnSpanFull(),
                             ]),
                         Tab::make(__('Attributes'))
