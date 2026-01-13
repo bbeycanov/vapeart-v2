@@ -149,9 +149,9 @@
 }
 
 .category-mini-card__icon {
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
     border-radius: 8px;
     overflow: hidden;
     flex-shrink: 0;
@@ -177,7 +177,7 @@
 }
 
 .category-mini-card__icon i {
-    font-size: 20px;
+    font-size: 28px;
     color: #6c757d;
 }
 

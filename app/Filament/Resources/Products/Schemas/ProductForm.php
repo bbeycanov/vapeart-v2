@@ -100,11 +100,12 @@ class ProductForm
                                             ]),
                                         TextInput::make('compare_at_price')
                                             ->label(__('Compare Price'))
-                                            ->required()
                                             ->numeric()
                                             ->prefix('$')
+                                            ->nullable()
+                                            ->default(null)
+                                            ->helperText(__('Köhnə qiymət (opsional). API import üçün istifadə olunur.'))
                                             ->validationMessages([
-                                                'required' => __('admin.validation.required'),
                                                 'numeric' => __('admin.validation.numeric'),
                                             ]),
                                         Select::make('currency')

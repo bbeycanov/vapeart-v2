@@ -210,7 +210,7 @@ class ProductImportService implements ProductImportServiceInterface
             'slug' => $this->generateUniqueSlug($apiProduct['slug'] ?? Str::slug($apiProduct['title'] ?? '')),
             'price' => (float)($apiProduct['new_price'] ?? $apiProduct['price'] ?? 0),
             'currency' => 'AZN',
-            'compare_at_price' => (float)($apiProduct['old_price'] ?? 0) > 0 ? (float)$apiProduct['old_price'] : 0,
+            'compare_at_price' => (float)($apiProduct['old_price'] ?? 0) > 0 ? (float)$apiProduct['old_price'] : null,
             'stock_qty' => (int)($apiProduct['smoke_count'] ?? $apiProduct['stock_qty'] ?? 0),
             'is_active' => (bool)($apiProduct['is_stock'] ?? $apiProduct['is_active'] ?? true),
             'is_new' => (bool)($apiProduct['is_new'] ?? false),

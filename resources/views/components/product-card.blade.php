@@ -25,6 +25,10 @@
     $discountText = $product->getDiscountText();
     $hasDiscount = $bestDiscount !== null;
 
+    // Compare at price (old price)
+    $compareAtPrice = $product->compare_at_price ?? null;
+    $hasComparePrice = $compareAtPrice && $compareAtPrice > $productPrice;
+
     // Stock status
     $isInStock = $product->isInStock();
 @endphp
@@ -131,8 +135,17 @@
                             {{ number_format($discountedPrice, 2) }} {{ $productCurrency }}
                         </span>
                     </div>
+                @elseif($hasComparePrice)
+                    <div class="d-flex align-items-center gap-2 flex-wrap justify-content-between">
+                        <span class="money price text-decoration-line-through" style="font-size: 0.875rem; color: #6c757d !important;">
+                            {{ number_format($compareAtPrice, 2) }} {{ $productCurrency }}
+                        </span>
+                        <span class="money price fw-bold" style="font-size: 1.25rem; color: #28a745 !important;">
+                            {{ number_format($productPrice, 2) }} {{ $productCurrency }}
+                        </span>
+                    </div>
                 @else
-                <span class="money price fs-5">{{ number_format($productPrice, 2) }} {{ $productCurrency }}</span>
+                    <span class="money price fs-5">{{ number_format($productPrice, 2) }} {{ $productCurrency }}</span>
                 @endif
             </div>
         </div>

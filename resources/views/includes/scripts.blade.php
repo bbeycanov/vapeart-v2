@@ -714,16 +714,15 @@
                             `;
                         }
                         if (oldPriceEl) oldPriceEl.style.display = 'none';
-                    } else if (productSalePrice && productSalePrice < originalPrice) {
-                        // Show sale price
-                        if (priceEl) priceEl.textContent = productSalePrice.toFixed(2) + ' ' + product.currency;
-                        if (oldPriceEl) {
-                            oldPriceEl.textContent = originalPrice.toFixed(2) + ' ' + product.currency;
-                        oldPriceEl.style.display = 'inline-block';
-                        oldPriceEl.style.textDecoration = 'line-through';
-                        oldPriceEl.style.marginLeft = '10px';
-                        oldPriceEl.style.color = '#999';
+                    } else if (productSalePrice && productSalePrice > originalPrice) {
+                        // Show compare price (old price crossed out, current price highlighted)
+                        if (priceEl) {
+                            priceEl.innerHTML = `
+                                <span class="text-decoration-line-through" style="font-size: 1rem; color: #6c757d !important; margin-right: 10px;">${productSalePrice.toFixed(2)} ${product.currency}</span>
+                                <span class="fw-bold" style="font-size: 1.5rem; color: #28a745 !important;">${originalPrice.toFixed(2)} ${product.currency}</span>
+                            `;
                         }
+                        if (oldPriceEl) oldPriceEl.style.display = 'none';
                     } else {
                         // Regular price
                         if (priceEl) priceEl.textContent = productPrice.toFixed(2) + ' ' + product.currency;

@@ -157,8 +157,8 @@
                 const imageUrl = product.image || placeholderImage;
                 const price = parseFloat(product.price) || 0;
                 const salePrice = product.sale_price ? parseFloat(product.sale_price) : null;
-                const displayPrice = salePrice && salePrice < price ? salePrice : price;
-                const oldPrice = salePrice && salePrice < price ? price : null;
+                const displayPrice = price;
+                const oldPrice = salePrice && salePrice > price ? salePrice : null;
 
                 return `
                     <div class="col mb-3 mb-md-4 mb-xxl-5">

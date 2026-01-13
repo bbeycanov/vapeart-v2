@@ -157,9 +157,9 @@
                             @endif
                         </div>
                         <span class="current-price fw-bold" style="font-size: 2rem; color: #28a745 !important;">{{ number_format($productPrice, 2) }} {{ $productCurrency }}</span>
-                    @elseif($productSalePrice && $productSalePrice < $originalPrice)
-                        <span class="current-price price-old">{{ number_format($originalPrice, 2) }} {{ $productCurrency }}</span>
-                        <span class="current-price price-sale">{{ number_format($productSalePrice, 2) }} {{ $productCurrency }}</span>
+                    @elseif($productSalePrice && $productSalePrice > $originalPrice)
+                        <span class="current-price price-old text-decoration-line-through" style="font-size: 1.25rem; color: #6c757d !important;">{{ number_format($productSalePrice, 2) }} {{ $productCurrency }}</span>
+                        <span class="current-price price-sale fw-bold" style="font-size: 2rem; color: #28a745 !important;">{{ number_format($originalPrice, 2) }} {{ $productCurrency }}</span>
                     @else
                         <span class="current-price">{{ number_format($productPrice, 2) }} {{ $productCurrency }}</span>
                     @endif
