@@ -42,8 +42,10 @@ class MenusTable
                     ->sortable()
                     ->searchable(query: function (Builder $query, string $search): Builder {
                         return $query->where(function ($q) use ($search) {
-                            $q->where('title', 'like', "%{$search}%")
-                              ->orWhere('url', 'like', "%{$search}%");
+                            $q->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.az')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                              ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.en')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                              ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.ru')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                              ->orWhereRaw("url COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"]);
                         });
                     }),
                 TextColumn::make('parent.title')

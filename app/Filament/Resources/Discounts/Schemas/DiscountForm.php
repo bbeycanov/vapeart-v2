@@ -114,12 +114,11 @@ class DiscountForm
                                 ->getOptionLabelFromRecordUsing(fn ($record) => $record->getTranslation('name', app()->getLocale()) ?: $record->name)
                                 ->searchable()
                                 ->getSearchResultsUsing(function (string $search) {
-                                    $searchLower = mb_strtolower($search);
                                     return \App\Models\Product::query()
-                                        ->where(function ($query) use ($searchLower) {
-                                            $query->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.az'))) LIKE ?", ["%{$searchLower}%"])
-                                                ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.en'))) LIKE ?", ["%{$searchLower}%"])
-                                                ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.ru'))) LIKE ?", ["%{$searchLower}%"]);
+                                        ->where(function ($query) use ($search) {
+                                            $query->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.az')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                                                ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.en')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                                                ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.ru')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"]);
                                         })
                                         ->orderBy('name')
                                         ->limit(50)

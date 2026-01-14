@@ -50,15 +50,13 @@ class ReviewForm
                                     return [];
                                 }
 
-                                $searchLower = mb_strtolower($search);
-
                                 return match ($type) {
                                     Blog::class => Blog::query()
-                                        ->where(function ($query) use ($searchLower) {
-                                            $query->whereRaw("LOWER(slug) LIKE ?", ["%{$searchLower}%"])
-                                                ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.az'))) LIKE ?", ["%{$searchLower}%"])
-                                                ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.en'))) LIKE ?", ["%{$searchLower}%"])
-                                                ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.ru'))) LIKE ?", ["%{$searchLower}%"]);
+                                        ->where(function ($query) use ($search) {
+                                            $query->whereRaw("slug COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                                                ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.az')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                                                ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.en')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                                                ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.ru')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"]);
                                         })
                                         ->limit(50)
                                         ->get()
@@ -66,11 +64,11 @@ class ReviewForm
                                             $item->id => $item->getTranslation('title', app()->getLocale()) ?? $item->slug ?? "Blog #{$item->id}"
                                         ]),
                                     Product::class => Product::query()
-                                        ->where(function ($query) use ($searchLower) {
-                                            $query->whereRaw("LOWER(slug) LIKE ?", ["%{$searchLower}%"])
-                                                ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.az'))) LIKE ?", ["%{$searchLower}%"])
-                                                ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.en'))) LIKE ?", ["%{$searchLower}%"])
-                                                ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.ru'))) LIKE ?", ["%{$searchLower}%"]);
+                                        ->where(function ($query) use ($search) {
+                                            $query->whereRaw("slug COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                                                ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.az')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                                                ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.en')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                                                ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.ru')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"]);
                                         })
                                         ->limit(50)
                                         ->get()

@@ -34,7 +34,11 @@ class DiscountsTable
                 TextColumn::make('name')
                     ->label(__('Name'))
                     ->searchable(query: function (Builder $query, string $search): Builder {
-                        return $query->where('name', 'like', "%{$search}%");
+                        return $query->where(function ($q) use ($search) {
+                            $q->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.az')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                              ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.en')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                              ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.ru')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"]);
+                        });
                     }),
                 TextColumn::make('code')
                     ->label(__('Code'))

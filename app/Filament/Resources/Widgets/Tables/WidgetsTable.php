@@ -37,7 +37,11 @@ class WidgetsTable
                 TextColumn::make('title')
                     ->label(__('Title'))
                     ->searchable(query: function (Builder $query, string $search): Builder {
-                        return $query->where('title', 'like', "%{$search}%");
+                        return $query->where(function ($q) use ($search) {
+                            $q->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.az')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                              ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.en')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                              ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.ru')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"]);
+                        });
                     })
                     ->limit(30),
                 TextColumn::make('button_text')

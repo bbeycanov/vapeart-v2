@@ -91,13 +91,12 @@ class MenuForm
                             ->preload()
                             ->searchable()
                             ->getSearchResultsUsing(function (string $search) {
-                                $searchLower = mb_strtolower($search);
                                 return Widget::query()
                                     ->where('is_active', true)
-                                    ->where(function ($query) use ($searchLower) {
-                                        $query->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.az'))) LIKE ?", ["%{$searchLower}%"])
-                                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.en'))) LIKE ?", ["%{$searchLower}%"])
-                                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.ru'))) LIKE ?", ["%{$searchLower}%"]);
+                                    ->where(function ($query) use ($search) {
+                                        $query->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.az')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                                            ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.en')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
+                                            ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.ru')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"]);
                                     })
                                     ->orderBy('sort_order')
                                     ->limit(50)
