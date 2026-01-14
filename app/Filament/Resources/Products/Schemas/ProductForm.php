@@ -62,6 +62,23 @@ class ProductForm
                                             ->label(__('Brand'))
                                             ->required()
                                             ->relationship('brand', 'name')
+                                            ->getOptionLabelFromRecordUsing(fn ($record) => $record->getTranslation('name', app()->getLocale()) ?: $record->name)
+                                            ->searchable()
+                                            ->getSearchResultsUsing(function (string $search) {
+                                                $searchLower = mb_strtolower($search);
+                                                return \App\Models\Brand::query()
+                                                    ->where(function ($query) use ($searchLower) {
+                                                        $query->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.az'))) LIKE ?", ["%{$searchLower}%"])
+                                                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.en'))) LIKE ?", ["%{$searchLower}%"])
+                                                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.ru'))) LIKE ?", ["%{$searchLower}%"]);
+                                                    })
+                                                    ->orderBy('name')
+                                                    ->limit(50)
+                                                    ->get()
+                                                    ->pluck('name', 'id')
+                                                    ->toArray();
+                                            })
+                                            ->preload()
                                             ->validationMessages([
                                                 'required' => __('admin.validation.required'),
                                             ]),
@@ -69,9 +86,24 @@ class ProductForm
                                             ->label(__('Categories'))
                                             ->required()
                                             ->multiple()
-                                            ->relationship('categories', 'name', fn($query) => $query->orderBy('name'))
-                                            ->preload()
+                                            ->relationship('categories', 'name')
+                                            ->getOptionLabelFromRecordUsing(fn ($record) => $record->getTranslation('name', app()->getLocale()) ?: $record->name)
                                             ->searchable()
+                                            ->getSearchResultsUsing(function (string $search) {
+                                                $searchLower = mb_strtolower($search);
+                                                return \App\Models\Category::query()
+                                                    ->where(function ($query) use ($searchLower) {
+                                                        $query->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.az'))) LIKE ?", ["%{$searchLower}%"])
+                                                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.en'))) LIKE ?", ["%{$searchLower}%"])
+                                                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.ru'))) LIKE ?", ["%{$searchLower}%"]);
+                                                    })
+                                                    ->orderBy('name')
+                                                    ->limit(50)
+                                                    ->get()
+                                                    ->pluck('name', 'id')
+                                                    ->toArray();
+                                            })
+                                            ->preload()
                                             ->columnSpanFull()
                                             ->validationMessages([
                                                 'required' => __('admin.validation.required'),
@@ -80,9 +112,24 @@ class ProductForm
                                         Select::make('tags')
                                             ->label(__('Tags'))
                                             ->multiple()
-                                            ->relationship('tags', 'name', fn($query) => $query->orderBy('name'))
-                                            ->preload()
+                                            ->relationship('tags', 'name')
+                                            ->getOptionLabelFromRecordUsing(fn ($record) => $record->getTranslation('name', app()->getLocale()) ?: $record->name)
                                             ->searchable()
+                                            ->getSearchResultsUsing(function (string $search) {
+                                                $searchLower = mb_strtolower($search);
+                                                return \App\Models\Tag::query()
+                                                    ->where(function ($query) use ($searchLower) {
+                                                        $query->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.az'))) LIKE ?", ["%{$searchLower}%"])
+                                                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.en'))) LIKE ?", ["%{$searchLower}%"])
+                                                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.ru'))) LIKE ?", ["%{$searchLower}%"]);
+                                                    })
+                                                    ->orderBy('name')
+                                                    ->limit(50)
+                                                    ->get()
+                                                    ->pluck('name', 'id')
+                                                    ->toArray();
+                                            })
+                                            ->preload()
                                             ->createOptionForm([
                                                 TextInput::make('name.az')
                                                     ->label('Ad (AZ)')
@@ -282,11 +329,27 @@ class ProductForm
                                             $query->where('position', MenuPosition::FEATURED->value)->orderBy('title');
                                         }
                                     )
+                                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->getTranslation('title', app()->getLocale()) ?: $record->title)
                                     ->required(function (Get $get) {
                                         return (bool) $get('is_featured');
                                     })
                                     ->preload()
                                     ->searchable()
+                                    ->getSearchResultsUsing(function (string $search) {
+                                        $searchLower = mb_strtolower($search);
+                                        return \App\Models\Menu::query()
+                                            ->where('position', MenuPosition::FEATURED->value)
+                                            ->where(function ($query) use ($searchLower) {
+                                                $query->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.az'))) LIKE ?", ["%{$searchLower}%"])
+                                                    ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.en'))) LIKE ?", ["%{$searchLower}%"])
+                                                    ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.ru'))) LIKE ?", ["%{$searchLower}%"]);
+                                            })
+                                            ->orderBy('title')
+                                            ->limit(50)
+                                            ->get()
+                                            ->pluck('title', 'id')
+                                            ->toArray();
+                                    })
                                     ->columnSpanFull()
                                     ->validationMessages([
                                         'required' => __('admin.validation.required'),
@@ -299,8 +362,23 @@ class ProductForm
                                         name: 'discounts',
                                         titleAttribute: 'name'
                                     )
+                                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->getTranslation('name', app()->getLocale()) ?: $record->name)
                                     ->preload()
                                     ->searchable()
+                                    ->getSearchResultsUsing(function (string $search) {
+                                        $searchLower = mb_strtolower($search);
+                                        return \App\Models\Discount::query()
+                                            ->where(function ($query) use ($searchLower) {
+                                                $query->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.az'))) LIKE ?", ["%{$searchLower}%"])
+                                                    ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.en'))) LIKE ?", ["%{$searchLower}%"])
+                                                    ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.ru'))) LIKE ?", ["%{$searchLower}%"]);
+                                            })
+                                            ->orderBy('name')
+                                            ->limit(50)
+                                            ->get()
+                                            ->pluck('name', 'id')
+                                            ->toArray();
+                                    })
                                     ->columnSpanFull(),
 
 

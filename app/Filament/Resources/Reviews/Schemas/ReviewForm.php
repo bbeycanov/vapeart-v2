@@ -49,14 +49,16 @@ class ReviewForm
                                 if (!$type) {
                                     return [];
                                 }
-                                
+
+                                $searchLower = mb_strtolower($search);
+
                                 return match ($type) {
                                     Blog::class => Blog::query()
-                                        ->where(function ($query) use ($search) {
-                                            $query->where('slug', 'like', "%{$search}%");
-                                            foreach (['en', 'az', 'ru'] as $locale) {
-                                                $query->orWhereRaw("JSON_EXTRACT(title, '$.{$locale}') LIKE ?", ["%{$search}%"]);
-                                            }
+                                        ->where(function ($query) use ($searchLower) {
+                                            $query->whereRaw("LOWER(slug) LIKE ?", ["%{$searchLower}%"])
+                                                ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.az'))) LIKE ?", ["%{$searchLower}%"])
+                                                ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.en'))) LIKE ?", ["%{$searchLower}%"])
+                                                ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.ru'))) LIKE ?", ["%{$searchLower}%"]);
                                         })
                                         ->limit(50)
                                         ->get()
@@ -64,11 +66,11 @@ class ReviewForm
                                             $item->id => $item->getTranslation('title', app()->getLocale()) ?? $item->slug ?? "Blog #{$item->id}"
                                         ]),
                                     Product::class => Product::query()
-                                        ->where(function ($query) use ($search) {
-                                            $query->where('slug', 'like', "%{$search}%");
-                                            foreach (['en', 'az', 'ru'] as $locale) {
-                                                $query->orWhereRaw("JSON_EXTRACT(name, '$.{$locale}') LIKE ?", ["%{$search}%"]);
-                                            }
+                                        ->where(function ($query) use ($searchLower) {
+                                            $query->whereRaw("LOWER(slug) LIKE ?", ["%{$searchLower}%"])
+                                                ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.az'))) LIKE ?", ["%{$searchLower}%"])
+                                                ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.en'))) LIKE ?", ["%{$searchLower}%"])
+                                                ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.ru'))) LIKE ?", ["%{$searchLower}%"]);
                                         })
                                         ->limit(50)
                                         ->get()

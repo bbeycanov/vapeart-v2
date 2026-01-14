@@ -90,6 +90,30 @@ class MenuForm
                             })
                             ->preload()
                             ->searchable()
+                            ->getSearchResultsUsing(function (string $search) {
+                                $searchLower = mb_strtolower($search);
+                                return Widget::query()
+                                    ->where('is_active', true)
+                                    ->where(function ($query) use ($searchLower) {
+                                        $query->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.az'))) LIKE ?", ["%{$searchLower}%"])
+                                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.en'))) LIKE ?", ["%{$searchLower}%"])
+                                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(title, '$.ru'))) LIKE ?", ["%{$searchLower}%"]);
+                                    })
+                                    ->orderBy('sort_order')
+                                    ->limit(50)
+                                    ->get()
+                                    ->mapWithKeys(function (Widget $record) {
+                                        $locale = app()->getLocale();
+                                        $title = $record->getTranslation('title', $locale, false);
+                                        if (!is_string($title) || $title === '') {
+                                            $title = is_array($record->title) && !empty($record->title)
+                                                ? (string)reset($record->title)
+                                                : 'Widget #' . $record->id;
+                                        }
+                                        return [$record->id => $title];
+                                    })
+                                    ->toArray();
+                            })
                             ->columnSpanFull()
                             ->reactive()
                     ]),

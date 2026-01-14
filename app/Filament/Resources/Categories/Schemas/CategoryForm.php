@@ -37,7 +37,24 @@ class CategoryForm
                     ->schema([
                         Select::make('parent_id')
                             ->label(__('Parent Menu'))
-                            ->relationship('parent', 'name'),
+                            ->relationship('parent', 'name')
+                            ->getOptionLabelFromRecordUsing(fn ($record) => $record->getTranslation('name', app()->getLocale()) ?: $record->name)
+                            ->searchable()
+                            ->getSearchResultsUsing(function (string $search) {
+                                $searchLower = mb_strtolower($search);
+                                return \App\Models\Category::query()
+                                    ->where(function ($query) use ($searchLower) {
+                                        $query->whereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.az'))) LIKE ?", ["%{$searchLower}%"])
+                                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.en'))) LIKE ?", ["%{$searchLower}%"])
+                                            ->orWhereRaw("LOWER(JSON_UNQUOTE(JSON_EXTRACT(name, '$.ru'))) LIKE ?", ["%{$searchLower}%"]);
+                                    })
+                                    ->orderBy('name')
+                                    ->limit(50)
+                                    ->get()
+                                    ->pluck('name', 'id')
+                                    ->toArray();
+                            })
+                            ->preload(),
                         TextInput::make('name')
                             ->label(__('Name'))
                             ->live(onBlur: true)
