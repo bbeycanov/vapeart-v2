@@ -94,7 +94,7 @@
         function updateBrandActionArea(brandId) {
             if (brandId && brands[brandId]) {
                 const brand = brands[brandId];
-                const brandUrl = `/${locale}/brands/${brand.slug}`;
+                const brandUrl = `/${locale}/brand/${brand.slug}`;
                 const visitText = window.categoryShowPageData?.visitText || 'Visit';
                 const pageText = window.categoryShowPageData?.pageText || 'Page';
 
