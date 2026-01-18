@@ -82,6 +82,9 @@
     transition: all 0.2s ease;
     border: 1px solid #e9ecef !important;
     background-color: #fff !important;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
 }
 
 .brand-scroll-arrow:hover {

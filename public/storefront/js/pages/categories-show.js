@@ -57,16 +57,28 @@
                 }
             }
 
-            // Arrow click handlers
+            // Arrow click/touch handlers
+            function scrollLeft() {
+                scrollWrapper.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            }
+
+            function scrollRight() {
+                scrollWrapper.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+
             if (leftArrow) {
-                leftArrow.addEventListener('click', () => {
-                    scrollWrapper.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                leftArrow.addEventListener('click', scrollLeft);
+                leftArrow.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    scrollLeft();
                 });
             }
 
             if (rightArrow) {
-                rightArrow.addEventListener('click', () => {
-                    scrollWrapper.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                rightArrow.addEventListener('click', scrollRight);
+                rightArrow.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    scrollRight();
                 });
             }
 
