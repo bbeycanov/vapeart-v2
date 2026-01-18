@@ -85,6 +85,8 @@
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     cursor: pointer;
+    position: relative;
+    z-index: 10;
 }
 
 .brand-scroll-arrow:hover {
