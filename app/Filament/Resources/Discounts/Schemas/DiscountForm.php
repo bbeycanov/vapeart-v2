@@ -11,7 +11,6 @@ use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Tabs;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DateTimePicker;
 
 class DiscountForm
@@ -105,7 +104,7 @@ class DiscountForm
                                 ]),
                         ]),
                         Tabs\Tab::make(__('Products'))->schema([
-                            CheckboxList::make('products')
+                            Select::make('products')
                                 ->label(__('Products'))
                                 ->relationship(
                                     name: 'products',
@@ -113,6 +112,8 @@ class DiscountForm
                                 )
                                 ->getOptionLabelFromRecordUsing(fn ($record) => $record->getTranslation('name', app()->getLocale()) ?: $record->name)
                                 ->searchable()
+                                ->multiple()
+                                ->preload()
                                 ->getSearchResultsUsing(function (string $search) {
                                     return \App\Models\Product::query()
                                         ->where(function ($query) use ($search) {
@@ -123,7 +124,7 @@ class DiscountForm
                                         ->orderBy('name')
                                         ->limit(50)
                                         ->get()
-                                        ->pluck('name', 'id')
+                                        ->mapWithKeys(fn ($product) => [$product->id => $product->getTranslation('name', app()->getLocale()) ?: $product->name])
                                         ->toArray();
                                 })
                                 ->columnSpanFull(),
