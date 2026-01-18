@@ -8,7 +8,7 @@
             </a>
 
             @if(isset($headerBranches) && $headerBranches->isNotEmpty())
-                <a href="#" class="header-tools__item" data-bs-toggle="modal" data-bs-target="#branchPhoneModal">
+                <a href="#" class="header-tools__item" data-bs-toggle="modal" data-bs-target="#branchSelectionModal">
                     <svg class="d-block" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                     </svg>
@@ -262,7 +262,7 @@
                 <div class="header-tools d-flex align-items-center">
                     @if(isset($headerBranches) && $headerBranches->isNotEmpty())
                         <div class="header-phone-slider position-relative me-3" id="desktopHeaderPhoneSlider">
-                            <a href="#" class="header-phone-link text-white text-decoration-none d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#branchPhoneModal">
+                            <a href="#" class="header-phone-link text-white text-decoration-none d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#branchSelectionModal">
                                 <svg class="header-phone-icon me-2" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                                 </svg>
@@ -411,52 +411,4 @@
     </div>
 </header>
 
-<!-- Branch Phone Modal -->
-@if(isset($headerBranches) && $headerBranches->isNotEmpty())
-<div class="modal fade" id="branchPhoneModal" tabindex="-1" aria-labelledby="branchPhoneModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content branch-modal-content">
-            <div class="modal-header border-bottom">
-                <div class="d-flex align-items-center">
-                    <svg class="me-2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    </svg>
-                    <h5 class="modal-title mb-0" id="branchPhoneModalLabel">{{ __('common.Select Branch') }}</h5>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-0">
-                <div class="branch-list">
-                    @foreach($headerBranches as $index => $branch)
-                        <div class="branch-item">
-                            <div class="branch-item-content">
-                                <div class="branch-icon-wrapper">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </div>
-                                <div class="branch-info">
-                                    <h6 class="branch-name">{{ $branch['name'] }}</h6>
-                                    <div class="branch-phone-wrapper">
-                                        <svg class="branch-phone-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                                        </svg>
-                                        <span class="branch-phone">{{ $branch['phone'] }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="tel:{{ $branch['phone'] }}" class="branch-call-btn">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                                </svg>
-                                <span>{{ __('common.Call') }}</span>
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endif
 

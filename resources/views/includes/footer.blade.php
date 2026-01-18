@@ -175,7 +175,7 @@
         </a>
 
         @if(isset($headerBranches) && $headerBranches->isNotEmpty())
-            <a href="#" class="footer-mobile__link d-flex flex-column align-items-center text-white" data-bs-toggle="modal" data-bs-target="#branchPhoneModal">
+            <a href="#" class="footer-mobile__link d-flex flex-column align-items-center text-white" data-bs-toggle="modal" data-bs-target="#branchSelectionModal">
                 <div class="position-relative">
                     <svg class="d-block" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M21.384 17.752a2.108 2.108 0 0 1-.522 3.359 7.674 7.674 0 0 1-5.478.642C4.933 20.428 1.48 7.378 4.268 3.384a2.108 2.108 0 0 1 3.359-.522l2.409 2.409a2.108 2.108 0 0 1 .396 2.396l-.923 1.846a.316.316 0 0 0 .063.396c1.429 1.114 3.312 2.997 4.426 4.426a.316.316 0 0 0 .396.063l1.846-.923a2.108 2.108 0 0 1 2.396.396l2.409 2.409a2.108 2.108 0 0 1 .099 2.837z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
