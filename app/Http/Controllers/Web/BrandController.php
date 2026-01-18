@@ -159,6 +159,10 @@ class BrandController extends Controller
         ]);
         $filters['brand_id'] = $brand->id;
 
+        if (empty($filters['sort'])) {
+            $filters['sort'] = 'created_desc';
+        }
+
         $menu = null;
         if ($request->has('menu_id')) {
             $menu = Menu::find($request->get('menu_id'));

@@ -111,6 +111,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                 case 'created_asc':
                     $q->orderBy('created_at');
                     break;
+                case 'created_desc':
+                    $q->orderByDesc('created_at');
+                    break;
                 case 'featured':
                     $q->orderByDesc('is_featured')->orderByDesc('created_at');
                     break;
@@ -119,7 +122,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                     break;
             }
         } else {
-            $q->orderByDesc('is_featured')->orderByDesc('created_at');
+            $q->orderByDesc('created_at');
         }
 
         return $q->with([

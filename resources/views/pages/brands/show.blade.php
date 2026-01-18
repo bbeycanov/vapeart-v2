@@ -89,14 +89,13 @@
 
             <div class="shop-acs d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
                 <select class="shop-acs__select form-select w-auto border-0 py-0 order-1 order-md-0" aria-label="Sort Items" name="sort" id="sort-select">
-                    <option value="">{{ __('product.Default') }}</option>
-                    <option value="featured">{{ __('product.Featured') }}</option>
-                    <option value="name_asc">{{ __('product.Name A-Z') }}</option>
-                    <option value="name_desc">{{ __('product.Name Z-A') }}</option>
-                    <option value="price_asc">{{ __('product.Price: Low to High') }}</option>
-                    <option value="price_desc">{{ __('product.Price: High to Low') }}</option>
-                    <option value="created_desc">{{ __('product.Newest') }}</option>
-                    <option value="created_asc">{{ __('product.Oldest') }}</option>
+                    <option value="created_desc" {{ request('sort', 'created_desc') === 'created_desc' ? 'selected' : '' }}>{{ __('product.Newest') }}</option>
+                    <option value="featured" {{ request('sort') === 'featured' ? 'selected' : '' }}>{{ __('product.Featured') }}</option>
+                    <option value="name_asc" {{ request('sort') === 'name_asc' ? 'selected' : '' }}>{{ __('product.Name A-Z') }}</option>
+                    <option value="name_desc" {{ request('sort') === 'name_desc' ? 'selected' : '' }}>{{ __('product.Name Z-A') }}</option>
+                    <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>{{ __('product.Price: Low to High') }}</option>
+                    <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>{{ __('product.Price: High to Low') }}</option>
+                    <option value="created_asc" {{ request('sort') === 'created_asc' ? 'selected' : '' }}>{{ __('product.Oldest') }}</option>
                 </select>
 
             </div><!-- /.shop-acs -->
