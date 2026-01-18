@@ -303,12 +303,12 @@
 
                 <div class="shop-acs d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
                     <select class="shop-acs__select form-select w-auto border-0 py-0 order-1 order-md-0" aria-label="Sort Items" name="sort" id="sortSelect">
-                        <option value="default" {{ ($filters['sort'] ?? 'default') === 'default' ? 'selected' : '' }}>{{ __('product.Default Sorting') }}</option>
+                        <option value="created_desc" {{ ($filters['sort'] ?? 'created_desc') === 'created_desc' ? 'selected' : '' }}>{{ __('product.Date, new to old') }}</option>
+                        <option value="featured" {{ ($filters['sort'] ?? '') === 'featured' ? 'selected' : '' }}>{{ __('product.Featured') }}</option>
                         <option value="price_asc" {{ ($filters['sort'] ?? '') === 'price_asc' ? 'selected' : '' }}>{{ __('product.Price, low to high') }}</option>
                         <option value="price_desc" {{ ($filters['sort'] ?? '') === 'price_desc' ? 'selected' : '' }}>{{ __('product.Price, high to low') }}</option>
                         <option value="name_asc" {{ ($filters['sort'] ?? '') === 'name_asc' ? 'selected' : '' }}>{{ __('product.Alphabetically, A-Z') }}</option>
                         <option value="name_desc" {{ ($filters['sort'] ?? '') === 'name_desc' ? 'selected' : '' }}>{{ __('product.Alphabetically, Z-A') }}</option>
-                        <option value="created_desc" {{ ($filters['sort'] ?? '') === 'created_desc' ? 'selected' : '' }}>{{ __('product.Date, new to old') }}</option>
                         <option value="created_asc" {{ ($filters['sort'] ?? '') === 'created_asc' ? 'selected' : '' }}>{{ __('product.Date, old to new') }}</option>
                     </select>
                     <div class="shop-filter d-flex align-items-center order-0 order-md-3 d-lg-none">

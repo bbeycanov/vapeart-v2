@@ -54,6 +54,10 @@ class ProductController extends Controller
             'sort'
         ]);
 
+        if (empty($filters['sort'])) {
+            $filters['sort'] = 'created_desc';
+        }
+
         $page = $request->get('page', 1);
         $products = $this->productService->catalog($filters, perPage: 24, page: $page);
 
