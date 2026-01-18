@@ -19,7 +19,7 @@
         <div class="logo position-absolute start-50 translate-middle-x">
             <a href="{{ route('home', app()->getLocale()) }}">
                 @php
-                    $defaultLogo = asset('storefront/images/vapeart-logo-mobile.svg');
+                    $defaultLogo = asset('storefront/images/vapeart-logo.svg');
                 @endphp
                 <img src="{{ $defaultLogo }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image d-block">
             </a>

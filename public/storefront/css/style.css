@@ -19152,10 +19152,21 @@ textarea.form-control.is-invalid {
 }
 
 .header-mobile {
-  height: 3.75rem;
-  min-height: 3.75rem;
-  background-color: #ffffff;
+  height: 6.5rem;
+  min-height: 6.5rem;
+  background-color: #333;
   z-index: 1030;
+}
+
+.header-mobile .mobile-nav-activator,
+.header-mobile .header-tools__item {
+  color: #fff;
+}
+
+.header-mobile .mobile-nav-activator svg,
+.header-mobile .header-tools__item svg {
+  fill: #fff;
+  stroke: #fff;
 }
 
 .header-mobile .logo {
@@ -19163,7 +19174,27 @@ textarea.form-control.is-invalid {
 }
 
 .header-mobile .logo__image {
-  max-height: 3rem;
+  max-height: 5.5rem;
+}
+
+.header-mobile .mobile-nav-activator .nav-icon {
+  width: 30px;
+  height: 24px;
+}
+
+.header-mobile .header-tools__item svg {
+  width: 28px;
+  height: 28px;
+}
+
+.header-mobile .wishlist-amount,
+.header-mobile .cart-amount {
+  font-size: 0.7rem;
+  min-width: 18px;
+  height: 18px;
+  line-height: 18px;
+  top: -6px;
+  right: -8px;
 }
 
 @media (min-width: 992px) {
@@ -19271,6 +19302,13 @@ textarea.form-control.is-invalid {
   transform: rotate(0);
   opacity: 1;
   visibility: visible;
+}
+
+.header-mobile .mobile-nav-activator .btn-close-lg {
+  background-image: url("data:image/svg+xml,%3csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M0.414336 14.1421L14.5565 0L15.9707 1.41421L1.82855 15.5563L0.414336 14.1421Z' fill='%23fff'/%3e%3cpath d='M1.41421 0.142113L15.5563 14.2842L14.1421 15.6985L0 1.55633L1.41421 0.142113Z' fill='%23fff'/%3e%3c/svg%3e");
+  width: 1.25rem;
+  height: 1.25rem;
+  background-size: 1.25rem auto;
 }
 
 .header_sticky {
