@@ -26,8 +26,59 @@
             }, 100);
         }
 
+        // Brand scroll arrows functionality
+        initBrandScrollArrows();
+
         // Initialize Infinite Scroll
         initInfiniteScroll();
+
+        function initBrandScrollArrows() {
+            const scrollWrapper = document.getElementById('brandScrollWrapper');
+            const leftArrow = document.querySelector('.brand-scroll-left');
+            const rightArrow = document.querySelector('.brand-scroll-right');
+
+            if (!scrollWrapper) return;
+
+            const scrollAmount = 200;
+
+            // Update arrows visibility based on scroll position
+            function updateArrowsVisibility() {
+                const { scrollLeft, scrollWidth, clientWidth } = scrollWrapper;
+                const maxScroll = scrollWidth - clientWidth;
+
+                if (leftArrow) {
+                    leftArrow.style.opacity = scrollLeft > 10 ? '1' : '0.3';
+                    leftArrow.style.pointerEvents = scrollLeft > 10 ? 'auto' : 'none';
+                }
+
+                if (rightArrow) {
+                    rightArrow.style.opacity = scrollLeft < maxScroll - 10 ? '1' : '0.3';
+                    rightArrow.style.pointerEvents = scrollLeft < maxScroll - 10 ? 'auto' : 'none';
+                }
+            }
+
+            // Arrow click handlers
+            if (leftArrow) {
+                leftArrow.addEventListener('click', () => {
+                    scrollWrapper.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                });
+            }
+
+            if (rightArrow) {
+                rightArrow.addEventListener('click', () => {
+                    scrollWrapper.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                });
+            }
+
+            // Listen for scroll events
+            scrollWrapper.addEventListener('scroll', updateArrowsVisibility);
+
+            // Initial check
+            setTimeout(updateArrowsVisibility, 200);
+
+            // Update on resize
+            window.addEventListener('resize', updateArrowsVisibility);
+        }
 
         // Brand Pill Click Handler
         brandPills.forEach(pill => {

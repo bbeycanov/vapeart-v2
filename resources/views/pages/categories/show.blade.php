@@ -131,8 +131,15 @@
             <!-- Sticky Brand Navigation -->
             @if($brands && $brands->count() > 0)
                 <div class="sticky-brand-nav bg-white border rounded-3 mb-4 mb-md-5" style="position: sticky; top: 60px; z-index: 99; transition: top 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                    <div class="brand-scroll-container py-3 py-md-3.5 d-flex align-items-center px-3 px-md-4 position-relative">
-                        <div class="brand-scroll-wrapper d-flex gap-2 gap-md-3 overflow-auto no-scrollbar w-100" style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch;">
+                    <div class="brand-scroll-container py-3 py-md-3.5 d-flex align-items-center px-2 px-md-3 position-relative">
+                        <!-- Left Arrow -->
+                        <button type="button" class="brand-scroll-arrow brand-scroll-left btn btn-light rounded-circle p-0 d-flex align-items-center justify-content-center flex-shrink-0 me-2" style="width: 32px; height: 32px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+
+                        <div class="brand-scroll-wrapper d-flex gap-2 gap-md-3 overflow-auto no-scrollbar w-100 position-relative" id="brandScrollWrapper" style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch;">
                             <!-- All Brands Button -->
                             <button type="button"
                                     class="brand-pill btn btn-sm {{ !$selectedBrandId ? 'btn-dark' : 'btn-outline-light text-dark border-secondary-subtle' }} rounded-pill px-3 px-md-4 py-2 py-md-2.5 flex-shrink-0 fw-medium d-flex align-items-center gap-2 transition-all"
@@ -156,6 +163,13 @@
                                 </button>
                             @endforeach
                         </div>
+
+                        <!-- Right Arrow -->
+                        <button type="button" class="brand-scroll-arrow brand-scroll-right btn btn-light rounded-circle p-0 d-flex align-items-center justify-content-center flex-shrink-0 ms-2" style="width: 32px; height: 32px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             @endif

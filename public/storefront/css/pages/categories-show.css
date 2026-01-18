@@ -68,12 +68,40 @@
 }
 
 .brand-scroll-container {
-    padding: 1rem 1.25rem;
+    padding: 1rem 0.75rem;
 }
 
 @media (min-width: 768px) {
     .brand-scroll-container {
-        padding: 1.25rem 1.5rem;
+        padding: 1.25rem 1rem;
+    }
+}
+
+/* Brand Scroll Arrows */
+.brand-scroll-arrow {
+    transition: all 0.2s ease;
+    border: 1px solid #e9ecef !important;
+    background-color: #fff !important;
+}
+
+.brand-scroll-arrow:hover {
+    background-color: #f8f9fa !important;
+    transform: scale(1.05);
+}
+
+.brand-scroll-arrow:active {
+    transform: scale(0.95);
+}
+
+@media (min-width: 768px) {
+    .brand-scroll-arrow {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .brand-scroll-arrow svg {
+        width: 16px;
+        height: 16px;
     }
 }
 
