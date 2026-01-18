@@ -4,23 +4,19 @@ namespace App\Filament\Concerns;
 
 use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 /**
- * Trait to preserve non-translatable fields (relationships, media, etc.)
- * when switching locales in Filament forms.
- *
- * Use this trait in CreateRecord pages that use LaraZeus Translatable.
+ * Trait to preserve non-translatable fields when switching locales in Filament forms.
+ * This includes media/file upload fields which have special state management.
  */
 trait PreservesNonTranslatableData
 {
-    /**
-     * Store non-translatable data separately to preserve during locale switches
-     */
     public array $nonTranslatableData = [];
+    public array $preservedUploads = [];
 
     /**
-     * Override this method in your page to specify which fields should be preserved.
-     * Include all relationship fields, media uploads, and other non-translatable fields.
+     * Override this method to specify which fields should be preserved.
      */
     protected function getNonTranslatableFields(): array
     {
@@ -31,13 +27,14 @@ trait PreservesNonTranslatableData
     {
         $this->oldActiveLocale = $this->activeLocale;
 
-        // Store non-translatable data before locale switch using raw Livewire data
-        $rawData = $this->data;
-        $fieldsToPreserve = $this->getNonTranslatableFields();
+        // Store ALL current form data before locale switch
+        $this->nonTranslatableData = $this->data;
 
-        foreach ($fieldsToPreserve as $field) {
-            if (isset($rawData[$field])) {
-                $this->nonTranslatableData[$field] = $rawData[$field];
+        // Store file upload state separately
+        $this->preservedUploads = [];
+        foreach (['thumbnail', 'images'] as $field) {
+            if (isset($this->data[$field])) {
+                $this->preservedUploads[$field] = $this->data[$field];
             }
         }
     }
@@ -55,30 +52,31 @@ trait PreservesNonTranslatableData
         try {
             // Store translatable data for old locale
             $this->otherLocaleData[$this->oldActiveLocale] = Arr::only(
-                $this->data,
+                $this->nonTranslatableData,
                 $translatableAttributes
             );
 
-            // Get translatable data for new locale (empty if not set yet)
+            // Get translatable data for new locale (or empty)
             $newLocaleTranslatableData = $this->otherLocaleData[$this->activeLocale] ?? [];
 
-            // Initialize empty translatable fields for new locale if not set
-            $emptyTranslatableData = [];
+            // Start with all preserved data (includes media, relationships, etc.)
+            $restoredData = $this->nonTranslatableData;
+
+            // Update only translatable fields with new locale data
             foreach ($translatableAttributes as $attr) {
-                // Use empty string instead of null for CKEditor compatibility
-                $emptyTranslatableData[$attr] = $newLocaleTranslatableData[$attr] ?? '';
+                $restoredData[$attr] = $newLocaleTranslatableData[$attr] ?? '';
             }
 
-            // Merge: non-translatable data + translatable data (empty or existing)
-            $mergedData = array_merge($this->nonTranslatableData, $emptyTranslatableData);
-
-            // Use form->fill() to properly update form state and trigger validation
-            $this->form->fill($mergedData);
-
-            // Also update Livewire data directly to ensure multi-select fields are preserved
-            foreach ($this->nonTranslatableData as $key => $value) {
-                $this->data[$key] = $value;
+            // Restore file uploads
+            foreach ($this->preservedUploads as $field => $value) {
+                $restoredData[$field] = $value;
             }
+
+            // Update Livewire data directly
+            $this->data = $restoredData;
+
+            // Force component to recognize file uploads
+            $this->dispatch('form-data-restored');
 
             unset($this->otherLocaleData[$this->activeLocale]);
         } catch (ValidationException $e) {

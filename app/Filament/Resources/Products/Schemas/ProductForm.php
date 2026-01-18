@@ -85,22 +85,16 @@ class ProductForm
                                             ->label(__('Categories'))
                                             ->required()
                                             ->multiple()
-                                            ->relationship('categories', 'name')
-                                            ->getOptionLabelFromRecordUsing(fn ($record) => $record->getTranslation('name', app()->getLocale()) ?: $record->name)
-                                            ->searchable()
-                                            ->getSearchResultsUsing(function (string $search) {
+                                            ->options(function () {
                                                 return \App\Models\Category::query()
-                                                    ->where(function ($query) use ($search) {
-                                                        $query->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.az')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
-                                                            ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.en')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
-                                                            ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.ru')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"]);
-                                                    })
                                                     ->orderBy('name')
-                                                    ->limit(50)
                                                     ->get()
-                                                    ->pluck('name', 'id')
+                                                    ->mapWithKeys(fn ($category) => [
+                                                        $category->id => $category->getTranslation('name', app()->getLocale()) ?: $category->name
+                                                    ])
                                                     ->toArray();
                                             })
+                                            ->searchable()
                                             ->preload()
                                             ->columnSpanFull()
                                             ->validationMessages([
@@ -110,22 +104,16 @@ class ProductForm
                                         Select::make('tags')
                                             ->label(__('Tags'))
                                             ->multiple()
-                                            ->relationship('tags', 'name')
-                                            ->getOptionLabelFromRecordUsing(fn ($record) => $record->getTranslation('name', app()->getLocale()) ?: $record->name)
-                                            ->searchable()
-                                            ->getSearchResultsUsing(function (string $search) {
+                                            ->options(function () {
                                                 return \App\Models\Tag::query()
-                                                    ->where(function ($query) use ($search) {
-                                                        $query->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.az')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
-                                                            ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.en')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
-                                                            ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.ru')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"]);
-                                                    })
                                                     ->orderBy('name')
-                                                    ->limit(50)
                                                     ->get()
-                                                    ->pluck('name', 'id')
+                                                    ->mapWithKeys(fn ($tag) => [
+                                                        $tag->id => $tag->getTranslation('name', app()->getLocale()) ?: $tag->name
+                                                    ])
                                                     ->toArray();
                                             })
+                                            ->searchable()
                                             ->preload()
                                             ->createOptionForm([
                                                 TextInput::make('name.az')
@@ -137,14 +125,30 @@ class ProductForm
                                                     ->label('Название (RU)'),
                                             ])
                                             ->createOptionUsing(function (array $data) {
-                                                $slug = Str::slug($data['name']['az'] ?? $data['name']['en']);
+                                                $baseName = $data['name']['az'] ?? $data['name']['en'] ?? '';
+                                                $baseSlug = Str::slug($baseName);
+                                                $slug = Str::limit($baseSlug, 250, '');
+
+                                                // Check if tag with this slug exists
+                                                $existingTag = \App\Models\Tag::where('slug', $slug)->first();
+                                                if ($existingTag) {
+                                                    return $existingTag->id;
+                                                }
+
+                                                // Create unique slug if needed
+                                                $counter = 1;
+                                                while (\App\Models\Tag::where('slug', $slug)->exists()) {
+                                                    $slug = Str::limit($baseSlug, 245, '') . '-' . $counter;
+                                                    $counter++;
+                                                }
+
                                                 $tag = \App\Models\Tag::create([
                                                     'name' => [
-                                                        'az' => $data['name']['az'] ?? $data['name']['az'],
-                                                        'en' => $data['name']['en'] ?? $data['name']['az'],
-                                                        'ru' => $data['name']['ru'] ?? $data['name']['az'],
+                                                        'az' => $data['name']['az'] ?? $baseName,
+                                                        'en' => $data['name']['en'] ?? $baseName,
+                                                        'ru' => $data['name']['ru'] ?? $baseName,
                                                     ],
-                                                    'slug' => Str::limit($slug, 250, ''),
+                                                    'slug' => $slug,
                                                     'is_active' => true,
                                                 ]);
                                                 return $tag->id;
@@ -160,7 +164,9 @@ class ProductForm
                                             ->label(__('Price'))
                                             ->required()
                                             ->numeric()
+                                            ->inputMode('decimal')
                                             ->prefix('$')
+                                            ->dehydrateStateUsing(fn ($state) => is_numeric($state) ? floatval($state) : 0)
                                             ->validationMessages([
                                                 'required' => __('admin.validation.required'),
                                                 'numeric' => __('admin.validation.numeric'),
@@ -168,9 +174,11 @@ class ProductForm
                                         TextInput::make('compare_at_price')
                                             ->label(__('Compare Price'))
                                             ->numeric()
+                                            ->inputMode('decimal')
                                             ->prefix('$')
                                             ->nullable()
                                             ->default(null)
+                                            ->dehydrateStateUsing(fn ($state) => is_numeric($state) ? floatval($state) : null)
                                             ->helperText(__('Köhnə qiymət (opsional). API import üçün istifadə olunur.'))
                                             ->validationMessages([
                                                 'numeric' => __('admin.validation.numeric'),
@@ -200,10 +208,12 @@ class ProductForm
                                                 return $get('is_track_stock') == true;
                                             })
                                             ->numeric()
+                                            ->inputMode('numeric')
                                             ->disabled(function (Get $get) {
                                                 return $get('is_track_stock') == false;
                                             })
                                             ->default(0)
+                                            ->dehydrateStateUsing(fn ($state) => is_numeric($state) ? intval($state) : 0)
                                             ->validationMessages([
                                                 'required' => __('admin.validation.required'),
                                                 'numeric' => __('admin.validation.numeric'),
@@ -320,33 +330,21 @@ class ProductForm
                                     ->hidden(function (Get $get) {
                                         return !$get('is_featured');
                                     })
-                                    ->relationship(
-                                        name: 'menus',
-                                        titleAttribute: 'title',
-                                        modifyQueryUsing: function ($query) {
-                                            $query->where('position', MenuPosition::FEATURED->value)->orderBy('title');
-                                        }
-                                    )
-                                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->getTranslation('title', app()->getLocale()) ?: $record->title)
+                                    ->options(function () {
+                                        return \App\Models\Menu::query()
+                                            ->where('position', MenuPosition::FEATURED->value)
+                                            ->orderBy('title')
+                                            ->get()
+                                            ->mapWithKeys(fn ($menu) => [
+                                                $menu->id => $menu->getTranslation('title', app()->getLocale()) ?: $menu->title
+                                            ])
+                                            ->toArray();
+                                    })
                                     ->required(function (Get $get) {
                                         return (bool) $get('is_featured');
                                     })
                                     ->preload()
                                     ->searchable()
-                                    ->getSearchResultsUsing(function (string $search) {
-                                        return \App\Models\Menu::query()
-                                            ->where('position', MenuPosition::FEATURED->value)
-                                            ->where(function ($query) use ($search) {
-                                                $query->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.az')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
-                                                    ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.en')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
-                                                    ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(title, '$.ru')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"]);
-                                            })
-                                            ->orderBy('title')
-                                            ->limit(50)
-                                            ->get()
-                                            ->pluck('title', 'id')
-                                            ->toArray();
-                                    })
                                     ->columnSpanFull()
                                     ->validationMessages([
                                         'required' => __('admin.validation.required'),
@@ -355,26 +353,17 @@ class ProductForm
                                 Select::make('discounts')
                                     ->label(__('Discounts'))
                                     ->multiple()
-                                    ->relationship(
-                                        name: 'discounts',
-                                        titleAttribute: 'name'
-                                    )
-                                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->getTranslation('name', app()->getLocale()) ?: $record->name)
-                                    ->preload()
-                                    ->searchable()
-                                    ->getSearchResultsUsing(function (string $search) {
+                                    ->options(function () {
                                         return \App\Models\Discount::query()
-                                            ->where(function ($query) use ($search) {
-                                                $query->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.az')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
-                                                    ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.en')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"])
-                                                    ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(name, '$.ru')) COLLATE utf8mb4_unicode_ci LIKE ?", ["%{$search}%"]);
-                                            })
                                             ->orderBy('name')
-                                            ->limit(50)
                                             ->get()
-                                            ->pluck('name', 'id')
+                                            ->mapWithKeys(fn ($discount) => [
+                                                $discount->id => $discount->getTranslation('name', app()->getLocale()) ?: $discount->name
+                                            ])
                                             ->toArray();
                                     })
+                                    ->preload()
+                                    ->searchable()
                                     ->columnSpanFull(),
 
 
