@@ -19214,7 +19214,7 @@ textarea.form-control.is-invalid {
 /* Mobile header spacing - add padding to body when mobile header is sticky */
 @media (max-width: 991px) {
   body {
-    padding-top: 6.5rem;
+    padding-top: 1.5rem;
   }
 }
 
