@@ -93,4 +93,8 @@ return [
     'Previous' => 'Previous',
     'Next' => 'Next',
     'Page' => 'Page',
+
+    // Cookie Consent
+    'cookie_consent_text' => 'To provide you with a better and personalized shopping experience, our site uses cookies. By continuing to use the site, you agree to our cookie policy.',
+    'cookie_accept' => 'Accept',
 ];

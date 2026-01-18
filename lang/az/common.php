@@ -93,4 +93,8 @@ return [
     'Previous' => 'Əvvəlki',
     'Next' => 'Növbəti',
     'Page' => 'Səhifə',
+
+    // Cookie Consent
+    'cookie_consent_text' => 'Sizə daha yaxşı və fərdiləşdirilmiş alış təcrübəsi təqdim etmək üçün saytımız cookie-lərdən istifadə edir. Saytdan istifadəyə davam etməklə cookie siyasətimizlə razılaşmış olursunuz.',
+    'cookie_accept' => 'Qəbul et',
 ];

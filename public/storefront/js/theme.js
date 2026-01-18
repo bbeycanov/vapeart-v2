@@ -1171,11 +1171,9 @@ function pureFadeOut(e) {
     }
 
     initCookieConsient() {
-      const purecookieDesc = "In order to provide you a personalized shopping experience, our site uses cookies. By continuing to use this site, you are agreeing to our cookie policy.",
-      purecookieButton = "Accept";
-
       function pureFadeIn(e, o) {
         var i = document.getElementById(e);
+        if (!i) return;
         i.style.opacity = 0, i.style.display = o || "block",
         function e() {
           var o = parseFloat(i.style.opacity);
@@ -1194,15 +1192,10 @@ function pureFadeOut(e) {
         return null
       }
 
-      function appendHtml(el, str) {
-        var div = document.createElement('div');
-        div.innerHTML = str;
-        while (div.children.length > 0) {
-          el.appendChild(div.children[0]);
-        }
+      // Show cookie consent if not dismissed (HTML is in blade template)
+      if (!getCookie("purecookieDismiss")) {
+        pureFadeIn("cookieConsentContainer");
       }
-
-      getCookie("purecookieDismiss") || (appendHtml(document.body, '<div class="cookieConsentContainer" id="cookieConsentContainer"><div class="cookieDesc"><p>' + purecookieDesc + '</p></div><div class="cookieButton"><a onClick="purecookieDismiss();">' + purecookieButton + "</a></div></div>"), pureFadeIn("cookieConsentContainer"))
     }
 
     initAccessories() {

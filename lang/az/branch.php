@@ -4,6 +4,7 @@ return [
     // Branch Modal
     'Filial Seçin' => 'Filial seçin',
     'Select Branch' => 'Filial seçin',
+    'Sifariş üçün filial seçin' => 'Sifariş üçün filial seçin',
     'Sifariş göndərmək istədiyiniz filialı seçin:' => 'Sifariş göndərmək istədiyiniz filialı seçin:',
     'WhatsApp yoxdur' => 'WhatsApp yoxdur',
     'Filial tapılmadı.' => 'Filial tapılmadı.',

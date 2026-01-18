@@ -33,6 +33,8 @@
 
     @include('includes.age-verification-popup')
 
+    @include('includes.cookie-consent')
+
     @include('includes.scripts')
 
     @stack('scripts')
