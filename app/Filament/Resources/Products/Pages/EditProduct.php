@@ -113,17 +113,26 @@ class EditProduct extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
+        // Load categories relationship
+        $data['categories'] = $this->record->categories()->pluck('categories.id')->toArray();
+
+        // Load tags relationship
+        $data['tags'] = $this->record->tags()->pluck('tags.id')->toArray();
+
+        // Load discounts relationship
+        $data['discounts'] = $this->record->discounts()->pluck('discounts.id')->toArray();
+
         // Split menus into featured_menus and sidebar_menus
         $menus = $this->record->menus()->get();
-        
+
         $data['featured_menus'] = $menus->filter(function ($menu) {
             return $menu->position === \App\Enums\MenuPosition::FEATURED->value;
         })->pluck('id')->toArray();
-        
+
         $data['sidebar_menus'] = $menus->filter(function ($menu) {
             return $menu->position === \App\Enums\MenuPosition::SIDEBAR->value;
         })->pluck('id')->toArray();
-        
+
         return $data;
     }
 
@@ -143,7 +152,30 @@ class EditProduct extends EditRecord
 
     protected function afterSave(): void
     {
+        // Sync categories relationship
+        if (isset($this->data['categories'])) {
+            $this->record->categories()->sync($this->data['categories'] ?? []);
+        }
+
+        // Sync tags relationship
+        if (isset($this->data['tags'])) {
+            $this->record->tags()->sync($this->data['tags'] ?? []);
+        }
+
+        // Sync menus relationship
+        $allMenus = array_merge(
+            $this->data['featured_menus'] ?? [],
+            $this->data['sidebar_menus'] ?? []
+        );
+        $this->record->menus()->sync(array_unique($allMenus));
+
+        // Sync discounts relationship
+        if (isset($this->data['discounts'])) {
+            $this->record->discounts()->sync($this->data['discounts'] ?? []);
+        }
+
         $this->clearCache();
+
         // Sync to Elasticsearch
         try {
             $elasticsearchService = app(\App\Services\ElasticsearchService::class);

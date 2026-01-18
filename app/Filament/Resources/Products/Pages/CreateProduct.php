@@ -66,7 +66,32 @@ class CreateProduct extends CreateRecord
 
     protected function afterCreate(): void
     {
+        // Sync categories relationship
+        if (!empty($this->data['categories'])) {
+            $this->record->categories()->sync($this->data['categories']);
+        }
+
+        // Sync tags relationship
+        if (!empty($this->data['tags'])) {
+            $this->record->tags()->sync($this->data['tags']);
+        }
+
+        // Sync menus relationship (featured_menus merged in mutateFormDataBeforeCreate)
+        $allMenus = array_merge(
+            $this->data['featured_menus'] ?? [],
+            $this->data['sidebar_menus'] ?? []
+        );
+        if (!empty($allMenus)) {
+            $this->record->menus()->sync(array_unique($allMenus));
+        }
+
+        // Sync discounts relationship
+        if (!empty($this->data['discounts'])) {
+            $this->record->discounts()->sync($this->data['discounts']);
+        }
+
         $this->clearCache();
+
         // Sync to Elasticsearch
         try {
             $elasticsearchService = app(\App\Services\ElasticsearchService::class);
