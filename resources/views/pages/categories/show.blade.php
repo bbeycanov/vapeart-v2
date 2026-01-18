@@ -264,7 +264,7 @@
 @endsection
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('storefront/css/pages/categories-show.css') }}">
+<link rel="stylesheet" href="{{ asset('storefront/css/pages/categories-show.css') }}?v={{ time() }}">
 @endpush
 
 @push('scripts')
@@ -279,5 +279,5 @@ window.categoryShowPageData = {
     pageText: '{{ __('page.Page') }}'
 };
 </script>
-<script src="{{ asset('storefront/js/pages/categories-show.js') }}" defer></script>
+<script src="{{ asset('storefront/js/pages/categories-show.js') }}?v={{ time() }}" defer></script>
 @endpush
