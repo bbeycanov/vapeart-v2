@@ -22096,6 +22096,7 @@ a.add-to-wishlist.active .flaticon.flaticon-heart {
   position: absolute;
   right: 0.75rem;
   top: 1rem;
+    z-index: 999;
 }
 
 .shop-checkout .page-title {
