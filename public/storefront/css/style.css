@@ -19211,6 +19211,13 @@ textarea.form-control.is-invalid {
   box-shadow: 0 8px 25px 0 rgba(140, 152, 164, 0.15);
 }
 
+/* Mobile header spacing - add padding to body when mobile header is sticky */
+@media (max-width: 991px) {
+  body {
+    padding-top: 6.5rem;
+  }
+}
+
 .header-mobile__navigation {
   display: flex;
   flex-direction: column;
@@ -19323,7 +19330,7 @@ textarea.form-control.is-invalid {
 .header_sticky-active {
   position: fixed;
   animation: moveDown .5s;
-  background-color: #ffffff;
+  background-color: #333;
   box-shadow: 0 8px 25px 0 rgba(140, 152, 164, 0.15);
   z-index: 1020;
 }
