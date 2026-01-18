@@ -137,13 +137,14 @@ class ProductForm
                                                     ->label('Название (RU)'),
                                             ])
                                             ->createOptionUsing(function (array $data) {
+                                                $slug = Str::slug($data['name']['az'] ?? $data['name']['en']);
                                                 $tag = \App\Models\Tag::create([
                                                     'name' => [
                                                         'az' => $data['name']['az'] ?? $data['name']['az'],
                                                         'en' => $data['name']['en'] ?? $data['name']['az'],
                                                         'ru' => $data['name']['ru'] ?? $data['name']['az'],
                                                     ],
-                                                    'slug' => Str::slug($data['name']['az'] ?? $data['name']['en']),
+                                                    'slug' => Str::limit($slug, 250, ''),
                                                     'is_active' => true,
                                                 ]);
                                                 return $tag->id;
