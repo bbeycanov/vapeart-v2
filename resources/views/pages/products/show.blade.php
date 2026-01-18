@@ -172,8 +172,8 @@
                     @endif
                 </div>
                 @if($productShortDesc)
-                <div class="product-single__short-desc">
-                    <p>{!! $productShortDesc !!}</p>
+                <div class="product-single__short-desc product-content">
+                    {!! $productShortDesc !!}
                 </div>
                 @endif
                     <div class="product-single__addtocart">

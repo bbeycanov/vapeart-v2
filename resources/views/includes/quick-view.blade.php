@@ -65,7 +65,7 @@
                     </div>
                     <div class="product-single__short-desc">
                         <div id="quickViewDescriptionWrapper" class="position-relative">
-                            <div id="quickViewDescription" class="quickview-desc-collapsed">-</div>
+                            <div id="quickViewDescription" class="quickview-desc-collapsed product-content">-</div>
                             <div id="quickViewFadeOverlay" class="quickview-fade-overlay"></div>
                             <button type="button" id="quickViewReadMoreBtn" class="btn btn-link p-0 text-decoration-none fw-semibold" style="display: none;">
                                 {{ __('product.Read more') }} <span class="read-more-icon">▼</span>
