@@ -77,7 +77,7 @@ class HomeController extends Controller
         // Discount products - Get first active discount and its products
         $discountProducts = Cache::remember("discount_products:$locale", 3600, static function () {
             $activeDiscount = Discount::active()
-                ->orderBy('sort_order')
+                ->orderByDesc('sort_order')
                 ->first();
 
             if ($activeDiscount) {
