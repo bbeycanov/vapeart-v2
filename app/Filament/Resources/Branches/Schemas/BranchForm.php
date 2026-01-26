@@ -102,10 +102,11 @@ class BranchForm
                                 'numeric' => __('admin.validation.numeric'),
                             ]),
                         Textarea::make('map_iframe_url')
-                            ->label(__('Google Maps Iframe URL'))
+                            ->label(__('Google Maps Embed URL'))
                             ->columnSpanFull()
                             ->rows(3)
-                            ->helperText(__('Paste the Google Maps embed URL here. Go to Google Maps → Share → Embed a map → Copy the src URL from iframe.')),
+                            ->placeholder('https://www.google.com/maps/embed?pb=!1m18!1m12...')
+                            ->helperText(__('Go to Google Maps → Share → Embed a map → Copy HTML → Paste only the src="..." URL. Must start with https://www.google.com/maps/embed')),
                     ]),
 
                 Section::make(__('SEO Information'))

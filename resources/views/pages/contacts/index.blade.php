@@ -159,13 +159,29 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Google Maps Container -->
-                            <div class="google-map-container mb-5">
-                                <div style="width: 100%"><iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=Vape Art Premium (Akedemik Həsən Əliyev 117)&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.mapsdirections.info/de/evolkerung-auf-einer-karte-berechnen/">Bevölkerung visualisieren Karte</a></iframe></div>
-                            </div>
                         </div>
                     @endforeach
                 </div>
+            @endif
+
+            <!-- Map Container -->
+            @php
+                $activeBranch = $defaultBranch ?? $branches->first();
+                $activeMapUrl = $activeBranch?->map_iframe_url;
+            @endphp
+            @if($activeMapUrl || $branches->contains(fn($b) => $b->map_iframe_url))
+            <div class="map-container mb-5">
+                <iframe
+                    id="branch-map-iframe"
+                    width="100%"
+                    height="450"
+                    style="border:0; border-radius: 8px;"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src="{{ $activeMapUrl }}"
+                    allowfullscreen>
+                </iframe>
+            </div>
             @endif
 
             <!-- Contact Form -->
@@ -253,16 +269,13 @@
 <script>
 // Pass data to JavaScript
 window.contactPageData = {
-    contactUsText: '{{ __('page.Contact Us') }}',
     submitUrl: '{{ route('contacts.store', app()->getLocale()) }}',
-    googleMapsApiKey: '{{ config('services.google.maps_api_key') }}',
     validationErrorText: '{{ __("form.Please fill in all required fields correctly.") }}',
     validationErrorTitle: '{{ __("messages.Validation Error") }}',
     genericErrorText: '{{ __("messages.An error occurred. Please try again.") }}',
     successText: '{{ __("messages.Your message has been sent successfully!") }}',
     successTitle: '{{ __("messages.Success") }}',
-    errorTitle: '{{ __("messages.Error") }}',
-    noApiKeyText: '{{ __("branch.Google Maps API key is not configured.") }}'
+    errorTitle: '{{ __("messages.Error") }}'
 };
 </script>
 <script src="{{ asset('storefront/js/pages/contacts-index.js') }}" defer></script>
