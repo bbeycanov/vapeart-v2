@@ -38,6 +38,7 @@ class Discount extends Model implements HasMedia, Sortable
         'usage_limit',
         'used_count',
         'is_active',
+        'is_show_home_page',
         'sort_order',
     ];
 
@@ -79,6 +80,16 @@ class Discount extends Model implements HasMedia, Sortable
                 $q->whereNull('usage_limit')
                     ->orWhereColumn('used_count', '<', 'usage_limit');
             });
+    }
+
+    /**
+     * Scope to get discounts that should be shown on homepage
+     * @param $query
+     * @return mixed
+     */
+    public function scopeShowOnHomePage($query): mixed
+    {
+        return $query->where('is_show_home_page', true);
     }
 
     /**

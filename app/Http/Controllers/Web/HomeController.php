@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Models\Discount;
+use App\Models\Product;
 use App\Enums\MenuPosition;
 use App\Enums\BannerPosition;
 use Spatie\SchemaOrg\Schema;
@@ -72,35 +73,46 @@ class HomeController extends Controller
 
         // Home page banners - BannerService içinde cache'leniyor
         $heroBanners = $this->bannerService->byPosition(BannerPosition::HOME_HERO_SLIDESHOW);
-        $discountBanner = $this->bannerService->byPosition(BannerPosition::HOME_DISCOUNT_BANNER)->first();
+        $discountBanner = $this->bannerService->byPosition(BannerPosition::HOME_DISCOUNT_BANNER)->last();
 
-        // Discount products - Get first active discount and its products
+        // Discount products - Get products from all discounts marked for homepage
         $discountProducts = Cache::remember("discount_products:$locale", 3600, static function () {
-            $activeDiscount = Discount::active()
-                ->orderByDesc('sort_order')
-                ->first();
+            $homePageDiscounts = Discount::active()
+                ->showOnHomePage()
+                ->orderBy('sort_order')
+                ->get();
 
-            if ($activeDiscount) {
-                return $activeDiscount->products()
-                    ->where('is_active', true)
-                    ->with([
-                        'brand',
-                        'media',
-                        'discounts' => function ($q) {
-                            $q->active();
-                        }
-                    ])
-                    ->orderBy('sort_order')
-                    ->limit(12)
-                    ->get();
+            if ($homePageDiscounts->isEmpty()) {
+                return collect();
             }
 
-            return collect();
+            // Get all product IDs from homepage discounts
+            $productIds = $homePageDiscounts->flatMap(function ($discount) {
+                return $discount->products()->pluck('products.id');
+            })->unique();
+
+            if ($productIds->isEmpty()) {
+                return collect();
+            }
+
+            return Product::query()
+                ->whereIn('id', $productIds)
+                ->where('is_active', true)
+                ->with([
+                    'brand',
+                    'media',
+                    'discounts' => function ($q) {
+                        $q->active();
+                    }
+                ])
+                ->orderBy('sort_order')
+                ->get();
         });
 
-        // Get discount info for banner
+        // Get first homepage discount info for banner
         $activeDiscount = Cache::remember("active_discount:$locale", 3600, static function () {
             return Discount::active()
+                ->showOnHomePage()
                 ->orderBy('sort_order')
                 ->first();
         });

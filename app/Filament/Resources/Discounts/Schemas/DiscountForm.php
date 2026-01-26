@@ -101,6 +101,10 @@ class DiscountForm
                                     Toggle::make('is_active')
                                         ->label(__('Is Active'))
                                         ->required(),
+                                    Toggle::make('is_show_home_page')
+                                        ->label(__('Show on Home Page'))
+                                        ->helperText(__('When enabled, products from this discount will be shown in the homepage discounts section.'))
+                                        ->default(false),
                                 ]),
                         ]),
                         Tabs\Tab::make(__('Products'))->schema([
