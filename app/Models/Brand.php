@@ -31,6 +31,7 @@ class Brand extends Model implements HasMedia, Sortable
         'meta_title',
         'meta_description',
         'is_active',
+        'priority',
         'sort_order',
         'social_links',
         'website'

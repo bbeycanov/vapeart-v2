@@ -165,11 +165,11 @@ class CategoryController extends Controller
             ->filter()
             ->unique('id')
             ->sortBy(function ($brand) use ($selectedBrandId) {
-                // Selected brand comes first, then sort by name
-                if ($selectedBrandId && $brand->id == $selectedBrandId) {
-                    return '0_' . $brand->getTranslation('name', app()->getLocale());
-                }
-                return '1_' . $brand->getTranslation('name', app()->getLocale());
+                // Selected brand comes first, then sort by priority (higher first), then by name
+                $priorityPrefix = $selectedBrandId && $brand->id == $selectedBrandId ? '0' : '1';
+                // Invert priority so higher values come first (10 becomes 0, 1 becomes 9)
+                $priorityValue = 10 - ($brand->priority ?? 10);
+                return sprintf('%s_%02d_%s', $priorityPrefix, $priorityValue, $brand->getTranslation('name', app()->getLocale()));
             })
             ->values();
 

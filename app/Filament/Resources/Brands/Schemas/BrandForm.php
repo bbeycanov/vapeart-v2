@@ -150,6 +150,17 @@ class BrandForm
                         Toggle::make('is_active')
                             ->label(__('Is Active'))
                             ->required(),
+                        TextInput::make('priority')
+                            ->label(__('Priority'))
+                            ->numeric()
+                            ->default(10)
+                            ->minValue(1)
+                            ->maxValue(10)
+                            ->helperText(__('Higher priority (1-10) shows first in category page. Default is 10.'))
+                            ->validationMessages([
+                                'min' => __('Priority must be between 1 and 10.'),
+                                'max' => __('Priority must be between 1 and 10.'),
+                            ]),
                     ]),
             ]);
     }
