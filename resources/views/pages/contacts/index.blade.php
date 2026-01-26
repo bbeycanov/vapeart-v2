@@ -54,10 +54,8 @@
                                     data-bs-target="#branch-{{ $branch->id }}"
                                     type="button"
                                     role="tab"
-                                    data-lat="{{ $branch->latitude }}"
-                                    data-lng="{{ $branch->longitude }}"
-                                    data-name="{{ $branch->getTranslation('name', app()->getLocale()) }}"
-                                    data-address="{{ $branch->getTranslation('address', app()->getLocale()) }}">
+                                    data-map-iframe="{{ $branch->map_iframe_url }}"
+                                    data-name="{{ $branch->getTranslation('name', app()->getLocale()) }}">
                                     {{ $branch->getTranslation('name', app()->getLocale()) }}
                                 </button>
                             </li>
@@ -161,15 +159,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Google Maps Container -->
+                            <div class="google-map-container mb-5">
+                                <div style="width: 100%"><iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=Vape Art Premium (Akedemik Həsən Əliyev 117)&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.mapsdirections.info/de/evolkerung-auf-einer-karte-berechnen/">Bevölkerung visualisieren Karte</a></iframe></div>
+                            </div>
                         </div>
                     @endforeach
                 </div>
             @endif
-
-            <!-- Google Maps Container -->
-            <div class="google-map-container mb-5">
-                <div id="map" class="google-map__wrapper"></div>
-            </div>
 
             <!-- Contact Form -->
             <div class="contact-form-wrapper">

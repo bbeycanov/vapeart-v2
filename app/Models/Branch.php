@@ -30,6 +30,7 @@ class Branch extends Model implements Sortable
         'description',
         'latitude',
         'longitude',
+        'map_iframe_url',
         'meta_title',
         'meta_description',
         'is_active',

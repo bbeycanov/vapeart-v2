@@ -19,108 +19,22 @@ if (typeof toastr !== 'undefined') {
     };
 }
 
-let map;
-let markers = [];
-
-function initGoogleMap() {
-    // Get data from window object
-    const contactPageData = window.contactPageData || {};
-    
-    // Initialize map with default branch
-    const defaultTab = document.querySelector('#branchTabs .nav-link.active');
-    if (defaultTab) {
-        initMap(
-            parseFloat(defaultTab.getAttribute('data-lat')) || 40.4093,
-            parseFloat(defaultTab.getAttribute('data-lng')) || 49.8671,
-            defaultTab.getAttribute('data-name'),
-            defaultTab.getAttribute('data-address')
-        );
-    } else {
-        // Default location (Baku)
-        initMap(40.4093, 49.8671, contactPageData.contactUsText || 'Contact Us', '');
-    }
-
-    // Tab change event
-    const tabButtons = document.querySelectorAll('#branchTabs button[data-bs-toggle="tab"]');
-    tabButtons.forEach(button => {
-        button.addEventListener('shown.bs.tab', function(e) {
-            const lat = parseFloat(this.getAttribute('data-lat'));
-            const lng = parseFloat(this.getAttribute('data-lng'));
-            const name = this.getAttribute('data-name');
-            const address = this.getAttribute('data-address');
-
-            if (lat && lng) {
-                initMap(lat, lng, name, address);
-            }
-        });
-    });
-}
-
-function initMap(lat, lng, name, address) {
-    if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
-        console.warn('Google Maps API not loaded');
-        return;
-    }
-
-    // Initialize Google Maps
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: lat, lng: lng },
-        zoom: 15,
-        styles: [
-            {
-                featureType: 'poi',
-                elementType: 'labels',
-                stylers: [{ visibility: 'off' }]
-            }
-        ]
-    });
-
-    // Add marker
-    const marker = new google.maps.Marker({
-        position: { lat: lat, lng: lng },
-        map: map,
-        title: name,
-        animation: google.maps.Animation.DROP
-    });
-
-    // Info window
-    const infoWindow = new google.maps.InfoWindow({
-        content: `<div style="padding: 10px;"><strong style="color: #222222; font-size: 1.1rem;">${name}</strong><br><p style="margin: 5px 0 0 0; color: #767676;">${address || ''}</p></div>`
-    });
-
-    marker.addListener('click', () => {
-        infoWindow.open(map, marker);
-    });
-
-    // Auto open info window
-    infoWindow.open(map, marker);
-
-    // Clear previous markers
-    markers.forEach(m => m.setMap(null));
-    markers = [marker];
-}
-
 document.addEventListener('DOMContentLoaded', function() {
     // Get translation strings from window object
     const contactPageData = window.contactPageData || {};
-    
-    // Wait for Google Maps to load
-    if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
-        initGoogleMap();
-    } else if (contactPageData.googleMapsApiKey) {
-        // Load Google Maps script
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${contactPageData.googleMapsApiKey}&callback=initGoogleMap`;
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
-    } else {
-        // No API key
-        const mapEl = document.getElementById('map');
-        if (mapEl && contactPageData.noApiKeyText) {
-            mapEl.innerHTML = `<div class="alert alert-info m-3">${contactPageData.noApiKeyText}</div>`;
-        }
-    }
+
+    // Branch tab change - update map iframe
+    const tabButtons = document.querySelectorAll('#branchTabs button[data-bs-toggle="tab"]');
+    const mapIframe = document.getElementById('branch-map-iframe');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('shown.bs.tab', function(e) {
+            const mapUrl = this.getAttribute('data-map-iframe');
+            if (mapIframe && mapUrl) {
+                mapIframe.src = mapUrl;
+            }
+        });
+    });
 
     // Contact Form AJAX Submit
     const contactForm = document.getElementById('contact-form');
@@ -214,4 +128,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
