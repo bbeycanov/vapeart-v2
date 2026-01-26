@@ -248,9 +248,10 @@
                     window.history.pushState({}, '', newUrl);
 
                 } else {
-                    // Append
-                    if (newGrid && productsGrid) {
-                        productsGrid.insertAdjacentHTML('beforeend', newGrid.innerHTML);
+                    // Append - get fresh reference since grid may have been replaced
+                    const currentProductsGrid = document.getElementById('products-grid');
+                    if (newGrid && currentProductsGrid) {
+                        currentProductsGrid.insertAdjacentHTML('beforeend', newGrid.innerHTML);
                     }
 
                     // Update Pagination Section
