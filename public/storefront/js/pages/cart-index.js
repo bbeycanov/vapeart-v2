@@ -61,20 +61,28 @@
         whatsappOrderBtn.style.display = 'block';
         
         let html = '';
-        let subtotal = 0;
-        let totalDiscount = 0;
+        // Note: item.price is already the discounted price from API
+        // item.original_price is the original price before discount
+        let subtotal = 0;         // Sum of original prices (for display)
+        let totalDiscount = 0;    // Total discount amount
+        let finalTotal = 0;       // Sum of actual prices to pay (discounted prices)
         const placeholderImage = window.location.origin + '/storefront/images/products/placeholder.jpg';
-        
+
         cart.forEach((item, index) => {
-            const itemPrice = parseFloat(item.price) || 0;
+            const itemPrice = parseFloat(item.price) || 0;  // Already discounted price
             const originalPrice = parseFloat(item.original_price || item.price) || 0;
             const quantity = item.quantity || 1;
-            const itemSubtotal = itemPrice * quantity;
+            const itemSubtotal = itemPrice * quantity;  // Actual price to pay for this item
             const hasDiscount = item.has_discount && originalPrice > itemPrice;
-            
-            subtotal += itemSubtotal;
+
+            // Calculate based on whether item has discount
             if (hasDiscount) {
-                totalDiscount += ((originalPrice - itemPrice) * quantity);
+                subtotal += (originalPrice * quantity);  // Original price for subtotal display
+                totalDiscount += ((originalPrice - itemPrice) * quantity);  // Discount amount
+                finalTotal += itemSubtotal;  // Actual price to pay
+            } else {
+                subtotal += itemSubtotal;
+                finalTotal += itemSubtotal;
             }
             
             const imageUrl = item.image || placeholderImage;
@@ -121,11 +129,11 @@
         });
         
         cartTableBody.innerHTML = html;
-        
+
         const currency = cart.length > 0 ? cart[0].currency : 'AZN';
-        const finalTotal = subtotal - totalDiscount;
-        
-        // Update subtotal
+        // finalTotal is already calculated in the loop above (sum of actual discounted prices)
+
+        // Update subtotal (shows original prices sum when there's discount)
         document.getElementById('cartPageSubtotal').textContent = subtotal.toFixed(2) + ' ' + currency;
         
         // Show/hide discount row

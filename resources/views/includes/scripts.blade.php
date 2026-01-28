@@ -68,22 +68,31 @@
         });
         
         // Calculate subtotal and discount
-        let subtotal = 0;
-        let totalDiscount = 0;
+        // Note: item.price is already the discounted price from API
+        // item.original_price is the original price before discount
+        let subtotal = 0;         // Sum of original prices
+        let totalDiscount = 0;    // Total discount amount
+        let finalTotal = 0;       // Sum of actual prices to pay (discounted prices)
+
         cart.forEach(item => {
-            const itemPrice = parseFloat(item.price) || 0;
+            const itemPrice = parseFloat(item.price) || 0;  // Already discounted price
             const originalPrice = parseFloat(item.original_price || item.price) || 0;
             const quantity = item.quantity || 1;
-            subtotal += (itemPrice * quantity);
+
+            // Calculate based on whether item has discount
             if (item.has_discount && originalPrice > itemPrice) {
-                totalDiscount += ((originalPrice - itemPrice) * quantity);
+                subtotal += (originalPrice * quantity);  // Original price for subtotal display
+                totalDiscount += ((originalPrice - itemPrice) * quantity);  // Discount amount
+                finalTotal += (itemPrice * quantity);  // Actual price to pay
+            } else {
+                subtotal += (itemPrice * quantity);
+                finalTotal += (itemPrice * quantity);
             }
         });
-        
+
         if (cartSubtotal) {
             const currency = cart.length > 0 ? cart[0].currency : 'AZN';
-            const finalTotal = subtotal - totalDiscount;
-            
+
             // Show discount if any
             const discountElement = document.getElementById('cartDiscount');
             if (totalDiscount > 0 && discountElement) {
@@ -95,8 +104,8 @@
             } else if (discountElement) {
                 discountElement.style.display = 'none';
             }
-            
-            // Update subtotal to show final total (after discount)
+
+            // Update subtotal to show final total (actual price to pay)
             cartSubtotal.textContent = finalTotal.toFixed(2) + ' ' + currency;
         }
         
