@@ -69,5 +69,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('storefront/js/pages/cart-index.js') }}" defer></script>
+<script src="{{ asset('storefront/js/pages/cart-index.js') }}?v={{ time() }}" defer></script>
 @endpush
