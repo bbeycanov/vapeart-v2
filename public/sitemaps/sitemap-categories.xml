@@ -1,398 +1,542 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/devices</loc>
-    <lastmod>2025-12-20T21:11:48+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/devices</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/devices</loc>
-    <lastmod>2025-12-20T21:11:48+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/devices</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/devices</loc>
-    <lastmod>2025-12-20T21:11:48+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/devices</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/electronic-cigarettes</loc>
-    <lastmod>2025-12-28T23:26:03+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/electronic-cigarettes</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/electronic-cigarettes</loc>
-    <lastmod>2025-12-28T23:26:03+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/electronic-cigarettes</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/electronic-cigarettes</loc>
-    <lastmod>2025-12-28T23:26:03+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/electronic-cigarettes</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/electronic-hookahs</loc>
-    <lastmod>2025-12-28T23:32:49+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/electronic-hookahs</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/electronic-hookahs</loc>
-    <lastmod>2025-12-28T23:32:49+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/electronic-hookahs</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/electronic-hookahs</loc>
-    <lastmod>2025-12-28T23:32:49+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/electronic-hookahs</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/catridge-ve-filterler</loc>
-    <lastmod>2025-12-27T15:11:55+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/catridge-ve-filterler</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/catridge-ve-filterler</loc>
-    <lastmod>2025-12-27T15:11:55+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/catridge-ve-filterler</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/catridge-ve-filterler</loc>
-    <lastmod>2025-12-27T15:11:55+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/catridge-ve-filterler</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/disposable-devices</loc>
-    <lastmod>2025-12-27T15:29:50+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/disposable-devices</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/disposable-devices</loc>
-    <lastmod>2025-12-27T15:29:50+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/disposable-devices</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/disposable-devices</loc>
-    <lastmod>2025-12-27T15:29:50+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/disposable-devices</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/liquids-for-electronic-cigarette</loc>
-    <lastmod>2025-12-28T16:32:59+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/liquids-for-electronic-cigarette</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/liquids-for-electronic-cigarette</loc>
-    <lastmod>2025-12-28T16:32:59+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/liquids-for-electronic-cigarette</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/liquids-for-electronic-cigarette</loc>
-    <lastmod>2025-12-28T16:32:59+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/liquids-for-electronic-cigarette</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/liquids-for-electronic-hookah</loc>
-    <lastmod>2025-12-28T23:19:12+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/liquids-for-electronic-hookah</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/liquids-for-electronic-hookah</loc>
-    <lastmod>2025-12-28T23:19:12+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/liquids-for-electronic-hookah</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/liquids-for-electronic-hookah</loc>
-    <lastmod>2025-12-28T23:19:12+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/liquids-for-electronic-hookah</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/snus</loc>
-    <lastmod>2025-12-27T15:39:17+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/snus</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/snus</loc>
-    <lastmod>2025-12-27T15:39:17+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/snus</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/snus</loc>
-    <lastmod>2025-12-27T15:39:17+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/snus</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/tobacco</loc>
-    <lastmod>2025-12-27T15:46:37+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/tobacco</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/tobacco</loc>
-    <lastmod>2025-12-27T15:46:37+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/tobacco</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/tobacco</loc>
-    <lastmod>2025-12-27T15:46:37+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/tobacco</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/zippo</loc>
-    <lastmod>2025-12-27T19:48:35+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/zippo</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/zippo</loc>
-    <lastmod>2025-12-27T19:48:35+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/zippo</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/zippo</loc>
-    <lastmod>2025-12-27T19:48:35+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/zippo</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/cigar-and-cigarillos</loc>
-    <lastmod>2025-12-27T21:14:16+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/cigar-and-cigarillos</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/cigar-and-cigarillos</loc>
-    <lastmod>2025-12-27T21:14:16+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/cigar-and-cigarillos</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/cigar-and-cigarillos</loc>
-    <lastmod>2025-12-27T21:14:16+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/cigar-and-cigarillos</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/cigarillos</loc>
-    <lastmod>2025-12-27T20:47:54+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/cigarillos</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/cigarillos</loc>
-    <lastmod>2025-12-27T20:47:54+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/cigarillos</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/cigarillos</loc>
-    <lastmod>2025-12-27T20:47:54+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/cigarillos</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/lighters-accessories</loc>
-    <lastmod>2025-12-31T06:27:40+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/lighters-accessories</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/lighters-accessories</loc>
-    <lastmod>2025-12-31T06:27:40+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/lighters-accessories</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/lighters-accessories</loc>
-    <lastmod>2025-12-31T06:27:40+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/lighters-accessories</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/cigar</loc>
-    <lastmod>2025-12-27T21:07:39+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/cigar</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/cigar</loc>
-    <lastmod>2025-12-27T21:07:39+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/cigar</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/cigar</loc>
-    <lastmod>2025-12-27T21:07:39+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/cigar</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/rolling-tobacco</loc>
-    <lastmod>2025-12-31T05:07:56+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/rolling-tobacco</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/rolling-tobacco</loc>
-    <lastmod>2025-12-31T05:07:56+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/rolling-tobacco</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/rolling-tobacco</loc>
-    <lastmod>2025-12-31T05:07:56+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/rolling-tobacco</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/pre-rolled-cones</loc>
-    <lastmod>2025-12-31T05:50:13+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/pre-rolled-cones</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/pre-rolled-cones</loc>
-    <lastmod>2025-12-31T05:50:13+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/pre-rolled-cones</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/pre-rolled-cones</loc>
-    <lastmod>2025-12-31T05:50:13+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/pre-rolled-cones</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/rolling-machines</loc>
-    <lastmod>2025-12-31T06:19:40+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/rolling-machines</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/rolling-machines</loc>
-    <lastmod>2025-12-31T06:19:40+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/rolling-machines</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/rolling-machines</loc>
-    <lastmod>2025-12-31T06:19:40+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/rolling-machines</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/cigarette-injector-machines</loc>
-    <lastmod>2025-12-31T06:23:34+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/cigarette-injector-machines</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/cigarette-injector-machines</loc>
-    <lastmod>2025-12-31T06:23:34+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/cigarette-injector-machines</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/cigarette-injector-machines</loc>
-    <lastmod>2025-12-31T06:23:34+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/cigarette-injector-machines</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/grinder</loc>
-    <lastmod>2025-12-31T06:31:27+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/grinder</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/grinder</loc>
-    <lastmod>2025-12-31T06:31:27+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/grinder</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/grinder</loc>
-    <lastmod>2025-12-31T06:31:27+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/grinder</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/rolling-papers</loc>
-    <lastmod>2025-12-31T06:05:23+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/rolling-papers</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/rolling-papers</loc>
-    <lastmod>2025-12-31T06:05:23+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/rolling-papers</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/rolling-papers</loc>
-    <lastmod>2025-12-31T06:05:23+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/rolling-papers</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/cigarette-filters</loc>
-    <lastmod>2025-12-31T06:12:18+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/cigarette-filters</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/cigarette-filters</loc>
-    <lastmod>2025-12-31T06:12:18+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/cigarette-filters</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/cigarette-filters</loc>
-    <lastmod>2025-12-31T06:12:18+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/cigarette-filters</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/az/category/rolling-tubes</loc>
-    <lastmod>2025-12-31T06:15:18+00:00</lastmod>
+    <loc>https://alcoartbaku.com/az/category/rolling-tubes</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/en/category/rolling-tubes</loc>
-    <lastmod>2025-12-31T06:15:18+00:00</lastmod>
+    <loc>https://alcoartbaku.com/en/category/rolling-tubes</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>
     <url>
-    <loc>https://v2.vapeartbaku.com/ru/category/rolling-tubes</loc>
-    <lastmod>2025-12-31T06:15:18+00:00</lastmod>
+    <loc>https://alcoartbaku.com/ru/category/rolling-tubes</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/az/category/hookah-products</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/en/category/hookah-products</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/ru/category/hookah-products</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/az/category/hookah-devices</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/en/category/hookah-devices</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/ru/category/hookah-devices</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/az/category/hookah-accessories</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/en/category/hookah-accessories</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/ru/category/hookah-accessories</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/az/category/hookah-charcoal</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/en/category/hookah-charcoal</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/ru/category/hookah-charcoal</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/az/category/hookah-tobacco</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/en/category/hookah-tobacco</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/ru/category/hookah-tobacco</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/az/category/heated-tobacco</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/en/category/heated-tobacco</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/ru/category/heated-tobacco</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/az/category/heating-systems</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/en/category/heating-systems</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/ru/category/heating-systems</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/az/category/tobacco-sticks</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/en/category/tobacco-sticks</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>https://alcoartbaku.com/ru/category/tobacco-sticks</loc>
+    <lastmod>2026-05-21T18:24:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
             </url>

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <sitemap>
-        <loc>https://v2.vapeartbaku.com/sitemaps/sitemap-static.xml</loc>
-            <lastmod>2026-01-07T21:20:30+00:00</lastmod>
+        <loc>https://alcoartbaku.com/sitemaps/sitemap-static.xml</loc>
+            <lastmod>2026-06-02T20:39:55+00:00</lastmod>
     </sitemap>
     <sitemap>
-        <loc>https://v2.vapeartbaku.com/sitemaps/sitemap-categories.xml</loc>
-            <lastmod>2026-01-07T21:20:30+00:00</lastmod>
+        <loc>https://alcoartbaku.com/sitemaps/sitemap-categories.xml</loc>
+            <lastmod>2026-06-02T20:39:55+00:00</lastmod>
     </sitemap>
     <sitemap>
-        <loc>https://v2.vapeartbaku.com/sitemaps/sitemap-products.xml</loc>
-            <lastmod>2026-01-07T21:20:30+00:00</lastmod>
+        <loc>https://alcoartbaku.com/sitemaps/sitemap-products.xml</loc>
+            <lastmod>2026-06-02T20:39:55+00:00</lastmod>
     </sitemap>
     <sitemap>
-        <loc>https://v2.vapeartbaku.com/sitemaps/sitemap-blogs.xml</loc>
-            <lastmod>2026-01-07T21:20:30+00:00</lastmod>
+        <loc>https://alcoartbaku.com/sitemaps/sitemap-blogs.xml</loc>
+            <lastmod>2026-06-02T20:39:55+00:00</lastmod>
     </sitemap>
     <sitemap>
-        <loc>https://v2.vapeartbaku.com/sitemaps/sitemap-brands.xml</loc>
-            <lastmod>2026-01-07T21:20:30+00:00</lastmod>
+        <loc>https://alcoartbaku.com/sitemaps/sitemap-brands.xml</loc>
+            <lastmod>2026-06-02T20:39:55+00:00</lastmod>
     </sitemap>
     <sitemap>
-        <loc>https://v2.vapeartbaku.com/sitemaps/sitemap-pages.xml</loc>
-            <lastmod>2026-01-07T21:20:30+00:00</lastmod>
+        <loc>https://alcoartbaku.com/sitemaps/sitemap-pages.xml</loc>
+            <lastmod>2026-06-02T20:39:55+00:00</lastmod>
     </sitemap>
 </sitemapindex>

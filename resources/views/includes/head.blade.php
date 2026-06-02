@@ -47,11 +47,15 @@
 @endphp
 <meta name="robots" content="@hasSection('robots')@yield('robots')@else{{ $robotsContent }}@endif">
 
-{{-- Canonical URL - always point to clean URL without filter params --}}
+{{-- Canonical URL - həmişə SEO əsas domeninə (CANONICAL_URL) yönəlir.
+     vapeartbaku.com və alcoartbaku.com eyni səhifəni göstərsə də, Google reytinqi
+     tədricən əsas domendə birləşdirir (duplicate content olmadan, itkisiz). --}}
 @php
-    $canonicalUrl = url()->current();
-    // Remove query parameters for canonical
-    $cleanCanonical = strtok($canonicalUrl, '?');
+    $canonicalBase = rtrim(config('app.canonical_url'), '/');
+    // Cari path (filter/sort query-ləri olmadan) əsas domenə yapışdırılır.
+    $cleanCanonical = $canonicalBase . request()->getPathInfo();
+    // route()/url() linklərinin host-unu əsas domenə çevirən helper (hreflang üçün).
+    $toCanonicalHost = fn ($u) => preg_replace('#^https?://[^/]+#', $canonicalBase, $u);
 @endphp
 <link rel="canonical" href="@hasSection('canonical')@yield('canonical')@else{{ $cleanCanonical }}@endif">
 
@@ -68,9 +72,9 @@
             ? route($currentRouteName, array_merge($currentParams, ['locale' => $langCode]))
             : url("/{$langCode}");
     @endphp
-    <link rel="alternate" hreflang="{{ $langCode }}" href="{{ $alternateUrl }}">
+    <link rel="alternate" hreflang="{{ $langCode }}" href="{{ $toCanonicalHost($alternateUrl) }}">
 @endforeach
-<link rel="alternate" hreflang="x-default" href="{{ url('/'.config('app.locale', 'az')) }}">
+<link rel="alternate" hreflang="x-default" href="{{ $toCanonicalHost(url('/'.config('app.locale', 'az'))) }}">
 
 {{-- Open Graph Meta Tags --}}
 <meta property="og:site_name" content="{{ settings('site.title', 'VapeArt Baku') }}">
@@ -78,7 +82,7 @@
 <meta property="og:type" content="@hasSection('og_type')@yield('og_type')@else{{ 'website' }}@endif">
 <meta property="og:title" content="@hasSection('title')@yield('title') | {{ settings('site.title', 'VapeArt Baku') }}@else{{ settings('site.title', 'VapeArt Baku') }}@endif">
 <meta property="og:description" content="@hasSection('meta_description')@yield('meta_description')@else{{ settings('site.description', 'VapeArt Baku - Bakıda elektron siqaretlər, vape cihazları, snus və premium tütün məhsulları mağazası.') }}@endif">
-<meta property="og:url" content="@hasSection('canonical')@yield('canonical')@else{{ url()->current() }}@endif">
+<meta property="og:url" content="@hasSection('canonical')@yield('canonical')@else{{ $cleanCanonical }}@endif">
 <meta property="og:image" content="@hasSection('og_image')@yield('og_image')@else{{ asset('storefront/images/placeholder-og.jpg') }}@endif">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">

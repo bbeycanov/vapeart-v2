@@ -1,11 +1,11 @@
 # VapeArt Baku - Robots.txt
-# https://vapeartbaku.com
+# https://alcoartbaku.com
 
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://vapeartbaku.com/sitemap.xml
+Sitemap: https://alcoartbaku.com/sitemap.xml
 
 # Disallow admin and dashboard areas
 Disallow: /admin

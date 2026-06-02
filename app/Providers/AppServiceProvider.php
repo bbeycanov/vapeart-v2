@@ -33,7 +33,20 @@ class AppServiceProvider extends ServiceProvider
     {
         if (app()->environment('production')) {
             URL::forceScheme('https');
-            URL::forceRootUrl(config('app.url'));
+
+            // Dinamik root URL: istifadəçi hansı domenlə giribsə (vapeartbaku.com /
+            // alcoartbaku.com), generasiya olunan linklər o domendə qalır.
+            // Host header injection-a qarşı yalnız icazəli host-lar qəbul edilir;
+            // CLI/sitemap/mail kontekstində default olaraq config('app.url').
+            $host = request()->getHost();
+
+            if ($host && in_array($host, config('app.allowed_hosts', []), true)) {
+                $root = 'https://' . $host;
+                URL::forceRootUrl($root);
+                config(['app.url' => $root, 'app.site_url' => $root]);
+            } else {
+                URL::forceRootUrl(config('app.url'));
+            }
         }
 
         app(PermissionRegistrar::class)

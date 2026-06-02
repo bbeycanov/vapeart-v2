@@ -57,6 +57,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Canonical URL (SEO əsas domeni)
+    |--------------------------------------------------------------------------
+    | canonical / og:url / hreflang taglarının yönəldiyi əsas domain.
+    | Default olaraq APP_URL götürülür.
+    */
+    'canonical_url' => env('CANONICAL_URL', env('APP_URL', 'http://localhost')),
+
+    /*
+    |--------------------------------------------------------------------------
+    | İcazə verilmiş host-lar (Host header injection-a qarşı)
+    |--------------------------------------------------------------------------
+    | URL generasiyası yalnız bu host-lar üçün dinamik edilir.
+    */
+    'allowed_hosts' => [
+        'vapeartbaku.com',
+        'www.vapeartbaku.com',
+        'alcoartbaku.com',
+        'www.alcoartbaku.com',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
