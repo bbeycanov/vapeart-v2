@@ -337,13 +337,21 @@ class Product extends Model implements HasMedia
     }
 
     /**
+     * Per-request memoization keşi — eyni request-də endirim sorğusu təkrar
+     * işləməsin. getBestDiscount/getDiscountedPrice/getDiscountText hamısı
+     * getActiveDiscounts-u çağırır; keşsiz bu, məhsul başına 3+ sorğu (N+1
+     * partlaması) demək idi və FPM pool-unu dolduraraq saytı asırdı.
+     */
+    protected ?Collection $cachedActiveDiscounts = null;
+
+    /**
      * Get active discounts for this product
      *
      * @return Collection
      */
     public function getActiveDiscounts(): Collection
     {
-        return $this->discounts()->active()->get();
+        return $this->cachedActiveDiscounts ??= $this->discounts()->active()->get();
     }
 
     /**

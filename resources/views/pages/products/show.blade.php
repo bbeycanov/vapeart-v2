@@ -283,7 +283,7 @@
                             @foreach($attributes as $key => $value)
                                 <div class="item mb-3">
                                     <label class="h6">{{ $key }}</label>
-                                    <span>{{ $value }}</span>
+                                    <span>{{ is_array($value) ? implode(', ', $value) : $value }}</span>
                         </div>
                             @endforeach
                         @endif
@@ -295,7 +295,7 @@
                             @foreach($specs as $key => $value)
                                 <div class="item mb-3">
                                     <label class="h6">{{ $key }}</label>
-                                    <span>{{ $value }}</span>
+                                    <span>{{ is_array($value) ? implode(', ', $value) : $value }}</span>
                         </div>
                             @endforeach
                         @endif
