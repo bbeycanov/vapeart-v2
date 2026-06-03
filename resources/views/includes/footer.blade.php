@@ -4,7 +4,7 @@
             <div class="footer-column footer-store-info col-12 col-lg-4 mb-4 mb-lg-0">
                 <div class="logo">
                     <a href="{{ route('home', app()->getLocale()) }}">
-                        <img src="{{ asset('storefront/images/vapeart-logo.svg') }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image d-block">
+                        <img src="{{ asset('storefront/images/alco-logo.svg') }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image d-block">
                     </a>
                 </div>
                 <p class="footer-address">{{ settings('site.address', __('Address')) }}</p>
