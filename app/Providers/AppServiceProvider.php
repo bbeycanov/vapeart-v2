@@ -57,6 +57,7 @@ class AppServiceProvider extends ServiceProvider
             ? 'storefront/images/vapeart-logo.svg'
             : 'storefront/images/alco-logo.svg'));
         View::share('brandColor', $isVapeart ? '#ed711b' : '#c81e57');
+        View::share('brandLogoMargin', $isVapeart ? '7rem' : '0.5rem');
 
         app(PermissionRegistrar::class)
             ->setPermissionClass(Permission::class)

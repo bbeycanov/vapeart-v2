@@ -132,4 +132,4 @@
 <link rel="stylesheet" href="{{ asset('storefront/css/includes/toastr-custom.css') }}" type="text/css">
 
 {{-- Domenə görə tema rəngi: vapeart → #ed711b, alco → #c81e57 --}}
-<style>:root{--theme-primary: {{ $brandColor ?? '#c81e57' }};}</style>
+<style>:root{--theme-primary: {{ $brandColor ?? '#c81e57' }};--logo-margin-right: {{ $brandLogoMargin ?? '0.5rem' }};}</style>
