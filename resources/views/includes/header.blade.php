@@ -204,7 +204,7 @@
                         @php
                             $defaultLogo = asset('storefront/images/alco-logo.svg');
                         @endphp
-                        <img src="{{   $defaultLogo }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image">
+                        <img src="{{   $defaultLogo }}" alt="{{ settings('site.name', 'VapeartBaku') }}" class="logo__image d-block">
                     </a>
                 </div>
 
