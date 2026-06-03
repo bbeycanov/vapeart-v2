@@ -83,7 +83,7 @@
 
 .branch-list .branch-item:hover:not(.disabled) {
     background-color: #fff8f3;
-    border-color: #ed711b;
+    border-color: #c81e57;
     box-shadow: 0 4px 12px rgba(237, 113, 27, 0.1);
     transform: translateY(-2px);
 }
@@ -114,13 +114,13 @@
     background-color: #ffffff;
     border: 1px solid #dee2e6;
     border-radius: 10px;
-    color: #ed711b;
+    color: #c81e57;
     transition: all 0.2s ease;
 }
 
 .branch-list .branch-item:hover:not(.disabled) .branch-item-icon {
-    background-color: #ed711b;
-    border-color: #ed711b;
+    background-color: #c81e57;
+    border-color: #c81e57;
     color: #ffffff;
 }
 
@@ -159,7 +159,7 @@
 }
 
 .branch-list::-webkit-scrollbar-thumb {
-    background: #ed711b;
+    background: #c81e57;
     border-radius: 10px;
 }
 

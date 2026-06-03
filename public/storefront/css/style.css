@@ -83,7 +83,7 @@
   --bs-lighter: #faf9f8;
   --bs-dark: #222222;
   --bs-red: #c32929;
-  --bs-beige: #ed711b;
+  --bs-beige: #c81e57;
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
@@ -3685,7 +3685,7 @@ progress {
 }
 
 .link-beige {
-  color: #ed711b;
+  color: #c81e57;
 }
 
 .link-beige:hover,
@@ -4096,7 +4096,7 @@ progress {
 }
 
 .border-beige {
-  border-color: #ed711b !important;
+  border-color: #c81e57 !important;
 }
 
 .border-white {
@@ -4898,7 +4898,7 @@ progress {
 }
 
 .text-beige {
-  color: #ed711b !important;
+  color: #c81e57 !important;
 }
 
 .text-white {
@@ -4982,7 +4982,7 @@ progress {
 }
 
 .bg-beige {
-  background-color: #ed711b !important;
+  background-color: #c81e57 !important;
 }
 
 .bg-body {
@@ -10064,11 +10064,11 @@ main {
 }
 
 .theme-color {
-  color: #ed711b !important;
+  color: #c81e57 !important;
 }
 
 .theme-bg-color {
-  background-color: #ed711b !important;
+  background-color: #c81e57 !important;
 }
 
 .theme-color-secondary {
@@ -10080,11 +10080,11 @@ main {
 }
 
 .theme-color-third {
-  color: #ed711b !important;
+  color: #c81e57 !important;
 }
 
 .theme-bg-color-third {
-  background-color: #ed711b !important;
+  background-color: #c81e57 !important;
 }
 
 .text-shadow-white {
@@ -10200,7 +10200,7 @@ h6,
 }
 
 .third-color {
-  color: #ed711b !important;
+  color: #c81e57 !important;
 }
 
 .white-color {
@@ -12561,7 +12561,7 @@ img {
 }
 
 .nav-link_underscore.theme-color:after {
-  background-color: #ed711b;
+  background-color: #c81e57;
 }
 
 .nav-link_underscore:hover,
@@ -13831,8 +13831,8 @@ fieldset:disabled .btn {
 
 .btn-beige {
   color: #ffffff;
-  background-color: #ed711b;
-  border-color: #ed711b;
+  background-color: #c81e57;
+  border-color: #c81e57;
   box-shadow: none;
 }
 
@@ -13871,19 +13871,19 @@ fieldset:disabled .btn {
 .btn-beige:disabled,
 .btn-beige.disabled {
   color: #000;
-  background-color: #ed711b;
-  border-color: #ed711b;
+  background-color: #c81e57;
+  border-color: #c81e57;
 }
 
 .btn-outline-beige {
-  color: #ed711b;
-  border-color: #ed711b;
+  color: #c81e57;
+  border-color: #c81e57;
 }
 
 .btn-outline-beige:hover {
   color: #ffffff;
-  background-color: #ed711b;
-  border-color: #ed711b;
+  background-color: #c81e57;
+  border-color: #c81e57;
 }
 
 .btn-check:focus+.btn-outline-beige,
@@ -13897,8 +13897,8 @@ fieldset:disabled .btn {
 .btn-outline-beige.active,
 .btn-outline-beige.dropdown-toggle.show {
   color: #ffffff;
-  background-color: #ed711b;
-  border-color: #ed711b;
+  background-color: #c81e57;
+  border-color: #c81e57;
 }
 
 .btn-check:checked+.btn-outline-beige:focus,
@@ -13911,7 +13911,7 @@ fieldset:disabled .btn {
 
 .btn-outline-beige:disabled,
 .btn-outline-beige.disabled {
-  color: #ed711b;
+  color: #c81e57;
   background-color: transparent;
 }
 
@@ -14203,7 +14203,7 @@ fieldset:disabled .btn {
 }
 
 .swiper-pagination-bullets.theme-color .swiper-pagination-bullet-active {
-  color: #ed711b;
+  color: #c81e57;
 }
 
 .swatch-color {
@@ -15513,12 +15513,12 @@ textarea.form-control.is-invalid {
 }
 
 .js-add-wishlist.active {
-  color: #ed711b !important;
+  color: #c81e57 !important;
 }
 
 .js-add-wishlist.active.btn-hover-red {
   color: #fff !important;
-  background-color: #ed711b !important;
+  background-color: #c81e57 !important;
 }
 
 .js-add-wishlist.active.btn-hover-primary {
@@ -15527,18 +15527,18 @@ textarea.form-control.is-invalid {
 }
 
 .js-add-wishlist.active.theme-bg-color.text-white {
-  color: #ed711b !important;
+  color: #c81e57 !important;
   background-color: #fff !important;
 }
 
 .js-add-wishlist.active.bg-transparent.text-white {
-  color: #ed711b !important;
+  color: #c81e57 !important;
   background-color: #fff !important;
 }
 
 .js-add-wishlist.active.bg-black.text-white {
   color: #fff !important;
-  background-color: #ed711b !important;
+  background-color: #c81e57 !important;
 }
 
 .pc__btn-wl .flaticon,
@@ -15750,7 +15750,7 @@ textarea.form-control.is-invalid {
 
 .product-card_style9 .product-card__price {
   margin-top: 0.625rem;
-  color: #ed711b;
+  color: #c81e57;
 }
 
 .product-card_style9:hover {
@@ -15765,13 +15765,13 @@ textarea.form-control.is-invalid {
 .product-card_style9 .js-add-cart,
 .product-card_style9 .js-quick-view {
   background-color: #f3e8d6;
-  color: #ed711b;
+  color: #c81e57;
 }
 
 .product-card_style9 .js-add-wishlist:hover,
 .product-card_style9 .js-add-cart:hover,
 .product-card_style9 .js-quick-view:hover {
-  background-color: #ed711b;
+  background-color: #c81e57;
   color: #fff;
 }
 
@@ -15789,7 +15789,7 @@ textarea.form-control.is-invalid {
 }
 
 .product-card_style9.type2 .pc__title a {
-  color: #ed711b;
+  color: #c81e57;
 }
 
 .product-card_style9.type2:hover {
@@ -15803,18 +15803,18 @@ textarea.form-control.is-invalid {
   align-items: center;
   justify-content: center;
   background-color: #E4F5F2;
-  color: #ed711b;
+  color: #c81e57;
 }
 
 .product-card_style9.type2 .js-add-wishlist:hover,
 .product-card_style9.type2 .js-add-cart:hover,
 .product-card_style9.type2 .js-quick-view:hover {
-  background-color: #ed711b;
+  background-color: #c81e57;
   color: #fff;
 }
 
 .product-card_style9.type2 .product-card__price {
-  color: #ed711b;
+  color: #c81e57;
   font-size: 1rem;
 }
 
@@ -18494,7 +18494,7 @@ textarea.form-control.is-invalid {
   width: 1rem;
   height: 1rem;
   border-radius: 100%;
-  background: #ed711b;
+  background: #c81e57;
   color: #ffffff;
   font-size: 0.625rem;
   line-height: 1rem;
@@ -18511,7 +18511,7 @@ textarea.form-control.is-invalid {
   width: 1rem;
   height: 1rem;
   border-radius: 100%;
-  background: #ed711b;
+  background: #c81e57;
   color: #ffffff;
   font-size: 0.625rem;
   line-height: 1rem;
@@ -18672,7 +18672,7 @@ textarea.form-control.is-invalid {
 }
 
 .branch-item:hover {
-  border-color: #ed711b;
+  border-color: #c81e57;
   background-color: #fff8f3;
   box-shadow: 0 4px 12px rgba(237, 113, 27, 0.1);
   transform: translateY(-2px);
@@ -18696,13 +18696,13 @@ textarea.form-control.is-invalid {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #ed711b;
+  color: #c81e57;
   transition: all 0.2s ease;
 }
 
 .branch-item:hover .branch-icon-wrapper {
-  background: #ed711b;
-  border-color: #ed711b;
+  background: #c81e57;
+  border-color: #c81e57;
   color: #fff;
 }
 
@@ -18756,14 +18756,14 @@ textarea.form-control.is-invalid {
   gap: 0.5rem;
   width: 100%;
   padding: 0.75rem 1rem;
-  background: #ed711b;
+  background: #c81e57;
   color: #ffffff;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
   font-size: 0.9375rem;
   transition: all 0.2s ease;
-  border: 1px solid #ed711b;
+  border: 1px solid #c81e57;
 }
 
 .branch-call-btn:hover {
@@ -19062,7 +19062,7 @@ textarea.form-control.is-invalid {
 }
 
 .header-desk_type_6.style2 .header-bottom {
-  background-color: #ed711b;
+  background-color: #c81e57;
 }
 
 .header-desk_type_6.style2 .header-bottom .navigation__list>.navigation__item>span {
@@ -19081,7 +19081,7 @@ textarea.form-control.is-invalid {
   padding-left: 0;
   padding-right: 0;
   cursor: pointer;
-  background-color: #ed711b;
+  background-color: #c81e57;
 }
 
 .header-desk_type_6.style2 .categories-nav__title+.categories-nav__list {
@@ -19627,7 +19627,7 @@ textarea.form-control.is-invalid {
   width: 1rem;
   height: 1rem;
   border-radius: 100%;
-  background: #ed711b;
+  background: #c81e57;
   color: #ffffff;
   font-size: 0.625rem;
   line-height: 1rem;
@@ -21340,7 +21340,7 @@ textarea.form-control.is-invalid {
 }
 
 .product-single__addtolinks>.add-to-wishlist.active svg {
-  color: #ed711b;
+  color: #c81e57;
 }
 
 .product-single__meta-info {
@@ -23469,7 +23469,7 @@ a.add-to-wishlist.active .flaticon.flaticon-heart {
   width: 1.5rem;
   height: 1.5rem;
   border: 0.3rem solid #fff;
-  background-color: #ed711b;
+  background-color: #c81e57;
   border-radius: 1rem;
 }
 
@@ -24074,7 +24074,7 @@ body.coming-soon-page .header {
 .branch-modal-icon {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, #ed711b 0%, #f59042 100%);
+  background: linear-gradient(135deg, #c81e57 0%, #f59042 100%);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -24127,7 +24127,7 @@ body.coming-soon-page .header {
 }
 
 .branch-card:hover {
-  border-color: #ed711b;
+  border-color: #c81e57;
   box-shadow: 0 4px 16px rgba(237, 113, 27, 0.12);
   transform: translateY(-2px);
 }
@@ -24154,8 +24154,8 @@ body.coming-soon-page .header {
 }
 
 .branch-card:hover .branch-card-icon {
-  background: #ed711b;
-  border-color: #ed711b;
+  background: #c81e57;
+  border-color: #c81e57;
   color: #fff;
 }
 
