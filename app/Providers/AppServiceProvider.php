@@ -49,6 +49,15 @@ class AppServiceProvider extends ServiceProvider
             }
         }
 
+        // Domenə görə brendləşmə: vapeart* → narıncı + vapeart logo,
+        // digər hallarda (alcoartbaku.com daxil) → çəhrayı + alco logo.
+        $host = request()?->getHost() ?? '';
+        $isVapeart = str_contains($host, 'vapeart');
+        View::share('brandLogo', asset($isVapeart
+            ? 'storefront/images/vapeart-logo.svg'
+            : 'storefront/images/alco-logo.svg'));
+        View::share('brandColor', $isVapeart ? '#ed711b' : '#c81e57');
+
         app(PermissionRegistrar::class)
             ->setPermissionClass(Permission::class)
             ->setRoleClass(Role::class);
