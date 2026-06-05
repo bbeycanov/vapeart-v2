@@ -18636,7 +18636,7 @@ textarea.form-control.is-invalid {
 }
 
 .branch-modal-content .modal-header svg {
-  color: #495057;
+  color: #fff;
   flex-shrink: 0;
 }
 
