@@ -94,10 +94,12 @@
 <meta name="twitter:image" content="@hasSection('og_image')@yield('og_image')@else{{ asset('storefront/images/placeholder-og.jpg') }}@endif">
 
 {{-- Favicon & Icons --}}
-<link rel="shortcut icon" href="{{ asset('storefront/images/favicon.ico') }}" type="image/x-icon">
-<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('storefront/images/favicon-32x32.png') }}">
-<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('storefront/images/favicon-16x16.png') }}">
-<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('storefront/images/apple-touch-icon.png') }}">
+@php $faviconVer = filemtime(public_path('storefront/images/favicon.ico')); @endphp
+<link rel="icon" type="image/svg+xml" href="{{ asset('storefront/images/favicon.svg') }}?v={{ $faviconVer }}">
+<link rel="shortcut icon" href="{{ asset('storefront/images/favicon.ico') }}?v={{ $faviconVer }}" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('storefront/images/favicon-32x32.png') }}?v={{ $faviconVer }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('storefront/images/favicon-16x16.png') }}?v={{ $faviconVer }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('storefront/images/apple-touch-icon.png') }}?v={{ $faviconVer }}">
 
 {{-- Web App Manifest (PWA) --}}
 <link rel="manifest" href="{{ asset('manifest.json') }}">
