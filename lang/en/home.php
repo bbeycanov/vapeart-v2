@@ -21,14 +21,15 @@ return [
     'Trending Now' => 'Trending Now',
 
     // SEO Content
-    'seo_title' => 'Best Vape & E-Cigarette Store in Baku',
-    'seo_paragraph_1' => 'VapeArt Baku is the leading vape and e-cigarette store in Azerbaijan. We offer our customers a wide range of vape devices, electronic cigarettes, e-liquids, nic salts, snus and premium tobacco products. As an official distributor of quality brands, we offer original products at the most affordable prices.',
-    'seo_paragraph_2' => 'In our store you can find products from world-famous brands such as Vozol, Elfbar, Lost Mary, Vaporesso, SMOK, GeekVape and others. From disposable vapes to professional mod kits, there is a choice for every taste.',
-    'seo_paragraph_3' => 'With fast delivery service throughout Baku, you will receive your orders in a short time. Our professional team is ready to help you choose the right product. We serve customers over 18 years of age.',
-    'seo_features_title' => 'Why VapeArt Baku?',
-    'seo_feature_1' => 'Original and quality products',
-    'seo_feature_2' => 'Affordable prices and regular discounts',
-    'seo_feature_3' => 'Fast delivery in Baku',
-    'seo_feature_4' => 'Professional advice and support',
+    'seo_title' => 'Premium Alcohol, Tobacco, and Exclusive Gifts Store in Baku',
+    'seo_paragraph_1' => 'At Alco Art Wine & Tobacco, we offer a wide range of premium products to our customers in Baku. Our collection includes all types of alcoholic beverages from the world\'s leading brands, cigars, cigarillos, rolling tobacco, and hookah tobacco.',
+    'seo_paragraph_2' => 'In addition, you can find high-quality snus varieties, original Zippo lighters, special hookahs, and elegant accessories in our store. Whether you are looking for your daily pleasure or unforgettable and exclusive gift sets for your loved ones, we are here to fully meet your needs with our unique concept.',
+    'seo_paragraph_3' => 'We ensure that your orders are delivered to your address safely and in a short time throughout Baku. Our experienced team is happy to assist you in choosing the right product, finding the perfect alcohol-tobacco harmony, or selecting an ideal gift. Our services are intended only for customers over 18 years old.',
+    'seo_features_title' => 'Why Alco Art Wine & Tobacco?',
+    'seo_feature_1' => 'Guaranteed Authenticity: 100% original and premium quality products.',
+    'seo_feature_2' => 'Rich Assortment: A wide selection of drinks, tobacco, and accessories for every taste, all in one place.',
+    'seo_feature_3' => 'Special Concept: Tastefully curated exclusive gift sets.',
+    'seo_feature_4' => 'Efficiency: Fast and reliable delivery service within Baku.',
+    'seo_feature_5' => 'Professional Service: A personalized approach to every customer and expert support in product selection.',
 ];
 

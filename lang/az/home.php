@@ -21,14 +21,15 @@ return [
     'Trending Now' => 'İndi trenddə',
 
     // SEO Content
-    'seo_title' => 'Bakıda Ən Yaxşı Vape və Elektron Siqaret Mağazası',
-    'seo_paragraph_1' => 'VapeArt Baku, Azərbaycanda aparıcı vape və elektron siqaret mağazasıdır. Biz müştərilərimizə geniş çeşiddə vape cihazları, elektron siqaretlər, e-liquid-lər, nic salt-lar, snus və premium tütün məhsulları təqdim edirik. Keyfiyyətli brendlərin rəsmi distribyutoru olaraq, orijinal məhsulları ən münasib qiymətlərlə təklif edirik.',
-    'seo_paragraph_2' => 'Mağazamızda Vozol, Elfbar, Lost Mary, Vaporesso, SMOK, GeekVape və digər dünyaca məşhur brendlərin məhsullarını tapa bilərsiniz. Disposable vape-lərdən tutmuş professional mod dəstlərinə qədər hər zövqə uyğun seçim mövcuddur.',
-    'seo_paragraph_3' => 'Bütün Bakı üzrə sürətli çatdırılma xidməti ilə sifarişlərinizi qısa müddətdə təhvil alırsınız. Peşəkar komandamız məhsul seçimində sizə kömək etməyə hazırdır. 18 yaşından yuxarı müştərilərə xidmət edirik.',
-    'seo_features_title' => 'Niyə VapeArt Baku?',
-    'seo_feature_1' => 'Orijinal və keyfiyyətli məhsullar',
-    'seo_feature_2' => 'Münasib qiymətlər və müntəzəm endirimlər',
-    'seo_feature_3' => 'Bakı üzrə sürətli çatdırılma',
-    'seo_feature_4' => 'Peşəkar məsləhət və dəstək',
+    'seo_title' => 'Bakıda Premium İçki, Tütün və Eksklüziv Hədiyyələr Mağazası',
+    'seo_paragraph_1' => 'Alco Art Wine & Tobacco olaraq, Bakıda müştərilərimizə geniş çeşiddə premium məhsullar təqdim edirik. Kolleksiyamızda dünyanın aparıcı brendlərinə məxsus hər növ alkoqollu içkilər, siqarlar, siqarillalar, bükmə və qəlyan tütünləri yer alır.',
+    'seo_paragraph_2' => 'Bundan əlavə, mağazamızda yüksək keyfiyyətli snus çeşidləri, orijinal Zippo alışqanları, xüsusi qəlyanlar və zövqlü aksesuarlar tapa bilərsiniz. İstər gündəlik zövqünüz, istərsə də yaxınlarınız üçün unudulmaz və eksklüziv hədiyyəlik dəstlər axtarışındasınızsa, fərqli konseptimizlə ehtiyaclarınızı tam qarşılamaq üçün buradayıq.',
+    'seo_paragraph_3' => 'Sifarişlərinizin bütün Bakı üzrə qısa müddətdə və təhlükəsiz şəkildə ünvanınıza çatdırılmasını təmin edirik. Təcrübəli komandamız düzgün məhsul, içki-tütün harmoniyası və ya hədiyyə seçimində sizə məmnuniyyətlə dəstək olmağa hazırdır. Xidmətlərimiz yalnız 18 yaşından yuxarı müştərilər üçün nəzərdə tutulmuşdur.',
+    'seo_features_title' => 'Niyə Alco Art Wine & Tobacco?',
+    'seo_feature_1' => 'Orijinallığa zəmanət: 100% orijinal və premium keyfiyyətli məhsullar.',
+    'seo_feature_2' => 'Zəngin çeşid: Hər zövqə uyğun içki, tütün və aksesuarların vahid məkanda toplanması.',
+    'seo_feature_3' => 'Xüsusi konsept: Zövqlə hazırlanmış eksklüziv hədiyyəlik dəstlər.',
+    'seo_feature_4' => 'Operativlik: Bakı daxilində sürətli və etibarlı çatdırılma xidməti.',
+    'seo_feature_5' => 'Peşəkar xidmət: Hər bir müştəriyə fərdi yanaşma və məhsul seçimində dəstək.',
 ];
 

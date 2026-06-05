@@ -488,6 +488,7 @@
                                     <li>{{ __('home.seo_feature_2') }}</li>
                                     <li>{{ __('home.seo_feature_3') }}</li>
                                     <li>{{ __('home.seo_feature_4') }}</li>
+                                    <li>{{ __('home.seo_feature_5') }}</li>
                                 </ul>
                             </div>
                         </div>
