@@ -21,7 +21,7 @@ use App\Http\Controllers\Web\NewProductsController;
 
 Route::get('/', function () {
     $default = (string)config('app.default_locale', config('app.fallback_locale'));
-    return redirect()->to(url($default), Response::HTTP_FOUND);
+    return redirect()->to(url($default), Response::HTTP_MOVED_PERMANENTLY);
 })->name('root.redirect');
 
 // CKEditor Upload Route (Admin)
