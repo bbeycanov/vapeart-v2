@@ -1,143 +1,185 @@
-/* Age Verification Popup Styles */
+/* Age Verification Popup — ALCO ART (Wine & Tobacco) */
 .age-verification-popup {
-    max-width: 500px;
+    max-width: 460px;
 }
 
 .age-verification-popup .modal-content {
+    position: relative;
     border: none;
-    border-radius: 0;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 30px 70px rgba(20, 5, 12, 0.35);
+}
+
+/* Üst aksent zolağı */
+.age-verification-popup .modal-content::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 5px;
+    background: linear-gradient(90deg, #c81e57 0%, #e0567f 100%);
 }
 
 .age-verification-popup .modal-body {
-    padding: 3rem 2rem;
+    padding: 3rem 2.25rem 2.5rem;
+    background: #ffffff;
 }
 
-@media (min-width: 576px) {
-    .age-verification-popup .modal-body {
-        padding: 4rem 3rem;
-    }
-}
-
-.age-verification-wrapper {
-    max-width: 100%;
-}
-
+/* Brand */
 .age-verification-brand {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #222222;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 2rem;
-}
-
-@media (min-width: 576px) {
-    .age-verification-brand {
-        font-size: 2.5rem;
-    }
-}
-
-.age-icon-circle {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #d6001c 0%, #c32929 100%);
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(214, 0, 28, 0.3);
+    gap: 0.35rem;
+    padding-bottom: 1.35rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #efe3e8;
 }
 
-.age-icon-text {
-    font-size: 2.5rem;
+.age-brand-main {
+    font-size: 1.95rem;
     font-weight: 800;
-    color: #ffffff;
+    letter-spacing: 0.17em;
+    color: #16121a;
     line-height: 1;
 }
 
-.age-verification-message {
-    font-size: 0.9375rem;
-    line-height: 1.7;
-    color: #222222;
-    text-align: left;
-    max-width: 400px;
+.age-brand-sub {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #c81e57;
+}
+
+/* +18 badge — halqalı çəhrayı nişan */
+.age-verification-icon {
+    margin-bottom: 1.5rem;
+}
+
+.age-icon-circle {
+    width: 106px;
+    height: 106px;
     margin: 0 auto;
+    border-radius: 50%;
+    background: #c81e57;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow:
+        0 0 0 7px rgba(200, 30, 87, 0.10),
+        0 0 0 14px rgba(200, 30, 87, 0.05),
+        0 12px 24px rgba(200, 30, 87, 0.30);
+}
+
+.age-icon-text {
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+/* Message */
+.age-verification-message {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #444851;
+    max-width: 360px;
+    margin: 0 auto 1.25rem;
 }
 
 .age-verification-message p {
-    margin-bottom: 0.75rem;
+    margin: 0 0 0.5rem;
 }
 
 .age-verification-message p:last-child {
     margin-bottom: 0;
-    color: #c32929;
 }
 
+/* Warning */
+.age-verification-warning {
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #b01545;
+    background: rgba(200, 30, 87, 0.07);
+    border: 1px solid rgba(200, 30, 87, 0.18);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    max-width: 380px;
+    margin: 0 auto 1.85rem;
+}
+
+/* Buttons */
 .age-verification-actions {
-    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
 }
 
-.age-verification-actions .btn {
+.age-btn {
     width: 100%;
-    padding: 0.9375rem 3.125rem;
-    font-size: 0.875rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-radius: 0;
-    min-height: 50px;
+    padding: 0.9rem 1.5rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
 }
 
-.age-verification-actions .btn-primary {
-    background-color: #222222;
-    border-color: #222222;
+.age-btn-yes {
+    background: #c81e57;
+    border-color: #c81e57;
     color: #ffffff;
+    box-shadow: 0 8px 18px rgba(200, 30, 87, 0.28);
 }
 
-.age-verification-actions .btn-primary:hover {
-    background-color: #000000;
-    border-color: #000000;
+.age-btn-yes:hover {
+    background: #ad1748;
+    border-color: #ad1748;
     color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(200, 30, 87, 0.34);
 }
 
-.age-verification-actions .btn-outline-primary {
-    border-color: #222222;
-    color: #222222;
-    background-color: transparent;
+.age-btn-no {
+    background: transparent;
+    border-color: #dcdfe4;
+    color: #6b7280;
 }
 
-.age-verification-actions .btn-outline-primary:hover {
-    background-color: #222222;
-    border-color: #222222;
-    color: #ffffff;
+.age-btn-no:hover {
+    background: #f5f6f8;
+    border-color: #cfd3da;
+    color: #374151;
 }
 
+/* Responsive */
 @media (max-width: 575.98px) {
     .age-verification-popup .modal-body {
-        padding: 2.5rem 1.5rem;
+        padding: 2.5rem 1.5rem 2rem;
     }
-    
-    .age-verification-brand {
-        font-size: 1.75rem;
-        margin-bottom: 1.5rem;
+
+    .age-brand-main {
+        font-size: 1.6rem;
+        letter-spacing: 0.13em;
     }
-    
+
+    .age-brand-sub {
+        font-size: 0.7rem;
+        letter-spacing: 0.26em;
+    }
+
     .age-icon-circle {
-        width: 100px;
-        height: 100px;
+        width: 92px;
+        height: 92px;
     }
-    
+
     .age-icon-text {
-        font-size: 2rem;
+        font-size: 2.05rem;
     }
-    
+
     .age-verification-message {
-        font-size: 0.875rem;
-    }
-    
-    .age-verification-actions {
-        margin-top: 2rem;
+        font-size: 0.86rem;
     }
 }
-

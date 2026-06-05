@@ -127,6 +127,7 @@
 <link rel="stylesheet" href="{{ asset('storefront/css/includes/site-map.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('storefront/css/includes/footer.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('storefront/css/includes/quick-view.css') }}" type="text/css">
+<link rel="stylesheet" href="{{ asset('storefront/css/includes/age-verification-popup.css') }}?v={{ filemtime(public_path('storefront/css/includes/age-verification-popup.css')) }}" type="text/css">
 
 {{-- Toastr Custom Styles (moved from inline) --}}
 <link rel="stylesheet" href="{{ asset('storefront/css/includes/toastr-custom.css') }}" type="text/css">
