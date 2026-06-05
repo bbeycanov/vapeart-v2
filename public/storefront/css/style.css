@@ -16360,6 +16360,25 @@ textarea.form-control.is-invalid {
   color: #41454c;
 }
 
+@media (max-width: 767.98px) {
+  .cookieConsentContainer {
+    left: 1rem;
+    right: 1rem;
+    bottom: 8.25rem;
+    width: auto;
+    max-width: none;
+    padding: 1.25rem 1.25rem 1.15rem;
+  }
+
+  .cookieConsentContainer .cookieDesc p {
+    font-size: 0.8125rem;
+  }
+
+  .cookieConsentContainer .cookieButton a {
+    width: 100%;
+  }
+}
+
 @-webkit-keyframes bounceIn {
 
   from,
