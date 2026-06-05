@@ -44,14 +44,14 @@
                         $productCount = $item['product_count'];
                         $brandName = $brand->getTranslation('name', $locale);
                         $brandSlug = $brand->slug;
-                        $brandLogo = $brand->getFirstMediaUrl('logo');
+                        $brandItemLogo = $brand->getFirstMediaUrl('logo');
                         $brandUrl = route('brands.show', [$locale, $brandSlug, 'menu_id' => $menu->id]);
                     @endphp
                     <div class="col">
                         <a href="{{ $brandUrl }}" class="brand-card d-flex flex-column border rounded-3 p-3 p-md-4 text-decoration-none h-100" style="transition: all 0.2s ease;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'; this.style.transform='translateY(-4px)';" onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)';">
                             <div class="brand-card__logo d-flex align-items-center justify-content-center mb-3" style="height: 120px; background-color: #f8f9fa; border-radius: 8px;">
-                                @if($brandLogo)
-                                    <img src="{{ $brandLogo }}" alt="{{ $brandName }}" style="max-width: 100%; max-height: 100%; object-fit: contain; padding: 12px;">
+                                @if($brandItemLogo)
+                                    <img src="{{ $brandItemLogo }}" alt="{{ $brandName }}" style="max-width: 100%; max-height: 100%; object-fit: contain; padding: 12px;">
                                 @else
                                     <div class="text-muted text-center">
                                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.3;">

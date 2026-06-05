@@ -151,13 +151,13 @@
                             @foreach($brands as $brand)
                                 @php
                                     $isActive = $selectedBrandId == $brand->id;
-                                    $brandLogo = $brand->getFirstMediaUrl('logo');
+                                    $brandItemLogo = $brand->getFirstMediaUrl('logo');
                                 @endphp
                                 <button type="button"
                                         class="brand-pill btn btn-sm {{ $isActive ? 'btn-dark' : 'btn-outline-light text-dark border-secondary-subtle' }} rounded-pill px-3 px-md-4 py-2 py-md-2.5 flex-shrink-0 fw-medium d-flex align-items-center gap-2 transition-all"
                                         data-brand-id="{{ $brand->id }}">
-                                    @if($brandLogo)
-                                        <img src="{{ $brandLogo }}" alt="{{ $brand->getTranslation('name', $locale) }}" class="rounded-circle bg-white p-0.5" style="width: 22px; height: 22px; object-fit: contain;">
+                                    @if($brandItemLogo)
+                                        <img src="{{ $brandItemLogo }}" alt="{{ $brand->getTranslation('name', $locale) }}" class="rounded-circle bg-white p-0.5" style="width: 22px; height: 22px; object-fit: contain;">
                                     @endif
                                     <span>{{ $brand->getTranslation('name', $locale) }}</span>
                                 </button>
