@@ -146,6 +146,9 @@ class BranchForm
                                         ->update(['is_default' => false]);
                                 }
                             }),
+                        Toggle::make('sells_alcohol')
+                            ->label(__('Sells Alcohol'))
+                            ->helperText(__('Alkoqol kateqoriyasındakı məhsulların WhatsApp sifarişində yalnız "alkoqol satır" filiallar göstərilir.')),
                     ]),
             ]);
     }

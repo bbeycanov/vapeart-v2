@@ -141,6 +141,9 @@ class CategoryForm
                         Toggle::make('is_active')
                             ->label(__('Is Active'))
                             ->required(),
+                        Toggle::make('is_alcohol')
+                            ->label(__('Alcohol Category'))
+                            ->helperText(__('Bu kateqoriya (və alt-kateqoriyaları) alkoqoldur. Belə məhsulların WhatsApp sifarişində yalnız alkoqol satan filiallar görünür.')),
                     ]),
             ]);
     }

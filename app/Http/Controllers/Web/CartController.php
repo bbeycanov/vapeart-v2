@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Web;
 
 use App\Models\Branch;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
@@ -38,14 +40,23 @@ class CartController extends Controller
 
     /**
      * @param string $locale
+     * @param Request $request
      * @return JsonResponse
      */
-    public function getBranches(string $locale): JsonResponse
+    public function getBranches(string $locale, Request $request): JsonResponse
     {
         app()->setLocale($locale);
 
-        $branches = Branch::where('is_active', true)
-            ->orderBy('sort_order')
+        $query = Branch::where('is_active', true);
+
+        // Alkoqol məhdudiyyəti: əgər sorğuda product_id varsa və həmin məhsul
+        // alkoqol kateqoriyasındadırsa, yalnız alkoqol satan filiallar göstərilir.
+        $productId = $request->query('product_id');
+        if ($productId && $this->productIsAlcohol((int) $productId)) {
+            $query->where('sells_alcohol', true);
+        }
+
+        $branches = $query->orderBy('sort_order')
             ->get()
             ->map(function ($branch) {
                 return [
@@ -61,6 +72,37 @@ class CartController extends Controller
             'success' => true,
             'branches' => $branches
         ]);
+    }
+
+    /**
+     * Məhsul alkoqol kateqoriyasına (is_alcohol) və ya onun alt-kateqoriyasına
+     * aiddirmi? Kateqoriya ağacı `path` (məs. "/29/") ilə yoxlanılır.
+     *
+     * @param int $productId
+     * @return bool
+     */
+    private function productIsAlcohol(int $productId): bool
+    {
+        $alcoholRootIds = Category::where('is_alcohol', true)->pluck('id');
+
+        if ($alcoholRootIds->isEmpty()) {
+            return false;
+        }
+
+        // Alkoqol kök kateqoriyaları + onların bütün alt-kateqoriyaları (path ilə).
+        $alcoholCategoryIds = Category::query()
+            ->where(function ($q) use ($alcoholRootIds) {
+                $q->whereIn('id', $alcoholRootIds);
+                foreach ($alcoholRootIds as $rootId) {
+                    $q->orWhere('path', 'like', '%/' . $rootId . '/%');
+                }
+            })
+            ->pluck('id');
+
+        return DB::table('product_categories')
+            ->where('product_id', $productId)
+            ->whereIn('category_id', $alcoholCategoryIds)
+            ->exists();
     }
 
     /**

@@ -66,6 +66,7 @@ class Category extends Model implements HasMedia, Sortable
         'meta_title',
         'meta_description',
         'is_active',
+        'is_alcohol',
         'sort_order',
     ];
 
@@ -78,6 +79,7 @@ class Category extends Model implements HasMedia, Sortable
         'meta_title' => 'array',
         'meta_description' => 'array',
         'is_active' => 'boolean',
+        'is_alcohol' => 'boolean',
     ];
 
     /**

@@ -183,8 +183,14 @@
         
         branchList.innerHTML = '<div class="text-center py-4"><div class="spinner-border" role="status"><span class="visually-hidden">{{ __("scripts.Loading...") }}</span></div></div>';
         modal.show();
-        
-        fetch(`/${locale}/cart/branches`, {
+
+        // Alkoqol filtri: alkoqol kateqoriyasındakı məhsulda yalnız alkoqol satan filiallar gəlsin.
+        const __spId = (window.singleProductOrder && window.singleProductOrder.product) ? window.singleProductOrder.product.id : null;
+        const __branchesUrl = __spId
+            ? `/${locale}/cart/branches?product_id=${encodeURIComponent(__spId)}`
+            : `/${locale}/cart/branches`;
+
+        fetch(__branchesUrl, {
             headers: {
                 'Accept': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest'

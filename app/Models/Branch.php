@@ -35,6 +35,7 @@ class Branch extends Model implements Sortable
         'meta_description',
         'is_active',
         'is_default',
+        'sells_alcohol',
         'sort_order',
     ];
 
@@ -50,6 +51,7 @@ class Branch extends Model implements Sortable
         'meta_description' => 'array',
         'is_active' => 'boolean',
         'is_default' => 'boolean',
+        'sells_alcohol' => 'boolean',
         'latitude' => 'decimal:8',
         'longitude' => 'decimal:8',
     ];
