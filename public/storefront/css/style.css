@@ -24074,7 +24074,7 @@ body.coming-soon-page .header {
 .branch-modal-icon {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, var(--theme-primary,#c81e57) 0%, #f59042 100%);
+  background: #c81e57;
   border-radius: 12px;
   display: flex;
   align-items: center;

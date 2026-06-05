@@ -122,7 +122,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" type="text/css">
 
 {{-- Main CSS --}}
-<link rel="stylesheet" href="{{ asset('storefront/css/style.css') }}" type="text/css">
+<link rel="stylesheet" href="{{ asset('storefront/css/style.css') }}?v={{ filemtime(public_path('storefront/css/style.css')) }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('storefront/css/pages/cart-index.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('storefront/css/includes/site-map.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('storefront/css/includes/footer.css') }}" type="text/css">
