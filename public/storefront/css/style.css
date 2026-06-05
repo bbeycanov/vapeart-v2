@@ -19175,13 +19175,13 @@ textarea.form-control.is-invalid {
 
 .header-mobile .mobile-nav-activator,
 .header-mobile .header-tools__item {
-  color: #fff;
+  color: #9A918A;
 }
 
 .header-mobile .mobile-nav-activator svg,
 .header-mobile .header-tools__item svg {
-  fill: #fff;
-  stroke: #fff;
+  fill: #9A918A;
+  stroke: #9A918A;
 }
 
 .header-mobile .logo {
