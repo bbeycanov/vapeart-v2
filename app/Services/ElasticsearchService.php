@@ -294,21 +294,48 @@ class ElasticsearchService
                     'bool' => [
                         'must' => [
                             [
-                                'multi_match' => [
-                                    'query' => $query,
-                                    'fields' => [
-                                        'name^3',
-                                        'name_all_locales^2',
-                                        'description^2',
-                                        'description_all_locales',
-                                        'short_description',
-                                        'brand_name^2',
-                                        'category_names^2',
-                                        'tag_names',
-                                        'sku'
+                                'bool' => [
+                                    // İstifadəçi tam söz, yarımçıq söz (prefiks) və ya
+                                    // kiçik səhvlə (typo) yazsa belə uyğun məhsullar gəlsin deyə
+                                    // iki strategiyanı birləşdiririk; biri tutsa kifayətdir.
+                                    'should' => [
+                                        // 1) Tam söz uyğunluğu + typo toleransı (fuzziness)
+                                        [
+                                            'multi_match' => [
+                                                'query' => $query,
+                                                'fields' => [
+                                                    'name^3',
+                                                    'name_all_locales^2',
+                                                    'description^2',
+                                                    'description_all_locales',
+                                                    'short_description',
+                                                    'brand_name^2',
+                                                    'category_names^2',
+                                                    'tag_names',
+                                                    'sku'
+                                                ],
+                                                'type' => 'best_fields',
+                                                'fuzziness' => 'AUTO'
+                                            ]
+                                        ],
+                                        // 2) Yarımçıq / söz başlanğıcına görə uyğunluq
+                                        //    "Jage", "Jagermei" → "Jagermeister"
+                                        [
+                                            'multi_match' => [
+                                                'query' => $query,
+                                                'fields' => [
+                                                    'name^3',
+                                                    'name_all_locales^2',
+                                                    'brand_name^2',
+                                                    'category_names^2',
+                                                    'tag_names'
+                                                ],
+                                                'type' => 'phrase_prefix',
+                                                'max_expansions' => 50
+                                            ]
+                                        ]
                                     ],
-                                    'type' => 'best_fields',
-                                    'fuzziness' => 'AUTO'
+                                    'minimum_should_match' => 1
                                 ]
                             ]
                         ],
